@@ -51,8 +51,8 @@
       "reproduceCommand": "node node-json-parse-v1.mjs",
       "artifactSha256": "c301ddea5fa2ebf955b06f56a939d573ac293b7b392adc43dc699ef8bac84713",
       "executionMode": "generated-artifact-file",
-      "verifiedAt": "2026-09-08T09:51:58.702Z",
-      "durationMs": 35,
+      "verifiedAt": "2026-09-09T09:55:26.980Z",
+      "durationMs": 41,
       "expectedStdout": "PASS",
       "actualStdout": "PASS",
       "codeSha256": "c301ddea5fa2ebf955b06f56a939d573ac293b7b392adc43dc699ef8bac84713",
@@ -61,14 +61,14 @@
     "runtimeReleaseSignal": {
       "checkId": "node-json-parse-v1",
       "runtime": "node",
-      "checkedAt": "2026-09-08T09:51:58.851Z",
+      "checkedAt": "2026-09-09T09:55:27.121Z",
       "verifiedRuntimeVersion": "v24.20.0",
       "requiredRuntimeMajor": 24,
-      "latestLtsVersion": "v24.20.0",
+      "latestLtsVersion": "v24.21.0",
       "latestLtsMajor": 24,
       "latestLtsCodename": "Krypton",
-      "status": "current",
-      "reason": "exact-latest-lts"
+      "status": "recheck-required",
+      "reason": "newer-lts-release"
     }
   },
   "canonicalUrl": "https://postify.zekiakgul.dev/posts/node-json-dogrulama",

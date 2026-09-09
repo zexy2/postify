@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-08T09:51:58.851Z",
+  "checkedAt": "2026-09-09T09:55:27.121Z",
   "source": "nodejs.org/dist/index.json",
   "sourceAvailable": true,
   "maxAgeHours": 36,
@@ -8,14 +8,14 @@
     "node-json-parse-v1": {
       "checkId": "node-json-parse-v1",
       "runtime": "node",
-      "checkedAt": "2026-09-08T09:51:58.851Z",
+      "checkedAt": "2026-09-09T09:55:27.121Z",
       "verifiedRuntimeVersion": "v24.20.0",
       "requiredRuntimeMajor": 24,
-      "latestLtsVersion": "v24.20.0",
+      "latestLtsVersion": "v24.21.0",
       "latestLtsMajor": 24,
       "latestLtsCodename": "Krypton",
-      "status": "current",
-      "reason": "exact-latest-lts"
+      "status": "recheck-required",
+      "reason": "newer-lts-release"
     }
   }
 }
