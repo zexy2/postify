@@ -27,7 +27,6 @@ describe('fallback public catalogue', () => {
     expect(builtIns).toHaveLength(1);
     expect(builtIns[0].slug).toBe('node-json-dogrulama');
     expect(builtIns[0].isFallback).toBe(false);
-    expect(builtIns[0].isBuiltIn).toBe(true);
     expect(builtIns[0].source).toBe('built-in-verified');
     expect(getBuiltInKnowledgePost('node-json-dogrulama', 'en')?.autoVerificationId).toBe('node-json-parse-v1');
     expect(getBuiltInKnowledgePost('ai-muhendisligi', 'tr')).toBeNull();

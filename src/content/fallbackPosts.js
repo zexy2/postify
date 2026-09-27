@@ -426,12 +426,11 @@ const localize = (post, locale) => {
 };
 
 
-const isBuiltInKnowledgeRecord = (post) => Boolean(post.autoVerificationId);
+const isBuiltInKnowledgeRecord = (post) => post.autoVerificationId;
 
 const asBuiltInKnowledge = (post) => ({
   ...post,
   isFallback: false,
-  isBuiltIn: true,
   source: 'built-in-verified',
 });
 

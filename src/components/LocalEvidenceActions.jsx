@@ -104,7 +104,7 @@ export default function LocalEvidenceActions({ post }) {
             <small>{en ? 'No independent community evidence yet.' : 'Henüz bağımsız topluluk kanıtı yok.'}</small>
           )}
         </div>
-        {!persistent && <small>{isAuthenticated && post.isBuiltIn
+        {!persistent && <small>{isAuthenticated && post.source === 'built-in-verified'
           ? (en ? 'This built-in verified article is release-owned, so your personal feedback stays on this device.' : 'Bu built-in verified yazı release tarafından yönetilir; kişisel geri bildirimin bu cihazda kalır.')
           : isAuthenticated && !backendReady
             ? (en ? 'Account sync is waiting for the Verified Knowledge backend upgrade. Your feedback stays on this device meanwhile.' : 'Hesap senkronu Verified Knowledge backend yükseltmesini bekliyor. Bu sırada geri bildirimin bu cihazda kalır.')

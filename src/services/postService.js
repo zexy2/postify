@@ -226,7 +226,6 @@ const normalizePost = (row, translation, author, commentCount = 0, evidenceSumma
   }),
   commentCount,
   isFallback: false,
-  isBuiltIn: false,
   source: 'supabase',
 });
 
@@ -257,11 +256,11 @@ const matchesBuiltInSearch = (post, search = '') => {
   if (!term) return true;
   return [post.title, post.excerpt, post.body, post.category]
     .filter(Boolean)
-    .some((value) => String(value).toLocaleLowerCase('tr-TR').includes(term));
+    .some((value) => value.toLocaleLowerCase('tr-TR').includes(term));
 };
 
 export const mergeBuiltInKnowledge = (remotePosts = [], locale = 'tr', search = '') => {
-  const existingSlugs = new Set(remotePosts.map((post) => post.slug).filter(Boolean));
+  const existingSlugs = new Set(remotePosts.map((post) => post.slug));
   const builtIns = getBuiltInKnowledgePosts(locale)
     .filter((post) => !existingSlugs.has(post.slug))
     .filter((post) => matchesBuiltInSearch(post, search));
@@ -496,7 +495,7 @@ export const postService = {
       }
 
       const remoteRows = authorsResult.data || [];
-      const remoteSlugs = new Set(remoteRows.map((row) => row.slug).filter(Boolean));
+      const remoteSlugs = new Set(remoteRows.map((row) => row.slug));
       const builtInCount = getBuiltInKnowledgePosts('tr').filter((post) => !remoteSlugs.has(post.slug)).length;
       const remoteAuthorCount = new Set(remoteRows.map((row) => row.author_id).filter(Boolean)).size;
       return {
