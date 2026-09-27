@@ -621,6 +621,12 @@ When the Header switches to drawer/touch navigation at 960px, secondary controls
 
 **Why:** After the navigation, account menu and mobile drawer adopted Postify's editorial language, the always-visible desktop utility cluster still read as a row of generic startup buttons. Flattening it removes that final header-level inconsistency without adding JavaScript or changing navigation, auth, keyboard or theme behavior.
 
+
+## 2026-09-02 — Transient feedback uses notice rails, not mini-cards
+**Decision:** Global success/error toasts retain their existing semantics, position and lifecycle but render as square, rule-based editorial notices without rounded card chrome or shadow.
+
+**Why:** Toasts appear across auth, bookmarks, publishing, copy and admin flows, so their old rounded mini-card treatment was a frequent cross-product break from Postify's editorial knowledge language. One global styling change improves all transient feedback without adding a new component or behavior.
+
 ## 2026-09-03 — Home discovery and feed use an editorial index, not segmented cards
 **Decision:** Home format filters use a flat tab rail, advanced refinement state uses square ruled tags, and KnowledgeCard variants use lead-story / ledger-row treatments with square imagery and actions instead of rounded cards, pills and circular bookmark controls.
 

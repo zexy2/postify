@@ -811,6 +811,12 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Graphify query covered Header, LanguageSwitcher, App, auth/bookmarks/theme hooks, Header unit coverage and authenticated visual fixtures; the source graph was updated after the CSS change.
 - Targeted Header unit behavior passes 3/3; authenticated header + mobile drawer visual compare passes 2/2. Dedicated 1440 public, 1180 authenticated, 1024 dark authenticated and 1024 at 200% text scaling QA passes 4/4 with radius 0, >=42px desktop controls and zero horizontal overflow.
 
+
+### 2026-09-02 — Editorial toast notices
+- Flattened the global react-hot-toast shell from a rounded bordered mini-card into a quiet editorial notice rail with a 2px top rule, 1px bottom rule, square corners and no shadow; success/error icon semantics, duration, bottom-right placement and overlay suppression remain unchanged.
+- Existing toast interaction contracts pass 2/2, including mobile article action-bar clearance and modal-overlay yielding. Dedicated 390 light, 320 dark and 320 at 200% text scaling geometry/style QA passes 3/3 with zero horizontal overflow.
+- The eager entry remains under budget at 319,349 B (still below the pre-system-state 319,496 B baseline).
+
 ### 2026-09-03 — Desktop header utility rail polish
 - Reworked desktop Search, Language, Theme and Saved controls from rounded hover cards into flat underline utilities; New Content/Login remain primary actions but now use square editorial CTA geometry.
 - Preserved mobile drawer styling and all Header auth/bookmark/theme/language behaviors; no eager JavaScript was added.
