@@ -15,6 +15,7 @@ import { getDomainCredibility } from '../../lib/domainCredibility';
 import { getCategoryLabel } from '../../lib/categoryLabels';
 import styles from './KnowledgeDashboardPage.module.css';
 import AuthorFailurePanel from './AuthorFailurePanel';
+import AuthorCorrectionQueue from './AuthorCorrectionQueue';
 import SystemStatus from '../../components/SystemStatus';
 
 const asPost = (row) => ({
@@ -221,6 +222,8 @@ export default function KnowledgeDashboardPage({ dataOverride = null, backendRea
           </div>
         </section>
       </div>
+
+      <AuthorCorrectionQueue corrections={data.corrections} posts={data.posts} />
     </div>
   );
 }

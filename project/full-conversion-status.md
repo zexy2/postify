@@ -47,3 +47,8 @@
 - Automatic verification now binds the displayed article code to the exact executed manifest contract; artifacts include actual runtime/output and code hash.
 - `node-deterministic-v1` rejects unsupported package/network/filesystem/process capabilities at release-gate policy level and is explicitly not described as a security sandbox.
 - Article verification steps are now an evidence-version-scoped Action Runbook with durable device-local progress and code-copy actions.
+
+
+## Network-value expansion checkpoint — 2026-08-28
+- Suggested Corrections V1 is implemented/tested behind backend capability v2. It remains production-dormant until item 29 applies the full migration chain.
+- Correction acceptance is a review signal only; actual article changes still require the editor/revision flow.

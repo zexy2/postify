@@ -2,6 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 const playwrightPort = process.env.PLAYWRIGHT_PORT || '4173';
 const localBaseURL = `http://127.0.0.1:${playwrightPort}/`;
+const artifactTag = process.env.PLAYWRIGHT_ARTIFACT_TAG || process.env.GITHUB_RUN_ID || String(process.pid);
+const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR || `/tmp/postify-test-results-${artifactTag}`;
+const reportDir = process.env.PLAYWRIGHT_HTML_REPORT || `/tmp/postify-playwright-report-${artifactTag}`;
 
 /**
  * Playwright Configuration
@@ -13,7 +16,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  outputDir,
+  reporter: [['html', { outputFolder: reportDir, open: 'never' }]],
   
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || localBaseURL,

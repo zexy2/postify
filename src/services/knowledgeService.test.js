@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const chain = {};
-for (const name of ['select', 'eq', 'order', 'limit', 'upsert', 'delete']) chain[name] = vi.fn(() => chain);
+for (const name of ['select', 'eq', 'order', 'limit', 'upsert', 'insert', 'delete', 'in']) chain[name] = vi.fn(() => chain);
 chain.maybeSingle = vi.fn(async () => ({ data: null, error: null }));
 chain.single = vi.fn(async () => ({ data: { result: 'worked' }, error: null }));
 chain.then = (resolve) => resolve({ data: [], error: null });
@@ -57,4 +57,35 @@ describe('knowledgeService', () => {
     await service.requestGap('React cache');
     expect(client.rpc).toHaveBeenCalledWith('request_knowledge_gap', { query_text: 'React cache' });
   });
+
+  it('submits a sanitized authenticated correction without spoofing another user', async () => {
+    chain.single.mockResolvedValueOnce({ data: { id: 'c1', status: 'pending' }, error: null });
+    const result = await service.submitCorrection('p1', {
+      kind: 'version',
+      summary: ' Runtime version is stale ',
+      proposedChange: ' Update the example to the maintained runtime release. ',
+      environment: 'Node 22',
+      sourceUrls: ['javascript:alert(1)', 'https://nodejs.org/en/about/previous-releases'],
+    });
+    expect(result.status).toBe('pending');
+    expect(client.from).toHaveBeenCalledWith('post_correction_suggestions');
+    expect(chain.insert).toHaveBeenCalledWith(expect.objectContaining({
+      post_id: 'p1',
+      user_id: 'u1',
+      kind: 'version',
+      source_urls: ['https://nodejs.org/en/about/previous-releases'],
+    }));
+  });
+
+  it('rejects underspecified corrections before touching the database', async () => {
+    await expect(service.submitCorrection('p1', { summary: 'short', proposedChange: 'also short' })).rejects.toThrow('summary');
+  });
+
+  it('resolves and withdraws corrections only through scoped RPCs', async () => {
+    await service.withdrawCorrection('c1');
+    expect(client.rpc).toHaveBeenCalledWith('withdraw_correction_suggestion', { target_suggestion_id: 'c1' });
+    await service.resolveCorrection('c1', 'accepted', 'Will apply after review');
+    expect(client.rpc).toHaveBeenCalledWith('resolve_correction_suggestion', expect.objectContaining({ target_suggestion_id: 'c1', decision: 'accepted' }));
+  });
+
 });

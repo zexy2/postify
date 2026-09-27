@@ -1209,7 +1209,7 @@ test.describe('Verified Knowledge pre-migration compatibility', () => {
 
     const evidenceRequests = [];
     page.on('request', (req) => {
-      if (/post_evidence_summary|post_confirmations|post_failure_reports|post_revision_history|post_revisions|get_post_failure_details|user_knowledge_shelf|knowledge_gaps/.test(req.url())) {
+      if (/post_evidence_summary|post_confirmations|post_failure_reports|post_revision_history|post_revisions|get_post_failure_details|post_correction_suggestions|correction_suggestion|user_knowledge_shelf|knowledge_gaps/.test(req.url())) {
         evidenceRequests.push(req.url());
       }
     });

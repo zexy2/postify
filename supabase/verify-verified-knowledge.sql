@@ -291,3 +291,122 @@ end $$;
 reset role;
 
 select 'verified knowledge RLS PASS' as result;
+
+-- Suggested Corrections privacy and state-transition assertions.
+grant select,insert on public.post_correction_suggestions to authenticated;
+grant execute on function public.withdraw_correction_suggestion(uuid) to authenticated;
+grant execute on function public.resolve_correction_suggestion(uuid,text,text) to authenticated;
+
+delete from public.post_correction_suggestions
+where user_id in ('11111111-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222');
+
+-- Reader can submit one pending proposal against somebody else's published post.
+set role authenticated;
+select set_config('request.jwt.claim.sub','22222222-2222-2222-2222-222222222222',false);
+insert into public.post_correction_suggestions(post_id,user_id,kind,summary,proposed_change,environment,source_urls)
+values(
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  '22222222-2222-2222-2222-222222222222',
+  'version',
+  'Node version note is stale',
+  'Update the runtime note to the currently tested Node version and re-run the verification step.',
+  'Node 22',
+  '["https://nodejs.org/en/about/previous-releases"]'::jsonb
+);
+
+-- Direct clients cannot bypass the HTTP(S) source boundary.
+do $$
+begin
+  begin
+    insert into public.post_correction_suggestions(post_id,user_id,summary,proposed_change,source_urls)
+    values(
+      'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+      '22222222-2222-2222-2222-222222222222',
+      'Unsafe source should fail',
+      'This proposal intentionally tries to store a script-scheme source URL.',
+      '["javascript:alert(1)"]'::jsonb
+    );
+    raise exception 'unsafe correction source unexpectedly succeeded';
+  exception when check_violation then null;
+  end;
+end $$;
+
+-- Duplicate pending proposal from the same user/post is blocked.
+do $$
+begin
+  begin
+    insert into public.post_correction_suggestions(post_id,user_id,summary,proposed_change)
+    values(
+      'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+      '22222222-2222-2222-2222-222222222222',
+      'Duplicate pending suggestion',
+      'This second pending suggestion should never be accepted by the database.'
+    );
+    raise exception 'duplicate correction unexpectedly succeeded';
+  exception when unique_violation then null;
+  end;
+end $$;
+reset role;
+
+-- Author can see the incoming raw proposal and resolve it, but cannot rewrite it directly.
+set role authenticated;
+select set_config('request.jwt.claim.sub','11111111-1111-1111-1111-111111111111',false);
+do $$
+begin
+  if (select count(*) from public.post_correction_suggestions where post_id='aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' and status='pending') <> 1 then
+    raise exception 'author cannot see pending correction';
+  end if;
+end $$;
+select (public.resolve_correction_suggestion(
+  (select id from public.post_correction_suggestions where post_id='aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' limit 1),
+  'accepted',
+  'Will fold into the next evidence revision.'
+)).status;
+reset role;
+
+-- Accepted proposal becomes visible to its contributor, but unrelated authenticated users cannot read it.
+insert into auth.users(id,email) values
+('33333333-3333-3333-3333-333333333333','other@example.test') on conflict do nothing;
+insert into public.profiles(id,email,username) values
+('33333333-3333-3333-3333-333333333333','other@example.test','other') on conflict(id) do nothing;
+set role authenticated;
+select set_config('request.jwt.claim.sub','33333333-3333-3333-3333-333333333333',false);
+do $$
+begin
+  if exists(select 1 from public.post_correction_suggestions where post_id='aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa') then
+    raise exception 'correction leaked to unrelated authenticated user';
+  end if;
+end $$;
+reset role;
+
+-- Contributor can submit another correction after the previous one is resolved and withdraw it via RPC.
+set role authenticated;
+select set_config('request.jwt.claim.sub','22222222-2222-2222-2222-222222222222',false);
+insert into public.post_correction_suggestions(post_id,user_id,summary,proposed_change)
+values(
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  '22222222-2222-2222-2222-222222222222',
+  'Source link needs replacement',
+  'Replace the outdated source with the maintained official documentation page.'
+);
+select (public.withdraw_correction_suggestion(
+  (select id from public.post_correction_suggestions where post_id='aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' and status='pending' limit 1)
+)).status;
+reset role;
+
+select 'correction suggestions RLS PASS' as correction_result;
+
+-- Backend capability metadata is public and must represent the complete current contract.
+set role anon;
+do $$
+begin
+  if not exists(
+    select 1 from public.knowledge_backend_capabilities
+    where schema_version >= 2 and evidence_ready=true and corrections_ready=true
+  ) then
+    raise exception 'knowledge backend capability v2 is incomplete';
+  end if;
+end $$;
+reset role;
+
+select 'knowledge backend capability v2 PASS' as capability_result;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiArrowLeft, FiArrowRight, FiMessageCircle, FiBookmark, FiClock } from 'react-icons/fi';
@@ -19,6 +19,8 @@ import EvidenceBadge from '../components/EvidenceBadge';
 import CopyableCodeBlock from '../components/CopyableCodeBlock';
 import SystemStatus from '../components/SystemStatus';
 import { extractExternalReferences, getArticleOutline, parseFencedCodeBlock, slugifyHeading, splitArticleBlocks } from '../lib/articleStructure';
+
+const CorrectionSuggestionPanel = lazy(() => import('../components/CorrectionSuggestionPanel'));
 
 const initials = (name = '') => name.trim().split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase() || 'P';
 
@@ -287,6 +289,7 @@ const PostDetailPage = () => {
                 <VerificationRunbook post={post} />
                 <LocalEvidenceActions post={post} />
                 <CommunityEvidenceDetails post={post} />
+                <Suspense fallback={null}><CorrectionSuggestionPanel post={post} /></Suspense>
                 {externalReferences.length > 0 && (
                   <section className={styles.references} aria-labelledby="article-references-title">
                     <div>
