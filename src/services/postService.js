@@ -252,11 +252,9 @@ const mapRows = async (rows, locale) => {
 export const isUuidPostIdentifier = (value) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value));
 
 const matchesBuiltInSearch = (post, search = '') => {
-  const term = search.trim().toLocaleLowerCase('tr-TR');
-  if (!term) return true;
-  return [post.title, post.excerpt, post.body, post.category]
-    .filter(Boolean)
-    .some((value) => value.toLocaleLowerCase('tr-TR').includes(term));
+  const term = search.trim().toLowerCase();
+  return !term || [post.title, post.excerpt, post.body, post.category]
+    .some((value) => value?.toLowerCase().includes(term));
 };
 
 export const mergeBuiltInKnowledge = (remotePosts = [], locale = 'tr', search = '') => {
@@ -495,13 +493,11 @@ export const postService = {
       }
 
       const remoteRows = authorsResult.data || [];
-      const remoteSlugs = new Set(remoteRows.map((row) => row.slug));
-      const builtInCount = getBuiltInKnowledgePosts('tr').filter((post) => !remoteSlugs.has(post.slug)).length;
-      const remoteAuthorCount = new Set(remoteRows.map((row) => row.author_id).filter(Boolean)).size;
+      const builtInCount = getBuiltInKnowledgePosts('tr').filter(({ slug }) => !remoteRows.some((row) => row.slug === slug)).length;
       return {
         posts: (postsResult.count || 0) + builtInCount,
         comments: commentsResult.count || 0,
-        authors: remoteAuthorCount + (builtInCount > 0 ? 1 : 0),
+        authors: new Set(remoteRows.map((row) => row.author_id).filter(Boolean)).size + (builtInCount ? 1 : 0),
       };
     } catch {
       return getFallbackStats();

@@ -105,7 +105,7 @@ export default function LocalEvidenceActions({ post }) {
           )}
         </div>
         {!persistent && <small>{isAuthenticated && post.source === 'built-in-verified'
-          ? (en ? 'This built-in verified article is release-owned, so your personal feedback stays on this device.' : 'Bu built-in verified yazı release tarafından yönetilir; kişisel geri bildirimin bu cihazda kalır.')
+          ? (en ? 'Built-in verified feedback stays on this device.' : 'Built-in doğrulama geri bildirimi bu cihazda kalır.')
           : isAuthenticated && !backendReady
             ? (en ? 'Account sync is waiting for the Verified Knowledge backend upgrade. Your feedback stays on this device meanwhile.' : 'Hesap senkronu Verified Knowledge backend yükseltmesini bekliyor. Bu sırada geri bildirimin bu cihazda kalır.')
             : (en ? 'Sign in to contribute to community evidence. Anonymous feedback stays only on this device.' : 'Topluluk kanıtına katkı için giriş yap. Girişsiz geri bildirim yalnız bu cihazda kalır.')}</small>}
