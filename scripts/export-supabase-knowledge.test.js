@@ -6,5 +6,8 @@ describe('production knowledge export policy', () => {
     expect(source).toContain('Verified Knowledge production schema pending');
     expect(source).toContain("['42703', '42P01', 'PGRST204', 'PGRST205']");
     expect(source).toContain('process.exit(0)');
+    expect(source).toContain('knowledge_backend_capabilities');
+    expect(source).toContain('corrections_ready');
+    expect(source).toContain('supabase-schema-partial');
   });
 });

@@ -129,7 +129,7 @@ jobs:
           node --input-type=module <<'NODE'
           const base=process.env.SUPABASE_URL.replace(/\/$/,'');
           const headers={apikey:process.env.SUPABASE_ANON_KEY,Authorization:`Bearer ${process.env.SUPABASE_ANON_KEY}`};
-          for(const resource of ['post_evidence_summary','post_failure_reports','post_revision_history']){
+          for(const resource of ['post_evidence_summary','post_failure_reports','post_revision_history','knowledge_backend_capabilities']){
             const response=await fetch(`${base}/rest/v1/${resource}?select=*&limit=1`,{headers});
             if(!response.ok) throw new Error(`${resource} probe returned ${response.status}: ${(await response.text()).slice(0,300)}`);
             console.log(`${resource} ${response.status}`);
@@ -137,6 +137,13 @@ jobs:
           const canonicalResponse=await fetch(`${base}/rest/v1/posts?select=id,canonical_source_url&limit=1`,{headers});
           if(!canonicalResponse.ok) throw new Error(`canonical_source_url probe returned ${canonicalResponse.status}: ${(await canonicalResponse.text()).slice(0,300)}`);
           console.log(`canonical_source_url ${canonicalResponse.status}`);
+          const capabilityResponse=await fetch(`${base}/rest/v1/knowledge_backend_capabilities?select=schema_version,evidence_ready,corrections_ready`,{headers});
+          if(!capabilityResponse.ok) throw new Error(`capability probe returned ${capabilityResponse.status}`);
+          const [capability]=await capabilityResponse.json();
+          if(Number(capability?.schema_version)<2 || capability?.evidence_ready!==true || capability?.corrections_ready!==true){
+            throw new Error(`incomplete backend capability: ${JSON.stringify(capability)}`);
+          }
+          console.log(`capability schema=${capability.schema_version} evidence=${capability.evidence_ready} corrections=${capability.corrections_ready}`);
           NODE
 
 

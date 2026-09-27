@@ -3,6 +3,15 @@ import { requireSupabase } from '../lib/supabase';
 const cleanEnvironment = (value='') => String(value).trim().slice(0,500);
 const cleanNote = (value='') => String(value).trim().slice(0,2000);
 
+const CORRECTION_KINDS = new Set(['technical','version','clarity','source','other']);
+const cleanCorrectionKind = (value='technical') => CORRECTION_KINDS.has(value) ? value : 'technical';
+const cleanCorrectionSummary = (value='') => String(value).trim().slice(0,280);
+const cleanCorrectionBody = (value='') => String(value).trim().slice(0,4000);
+const cleanSources = (values=[]) => [...new Set((Array.isArray(values) ? values : [])
+  .map((value) => String(value).trim())
+  .filter(Boolean)
+  .filter((value) => { try { return ['http:','https:'].includes(new URL(value).protocol); } catch { return false; } }))].slice(0,5);
+
 export const knowledgeService = {
   getSummary: async (postId) => {
     const client=requireSupabase();
@@ -47,6 +56,53 @@ export const knowledgeService = {
     if(error) throw error;
     return data || [];
   },
+  getCorrections: async (postId) => {
+    const client=requireSupabase();
+    const {data,error}=await client.from('post_correction_suggestions')
+      .select('id,post_id,user_id,kind,summary,proposed_change,environment,source_urls,status,resolution_note,created_at,updated_at,resolved_at')
+      .eq('post_id',postId)
+      .order('created_at',{ascending:false});
+    if(error) throw error;
+    return data || [];
+  },
+  submitCorrection: async (postId,{kind='technical',summary='',proposedChange='',environment='',sourceUrls=[]}) => {
+    const cleanedSummary=cleanCorrectionSummary(summary);
+    const cleanedBody=cleanCorrectionBody(proposedChange);
+    if(cleanedSummary.length < 8) throw new Error('Correction summary is too short');
+    if(cleanedBody.length < 16) throw new Error('Proposed change is too short');
+    const client=requireSupabase();
+    const {data:{user},error:authError}=await client.auth.getUser();
+    if(authError) throw authError;
+    if(!user) throw new Error('Authentication required');
+    const {data,error}=await client.from('post_correction_suggestions').insert({
+      post_id:postId,
+      user_id:user.id,
+      kind:cleanCorrectionKind(kind),
+      summary:cleanedSummary,
+      proposed_change:cleanedBody,
+      environment:cleanEnvironment(environment),
+      source_urls:cleanSources(sourceUrls),
+    }).select().single();
+    if(error) throw error;
+    return data;
+  },
+  withdrawCorrection: async (suggestionId) => {
+    const client=requireSupabase();
+    const {data,error}=await client.rpc('withdraw_correction_suggestion',{target_suggestion_id:suggestionId});
+    if(error) throw error;
+    return data;
+  },
+  resolveCorrection: async (suggestionId,decision,note='') => {
+    if(!['accepted','rejected'].includes(decision)) throw new Error('Invalid correction decision');
+    const client=requireSupabase();
+    const {data,error}=await client.rpc('resolve_correction_suggestion',{
+      target_suggestion_id:suggestionId,
+      decision,
+      note:String(note).trim().slice(0,1000),
+    });
+    if(error) throw error;
+    return data;
+  },
   captureRevision: async (postId,reason='') => {
     const client=requireSupabase();
     const {data,error}=await client.rpc('capture_post_revision',{target_post_id:postId,revision_reason:String(reason).slice(0,1000)});
@@ -63,16 +119,26 @@ export const knowledgeService = {
     const client=requireSupabase();
     const {data:{user},error:authError}=await client.auth.getUser();
     if(authError) throw authError;
-    if(!user) return {posts:[],gaps:[]};
+    if(!user) return {posts:[],gaps:[],corrections:[]};
     const {data:posts,error}=await client.from('posts').select('id,slug,title,category,content_type,outcome,evidence_status,tested_at,stale_after_days,environment,verification_steps,evidence_version,updated_at,is_published').eq('author_id',user.id).order('tested_at',{ascending:true,nullsFirst:true});
     if(error) throw error;
     const ids=(posts||[]).map((post)=>post.id);
     let summaries=[];
     if(ids.length){const result=await client.from('post_evidence_summary').select('*').in('post_id',ids);if(result.error) throw result.error;summaries=result.data||[];}
     const byId=new Map(summaries.map((item)=>[String(item.post_id),item]));
+    let corrections=[];
+    if(ids.length){
+      const result=await client.from('post_correction_suggestions')
+        .select('id,post_id,user_id,kind,summary,proposed_change,environment,source_urls,status,created_at')
+        .in('post_id',ids)
+        .eq('status','pending')
+        .order('created_at',{ascending:false});
+      if(result.error) throw result.error;
+      corrections=result.data||[];
+    }
     const {data:gaps,error:gapsError}=await client.from('knowledge_gaps').select('id,display_query,request_count,last_requested_at').order('request_count',{ascending:false}).order('last_requested_at',{ascending:false}).limit(12);
     if(gapsError) throw gapsError;
-    return {posts:(posts||[]).map((post)=>({...post,summary:byId.get(String(post.id))||null})),gaps:gaps||[]};
+    return {posts:(posts||[]).map((post)=>({...post,summary:byId.get(String(post.id))||null})),gaps:gaps||[],corrections};
   },
   reverifyPost: async (postId,reason='Author re-verified evidence') => {
     const client=requireSupabase();

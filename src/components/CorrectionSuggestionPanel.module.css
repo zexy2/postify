@@ -1,0 +1,20 @@
+.panel { max-width:68ch; margin:2.5rem 0; padding:1.25rem 0; border-block:1px solid var(--border-strong); }
+.header { display:flex; align-items:flex-start; justify-content:space-between; gap:1.25rem; }
+.eyebrow { color:var(--primary); font-family:var(--font-mono); font-size:.67rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.panel h2 { margin:.35rem 0 .5rem; color:var(--text-primary); font-family:var(--font-display); font-size:clamp(1.55rem,3vw,2rem); line-height:1.1; }
+.panel p { color:var(--text-muted); line-height:1.55; }
+.primaryAction,.pending button,.formActions button { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; min-height:40px; padding:.55rem .75rem; color:var(--text-secondary); background:transparent; border:1px solid var(--border-color); border-radius:var(--radius-md); font:inherit; font-size:.76rem; font-weight:750; text-decoration:none; cursor:pointer; }
+.primaryAction { color:var(--primary); border-color:var(--primary-light); }
+.message { padding:.65rem .75rem; background:var(--bg-secondary); border-left:2px solid var(--primary); font-size:.8rem; }
+.pending { display:grid; grid-template-columns:auto 1fr auto; gap:.7rem; align-items:start; margin-top:1rem; padding:.85rem 0; border-top:1px solid var(--border-color); }
+.pending svg { margin-top:.15rem; color:var(--warning,#9a6700); }
+.pending p { margin:.2rem 0 0; font-size:.8rem; }
+.resolution { display:flex; align-items:center; gap:.4rem; margin-top:1rem; font-size:.78rem; }
+.resolution[data-status="accepted"] svg { color:var(--success,#237a4b); }
+.form { display:grid; gap:.85rem; margin-top:1.15rem; padding-top:1rem; border-top:1px solid var(--border-color); }
+.form label { display:grid; gap:.35rem; color:var(--text-secondary); font-size:.75rem; font-weight:750; }
+.form input,.form textarea,.form select { width:100%; padding:.72rem .8rem; color:var(--text-primary); background:var(--bg-primary); border:1px solid var(--border-color); border-radius:var(--radius-md); font:inherit; line-height:1.45; }
+.form textarea { resize:vertical; }
+.form input:focus-visible,.form textarea:focus-visible,.form select:focus-visible { outline:2px solid var(--primary); outline-offset:2px; }
+.formActions { display:flex; justify-content:flex-end; gap:.5rem; }
+@media(max-width:680px){.header{flex-direction:column}.pending{grid-template-columns:auto 1fr}.pending button{grid-column:2;justify-self:start}.formActions{justify-content:flex-start;flex-wrap:wrap}}
