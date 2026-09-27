@@ -621,6 +621,12 @@ When the Header switches to drawer/touch navigation at 960px, secondary controls
 
 **Why:** After the navigation, account menu and mobile drawer adopted Postify's editorial language, the always-visible desktop utility cluster still read as a row of generic startup buttons. Flattening it removes that final header-level inconsistency without adding JavaScript or changing navigation, auth, keyboard or theme behavior.
 
+
+## 2026-09-02 — Transient feedback uses notice rails, not mini-cards
+**Decision:** Global success/error toasts retain their existing semantics, position and lifecycle but render as square, rule-based editorial notices without rounded card chrome or shadow.
+
+**Why:** Toasts appear across auth, bookmarks, publishing, copy and admin flows, so their old rounded mini-card treatment was a frequent cross-product break from Postify's editorial knowledge language. One global styling change improves all transient feedback without adding a new component or behavior.
+
 ## 2026-09-03 — Home discovery and feed use an editorial index, not segmented cards
 **Decision:** Home format filters use a flat tab rail, advanced refinement state uses square ruled tags, and KnowledgeCard variants use lead-story / ledger-row treatments with square imagery and actions instead of rounded cards, pills and circular bookmark controls.
 
@@ -630,3 +636,8 @@ When the Header switches to drawer/touch navigation at 960px, secondary controls
 **Decision:** The Home masthead uses a plain page background with typographic hierarchy and hard editorial rules; Topics are underline tabs; advanced filters use an opaque square sheet with no blur/shadow and become an edge-to-edge bottom ledger on small screens.
 
 **Why:** After the feed itself became a lead-story/ledger index, the remaining glow, rounded topic tabs and floating filter sheet made the top half of Home feel like a different design system. Removing those effects aligns the first screen with the rest of the editorial knowledge surface while preserving search, category and filter behavior.
+
+## 2026-09-04 — Home first screen prioritizes useful knowledge over decorative vertical space
+**Decision:** Keep the Home masthead, search, contribution actions and featured record, but compress their vertical rhythm and render the mobile featured record as a compact horizontal lead story. The first knowledge-feed record should arrive materially earlier in the scroll without hiding product value or reducing touch targets.
+
+**Why:** Real Chromium geometry showed the previous mobile Hero consumed about 1007px and pushed the first feed record to roughly 1470px on a 390px-wide phone. The denser hierarchy brings real content more than 500px earlier while preserving search, featured context, dark mode, 200% text scaling and >=44px interactions.

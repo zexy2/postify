@@ -39,11 +39,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 toastOptions={{
                   duration: 3000,
                   style: {
-                    background: 'var(--bg-secondary)',
+                    background: 'var(--bg-elevated)',
                     color: 'var(--text-primary)',
-                    border: '1px solid var(--border-color)',
-                    borderRadius: '10px',
-                    padding: '12px 16px',
+                    border: '0',
+                    borderTop: '2px solid var(--text-primary)',
+                    borderBottom: '1px solid var(--border-strong)',
+                    borderRadius: '0',
+                    boxShadow: 'none',
+                    maxWidth: 'min(420px, calc(100vw - 2rem))',
+                    padding: '12px 14px',
                   },
                   success: {
                     iconTheme: {
