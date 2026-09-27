@@ -15,22 +15,48 @@ const isSchemaPending = (error) => {
   return ['42703', '42P01', 'PGRST204', 'PGRST205'].includes(code)
     || message.includes('post_evidence_summary')
     || message.includes('evidence_status')
-    || message.includes('content_type');
+    || message.includes('content_type')
+    || message.includes('knowledge_backend_capabilities');
 };
 
-const [{ data: posts, error: postsError }, { data: summaries, error: summaryError }] = await Promise.all([
+const [
+  { data: posts, error: postsError },
+  { data: summaries, error: summaryError },
+  { data: capability, error: capabilityError },
+] = await Promise.all([
   supabase.from('posts').select(postFields).eq('is_published', true).order('published_at', { ascending: false }),
   supabase.from('post_evidence_summary').select('*'),
+  supabase.from('knowledge_backend_capabilities').select('schema_version,evidence_ready,corrections_ready').maybeSingle(),
 ]);
 
-if (isSchemaPending(postsError) || isSchemaPending(summaryError)) {
+const writePendingStatus = async (mode = 'supabase-schema-pending') => {
   await mkdir('docs', { recursive: true });
-  await writeFile('docs/knowledge-backend-status.json', `${JSON.stringify({ schemaVersion: 1, ready: false, mode: 'supabase-schema-pending', checkedAt: new Date().toISOString() }, null, 2)}\n`);
-  console.warn('::warning title=Verified Knowledge production schema pending::Keeping build-generated fallback knowledge artifacts until the production migration is applied.');
+  await writeFile('docs/knowledge-backend-status.json', `${JSON.stringify({
+    schemaVersion: 2,
+    ready: false,
+    mode,
+    features: { evidence: false, corrections: false },
+    checkedAt: new Date().toISOString(),
+  }, null, 2)}\n`);
+};
+
+if (isSchemaPending(postsError) || isSchemaPending(summaryError) || isSchemaPending(capabilityError)) {
+  await writePendingStatus();
+  console.warn('::warning title=Verified Knowledge production schema pending::Keeping build-generated fallback knowledge artifacts until the complete production migration chain is applied.');
   process.exit(0);
 }
 if (postsError) throw postsError;
 if (summaryError) throw summaryError;
+if (capabilityError) throw capabilityError;
+
+const fullCapability = Number(capability?.schema_version) >= 2
+  && capability?.evidence_ready === true
+  && capability?.corrections_ready === true;
+if (!fullCapability) {
+  await writePendingStatus('supabase-schema-partial');
+  console.warn('::warning title=Verified Knowledge capability incomplete::Persistent knowledge features remain closed until evidence and corrections contracts are both ready.');
+  process.exit(0);
+}
 
 const ids = (posts || []).map((post) => String(post.id));
 const canonicalResult = ids.length
@@ -109,5 +135,5 @@ for (const post of posts || []) {
     count += 1;
   }
 }
-await writeFile('docs/knowledge-backend-status.json', `${JSON.stringify({ schemaVersion: 1, ready: true, mode: 'supabase', checkedAt: new Date().toISOString(), exportedArtifacts: count, capabilities: { canonicalSourceUrl: canonicalSourceReady } }, null, 2)}\n`);
+await writeFile('docs/knowledge-backend-status.json', `${JSON.stringify({ schemaVersion: 2, ready: true, mode: 'supabase', features: { evidence: true, corrections: true }, checkedAt: new Date().toISOString(), exportedArtifacts: count, capabilities: { canonicalSourceUrl: canonicalSourceReady } }, null, 2)}\n`);
 console.log(`Supabase knowledge export PASS: ${count} artifact(s)`);

@@ -25,7 +25,7 @@
 
 ## Later — Network value
 - [x] “Worked for me” with environment/version context
-- [ ] Suggested corrections / patch-style contributions
+- [~] Suggested corrections / patch-style contributions (implemented + PostgreSQL/RLS/browser tested; production activation pending migration)
 - [ ] Follow authors/topics
 - [ ] Personalized reading queue
 - [x] Structured source/reference blocks and freshness reminders

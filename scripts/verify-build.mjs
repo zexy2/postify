@@ -54,8 +54,11 @@ for (const chunk of forbiddenPreloads) {
 }
 
 const backendStatus = JSON.parse(await readFile('docs/knowledge-backend-status.json', 'utf8'));
-if (typeof backendStatus.ready !== 'boolean') {
+if (backendStatus.schemaVersion < 2 || typeof backendStatus.ready !== 'boolean' || typeof backendStatus.features?.corrections !== 'boolean') {
   throw new Error('Knowledge backend capability artifact is invalid');
+}
+if (backendStatus.ready && (!backendStatus.features.evidence || !backendStatus.features.corrections)) {
+  throw new Error('Knowledge backend cannot be ready with incomplete feature capabilities');
 }
 
 const verificationRuns = JSON.parse(await readFile('docs/verification-runs.json', 'utf8'));

@@ -14,6 +14,7 @@ import { getCategoryLabel } from '../lib/categoryLabels';
 import KnowledgeEvidencePanel from '../components/KnowledgeEvidencePanel';
 import LocalEvidenceActions from '../components/LocalEvidenceActions';
 import CommunityEvidenceDetails from '../components/CommunityEvidenceDetails';
+import CorrectionSuggestionPanel from '../components/CorrectionSuggestionPanel';
 import VerificationRunbook from '../components/VerificationRunbook';
 import EvidenceBadge from '../components/EvidenceBadge';
 import CopyableCodeBlock from '../components/CopyableCodeBlock';
@@ -287,6 +288,7 @@ const PostDetailPage = () => {
                 <VerificationRunbook post={post} />
                 <LocalEvidenceActions post={post} />
                 <CommunityEvidenceDetails post={post} />
+                <CorrectionSuggestionPanel post={post} />
                 {externalReferences.length > 0 && (
                   <section className={styles.references} aria-labelledby="article-references-title">
                     <div>
