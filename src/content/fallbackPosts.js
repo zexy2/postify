@@ -425,6 +425,27 @@ const localize = (post, locale) => {
   };
 };
 
+
+const isBuiltInKnowledgeRecord = (post) => Boolean(post.autoVerificationId);
+
+const asBuiltInKnowledge = (post) => ({
+  ...post,
+  isFallback: false,
+  isBuiltIn: true,
+  source: 'built-in-verified',
+});
+
+export const getBuiltInKnowledgePosts = (locale = 'tr') => (
+  FALLBACK_CATALOG
+    .filter(isBuiltInKnowledgeRecord)
+    .map((post) => asBuiltInKnowledge(localize(post, locale)))
+);
+
+export const getBuiltInKnowledgePost = (identifier, locale = 'tr') => {
+  const post = FALLBACK_CATALOG.find((item) => isBuiltInKnowledgeRecord(item) && (item.slug === identifier || item.id === identifier));
+  return post ? asBuiltInKnowledge(localize(post, locale)) : null;
+};
+
 export const getFallbackPosts = (locale = 'tr') => FALLBACK_CATALOG.map((post) => localize(post, locale));
 
 export const getFallbackPost = (identifier, locale = 'tr') => {

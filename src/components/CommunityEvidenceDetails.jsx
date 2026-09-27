@@ -4,7 +4,7 @@ import { useFailures, useRevisions } from '../hooks/useKnowledge';
 export default function CommunityEvidenceDetails({ post }) {
   const { i18n } = useTranslation();
   const en = i18n.language?.startsWith('en');
-  const enabled = !post.isFallback;
+  const enabled = post.source === 'supabase';
   const failures = useFailures(post.id, { enabled }).data || [];
   const revisions = useRevisions(post.id, { enabled }).data || [];
   const failure = failures[0] || null;

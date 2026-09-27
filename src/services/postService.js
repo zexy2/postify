@@ -10,6 +10,8 @@ import { requireSupabase } from '../lib/supabase';
 import { getKnowledgeBackendStatus } from '../lib/knowledgeBackendStatus';
 import {
   FALLBACK_AUTHOR,
+  getBuiltInKnowledgePost,
+  getBuiltInKnowledgePosts,
   getFallbackPost,
   getFallbackPosts,
   getFallbackStats,
@@ -223,6 +225,9 @@ const normalizePost = (row, translation, author, commentCount = 0, evidenceSumma
     body: translation?.body || row.body || '',
   }),
   commentCount,
+  isFallback: false,
+  isBuiltIn: false,
+  source: 'supabase',
 });
 
 const mapRows = async (rows, locale) => {
@@ -246,6 +251,24 @@ const mapRows = async (rows, locale) => {
 };
 
 export const isUuidPostIdentifier = (value) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value));
+
+const matchesBuiltInSearch = (post, search = '') => {
+  const term = search.trim().toLocaleLowerCase('tr-TR');
+  if (!term) return true;
+  return [post.title, post.excerpt, post.body, post.category]
+    .filter(Boolean)
+    .some((value) => String(value).toLocaleLowerCase('tr-TR').includes(term));
+};
+
+export const mergeBuiltInKnowledge = (remotePosts = [], locale = 'tr', search = '') => {
+  const existingSlugs = new Set(remotePosts.map((post) => post.slug).filter(Boolean));
+  const builtIns = getBuiltInKnowledgePosts(locale)
+    .filter((post) => !existingSlugs.has(post.slug))
+    .filter((post) => matchesBuiltInSearch(post, search));
+  return [...remotePosts, ...builtIns].sort((a, b) => (
+    new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime()
+  ));
+};
 
 const getPostRow = async (identifier) => {
   const client = requireSupabase();
@@ -280,7 +303,8 @@ export const postService = {
 
       const { data, error } = await runCompatiblePostQuery(runQuery);
       if (error) throw error;
-      return mapRows(data || [], locale);
+      const remotePosts = await mapRows(data || [], locale);
+      return mergeBuiltInKnowledge(remotePosts, locale, search);
     } catch {
       // Public reading must not become a blank page when Supabase is asleep.
       // Mutations below intentionally remain Supabase-only.
@@ -291,7 +315,7 @@ export const postService = {
   getById: async (identifier, locale = 'tr') => {
     try {
       const row = await getPostRow(identifier);
-      if (!row) return null;
+      if (!row) return getBuiltInKnowledgePost(identifier, locale);
       const [post] = await mapRows([row], locale);
       return post;
     } catch (error) {
@@ -464,17 +488,21 @@ export const postService = {
       const [postsResult, commentsResult, authorsResult] = await Promise.all([
         client.from('posts').select('id', { count: 'exact', head: true }).eq('is_published', true),
         client.from('comments').select('id', { count: 'exact', head: true }),
-        client.from('posts').select('author_id').eq('is_published', true),
+        client.from('posts').select('author_id, slug').eq('is_published', true),
       ]);
 
       for (const result of [postsResult, commentsResult, authorsResult]) {
         if (result.error) throw result.error;
       }
 
+      const remoteRows = authorsResult.data || [];
+      const remoteSlugs = new Set(remoteRows.map((row) => row.slug).filter(Boolean));
+      const builtInCount = getBuiltInKnowledgePosts('tr').filter((post) => !remoteSlugs.has(post.slug)).length;
+      const remoteAuthorCount = new Set(remoteRows.map((row) => row.author_id).filter(Boolean)).size;
       return {
-        posts: postsResult.count || 0,
+        posts: (postsResult.count || 0) + builtInCount,
         comments: commentsResult.count || 0,
-        authors: new Set((authorsResult.data || []).map((row) => row.author_id).filter(Boolean)).size,
+        authors: remoteAuthorCount + (builtInCount > 0 ? 1 : 0),
       };
     } catch {
       return getFallbackStats();

@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   FALLBACK_AUTHOR,
+  getBuiltInKnowledgePost,
+  getBuiltInKnowledgePosts,
   getFallbackPost,
   getFallbackPosts,
   getFallbackStats,
@@ -17,6 +19,18 @@ describe('fallback public catalogue', () => {
     expect(turkishPosts.every((post) => post.isFallback && post.coverImageUrl && post.slug)).toBe(true);
     expect(englishPosts[0].title).toBe('An AI feature is a system, not a model call');
     expect(turkishPosts[0].author.id).toBe(FALLBACK_AUTHOR.id);
+  });
+
+
+  it('exposes automatic checks as built-in verified knowledge, not outage fallback', () => {
+    const builtIns = getBuiltInKnowledgePosts('tr');
+    expect(builtIns).toHaveLength(1);
+    expect(builtIns[0].slug).toBe('node-json-dogrulama');
+    expect(builtIns[0].isFallback).toBe(false);
+    expect(builtIns[0].isBuiltIn).toBe(true);
+    expect(builtIns[0].source).toBe('built-in-verified');
+    expect(getBuiltInKnowledgePost('node-json-dogrulama', 'en')?.autoVerificationId).toBe('node-json-parse-v1');
+    expect(getBuiltInKnowledgePost('ai-muhendisligi', 'tr')).toBeNull();
   });
 
   it('resolves a post by slug and keeps unknown posts absent', () => {

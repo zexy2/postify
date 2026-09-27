@@ -5,12 +5,14 @@ const requireSupabase = vi.fn(() => {
 });
 
 vi.mock('../lib/supabase', () => ({ requireSupabase }));
+vi.mock('../lib/knowledgeBackendStatus', () => ({ getKnowledgeBackendStatus: vi.fn(async () => ({ ready: true })) }));
 
-const { default: postService, normalizeCoverImageUrl, getPostFieldsForCapability, isUuidPostIdentifier } = await import('./postService');
+const { default: postService, normalizeCoverImageUrl, getPostFieldsForCapability, isUuidPostIdentifier, mergeBuiltInKnowledge } = await import('./postService');
 
 describe('postService public fallback', () => {
   beforeEach(() => {
-    requireSupabase.mockClear();
+    requireSupabase.mockReset();
+    requireSupabase.mockImplementation(() => { throw new Error('Supabase unavailable'); });
   });
 
   it('maps legacy local jpg covers to shipped webp assets', () => {
@@ -29,6 +31,19 @@ describe('postService public fallback', () => {
 
   it('surfaces a service failure for unknown details that have no local fallback', async () => {
     await expect(postService.getById('live-only-story', 'en')).rejects.toThrow('Supabase unavailable');
+  });
+
+  it('returns built-in verified detail when healthy Supabase has no matching row', async () => {
+    const maybeSingle = vi.fn().mockResolvedValue({ data: null, error: null });
+    const eq = vi.fn(() => ({ maybeSingle }));
+    const select = vi.fn(() => ({ eq }));
+    requireSupabase.mockReturnValueOnce({ from: vi.fn(() => ({ select })) });
+
+    const post = await postService.getById('node-json-dogrulama', 'tr');
+    expect(post.slug).toBe('node-json-dogrulama');
+    expect(post.source).toBe('built-in-verified');
+    expect(post.isFallback).toBe(false);
+    expect(post.autoVerificationId).toBe('node-json-parse-v1');
   });
 
   it('keeps detail, author posts, and stats available offline', async () => {
@@ -59,6 +74,19 @@ describe('Verified Knowledge schema compatibility', () => {
   it('never sends a non-UUID slug to the UUID id lookup path', () => {
     expect(isUuidPostIdentifier('node-json-dogrulama')).toBe(false);
     expect(isUuidPostIdentifier('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa')).toBe(true);
+  });
+
+
+  it('keeps release-owned verified knowledge alongside healthy Supabase posts without duplicate slugs', () => {
+    const remote = [{ id: 'remote-1', slug: 'ai-muhendisligi', title: 'Remote', publishedAt: '2026-08-07T00:00:00Z', source: 'supabase' }];
+    const merged = mergeBuiltInKnowledge(remote, 'tr');
+    expect(merged.some((post) => post.slug === 'node-json-dogrulama' && post.source === 'built-in-verified')).toBe(true);
+    expect(merged.filter((post) => post.slug === 'ai-muhendisligi')).toHaveLength(1);
+  });
+
+  it('applies discovery search to built-in verified knowledge too', () => {
+    expect(mergeBuiltInKnowledge([], 'tr', 'Node.js').map((post) => post.slug)).toEqual(['node-json-dogrulama']);
+    expect(mergeBuiltInKnowledge([], 'tr', 'olmayan terim')).toEqual([]);
   });
 
   it('recognizes additive-schema absence without treating unrelated errors as migration state', async () => {
