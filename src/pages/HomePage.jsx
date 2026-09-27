@@ -359,12 +359,22 @@ const HomePage = ({ isHistoryRestore = false }) => {
         </div>
 
         {displayPosts.length === 0 ? (
-          <div className={styles.noResults}>
+          <div className={styles.noResults} data-home-state="empty" aria-live="polite">
             <FiSearch size={32} />
             <h3>{hasSearch || activeCategory !== 'all' || activeType !== 'all' || readingFilter !== 'all' ? t('common.noResults') : t('home.noContent')}</h3>
             <p>{hasSearch ? `${t('common.noResultsFor')}: “${query}”` : activeCategory !== 'all' ? t('home.noCategoryResults') : activeType !== 'all' ? (i18n.language?.startsWith('en') ? 'No stories match this format yet.' : 'Bu biçimde eşleşen yazı henüz yok.') : readingFilter !== 'all' ? (i18n.language?.startsWith('en') ? 'No quick reads match these filters yet.' : 'Bu filtrelerde kısa okuma bulunamadı.') : t('home.noContentHint')}</p>
-            {hasSearch && <button type="button" disabled={gapSaved || requestGapMutation.isPending} onClick={async () => { try { if (isAuthenticated && knowledgeBackendReady) await requestGapMutation.mutateAsync(query); else addKnowledgeGap(window.localStorage, query); setGapSaved(true); } catch { addKnowledgeGap(window.localStorage, query); setGapSaved(true); } }}>{gapSaved ? (isAuthenticated && knowledgeBackendReady ? (i18n.language?.startsWith('en') ? 'Need recorded' : 'İhtiyaç kaydedildi') : (i18n.language?.startsWith('en') ? 'Need saved on this device' : 'İhtiyaç bu cihaza kaydedildi')) : (i18n.language?.startsWith('en') ? 'I need this solution' : 'Bu çözüme ihtiyacım var')}</button>}
-            {(hasSearch || activeCategory !== 'all' || activeType !== 'all' || readingFilter !== 'all' || freshnessFilter !== 'all') && <button type="button" onClick={() => { setQuery(''); setActiveCategory('all'); setActiveType('all'); setReadingFilter('all'); setFreshnessFilter('all'); setSearchParams({}, { replace: true }); }}>{t('home.clearFilters')}</button>}
+            {(hasSearch || activeCategory !== 'all' || activeType !== 'all' || readingFilter !== 'all' || freshnessFilter !== 'all') && (
+              <div className={styles.noResultsActions}>
+                {hasSearch && (
+                  <button className={styles.needAction} type="button" disabled={gapSaved || requestGapMutation.isPending} onClick={async () => { try { if (isAuthenticated && knowledgeBackendReady) await requestGapMutation.mutateAsync(query); else addKnowledgeGap(window.localStorage, query); setGapSaved(true); } catch { addKnowledgeGap(window.localStorage, query); setGapSaved(true); } }}>
+                    {gapSaved ? (isAuthenticated && knowledgeBackendReady ? (i18n.language?.startsWith('en') ? 'Need recorded' : 'İhtiyaç kaydedildi') : (i18n.language?.startsWith('en') ? 'Need saved on this device' : 'İhtiyaç bu cihaza kaydedildi')) : (i18n.language?.startsWith('en') ? 'I need this solution' : 'Bu çözüme ihtiyacım var')}
+                  </button>
+                )}
+                <button className={styles.resetAction} type="button" onClick={() => { setQuery(''); setActiveCategory('all'); setActiveType('all'); setReadingFilter('all'); setFreshnessFilter('all'); setSearchParams({}, { replace: true }); }}>
+                  {t('home.clearFilters')}
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <EditorialFeed
