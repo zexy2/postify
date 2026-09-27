@@ -262,9 +262,7 @@ export const mergeBuiltInKnowledge = (remotePosts = [], locale = 'tr', search = 
   const builtIns = getBuiltInKnowledgePosts(locale)
     .filter((post) => !existingSlugs.has(post.slug))
     .filter((post) => matchesBuiltInSearch(post, search));
-  return [...remotePosts, ...builtIns].sort((a, b) => (
-    new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime()
-  ));
+  return [...remotePosts, ...builtIns];
 };
 
 const getPostRow = async (identifier) => {
@@ -485,19 +483,17 @@ export const postService = {
       const [postsResult, commentsResult, authorsResult] = await Promise.all([
         client.from('posts').select('id', { count: 'exact', head: true }).eq('is_published', true),
         client.from('comments').select('id', { count: 'exact', head: true }),
-        client.from('posts').select('author_id, slug').eq('is_published', true),
+        client.from('posts').select('author_id').eq('is_published', true),
       ]);
 
       for (const result of [postsResult, commentsResult, authorsResult]) {
         if (result.error) throw result.error;
       }
 
-      const remoteRows = authorsResult.data || [];
-      const builtInCount = getBuiltInKnowledgePosts('tr').filter(({ slug }) => !remoteRows.some((row) => row.slug === slug)).length;
       return {
-        posts: (postsResult.count || 0) + builtInCount,
+        posts: postsResult.count || 0,
         comments: commentsResult.count || 0,
-        authors: new Set(remoteRows.map((row) => row.author_id).filter(Boolean)).size + (builtInCount ? 1 : 0),
+        authors: new Set((authorsResult.data || []).map((row) => row.author_id).filter(Boolean)).size,
       };
     } catch {
       return getFallbackStats();

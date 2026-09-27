@@ -104,11 +104,9 @@ export default function LocalEvidenceActions({ post }) {
             <small>{en ? 'No independent community evidence yet.' : 'Henüz bağımsız topluluk kanıtı yok.'}</small>
           )}
         </div>
-        {!persistent && <small>{isAuthenticated && post.source === 'built-in-verified'
-          ? (en ? 'Built-in verified feedback stays on this device.' : 'Built-in doğrulama geri bildirimi bu cihazda kalır.')
-          : isAuthenticated && !backendReady
-            ? (en ? 'Account sync is waiting for the Verified Knowledge backend upgrade. Your feedback stays on this device meanwhile.' : 'Hesap senkronu Verified Knowledge backend yükseltmesini bekliyor. Bu sırada geri bildirimin bu cihazda kalır.')
-            : (en ? 'Sign in to contribute to community evidence. Anonymous feedback stays only on this device.' : 'Topluluk kanıtına katkı için giriş yap. Girişsiz geri bildirim yalnız bu cihazda kalır.')}</small>}
+        {!persistent && <small>{isAuthenticated
+          ? (en ? 'Feedback stays on this device.' : 'Geri bildirim bu cihazda kalır.')
+          : (en ? 'Sign in to contribute. Anonymous feedback stays on this device.' : 'Katkı için giriş yap. Girişsiz geri bildirim bu cihazda kalır.')}</small>}
       </div>
       <div className="local-evidence-actions__buttons">
         <button
