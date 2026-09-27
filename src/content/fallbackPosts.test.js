@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
   FALLBACK_AUTHOR,
-  getBuiltInKnowledgePost,
   getBuiltInKnowledgePosts,
   getFallbackPost,
   getFallbackPosts,
@@ -28,8 +27,9 @@ describe('fallback public catalogue', () => {
     expect(builtIns[0].slug).toBe('node-json-dogrulama');
     expect(builtIns[0].isFallback).toBe(false);
     expect(builtIns[0].source).toBe('built-in-verified');
-    expect(getBuiltInKnowledgePost('node-json-dogrulama', 'en')?.autoVerificationId).toBe('node-json-parse-v1');
-    expect(getBuiltInKnowledgePost('ai-muhendisligi', 'tr')).toBeNull();
+    const englishBuiltIns = getBuiltInKnowledgePosts('en');
+    expect(englishBuiltIns.find((post) => post.slug === 'node-json-dogrulama')?.autoVerificationId).toBe('node-json-parse-v1');
+    expect(builtIns.find((post) => post.slug === 'ai-muhendisligi')).toBeUndefined();
   });
 
   it('resolves a post by slug and keeps unknown posts absent', () => {

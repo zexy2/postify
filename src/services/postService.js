@@ -10,7 +10,6 @@ import { requireSupabase } from '../lib/supabase';
 import { getKnowledgeBackendStatus } from '../lib/knowledgeBackendStatus';
 import {
   FALLBACK_AUTHOR,
-  getBuiltInKnowledgePost,
   getBuiltInKnowledgePosts,
   getFallbackPost,
   getFallbackPosts,
@@ -225,7 +224,6 @@ const normalizePost = (row, translation, author, commentCount = 0, evidenceSumma
     body: translation?.body || row.body || '',
   }),
   commentCount,
-  isFallback: false,
   source: 'supabase',
 });
 
@@ -251,18 +249,12 @@ const mapRows = async (rows, locale) => {
 
 export const isUuidPostIdentifier = (value) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value));
 
-const matchesBuiltInSearch = (post, search = '') => {
-  const term = search.trim().toLowerCase();
-  return !term || [post.title, post.excerpt, post.body, post.category]
-    .some((value) => value?.toLowerCase().includes(term));
-};
-
 export const mergeBuiltInKnowledge = (remotePosts = [], locale = 'tr', search = '') => {
-  const existingSlugs = new Set(remotePosts.map((post) => post.slug));
-  const builtIns = getBuiltInKnowledgePosts(locale)
-    .filter((post) => !existingSlugs.has(post.slug))
-    .filter((post) => matchesBuiltInSearch(post, search));
-  return [...remotePosts, ...builtIns];
+  const term = search.trim().toLowerCase();
+  return [...remotePosts, ...getBuiltInKnowledgePosts(locale).filter((post) => (
+    !remotePosts.some((item) => item.slug === post.slug)
+    && (!term || JSON.stringify(post).toLowerCase().includes(term))
+  ))];
 };
 
 const getPostRow = async (identifier) => {
@@ -310,7 +302,7 @@ export const postService = {
   getById: async (identifier, locale = 'tr') => {
     try {
       const row = await getPostRow(identifier);
-      if (!row) return getBuiltInKnowledgePost(identifier, locale);
+      if (!row) return getBuiltInKnowledgePosts(locale).find((post) => post.slug === identifier || post.id === identifier) || null;
       const [post] = await mapRows([row], locale);
       return post;
     } catch (error) {

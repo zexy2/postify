@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import postService from '../services/postService';
-import { getBuiltInKnowledgePost, getFallbackPost, getFallbackPosts } from '../content/fallbackPosts';
+import { getFallbackPost, getFallbackPosts } from '../content/fallbackPosts';
 
 export const postKeys = {
   all: ['posts'],
@@ -63,14 +63,15 @@ export function usePost(identifier) {
     enabled: Boolean(identifier),
     staleTime: 1000 * 60 * 5,
     retry: 1,
-    initialData: () => getBuiltInKnowledgePost(identifier, locale) || getFallbackPost(identifier, locale) || undefined,
+    initialData: () => getFallbackPost(identifier, locale) || undefined,
     initialDataUpdatedAt: 0,
   });
 
+  const remoteBacked = postQuery.data?.source === 'supabase';
   const commentsQuery = useQuery({
     queryKey: [...postKeys.detail(identifier, locale), 'comments'],
     queryFn: () => postService.getComments(postQuery.data.id),
-    enabled: Boolean(postQuery.data?.id) && postQuery.data?.source === 'supabase',
+    enabled: Boolean(postQuery.data?.id) && remoteBacked,
     staleTime: 1000 * 60 * 2,
     retry: 0,
   });
@@ -82,7 +83,7 @@ export function usePost(identifier) {
     isLoading: postQuery.isLoading,
     isError: postQuery.isError,
     error: postQuery.error,
-    commentsUnavailable: postQuery.data?.source !== 'supabase' || commentsQuery.isError,
+    commentsUnavailable: !remoteBacked || commentsQuery.isError,
     refetch: async () => {
       const postResult = await postQuery.refetch();
       if (postResult.data?.source !== 'supabase') return [postResult];

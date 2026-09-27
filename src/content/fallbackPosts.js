@@ -426,24 +426,9 @@ const localize = (post, locale) => {
 };
 
 
-const isBuiltInKnowledgeRecord = (post) => post.autoVerificationId;
-
-const asBuiltInKnowledge = (post) => ({
-  ...post,
-  isFallback: false,
-  source: 'built-in-verified',
-});
-
-export const getBuiltInKnowledgePosts = (locale = 'tr') => (
-  FALLBACK_CATALOG
-    .filter(isBuiltInKnowledgeRecord)
-    .map((post) => asBuiltInKnowledge(localize(post, locale)))
-);
-
-export const getBuiltInKnowledgePost = (identifier, locale = 'tr') => {
-  const post = FALLBACK_CATALOG.find((item) => isBuiltInKnowledgeRecord(item) && (item.slug === identifier || item.id === identifier));
-  return post ? asBuiltInKnowledge(localize(post, locale)) : null;
-};
+export const getBuiltInKnowledgePosts = (locale = 'tr') => FALLBACK_CATALOG
+  .filter((post) => post.autoVerificationId)
+  .map((post) => ({ ...localize(post, locale), isFallback: false, source: 'built-in-verified' }));
 
 export const getFallbackPosts = (locale = 'tr') => FALLBACK_CATALOG.map((post) => localize(post, locale));
 
