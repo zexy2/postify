@@ -10,6 +10,7 @@ import { requireSupabase } from '../lib/supabase';
 import { getKnowledgeBackendStatus } from '../lib/knowledgeBackendStatus';
 import {
   FALLBACK_AUTHOR,
+  getBuiltInKnowledgePosts,
   getFallbackPost,
   getFallbackPosts,
   getFallbackStats,
@@ -223,6 +224,7 @@ const normalizePost = (row, translation, author, commentCount = 0, evidenceSumma
     body: translation?.body || row.body || '',
   }),
   commentCount,
+  source: 'supabase',
 });
 
 const mapRows = async (rows, locale) => {
@@ -246,6 +248,14 @@ const mapRows = async (rows, locale) => {
 };
 
 export const isUuidPostIdentifier = (value) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value));
+
+export const mergeBuiltInKnowledge = (remotePosts = [], locale = 'tr', search = '') => {
+  const term = search.trim().toLowerCase();
+  return [...remotePosts, ...getBuiltInKnowledgePosts(locale).filter((post) => (
+    !remotePosts.some((item) => item.slug === post.slug)
+    && (!term || JSON.stringify(post).toLowerCase().includes(term))
+  ))];
+};
 
 const getPostRow = async (identifier) => {
   const client = requireSupabase();
@@ -280,7 +290,8 @@ export const postService = {
 
       const { data, error } = await runCompatiblePostQuery(runQuery);
       if (error) throw error;
-      return mapRows(data || [], locale);
+      const remotePosts = await mapRows(data || [], locale);
+      return mergeBuiltInKnowledge(remotePosts, locale, search);
     } catch {
       // Public reading must not become a blank page when Supabase is asleep.
       // Mutations below intentionally remain Supabase-only.
@@ -291,7 +302,7 @@ export const postService = {
   getById: async (identifier, locale = 'tr') => {
     try {
       const row = await getPostRow(identifier);
-      if (!row) return null;
+      if (!row) return getBuiltInKnowledgePosts(locale).find((post) => post.slug === identifier || post.id === identifier) || null;
       const [post] = await mapRows([row], locale);
       return post;
     } catch (error) {

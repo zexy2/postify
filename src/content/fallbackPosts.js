@@ -425,6 +425,11 @@ const localize = (post, locale) => {
   };
 };
 
+
+export const getBuiltInKnowledgePosts = (locale = 'tr') => FALLBACK_CATALOG
+  .filter((post) => post.autoVerificationId)
+  .map((post) => ({ ...localize(post, locale), isFallback: false, source: 'built-in-verified' }));
+
 export const getFallbackPosts = (locale = 'tr') => FALLBACK_CATALOG.map((post) => localize(post, locale));
 
 export const getFallbackPost = (identifier, locale = 'tr') => {

@@ -23,7 +23,8 @@ export default function LocalEvidenceActions({ post }) {
   const { isAuthenticated } = useSelector((state) => state.user);
   const backendStatus = useKnowledgeBackendStatus();
   const backendReady = backendStatus.data?.ready === true;
-  const persistent = isAuthenticated && !post.isFallback && backendReady;
+  const remoteBacked = post.source === 'supabase';
+  const persistent = isAuthenticated && remoteBacked && backendReady;
   const storage = typeof window === 'undefined' ? null : window.localStorage;
   const [localFeedback, setLocalFeedbackState] = useState(() => storage ? getLocalFeedback(storage, post.id) : null);
   const [localShelf, setLocalShelfState] = useState(() => storage ? getShelfState(storage, post.id) : null);
@@ -33,7 +34,7 @@ export default function LocalEvidenceActions({ post }) {
   const [environmentDraft, setEnvironmentDraft] = useState('');
   const [noteDraft, setNoteDraft] = useState('');
 
-  const summaryQuery = useEvidenceSummary(post.id, { enabled: !post.isFallback });
+  const summaryQuery = useEvidenceSummary(post.id, { enabled: remoteBacked });
   const mineQuery = useMyConfirmation(post.id, { enabled: persistent });
   const confirmationMutation = useSetConfirmation(post.id);
   const shelfQuery = useShelf({ enabled: persistent });
@@ -92,7 +93,7 @@ export default function LocalEvidenceActions({ post }) {
       <div className="local-evidence-actions__summary">
         <div>
           <span>{en ? 'Does this work in the real world?' : 'Gerçek ortamda çalışıyor mu?'}</span>
-          {!post.isFallback && summary.total > 0 ? (
+          {remoteBacked && summary.total > 0 ? (
             <small>
               {summary.canShowRate
                 ? (en ? `${summary.successRate}% success from ${summary.total} confirmations` : `${summary.total} doğrulamada %${summary.successRate} başarı`)
@@ -103,9 +104,9 @@ export default function LocalEvidenceActions({ post }) {
             <small>{en ? 'No independent community evidence yet.' : 'Henüz bağımsız topluluk kanıtı yok.'}</small>
           )}
         </div>
-        {!persistent && <small>{isAuthenticated && !backendReady
-          ? (en ? 'Account sync is waiting for the Verified Knowledge backend upgrade. Your feedback stays on this device meanwhile.' : 'Hesap senkronu Verified Knowledge backend yükseltmesini bekliyor. Bu sırada geri bildirimin bu cihazda kalır.')
-          : (en ? 'Sign in to contribute to community evidence. Anonymous feedback stays only on this device.' : 'Topluluk kanıtına katkı için giriş yap. Girişsiz geri bildirim yalnız bu cihazda kalır.')}</small>}
+        {!persistent && <small>{isAuthenticated
+          ? (en ? 'Feedback stays on this device.' : 'Geri bildirim bu cihazda kalır.')
+          : (en ? 'Sign in to contribute. Anonymous feedback stays on this device.' : 'Katkı için giriş yap. Girişsiz geri bildirim bu cihazda kalır.')}</small>}
       </div>
       <div className="local-evidence-actions__buttons">
         <button

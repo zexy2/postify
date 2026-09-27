@@ -67,10 +67,11 @@ export function usePost(identifier) {
     initialDataUpdatedAt: 0,
   });
 
+  const remoteBacked = postQuery.data?.source === 'supabase';
   const commentsQuery = useQuery({
     queryKey: [...postKeys.detail(identifier, locale), 'comments'],
     queryFn: () => postService.getComments(postQuery.data.id),
-    enabled: Boolean(postQuery.data?.id) && !postQuery.data?.isFallback,
+    enabled: Boolean(postQuery.data?.id) && remoteBacked,
     staleTime: 1000 * 60 * 2,
     retry: 0,
   });
@@ -82,10 +83,10 @@ export function usePost(identifier) {
     isLoading: postQuery.isLoading,
     isError: postQuery.isError,
     error: postQuery.error,
-    commentsUnavailable: Boolean(postQuery.data?.isFallback) || commentsQuery.isError,
+    commentsUnavailable: !remoteBacked || commentsQuery.isError,
     refetch: async () => {
       const postResult = await postQuery.refetch();
-      if (postResult.data?.isFallback) return [postResult];
+      if (postResult.data?.source !== 'supabase') return [postResult];
       return Promise.all([postResult, commentsQuery.refetch()]);
     },
   };
