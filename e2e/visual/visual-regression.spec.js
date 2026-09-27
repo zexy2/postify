@@ -264,6 +264,19 @@ test('Mobile command palette open baseline', async ({ page }) => {
 });
 
 for (const viewport of viewports) {
+  test(`Home no-results ${viewport.name} baseline`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await stabilize(page, { theme: viewport.name === 'mobile' ? 'dark' : 'light', locale: 'en' });
+    await page.goto('/');
+    await page.getByRole('searchbox').fill('zzzz-no-such-home-result');
+    const emptyState = page.locator('[data-home-state="empty"]');
+    await expect(emptyState).toBeVisible();
+    await settleVisualSurface(page);
+    await expect(emptyState).toHaveScreenshot(`home-no-results-${viewport.name}.png`);
+  });
+}
+
+for (const viewport of viewports) {
   test(`Discovery filter popover ${viewport.name} baseline`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     await stabilize(page, { theme: 'dark', locale: 'tr' });
