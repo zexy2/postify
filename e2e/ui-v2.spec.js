@@ -1083,7 +1083,27 @@ test.describe('Verified Knowledge V1', () => {
     await page.goto('/');
     const search = page.getByRole('searchbox');
     await search.fill('zzzz-no-such-verified-solution');
-    await expect(page.getByRole('button', { name: /bu çözüme ihtiyacım var|i need this solution/i })).toBeVisible();
+
+    const emptyState = page.locator('[data-home-state="empty"]');
+    const needAction = emptyState.getByRole('button', { name: /bu çözüme ihtiyacım var|i need this solution/i });
+    const clearAction = emptyState.getByRole('button', { name: /filtreleri temizle|clear filters/i });
+    await expect(emptyState).toBeVisible();
+    await expect(needAction).toBeVisible();
+    await expect(clearAction).toBeVisible();
+
+    for (const action of [needAction, clearAction]) {
+      const box = await action.boundingBox();
+      expect(box?.height || 0).toBeGreaterThanOrEqual(44);
+    }
+
+    await needAction.click();
+    const savedNeedAction = emptyState.getByRole('button', { name: /ihtiyaç bu cihaza kaydedildi|need saved on this device|ihtiyaç kaydedildi|need recorded/i });
+    await expect(savedNeedAction).toBeDisabled();
+
+    await clearAction.click();
+    await expect(search).toHaveValue('');
+    await expect(emptyState).toHaveCount(0);
+    await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible();
   });
 });
 
