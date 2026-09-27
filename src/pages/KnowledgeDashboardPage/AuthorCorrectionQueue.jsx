@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiCheck, FiEdit3, FiX } from 'react-icons/fi';
-import { useResolveCorrection } from '../../hooks/useKnowledge';
+import { useResolveCorrection } from '../../hooks/useCorrections';
 import styles from './KnowledgeDashboardPage.module.css';
 
 const safeHttp = (value) => { try { const url=new URL(value); return ['http:','https:'].includes(url.protocol) ? url : null; } catch { return null; } };

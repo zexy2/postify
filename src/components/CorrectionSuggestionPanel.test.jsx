@@ -4,12 +4,13 @@ import { screen } from '@testing-library/react';
 import { render } from '../test/utils';
 import CorrectionSuggestionPanel from './CorrectionSuggestionPanel';
 import { useAuth } from '../hooks/useAuth';
-import { useCorrections, useKnowledgeBackendStatus, useSubmitCorrection, useWithdrawCorrection } from '../hooks/useKnowledge';
+import { useKnowledgeBackendStatus } from '../hooks/useKnowledge';
+import { useCorrections, useSubmitCorrection, useWithdrawCorrection } from '../hooks/useCorrections';
 
 vi.mock('../hooks/useAuth', () => ({ useAuth: vi.fn() }));
-vi.mock('../hooks/useKnowledge', () => ({
+vi.mock('../hooks/useKnowledge', () => ({ useKnowledgeBackendStatus: vi.fn() }));
+vi.mock('../hooks/useCorrections', () => ({
   useCorrections: vi.fn(),
-  useKnowledgeBackendStatus: vi.fn(),
   useSubmitCorrection: vi.fn(),
   useWithdrawCorrection: vi.fn(),
 }));

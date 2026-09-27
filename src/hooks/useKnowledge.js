@@ -11,7 +11,6 @@ export const knowledgeKeys = {
   failures: (id) => ['knowledge', 'failures', id],
   authorFailures: (id) => ['knowledge', 'author-failures', id],
   revisions: (id) => ['knowledge', 'revisions', id],
-  corrections: (id) => ['knowledge', 'corrections', id],
   shelf: ['knowledge', 'shelf'],
   gaps: ['knowledge', 'gaps'],
   dashboard: ['knowledge', 'dashboard'],
@@ -27,7 +26,6 @@ export function useKnowledgeBackendStatus() {
 }
 
 const useBackendReady = () => useKnowledgeBackendStatus().data?.ready === true;
-const useCorrectionsReady = () => { const status=useKnowledgeBackendStatus().data; return status?.ready === true && status?.features?.corrections === true; };
 const pendingError = () => Object.assign(new Error('Verified Knowledge backend upgrade is pending.'), { code: 'KNOWLEDGE_SCHEMA_PENDING' });
 
 export function useEvidenceSummary(postId, { enabled = true } = {}) {
@@ -49,25 +47,6 @@ export function useAuthorFailureDetails(postId, { enabled = true } = {}) {
 export function useRevisions(postId, { enabled = true } = {}) {
   const ready = useBackendReady();
   return useQuery({ queryKey: knowledgeKeys.revisions(postId), queryFn: async () => (await loadKnowledgeService()).getRevisions(postId), enabled: Boolean(postId) && enabled && ready, staleTime: 60_000, retry: 0 });
-}
-export function useCorrections(postId, { enabled = true } = {}) {
-  const ready = useCorrectionsReady();
-  return useQuery({ queryKey: knowledgeKeys.corrections(postId), queryFn: async () => (await loadKnowledgeService()).getCorrections(postId), enabled: Boolean(postId) && enabled && ready, staleTime: 30_000, retry: 0 });
-}
-export function useSubmitCorrection(postId) {
-  const ready = useCorrectionsReady();
-  const qc = useQueryClient();
-  return useMutation({ mutationFn: async (payload) => ready ? (await loadKnowledgeService()).submitCorrection(postId,payload) : Promise.reject(pendingError()), onSuccess: () => { qc.invalidateQueries({queryKey:knowledgeKeys.corrections(postId)}); qc.invalidateQueries({queryKey:knowledgeKeys.dashboard}); } });
-}
-export function useWithdrawCorrection(postId) {
-  const ready = useCorrectionsReady();
-  const qc = useQueryClient();
-  return useMutation({ mutationFn: async (suggestionId) => ready ? (await loadKnowledgeService()).withdrawCorrection(suggestionId) : Promise.reject(pendingError()), onSuccess: () => { qc.invalidateQueries({queryKey:knowledgeKeys.corrections(postId)}); qc.invalidateQueries({queryKey:knowledgeKeys.dashboard}); } });
-}
-export function useResolveCorrection() {
-  const ready = useCorrectionsReady();
-  const qc = useQueryClient();
-  return useMutation({ mutationFn: async ({suggestionId,decision,note=''}) => ready ? (await loadKnowledgeService()).resolveCorrection(suggestionId,decision,note) : Promise.reject(pendingError()), onSuccess: () => qc.invalidateQueries({queryKey:knowledgeKeys.dashboard}) });
 }
 export function useSetConfirmation(postId) {
   const ready = useBackendReady();

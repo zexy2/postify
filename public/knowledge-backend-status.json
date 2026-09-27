@@ -1,6 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "ready": false,
   "mode": "build-default",
+  "features": {
+    "evidence": false,
+    "corrections": false
+  },
   "reason": "Production capability is determined during deployment."
 }

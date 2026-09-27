@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiAlertCircle, FiCheck, FiEdit3, FiX } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
-import { useCorrections, useKnowledgeBackendStatus, useSubmitCorrection, useWithdrawCorrection } from '../hooks/useKnowledge';
+import { useKnowledgeBackendStatus } from '../hooks/useKnowledge';
+import { useCorrections, useSubmitCorrection, useWithdrawCorrection } from '../hooks/useCorrections';
 import styles from './CorrectionSuggestionPanel.module.css';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
