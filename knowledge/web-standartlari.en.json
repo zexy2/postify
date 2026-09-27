@@ -1,37 +1,36 @@
 {
   "schemaVersion": 1,
-  "id": "505ec663-48ae-4af4-bbc3-d98383940b89",
+  "id": "fallback-web-standartlari",
   "slug": "web-standartlari",
   "locale": "en",
-  "title": "Choosing the web platform matters more than choosing a framework",
-  "outcome": "Semantic HTML, accessibility, and browser capabilities extend a product’s life; the framework comes after that.",
-  "body": "The cheapest way to improve an interface is not to add more packages. Start with semantic HTML, correct form controls, native navigation, and capabilities the browser already provides. A framework is valuable when it makes this contract sustainable. It creates debt when it replaces the platform.",
+  "title": "Web standards come before speed",
+  "outcome": "Accessible HTML and predictable browser behavior are the cheapest foundation for performance.",
   "contentType": null,
-  "category": "Web",
-  "publishedAt": "2026-08-07T11:14:10.230392+00:00",
-  "updatedAt": "2026-08-07T11:14:10.230392+00:00",
-  "author": null,
+  "category": "Web geliştirme",
+  "publishedAt": "2026-08-06T00:00:00.000Z",
+  "updatedAt": "2026-08-06T00:00:00.000Z",
   "evidence": {
-    "level": "unverified",
-    "testedAt": null,
+    "level": "author-tested",
+    "testedAt": "2026-08-28T00:00:00.000Z",
     "staleAfterDays": 180,
-    "environment": [],
-    "prerequisites": [],
-    "verificationSteps": [],
+    "environment": [
+      "Web standartları kontrol listesi"
+    ],
+    "prerequisites": [
+      "Semantik HTML",
+      "Klavye erişimi",
+      "Görünür focus"
+    ],
+    "verificationSteps": [
+      "Kritik akışı yalnızca klavyeyle tamamla",
+      "Başlık hiyerarşisini ve form etiketlerini kontrol et"
+    ],
     "caveats": [],
     "sources": [],
-    "version": 1,
-    "community": {
-      "post_id": "505ec663-48ae-4af4-bbc3-d98383940b89",
-      "confirmation_count": 0,
-      "worked_count": 0,
-      "failed_count": 0,
-      "environment_count": 0,
-      "last_community_check_at": null
-    },
     "automaticVerification": null,
     "runtimeReleaseSignal": null
   },
+  "body": "Making a modern interface fast is not only about shrinking the bundle. The browser should understand the page, keyboard users should be able to operate it, and the interface should retain its meaning on a poor connection.\n\nSemantic HTML, form labels, visible focus, and a clear heading hierarchy are often treated as cleanup work. They should be designed as early as the component API.\n\nStandards reduce surprises. That pays off in performance, testing, and the cost of maintaining the product over time.",
   "canonicalUrl": "https://postify.zekiakgul.dev/posts/web-standartlari",
   "canonicalSourceUrl": null
 }
