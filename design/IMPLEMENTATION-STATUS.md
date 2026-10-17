@@ -173,3 +173,16 @@ User said “Devam”; source implementation/tests authorized, not GitHub push o
 - Validation executed: ESLint PASS, Vitest 164/164 (43 files) PASS, production build PASS, build smoke 11 critical artifacts PASS, entry 309650 bytes below unchanged 320000 byte guard, npm verify:security PASS zero known advisories, Playwright Chromium E2E 58/58 PASS (job-be6d596b2287).
 - Two alternating mobile Lighthouse 13.5 lab rounds: baseline 49 and 52 performance vs candidate 48 and 59. LCP 5201 and 5131ms baseline vs 5414 and 4690ms candidate. Lighthouse LCP image discoverability changed false to true in both candidate runs. A11y, SEO, best practices 100 and CLS0 each run. Total performance score change is NOISY, not an established win; performance QA gate remains OPEN.
 - Evidence: /tmp/postify-preload-lh-baseline-1.json and -2.json, /tmp/postify-preload-lh-candidate-1.json and -2.json; isolated test logs/job. Manual WCAG 2.2 AA, true 200/400% zoom, safe authenticated editor/admin/knowledge operations and field CWV p75 remain unverified. No remote push/deployment.
+
+
+## 2026-10-17 — Scroll anchor geometry performance milestone
+
+**User authorization:** isolated source/tests only, not push or deployment.
+
+- Previous fallback/home useScrollAnchorTransition hook measured #knowledge-feed with getBoundingClientRect every animation frame. Real 390px Chromium counter: 106 calls in 1.75s idle and 48 calls in 0.8s after scroll, potentially indefinitely offline.
+- ResizeObserver now watches document body, feed, parent and prior sibling editorial sections. Layout/scroll/resize/font events coalesce measurement into one scheduled frame. Geometry reads are skipped if scrollY<=1. Browsers without ResizeObserver retain the old frame-polling compatibility path. Existing useLayoutEffect scroll adjustment behavior preserved.
+- New 390px Chromium benchmark: 0 reads during 1.75s idle and 1 during 0.8s after scroll. Feed remained visible.
+- New unit test covers ResizeObserver, no perpetual scheduling, cleanup and preserved -73.125px scroll delta. A test-only shared non-constructable ResizeObserver mock issue was fixed. 3/3 targeted unit tests passed.
+- Full verification: ESLint PASS, Vitest 165/165 across43 files PASS, Vite/PWA build PASS, 11-artifact smoke with 310440-byte entry under existing 320000-byte budget PASS, npm verify:security 0 advisories PASS, Chromium 58/58 Playwright E2E PASS job-bb1ae83f31c1.
+- Lighthouse 13.5 mobile alternating A/B two passes: baseline performance60/59 vs candidate60/60, baseline LCP4678/4691ms vs candidate4665/4680ms, baseline TBT570/576ms vs candidate569/560ms, baseline style/layout1453/1445ms vs candidate1437/1432ms. Accessibility/SEO/best-practices all 100. Tiny deltas do NOT establish significant Lighthouse improvement. JSON saved at /tmp/postify-observer-lh-{baseline,candidate}-{1,2}.json.
+- Still outstanding: real authenticated admin/editor/knowledge flows, manual WCAG 2.2 AA with true zoom and assistive technology, field p75 CWV, higher mobile performance target, final design review. No remote push or deployment; keep final QA phase running.

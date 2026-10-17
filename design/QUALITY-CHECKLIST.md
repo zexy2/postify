@@ -109,3 +109,11 @@
 - [x] Lighthouse LCP request discoverability false to true in both candidate mobile rounds.
 - [ ] Lighthouse performance unchanged as a reliable conclusion: baseline 49/52 versus candidate 48/59 is noisy. Mobile performance release gate remains OPEN.
 - [ ] Genuine signed-in workflows, manual WCAG 2.2 AA, real zoom and field CWV remain pending; push/deployment need separate user approval.
+
+
+## 2026-10-17 — Fallback anchor layout polling reduction
+
+- [x] 390px Chromium anchor geometry measurements: idle1.75s 106 to 0, scroll0.8s 48 to1 using ResizeObserver.
+- [x] 165 Vitest, 58 E2E, lint/build/smoke/security PASS; scroll restoration and legacy fallback unit tests preserved.
+- [x] Lighthouse mobile A/B baseline60/59 versus candidate60/60; small delta, performance gate still OPEN.
+- [ ] Field performance, manual WCAG, real protected workflows, final visual acceptance, and explicit remote push/deployment approvals still pending.

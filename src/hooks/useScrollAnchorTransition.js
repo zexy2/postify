@@ -7,13 +7,12 @@ const readAbsoluteTop = (selector) => {
 };
 
 /**
- * Preserve a viewport anchor when a temporary layout state is replaced.
- *
- * While `active` is true we keep the latest absolute position on every frame,
- * so font/image/layout settling cannot leave a stale pre-transition reference.
- * When `active` turns false, any resulting layout delta is compensated before
- * paint as long as the reader has already scrolled into the document.
+ * Keep a reader's position as cached articles are replaced by live content.
+ * Observe actual layout changes instead of reading geometry on every frame
+ * throughout a potentially indefinite offline/fallback session.
+ * Browsers without ResizeObserver retain the original polling fallback.
  */
+
 export function useScrollAnchorTransition({ active, selector }) {
   const anchorRef = useRef({ active, absoluteTop: null });
 
@@ -36,12 +35,57 @@ export function useScrollAnchorTransition({ active, selector }) {
     if (!active) return undefined;
 
     let frame = 0;
-    const track = () => {
+    const measure = () => {
+      // No need to preserve the viewport when the reader is at the top.
+      if (window.scrollY <= 1) return;
       const absoluteTop = readAbsoluteTop(selector);
       if (absoluteTop !== null) anchorRef.current = { active: true, absoluteTop };
-      frame = window.requestAnimationFrame(track);
     };
 
+    if (typeof ResizeObserver === 'function') {
+      const anchor = document.querySelector(selector);
+      const observer = new ResizeObserver(() => {
+        window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(measure);
+      });
+      const seen = new Set();
+      const watch = (node) => {
+        if (node && !seen.has(node)) {
+          observer.observe(node);
+          seen.add(node);
+        }
+      };
+      watch(document.body);
+      watch(anchor?.parentElement);
+      watch(anchor);
+      // Resizing a prior sibling moves the feed even if the feed itself
+      // remains unchanged: observe all preceding editorial sections.
+      for (let sibling = anchor?.previousElementSibling; sibling; sibling = sibling.previousElementSibling) {
+        watch(sibling);
+      }
+      measure();
+
+      const onScroll = () => {
+        window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(measure);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      document.fonts?.addEventListener?.('loadingdone', onScroll);
+      return () => {
+        observer.disconnect();
+        window.cancelAnimationFrame(frame);
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+        document.fonts?.removeEventListener?.('loadingdone', onScroll);
+      };
+    }
+
+    // Older browsers preserve the original requestAnimationFrame behavior.
+    const track = () => {
+      measure();
+      frame = window.requestAnimationFrame(track);
+    };
     track();
     return () => window.cancelAnimationFrame(frame);
   }, [active, selector]);

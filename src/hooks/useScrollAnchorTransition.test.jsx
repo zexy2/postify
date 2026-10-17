@@ -13,6 +13,9 @@ describe('useScrollAnchorTransition', () => {
   let rectSpy;
 
   beforeEach(() => {
+    // The shared test setup provides a non-constructable observer stub.
+    // The legacy fallback scenarios explicitly run without ResizeObserver.
+    vi.stubGlobal('ResizeObserver', undefined);
     top = 452.5;
     nextFrame = null;
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 700 });
@@ -37,6 +40,7 @@ describe('useScrollAnchorTransition', () => {
 
   afterEach(() => {
     rectSpy?.mockRestore();
+    vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
 
@@ -63,5 +67,45 @@ describe('useScrollAnchorTransition', () => {
     top = 350;
     rerender(<Harness active={false} />);
     expect(window.scrollBy).not.toHaveBeenCalled();
+  });
+
+  it('observes layout changes without an infinite animation-frame polling loop', () => {
+    let notifyResize;
+    const disconnect = vi.fn();
+    const observe = vi.fn();
+    class ResizeObserverMock {
+      constructor(callback) { notifyResize = callback; }
+      observe(node) { observe(node); }
+      disconnect() { disconnect(); }
+    }
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
+
+    const { rerender, unmount } = render(<Harness active />);
+    const initialReads = rectSpy.mock.calls.length;
+    // Initial layout at scrollY=0 should not start measuring every frame.
+    expect(window.requestAnimationFrame).not.toHaveBeenCalled();
+    expect(observe).toHaveBeenCalled();
+    expect(rectSpy.mock.calls.length).toBe(initialReads);
+
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 700 });
+    top = 500;
+    act(() => {
+      window.dispatchEvent(new Event('scroll'));
+      nextFrame?.();
+    });
+    expect(rectSpy.mock.calls.length).toBe(initialReads + 1);
+    // Layout changes are coalesced into one scheduled measurement.
+    top = 510;
+    act(() => { notifyResize(); });
+    expect(window.requestAnimationFrame).toHaveBeenCalledTimes(2);
+    act(() => { nextFrame?.(); });
+    expect(rectSpy.mock.calls.length).toBe(initialReads + 2);
+
+    top = 436.875;
+    rerender(<Harness active={false} />);
+    expect(window.scrollBy).toHaveBeenCalledWith({ top: -73.125, left: 0, behavior: 'auto' });
+    expect(disconnect).toHaveBeenCalledTimes(1);
+    unmount();
   });
 });
