@@ -249,3 +249,9 @@ On the profile task screen, a file input hidden inside a label with no focusable
 Final independent Node24 job QA: Vitest 189/189 in 44 files, Chromium Playwright E2E60/60, ESLint zero errors/warnings, PWA build PASS, 11 asset smoke PASS (311319/320000 entry bytes), npm security audit 0 known vulnerable dependencies. Structured reports in Oracle phase4.
 
 A separate unresolved data ownership problem was also reproduced (no code migration): device-persisted Redux bookmarks remain visible to account B after saving under A, logging out and switching to B. Needs explicit migration/privacy design to avoid losing or misattributing existing local bookmarks before final QA signoff. No pushed code/deployment.
+
+## 2026-10-18 — Bookmark ownership migration implemented locally
+
+Implemented owner-scoped Redux bookmark shelves with a fail-closed identity selector, anonymous guest shelf, and old-owner closure invalidation. Redux-Persist root version 2 migrates unowned version-1 IDs and cached posts into an untouched legacy archive; there is no automatic attribution to whichever user logs in first. Protected BookmarksPage offers keyboard-accessible explicit acknowledgement followed by an import control. Verified account import merges historical records without overwriting the owner's current cached metadata. No-account/guest cannot claim; consent resets on account change. `design/BOOKMARK-ACCOUNT-MIGRATION.md` defines the user-approved behavior and the local-only privacy limitations.
+
+Migration was tested with a real redux-persist serialized v1 hydration, reducer/hook identity transitions, stable archived data, UI consent and a 2-viewport Chromium browser fixture. The currently saved visual baseline screenshots for bookmarks differ from the latest design and must be evaluated separately; no baseline overwrites. Application code, test fixtures, and documents only in isolated worktree; no production localStorage migration, push or deployment.

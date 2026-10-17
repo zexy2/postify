@@ -48,8 +48,7 @@ const store = configureStore({
     },
     bookmarks: {
       ...baseBookmarks,
-      items: [bookmarkedPost.id],
-      posts: { [bookmarkedPost.id]: bookmarkedPost },
+      accounts: { [userId]: { items: [bookmarkedPost.id], posts: { [bookmarkedPost.id]: bookmarkedPost } } },
     },
     ui: { ...baseUi, theme: localStorage.getItem('postify_theme') || 'light' },
   },

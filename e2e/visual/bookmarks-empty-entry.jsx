@@ -12,7 +12,7 @@ import '../../src/index.css';
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 const store = configureStore({
   reducer: { bookmarks: bookmarksReducer },
-  preloadedState: { bookmarks: { items: [], posts: {} } },
+  preloadedState: { bookmarks: bookmarksReducer(undefined, { type: '@@visual/initial' }) },
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(

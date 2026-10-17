@@ -7,6 +7,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
+  createMigrate,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -19,6 +20,7 @@ import storage from 'redux-persist/lib/storage';
 import uiReducer from './slices/uiSlice';
 import postsReducer from './slices/postsSlice';
 import bookmarksReducer from './slices/bookmarksSlice';
+import { migrateBookmarksV2 } from './bookmarkMigration';
 import userReducer from './slices/userSlice';
 import aiReducer from '../features/ai-assistant/store/aiSlice';
 
@@ -34,7 +36,8 @@ const rootReducer = combineReducers({
 // Persist configuration
 const persistConfig = {
   key: 'postify_root',
-  version: 1,
+  version: 2,
+  migrate: createMigrate({ 2: migrateBookmarksV2 }, { debug: false }),
   storage,
   whitelist: ['ui', 'bookmarks'], // Only persist these reducers
   blacklist: ['posts'], // Don't persist posts (fetched from API)
