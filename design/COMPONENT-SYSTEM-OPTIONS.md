@@ -1,7 +1,7 @@
 # Postify — Aşama 6 / Component Design System Karşılaştırması
 
 **Tarih:** 2026-10-17
-**Durum:** **C-01 / C-02 / C-03 bileşen tasarım alternatifleri hazır; kullanıcı Aşama 6 onayı BEKLENİYOR.**
+**Durum:** **C-02 Inked Folio kullanıcı tarafından ONAYLANDI** (CD-006); diğer alternatifler karşılaştırma geçmişidir. G-02 özel layout istisnası değişmedi.
 **Onaylı önceki kararlar:**
 - CD-001 A+B yaşayan saha rehberi + bağımsız dijital dergi.
 - CD-002 MOOD-02 ana editoryal ifade + MOOD-01 kanıt, okunabilirlik ve kullanılabilirlik; MOOD-03 sadece içerikle gerekçelendirilen teknik görseller.
@@ -127,3 +127,8 @@ Kart hover, button transition, toast motion, drawer reveal, responsive scroll ve
 ## 6. Stage 6 kullanıcı karar kapısı
 
 Kullanıcı **C-01 / C-02 / C-03 / belirlenmiş hibrit** seçeneklerinden birini onaylamalı. Bu kararda seçilen kart/navigasyon/kanıt/form/durum grameri `DESIGN-DECISIONS.md` ve `DESIGN-SYSTEM.md` içine açıkça işlenir. **Aşama 7 Homepage Design** ancak Aşama 6 kullanıcı onayından sonra başlar. Tasarım sisteminin bu aşamada seçilmesi bile JSX/CSS kodlama izni değildir. Aşama 9 hareket ve Aşama 10 responsive/a11y testleri ayrıca onay kapılarıdır.
+
+
+## 7. Kullanıcı onayı — CD-006
+
+2026-10-17: **C-02 Inked Folio** açıkça seçildi. **CD-005 G-01 ana grid / yalnızca öne çıkan editoryal yayın dosyalarında G-02** kısıtı ayrıca teyit edildi. C-02'nin tüm kartları zorunlu ağır çerçeveye hapsetmesi, admin/knowledge tablolarına geniş dergi kapakları getirmesi veya gerçek doğrulama mantığını değiştirmesi onaylı değildir. Artık yalnızca Aşama 7 Homepage Design seçenekleri hazırlanır; uygulama kodu değiştirilmez.

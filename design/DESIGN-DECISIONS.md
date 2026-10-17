@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 6 / Component Design System — **alternatif tasarım sistemleri araştırılıyor; Aşama 6 kullanıcı onayı henüz yok**.
-**Sonraki aşama:** 7 / Homepage Design — **Aşama 6 onayı olmadan başlamayacak**.
+**Aktif aşama:** 7 / Homepage Design — **ana sayfa alternatifleri hazırlanıyor; Aşama 7 kullanıcı onayı henüz yok**.
+**Sonraki aşama:** 8 / Inner Pages & Editorial Experience — **Aşama 7 onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -28,8 +28,8 @@
 | 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
 | 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
 | 5 Grid, Layout & Spacing | **ONAYLANDI** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | **G-01 ana sistem + G-02 yalnızca öne çıkan editoryal yayın dosyalarında** | 2026-10-17 |
-| 6 Component Design System | **Üç alternatif sunuldu; onay bekliyor** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | — | 2026-10-17 |
-| 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
+| 6 Component Design System | **ONAYLANDI** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | **C-02 Inked Folio; CD-005 G-02 istisna sınırı korunur** | 2026-10-17 |
+| 7 Homepage Design | **Alternatifler hazırlanıyor; kullanıcı onayı bekliyor** | Açılış ve keşif kompozisyonları | — | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
 | 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
 | 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
@@ -158,3 +158,16 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 - Oracle'da repo dışında 3 variant × 4 viewport (1440/768/390/320) **12 statik Chromium render**, horizontal overflow ve pageerror yok, tüm **görünür** button yükseklikleri ≥44px ve Fraunces yüklenmiş. Tam WCAG veya çalışan uygulama testi değildir.
 - **Öneri (onay değil):** C-01 temel gramer + C-02 yalnızca CD-005 featured istisna + C-03 yalnızca gerçekten veri/kanıt yoğun işlevsel panellerde seçici kullanım. Kullanıcı aksi bir bileşen politikası da seçebilir.
 - **Onay:** YOK. C-01/C-02/C-03 veya açıklanmış hibrit seçimi kullanıcı kararı gerektirir. Aşama 7 ana sayfa, Aşama 6 onayı olmadan başlayamaz. `src/` dosyalarına dokunulmadı.
+
+
+## CD-006 — Aşama 6 C-02 Inked Folio açık kullanıcı onayı (2026-10-17)
+
+**Kullanıcının aynen kararı:** “Postify Aşama 6 için C-02 Inked Folio bileşen dilini, önceki G-02 istisna sınırlarını koruyarak onaylıyorum. Kaydet ve yalnızca Aşama 7 Homepage Design alternatiflerine geç, kod değiştirme.”
+
+**ONAYLI:** C-02 **Inked Folio** bileşen grameri; güçlü ve ölçülü masthead, basılı yayın hissi veren çerçeveler, özel featured kapak, ayrıştırıcı tipografik bölüm bantları, sağlam primary/secondary CTA, tutarlı formlar ve kaynak/kanıt paneli. **Onay sınırı CD-005:** G-01 Editorial Spine **genel grid** olarak kalır. G-02'nin 1440px page-wide dış omurgası, rastgele modüler tüm kartları veya yönetim/auth sayfalarında geniş dergi kompozisyonu **onaylanmadı**. G-02 yalnızca seçilmiş *öne çıkan editoryal yayın dosyaları* için istisnadır. C-02 bileşen dilini benimsemek her bilgi kartının kiremit kutuya dönüşmesi anlamına gelmez: yoğunluğu bağlama göre sınırlanır.
+
+**ONAYLANMAYANLAR:** C-01 veya C-03 sitenin ana bileşen dili olarak seçilmedi. Kaynakların görünürlüğü, metin/içerik hiyerarşisi ve admin gibi tabloların işlevsel yapısı C-02 uğruna bozulmaz. Kanıt doğrulanmadan rozet, geçerli semantik durum olmadan yalnızca renk, gereksiz animasyon veya sahte veri kullanılmaz. Hover/focus/disabled/error özel renkleri, hareket süreleri, final UI ölçüleri ve ana sayfa tam kompozisyonu **bu seçimle kesinleşmez**.
+
+**UYGULAMA SINIRI:** Belge ve kavramsal tasarım. Uygulama kodu değişmedi, push/deploy yok.
+
+**SONRAKİ KAPI:** Yalnızca Aşama 7 Homepage Design kompozisyon alternatifleri hazırlanacak; kullanıcı Aşama 7 onayı vermeden Aşama 8 iç sayfalara geçilmeyecek.

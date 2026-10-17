@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — PL-01 renkleri, TYPE-02 font aileleri ve G-01 ana grid (sınırlı G-02 feature istisnası) ONAYLI; component, motion ve henüz kararlaştırılmayan detay ölçüler ONAYSIZ.**
+**Durum: KISMEN ONAYLI — PL-01, TYPE-02, G-01 (+sınırlı G-02) ve C-02 Inked Folio bileşen grameri ONAYLI; Homepage ayrıntıları, motion ve bazı durum/ölçü tokenları ONAYSIZ.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -36,7 +36,7 @@ Durum: **TYPE-02 Expressive Issue, kullanıcı tarafından ONAYLANDI (CD-004).**
 Durum: **G-01 Editorial Spine ana sistem + G-02 yalnızca öne çıkan editoryal dosyalarda seçici kullanım ONAYLI (CD-005).** Öncelikli container 1280px, 12-column; masaüstü gutter 56px, gap 24px, 7:5 feature, 3-col feed; makale ana ölçü yaklaşık 715px. Mobil hedef gutter 26px @390 / 20px @320, dar ekranda tek akış. **G-02'nin site çapında 1440px genişliği, modüler dağılımı ve G-03 onaylanmadı.** Detaylar [GRID-LAYOUT-SPACING-OPTIONS.md](./GRID-LAYOUT-SPACING-OPTIONS.md). Bu değerler ileriki uygulama aşamasında içerik, zoom ve cihaz davranışına göre doğrulanmalıdır.
 
 ### Aşama 6: Components
-Durum: **C-01 Editorial Grammar / C-02 Inked Folio / C-03 Research Instruments karşılaştırıldı, onay bekliyor.** Kart, navigasyon, formlar, kanıt, error/empty/loading ve 44px dokunma hedefli statik örnekler: [COMPONENT-SYSTEM-OPTIONS.md](./COMPONENT-SYSTEM-OPTIONS.md) ve [component-system-reference.svg](./component-system-reference.svg). **Hiçbir bileşen formu, değişkeni, yeni durum tokenı veya hareket onaylanmadı.**
+Durum: **C-02 Inked Folio kullanıcı tarafından ONAYLANDI (CD-006).** [COMPONENT-SYSTEM-OPTIONS.md](./COMPONENT-SYSTEM-OPTIONS.md) içindeki karşılaştırma korunur; C-02 kapak/çerçeve/bölüm/CTA/forma dair karakterdir. **SİTE GENELİ GRID G-01 olarak kalır.** G-02 yalnızca seçilmiş featured dosyaların istisna kompozisyonudur. Durum semantiği, doğrulama kaynağı, son hover/motion ve pixel düzeyi ayrıntılar ayrıca incelenir.
 
 ### Aşama 9: Motion
 Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
@@ -71,3 +71,13 @@ Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
 | Kanıt/meta / tarih / kod / komut | **IBM Plex Mono** | CD-004 ONAYLI |
 
 **Kısıt:** Fraunces değişken SOFT/WONK eksenlerinde aşırı oyunbazlık yok; gerçek glif kapsamı, lisans dosyası, WOFF2 subset, font-display, fallback, CLS ve 200% zoom uygulamadan önce kontrol edilmeli. Bu bölüm font ölçüsü ya da sayfa layout'u için açık onay sayılmaz. `src/` henüz değişmedi.
+
+
+## 3. ONAYLI — C-02 Inked Folio bileşen grameri (CD-006)
+
+- **Masthead/navigation:** Bağımsız basılı dergi hissini taşıyan belirgin ayraç ve editoryal hiyerarşi; gerçek site route, TR/EN, mobile menu, keyboard ve command palette akışları saklı kalır.
+- **Cards:** Featured için editoryal kapak/numara/blok vurgusu; standart liste kartı için dengeli içerik önceliği ve kaynak/kanıt bilgisi. Her kartı indiscriminately G-02 geniş kompozisyonuna dönüştürme.
+- **Evidence:** Kutucuk/kurallı provenance bilgisi yalnızca gerçekten mevcut sunucu verisine bağlanır; yazar beyanı ile bağımsız doğrulama ayrı tutulur.
+- **Actions/Forms/States:** Belirgin birincil CTA ve okunur ikincil outline; label/invalid/helper, empty/loading/error mesajları aynı yayının görsel kimliğini taşır. Bunlar tasarım kurallarıdır, henüz kod uygulanmadı.
+- **Grid istisnası:** CD-005 G-02 kullanım sınırına dokunulamaz; varsayılan layout G-01 ve mobil tek akış.
+- **Açık alan:** Kesin border/radius/hover/focus/semantic status tokenları, motion, component JSX implementasyonu, Aşama 7 homepage seçenekleri **onaysız**.

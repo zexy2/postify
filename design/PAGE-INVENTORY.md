@@ -54,3 +54,6 @@ G-01 tüm rotalarda layout omurgasıdır; G-02 yalnızca onaylı istisna kapsam�
 ## Aşama 6 bileşen sözlüğü — bekleyen karar (2026-10-17)
 
 Mevcut component envanteri ve 17 rota için **C-01 Editorial Grammar / C-02 Inked Folio / C-03 Research Instruments** bileşen estetiği araştırıldı. Tüm seçeneklerin Home, Article, Auth, Profile, Editor, Knowledge ve Admin akışlarında aynı gerçek veri/role semantiğini koruması gerekir. `design/COMPONENT-SYSTEM-OPTIONS.md` içindeki kart/nav/form/evidence/loading/empty/error/disabled örnekleri yerleşim prototipidir ve gerçek ekran uygulanmış sayılmaz. **Aşama 6 için henüz kullanıcı seçimi yoktur; bütün sayfaların uygulama statüsü beklemede.**
+
+## Aşama 6 — CD-006 seçimi / sayfa kapsamı
+C-02 Inked Folio ortak bileşen dili olarak onaylandı, fakat G-02 Modular Broadsheet sadece seçili featured editoryal dosyalarda kullanılabilir. Standart Home akışı, bütün iç sayfalar, formlar ve servis durumları G-01 genel gridini korur. Aşama 7 Homepage Design ile Aşama 8 Inner Pages onayı ve uygulaması **henüz yapılmadı**.

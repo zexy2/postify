@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 6 — G-01 ana + seçici G-02 onaylı; C-01/C-02/C-03 bileşen alternatifleri sunuldu, kullanıcı onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 7 — C-02 Inked Folio CD-006 ile ONAYLANDI, G-02 istisnası korundu; homepage seçenekleri araştırılıyor, onay bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -29,7 +29,8 @@
 - [x] Aşama 5 **G-01 ana sistem + G-02 yalnızca seçilmiş editoryal dosyalar** CD-005 kullanıcı onayıyla kaydedildi.
 - [x] Aşama 6 mevcut component API/rolleri, protected/empty/loading/error/verification durumları envantere bağlandı.
 - [x] Aşama 6 C-01/C-02/C-03 karşılaştırmalı bileşen örnekleri Oracle Chromium'da 1440/768/390/320px (12 statik render) görüldü; taşma/pageerror yok ve görünür buttonlar ≥44px.
-- [ ] Aşama 6 Component Design System kullanıcı onayı henüz verilmedi.
+- [x] Aşama 6 **C-02 Inked Folio** kullanıcı tarafından CD-006 ile açıkça onaylandı; G-01 genel grid ve G-02 seçici istisnası korundu.
+- [ ] Aşama 7 Homepage Design kullanıcı onayı henüz verilmedi.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -51,4 +52,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Kullanıcıdan C-01/C-02/C-03 veya sınırları açık hibrit için Aşama 6 kararı bekle; onay olmadan Aşama 7 Homepage Design başlatma.
+**Şimdiki sonraki adım:** Aşama 7 Homepage Design seçeneklerini gerçek içerik keşfi/kanıt/mobil akışıyla karşılaştır, kullanıcı onayını bekle; Aşama 8 Inner Pages için henüz izin yok.
