@@ -153,3 +153,9 @@
 - [x] Article neighbor CSS adds min-width:0 and overflow-wrap:anywhere, disables three-line title clamping on narrow screens so enlarged titles remain readable, and adds .14em bottom ink spacing (browser probe scroll/client 285/282 -> 288/288). Strengthened 200% text-scaling + login hit-area targeted tests 2/2 GREEN.
 - [x] Final independently executed QA under local Node 24: Vitest 180/180 (43 suites), full Chromium UI E2E 59/59 (0 flaky), ESLint 0 errors/0 warnings after updating useCallback dependency, PWA build PASS, build smoke 11 critical assets and entry 311039/320000 bytes, verify:security npm audit 0 known vulnerabilities. Structured reports imported into Oracle Evidence Collector.
 - [ ] This 200% test injects root CSS font-size, it is NOT native browser zoom and is NOT manual screen-reader WCAG 2.2 AA sign-off. Real staging auth/OAuth/RLS/CRUD, field CWV p75, mobile Lighthouse performance ~60 and final visual acceptance remain pending. No push or deployment.
+
+## 2026-10-18 — Preserve mobile article back-navigation during performance work
+
+- [x] Actual Chromium cold mobile navigation test opens a feed article from ~2400px scroll and returns with the original card at the same viewport position; strengthened permanent E2E guard allows at most 10px displacement. Targeted test passed.
+- [x] Mobile feed CSS `content-visibility:auto` performance experiment tested with five 4x-CPU cold CDP runs each; 5 focused E2E passed but weak ~20ms FCP / ~10ms estimated blocking median improvement with large candidate worst-case regression. Reverted experiment; no CSS product change.
+- [ ] True performance gate requires paired stable Lighthouse gains, field p75 Core Web Vitals, mobile assistive-tech/native zoom manual signoff, and authenticated Supabase staging flows; do not declare complete.

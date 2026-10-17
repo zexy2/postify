@@ -1401,6 +1401,32 @@ test.describe('Approved publication palette accessibility', () => {
   });
 });
 
+// Anchor preservation is a release guard for any future home-feed optimization:
+// entering an article and returning must preserve the exact visible feed card.
+test('mobile article history restores the same feed card position', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const card = page.locator('#knowledge-feed a[class*="titleLink"]').nth(3);
+  await expect(card).toBeVisible();
+  await card.scrollIntoViewIfNeeded();
+  const href = await card.getAttribute('href');
+  const beforeTop = await card.evaluate((element) => element.getBoundingClientRect().top);
+  const beforeScroll = await page.evaluate(() => window.scrollY);
+  expect(beforeScroll).toBeGreaterThan(1000);
+
+  await card.click();
+  await expect(page).toHaveURL(/\/posts\//);
+  await page.goBack();
+
+  const restoredCard = page.locator(`#knowledge-feed a[class*="titleLink"][href="${href}"]`);
+  await expect(restoredCard).toBeVisible();
+  await expect.poll(async () => Math.abs(
+    (await restoredCard.evaluate((element) => element.getBoundingClientRect().top)) - beforeTop,
+  ), { timeout: 5_000 }).toBeLessThan(10);
+  expect(Math.abs((await page.evaluate(() => window.scrollY)) - beforeScroll)).toBeLessThan(10);
+});
+
 // The approved featured issue cover should download a genuinely smaller local
 // image on narrow displays, without changing remote/user-uploaded URL rules.
 test('mobile featured cover selects a generated responsive image', async ({ page }) => {

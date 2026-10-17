@@ -65,3 +65,18 @@ A tested alternative moved the eager `Sheet` import from module evaluation to a 
 | JS resource transfer bytes | 227093 | 227165 |
 
 The 20 ms FCP difference is too small/noisy and the candidate's blocking and longest task were worse. The import experiment was REVERTED, and its two private temporary preview servers stopped. These CDP browser laboratory figures are **not** Lighthouse scores or field Core Web Vitals; do not treat the LCP observer as real user p75. Mobile performance QA is still OPEN.
+
+## 2026-10-18 — Experimental mobile feed containment (REVERTED)
+
+Tested adding `content-visibility: auto; contain-intrinsic-size: auto 320px` to feed cards 3+ only below 960px. The candidate was produced as a separate production build and compared against unchanged local commit `c8861a8` on two isolated preview servers. Five independent 390px cold Chromium contexts per build, CPU 4x throttle, measured median:
+
+| CDP metric | Baseline | Candidate |
+| --- | ---: | ---: |
+| First Contentful Paint | 1288ms | 1268ms |
+| Longest long task | 875ms | 860ms |
+| Estimated post-FCP blocking | 84ms | 74ms |
+| Script transfer | 227119 bytes | 227129 bytes |
+
+One candidate run was highly unstable: FCP 3512ms and longest task 2129ms. Five scoped Chromium checks passed (mobile 200% CSS text scaling, format navigation, discovery, card hierarchy). The small medians and the severe tail outlier do not establish a reproducible performance benefit; **all candidate CSS source was reverted**. These are local CDP lab metrics, not Lighthouse or field CWV; estimated blocking is not Lighthouse's TBT calculation.
+
+The previous sampled V8 profile of an older build attributed many CPU samples to the feed absolute-position geometry reader (`readAbsoluteTop`/`getBoundingClientRect`) as a possible forced-layout contributor. But an earlier direct scroll-at-top bypass did not improve paired Lighthouse results; the captured attribution alone is not reliable causal evidence. Preserve scroll history and anchor behavior in future optimizations. A new mobile browser test checks that opening a feed card and navigating back restores the same card near its previous viewport position, with 10px tolerance. It passed in an isolated targeted Chromium run. Final mobile Lighthouse performance gate and field CWV p75 remain **OPEN**; no push/deploy.
