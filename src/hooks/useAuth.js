@@ -299,28 +299,45 @@ export const useAuth = () => {
    */
   const updateProfile = useCallback(
     async (updates) => {
+      const accountId = user?.id;
+      const originalSession = authStore.getState().user.session;
+      const isCurrentSession = () => {
+        const current = authStore.getState().user;
+        return Boolean(
+          accountId &&
+          originalSession?.user?.id === accountId &&
+          current.isAuthenticated &&
+          current.session === originalSession &&
+          current.user?.id === accountId
+        );
+      };
+
       try {
+        // Never send a profile mutation under a missing or mismatched session.
+        if (!isCurrentSession()) throw new Error("Not authenticated");
         dispatch(setLoading(true));
 
-        if (!user?.id) throw new Error("Not authenticated");
+        const updatedProfile = await authService.updateProfile(accountId, updates);
+        // A sign-out, token replacement or A→B switch outranks an older
+        // profile response. Only the original session may update its own UI.
+        if (!isCurrentSession()) return { success: false, error: "Not authenticated" };
 
-        const updatedProfile = await authService.updateProfile(
-          user.id,
-          updates,
-        );
-        dispatch(setUser({ ...user, profile: updatedProfile }));
-
+        dispatch(setUser({ ...authStore.getState().user.user, profile: updatedProfile }));
         toast.success(t("auth.profileUpdated"));
         return { success: true, profile: updatedProfile };
       } catch (err) {
+        if (originalSession && !isCurrentSession()) {
+          return { success: false, error: "Not authenticated" };
+        }
         const message = err.message || t("auth.profileUpdateError");
         toast.error(message);
         return { success: false, error: message };
       } finally {
-        dispatch(setLoading(false));
+        // Do not dismiss a newer identity's pending verification spinner.
+        if (isCurrentSession()) dispatch(setLoading(false));
       }
     },
-    [dispatch, user, t],
+    [authStore, dispatch, user, t],
   );
 
   /**

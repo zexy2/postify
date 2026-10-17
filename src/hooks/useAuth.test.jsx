@@ -338,4 +338,161 @@ describe('useAuth hydration', () => {
     expect(result.current.isLoading).toBe(false);
   });
 
+  it('does not resurrect a signed-out account after a delayed profile update', async () => {
+    let emitAuthEvent;
+    let resolveUpdate;
+    const account = { id: 'profile-account-a', email: 'a@example.com' };
+    const session = { user: account, access_token: 'account-a-token' };
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue(session);
+    authService.getCurrentUser.mockResolvedValue(account);
+    authService.getProfile.mockResolvedValue({ role: 'reader' });
+    authService.updateProfile.mockImplementation(() => new Promise((resolve) => {
+      resolveUpdate = resolve;
+    }));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.profile?.role).toBe('reader'));
+
+    let updatePromise;
+    await act(async () => {
+      updatePromise = result.current.updateProfile({ full_name: 'Updated A' });
+      await Promise.resolve();
+    });
+    expect(authService.updateProfile).toHaveBeenCalledWith(account.id, { full_name: 'Updated A' });
+
+    await act(async () => { emitAuthEvent('SIGNED_OUT', null); });
+    let outcome;
+    await act(async () => {
+      resolveUpdate({ role: 'admin', full_name: 'Updated A' });
+      outcome = await updatePromise;
+    });
+
+    expect(outcome.success).toBe(false);
+    expect(result.current.user).toBeNull();
+    expect(result.current.session).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(toast.success).not.toHaveBeenCalledWith('auth.profileUpdated');
+  });
+
+  it('keeps a new account hidden while verifying if an old profile update finishes', async () => {
+    let emitAuthEvent;
+    let resolveUpdate;
+    let resolveNextUser;
+    const accountA = { id: 'profile-a', email: 'a@example.com' };
+    const accountB = { id: 'profile-b', email: 'b@example.com' };
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue({ user: accountA, access_token: 'token-a' });
+    authService.getCurrentUser.mockResolvedValueOnce(accountA)
+      .mockImplementationOnce(() => new Promise((resolve) => { resolveNextUser = resolve; }));
+    authService.getProfile.mockResolvedValue({ role: 'reader' });
+    authService.updateProfile.mockImplementation(() => new Promise((resolve) => {
+      resolveUpdate = resolve;
+    }));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.profile?.role).toBe('reader'));
+
+    let updatePromise;
+    await act(async () => {
+      updatePromise = result.current.updateProfile({ full_name: 'Old A' });
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      emitAuthEvent('SIGNED_IN', { user: accountB, access_token: 'token-b' });
+      await Promise.resolve();
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.isLoading).toBe(true);
+
+    let outcome;
+    await act(async () => {
+      resolveUpdate({ role: 'admin', full_name: 'Old A' });
+      outcome = await updatePromise;
+    });
+    expect(outcome.success).toBe(false);
+    expect(result.current.user).toBeNull();
+    expect(result.current.session).toBeNull();
+    expect(result.current.isLoading).toBe(true);
+    expect(toast.success).not.toHaveBeenCalledWith('auth.profileUpdated');
+
+    await act(async () => { resolveNextUser(accountB); });
+    await waitFor(() => expect(result.current.user?.id).toBe(accountB.id));
+    expect(result.current.session?.user?.id).toBe(accountB.id);
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it('applies a successful profile edit to the same verified session', async () => {
+    const account = { id: 'profile-positive', email: 'positive@example.com' };
+    const session = { user: account, access_token: 'steady-token' };
+    authService.getSession.mockResolvedValue(session);
+    authService.getCurrentUser.mockResolvedValue(account);
+    authService.getProfile.mockResolvedValue({ role: 'reader', full_name: 'Before' });
+    authService.updateProfile.mockResolvedValue({ role: 'reader', full_name: 'After' });
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.profile?.full_name).toBe('Before'));
+
+    let response;
+    await act(async () => {
+      response = await result.current.updateProfile({ full_name: 'After' });
+    });
+
+    expect(authService.updateProfile).toHaveBeenCalledWith(account.id, { full_name: 'After' });
+    expect(response).toMatchObject({ success: true, profile: { full_name: 'After' } });
+    expect(result.current.user?.profile?.full_name).toBe('After');
+    expect(result.current.session).toEqual(session);
+    expect(result.current.isLoading).toBe(false);
+    expect(toast.success).toHaveBeenCalledWith('auth.profileUpdated');
+  });
+
+  it('ignores an obsolete profile edit after same-account token refresh', async () => {
+    let emitAuthEvent;
+    let resolveUpdate;
+    const account = { id: 'profile-refresh', email: 'refresh@example.com' };
+    const session1 = { user: account, access_token: 'token-1' };
+    const session2 = { user: account, access_token: 'token-2' };
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue(session1);
+    authService.getCurrentUser.mockResolvedValue(account);
+    authService.getProfile.mockResolvedValueOnce({ full_name: 'First' })
+      .mockResolvedValueOnce({ full_name: 'Newer session' });
+    authService.updateProfile.mockImplementation(() => new Promise((resolve) => {
+      resolveUpdate = resolve;
+    }));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.profile?.full_name).toBe('First'));
+
+    let updatePromise;
+    await act(async () => {
+      updatePromise = result.current.updateProfile({ full_name: 'Stale edit' });
+      await Promise.resolve();
+    });
+    await act(async () => {
+      emitAuthEvent('TOKEN_REFRESHED', session2);
+    });
+    await waitFor(() => expect(result.current.user?.profile?.full_name).toBe('Newer session'));
+
+    let response;
+    await act(async () => {
+      resolveUpdate({ full_name: 'Stale edit' });
+      response = await updatePromise;
+    });
+    expect(response.success).toBe(false);
+    expect(result.current.user?.profile?.full_name).toBe('Newer session');
+    expect(result.current.session).toEqual(session2);
+    expect(toast.success).not.toHaveBeenCalledWith('auth.profileUpdated');
+  });
+
 });
