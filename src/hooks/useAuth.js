@@ -254,7 +254,7 @@ export const useAuth = () => {
         dispatch(setLoading(false));
       }
     },
-    [dispatch, navigate, t],
+    [authStore, dispatch, navigate, t],
   );
 
   /**

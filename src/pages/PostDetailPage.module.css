@@ -557,6 +557,7 @@
 
 .adjacentLink {
   display: flex;
+  min-width: 0;
   min-height: 168px;
   flex-direction: column;
   align-items: flex-start;
@@ -584,6 +585,7 @@
   display: -webkit-box;
   max-width: 18ch;
   overflow: hidden;
+  overflow-wrap: anywhere;
   font-family: var(--font-display);
   font-size: clamp(1.28rem, 2vw, 1.68rem);
   font-weight: 560;
@@ -744,7 +746,13 @@
     text-align: left;
   }
   .adjacentLink:last-child { border-bottom: 0; }
-  .adjacentLink strong { max-width: 24ch; font-size: 1.36rem; -webkit-line-clamp: 3; }
+  .adjacentLink strong {
+    max-width: 24ch;
+    font-size: 1.36rem;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    padding-bottom: .14em;
+  }
   .newer span { text-align: left; }
 }
 

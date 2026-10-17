@@ -221,6 +221,10 @@
 
 .forgotPassword a,
 .footer a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
   color: var(--text-primary);
   font-weight: 750;
   text-decoration: underline;

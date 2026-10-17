@@ -788,6 +788,11 @@ test.describe('Postify UI V2', () => {
     for (const route of routes) {
       await page.goto(route);
       await expect.poll(async () => page.locator('a[href], button, input:not([type=hidden]), select, textarea, [role=button]').count()).toBeGreaterThan(0);
+      if (route === '/posts/node-json-dogrulama') {
+        // Ensure the lazy article and both adjacent links have mounted before
+        // evaluating clipping, rather than accidentally passing on the header.
+        await expect(page.locator('nav a[href^="/posts/"] strong').first()).toBeVisible();
+      }
       await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
 
       const escapedControls = await page.locator('a[href], button, input:not([type=hidden]), select, textarea, [role=button]').evaluateAll((controls) => {
@@ -1423,4 +1428,26 @@ test('home issue cover preloads only on the publication front', async ({ page })
 
   await page.goto('/auth/login');
   await expect(page.locator('link[data-postify-cover-preload]')).toHaveCount(0);
+});
+
+// Login utility links must retain a generous interactive region at narrow
+// reflow and wide breakpoints; font size alone is not the click target.
+test('login recovery and registration links maintain 44px targets without horizontal overflow', async ({ page }) => {
+  for (const width of [320, 720, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/auth/login');
+    const recovery = page.locator('main a[href="/auth/forgot-password"]');
+    const registration = page.locator('main a[href="/auth/register"]');
+    await expect(recovery).toBeVisible();
+    await expect(registration).toBeVisible();
+    for (const link of [recovery, registration]) {
+      const rect = await link.boundingBox();
+      expect(rect.height).toBeGreaterThanOrEqual(44);
+      expect(rect.width).toBeGreaterThanOrEqual(44);
+    }
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(1);
+  }
 });

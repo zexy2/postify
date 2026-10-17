@@ -144,3 +144,12 @@
 - [x] Auth hook clears existing Redux identity and sets neutral loading state when a new provider session subject differs; guarded hydration only unlocks B after matching getCurrentUser. Same-account restoration/refresh path is not force-logged-out by this condition.
 - [x] Targeted auth 12/12 GREEN; full Node 24 Vitest 180/180 (43 files) GREEN, Chromium E2E 58/58, ESLint, Vite PWA production build, 11-file smoke (311037/320000 entry bytes), npm security audit zero PASS. JUnit and Playwright JSON imported to Oracle phase 4.
 - [ ] Real provider sign-in, token refresh, staging RLS and role-based CRUD, native 200/400% zoom/assistive technology, mobile Lighthouse and field CWV remain unverified; production auth security is not established by mocked hooks. No push/deployment.
+
+## 2026-10-18 — Login target and article 200% text reflow QA
+
+- [x] Browser reflow sample (not true native zoom): 4 public routes × 5 viewport widths (320/360/390/720/1440), 20 observations, no horizontal document overflow and no missing h1 detected. Limited to sampled states.
+- [x] RED Chromium: login recovery link 19.28px tall and registration link ~15px at 720/1440, below the intended 44px hit target. CSS inline-flex alignment/minimum 44×44px; GREEN across 320/720/1440 and no page overflow.
+- [x] Existing 200% text-scaling Playwright test could finish before lazy article/adjacent navigation mounted. It now waits for the actual neighboring post title, producing a repeatable RED 320px viewport, article next-link right edge ~337.8px outside viewport.
+- [x] Article neighbor CSS adds min-width:0 and overflow-wrap:anywhere, disables three-line title clamping on narrow screens so enlarged titles remain readable, and adds .14em bottom ink spacing (browser probe scroll/client 285/282 -> 288/288). Strengthened 200% text-scaling + login hit-area targeted tests 2/2 GREEN.
+- [x] Final independently executed QA under local Node 24: Vitest 180/180 (43 suites), full Chromium UI E2E 59/59 (0 flaky), ESLint 0 errors/0 warnings after updating useCallback dependency, PWA build PASS, build smoke 11 critical assets and entry 311039/320000 bytes, verify:security npm audit 0 known vulnerabilities. Structured reports imported into Oracle Evidence Collector.
+- [ ] This 200% test injects root CSS font-size, it is NOT native browser zoom and is NOT manual screen-reader WCAG 2.2 AA sign-off. Real staging auth/OAuth/RLS/CRUD, field CWV p75, mobile Lighthouse performance ~60 and final visual acceptance remain pending. No push or deployment.
