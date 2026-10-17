@@ -660,11 +660,51 @@ test.describe('Postify UI V2', () => {
     await expect(toaster).toHaveCSS('pointer-events', 'none');
   });
 
+  test('all public routes retain a heading and stay contained from phone to desktop', async ({ page }) => {
+    const publicRoutes = [
+      '/', '/posts/ai-muhendisligi', '/auth/login', '/auth/register',
+      '/auth/forgot-password', '/auth/reset-password', '/auth/callback',
+      '/users/fallback-editor', '/about', '/contact', '/route-not-found-qa',
+    ];
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 850 });
+      for (const route of publicRoutes) {
+        await page.goto(route);
+        await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(overflow, `Overflow on ${route} at ${width}px`).toBeLessThanOrEqual(1);
+      }
+    }
+  });
+
+  test('protected destinations never expose account UI without a session', async ({ page }) => {
+    for (const route of ['/posts/create', '/posts/ai-muhendisligi/edit', '/bookmarks', '/admin', '/knowledge', '/profile']) {
+      await page.goto(route);
+      await expect(page).toHaveURL(/\/auth\/login$/);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    }
+  });
+
   test('login surface remains clear and operable', async ({ page }) => {
     await page.goto('/auth/login');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.getByLabel(/email/i)).toBeVisible();
     await expect(page.locator('input[name="password"]')).toBeVisible();
+  });
+
+  test('login, registration and recovery keep their forms before storytelling on mobile and tablet', async ({ page }) => {
+    for (const width of [390, 768]) {
+      await page.setViewportSize({ width, height: 844 });
+      for (const route of ['/auth/login', '/auth/register', '/auth/forgot-password', '/auth/reset-password']) {
+        await page.goto(route);
+        const form = page.locator('form').first();
+        await expect(form).toBeVisible();
+        const formTop = (await form.boundingBox())?.y ?? Infinity;
+        const storyTop = (await page.locator('section[class*="context"]').boundingBox())?.y ?? 0;
+        expect(formTop, `Task-first on ${route} at ${width}px`).toBeLessThan(storyTop);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+      }
+    }
   });
 
   test('auth validation is programmatic and mobile controls meet touch targets', async ({ page }) => {

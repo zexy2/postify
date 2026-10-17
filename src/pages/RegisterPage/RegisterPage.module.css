@@ -347,7 +347,12 @@
 
   .context {
     position: static;
+    order: 1;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-strong);
   }
+
+  .card { order: 0; padding: 0; border: 0; }
 
   .context h2 {
     max-width: 12ch;
@@ -372,10 +377,30 @@
     display: none;
   }
 
+  /* Mobile visitors should reach the registration task before the brand story. */
   .card {
-    padding: 1.3rem 0 0;
+    order: 0;
+    padding: 0;
     border-left: 0;
+    border-top: 0;
+  }
+
+  .context {
+    order: 1;
+    padding-top: 1.4rem;
     border-top: 1px solid var(--border-strong);
+  }
+
+  .context h2 {
+    max-width: 17ch;
+    font-size: clamp(2rem, 8vw, 2.65rem);
+    line-height: 1;
+  }
+
+  .context > p {
+    margin-top: .85rem;
+    font-size: .87rem;
+    line-height: 1.65;
   }
 
   .row {

@@ -19,4 +19,12 @@ describe('KnowledgeDashboardPage loading', () => {
     expect(status).toHaveAttribute('aria-busy', 'true');
     expect(screen.getByRole('heading', { name: /Bilgi sağlığı yükleniyor|Loading knowledge health/i })).toBeVisible();
   });
+
+  it('shows actionable navigation without claiming unavailable backend access', () => {
+    render(<MemoryRouter><KnowledgeDashboardPage dataOverride={{ posts: [], gaps: [] }} backendReadyOverride={false} /></MemoryRouter>);
+
+    expect(screen.getByRole('heading', { name: /Hesap senkronu henüz aktif değil|Account sync is not active/i })).toBeVisible();
+    expect(screen.getByRole('link', { name: /Profiline dön|Return to your profile/i })).toHaveAttribute('href', '/profile');
+    expect(screen.getByRole('link', { name: /Bilgi arşivini keşfet|Explore the knowledge library/i })).toHaveAttribute('href', '/');
+  });
 });

@@ -351,7 +351,12 @@
 
   .context {
     position: static;
+    order: 1;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-strong);
   }
+
+  .card { order: 0; padding: 0; border: 0; }
 
   .context h2 {
     max-width: 12ch;

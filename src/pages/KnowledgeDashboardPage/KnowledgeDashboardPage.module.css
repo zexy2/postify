@@ -52,6 +52,39 @@
   line-height: 1.7;
 }
 
+.unavailableActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1.8rem;
+}
+
+.unavailableActions a {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: .75rem 1rem;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  font-size: .79rem;
+  font-weight: 780;
+  text-decoration: none;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.unavailableActions a:first-child {
+  color: var(--bg-primary);
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.unavailableActions a:hover { border-color: var(--primary); }
+.unavailableActions a:not(:first-child):hover { background: var(--bg-secondary); }
+.unavailableActions a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
 .demandSignal {
   display: grid;
   gap: .45rem;
@@ -436,6 +469,9 @@
 }
 
 @media (max-width: 520px) {
+  .unavailableActions { flex-direction: column; }
+  .unavailableActions a { justify-content: space-between; width: 100%; }
+
   .healthStrip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

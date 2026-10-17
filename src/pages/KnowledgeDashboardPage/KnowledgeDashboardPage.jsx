@@ -76,6 +76,10 @@ export default function KnowledgeDashboardPage({ dataOverride = null, backendRea
           <p>{en
             ? 'The product remains usable with local evidence while the production database upgrade is pending. This dashboard will activate automatically after migration.'
             : 'Production veritabanı yükseltmesi beklerken ürün yerel kanıtla kullanılmaya devam eder. Migration sonrası bu panel otomatik olarak aktif olacak.'}</p>
+          <nav className={styles.unavailableActions} aria-label={en ? 'Available account actions' : 'Kullanılabilir hesap işlemleri'}>
+            <Link to="/profile">{en ? 'Return to your profile' : 'Profiline dön'} <FiArrowUpRight aria-hidden="true" /></Link>
+            <Link to="/">{en ? 'Explore the knowledge library' : 'Bilgi arşivini keşfet'}</Link>
+          </nav>
         </header>
       </div>
     );

@@ -204,10 +204,12 @@
 
 .emptyState {
   display: grid;
-  min-height: 70vh;
+  min-height: min(65vh, 620px);
   align-content: center;
   justify-items: start;
-  max-width: 760px;
+  width: min(calc(100% - 2rem), 760px);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 7vw, 5.5rem);
 }
 
 .emptyIcon {
@@ -285,6 +287,14 @@
   .emptyState {
     padding-top: 2rem;
   }
+
+  .emptyState {
+    min-height: 50vh;
+    align-content: start;
+    padding-bottom: 3rem;
+  }
+
+  .emptyTitle { font-size: clamp(2.65rem, 12vw, 3.5rem); }
 
   .title {
     font-size: clamp(3.2rem, 17vw, 4.7rem);

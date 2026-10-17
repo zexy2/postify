@@ -242,7 +242,9 @@ const AdminPage = ({ service = adminService }) => {
       {users.length === 0 ? (
         <p className={styles.noPosts}>{copy.noUsers}</p>
       ) : (
-        <div className={styles.tableWrap}>
+        <>
+        <p className={styles.tableHint}>{en ? 'Scroll sideways to inspect roles and account actions.' : 'Rolleri ve hesap işlemlerini incelemek için yatay kaydır.'}</p>
+        <div className={styles.tableWrap} role="region" aria-label={copy.userManagement} tabIndex={0}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -291,6 +293,7 @@ const AdminPage = ({ service = adminService }) => {
           </tbody>
         </table>
         </div>
+        </>
       )}
     </div>
   );
@@ -302,7 +305,9 @@ const AdminPage = ({ service = adminService }) => {
       {posts.length === 0 ? (
         <p className={styles.noPosts}>{copy.noPosts}</p>
       ) : (
-        <div className={styles.tableWrap}>
+        <>
+        <p className={styles.tableHint}>{en ? 'Scroll sideways to inspect publication status and moderation actions.' : 'Yayın durumunu ve moderasyon işlemlerini görmek için yatay kaydır.'}</p>
+        <div className={styles.tableWrap} role="region" aria-label={copy.contentModeration} tabIndex={0}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -358,6 +363,7 @@ const AdminPage = ({ service = adminService }) => {
           </tbody>
         </table>
         </div>
+        </>
       )}
     </div>
   );

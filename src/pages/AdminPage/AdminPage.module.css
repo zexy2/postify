@@ -261,12 +261,20 @@
   color: var(--text-secondary);
 }
 
+.tableHint { display: none; }
+
 .tableWrap {
   width: 100%;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
   border-top: 1px solid var(--border-strong);
   border-bottom: 1px solid var(--border-strong);
   scrollbar-width: thin;
+}
+
+.tableWrap:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 .table {
@@ -435,6 +443,27 @@
 }
 
 @media (max-width: 640px) {
+  .tableHint {
+    display: block;
+    margin: -.4rem 0 .8rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    line-height: 1.5;
+  }
+
+  .table th:first-child,
+  .table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 185px;
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+  }
+
+  .table tbody tr:hover td:first-child { background: var(--bg-secondary); }
+
   .error { align-items: flex-start; flex-direction: column; }
   .roleSelect { min-height: 44px; }
   .actionBtn,
