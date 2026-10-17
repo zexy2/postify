@@ -52,3 +52,16 @@ While preparing safe authentication test fixtures for potential future Supabase 
 The useAuth hook now uses an auth revision ref: each newer auth callback invalidates pending older hydration after awaits, a direct logout invalidates in-flight requests even if SIGNED_OUT arrives later, and an initial session lookup cannot override a newer auth event. New non-production mocked tests cover delayed profile after SIGNED_OUT, stale session lookup after SIGNED_OUT, and direct logout with late profile response. Existing login and profile-enrichment tests still pass. Live account, OAuth redirect, token refresh and real RLS tests are still NOT covered; no assertion of live production conformance.
 
 Further optimization should be evidence-driven: isolate React render overhead and CSS layout via Chrome traces, and establish more complete session/OAuth fixtures before any risky Supabase lazy initialization. Mobile performance, field CWV p75, manual WCAG 2.2 AA at native zoom and assistive tech, authenticated admin/editor/knowledge operations, and final visual acceptance remain OPEN. GitHub push/deployment need separate user authorization.
+
+## 2026-10-18 — Mobile dialog idle prewarm trial (REVERTED)
+
+A tested alternative moved the eager `Sheet` import from module evaluation to a `requestIdleCallback` prewarm with immediate import when the menu was requested. The Radix dialog's two focused mobile Playwright tests remained green, including the existing 250 ms click-to-mount gate. Two production bundles were compared in separate localhost preview servers using cold Chromium contexts, 390 × 844 viewport, 4× CPU throttle, three passes each, without touching user services.
+
+| Local CDP metric (3-run median) | Baseline c34ebd0 | Idle candidate |
+| --- | ---: | ---: |
+| FCP / observer LCP | 1288 / 1288 ms | 1268 / 1268 ms |
+| Longest reported task | 873 ms | 919 ms |
+| Post-FCP estimated blocking | 101 ms | 106 ms |
+| JS resource transfer bytes | 227093 | 227165 |
+
+The 20 ms FCP difference is too small/noisy and the candidate's blocking and longest task were worse. The import experiment was REVERTED, and its two private temporary preview servers stopped. These CDP browser laboratory figures are **not** Lighthouse scores or field Core Web Vitals; do not treat the LCP observer as real user p75. Mobile performance QA is still OPEN.

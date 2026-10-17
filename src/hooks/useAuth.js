@@ -123,6 +123,15 @@ export const useAuth = () => {
       }
 
       if (newSession) {
+        // When Supabase switches accounts, old account content must disappear
+        // while the new session subject is independently verified. Keep the
+        // route neutral rather than redirecting during the async transition.
+        const previousUserId = authStore.getState().user.user?.id;
+        if (previousUserId && previousUserId !== newSession.user?.id) {
+          dispatch(logoutAction());
+          dispatch(setLoading(true));
+        }
+
         // Do not await profile queries inside Supabase's auth callback.
         void hydrateUser(newSession, revision).finally(() => {
           if (isMounted && revision === authRevisionRef.current) dispatch(setLoading(false));
@@ -156,7 +165,7 @@ export const useAuth = () => {
       isMounted = false;
       subscription?.unsubscribe();
     };
-  }, [dispatch]);
+  }, [authStore, dispatch]);
 
   /**
    * Register a new user

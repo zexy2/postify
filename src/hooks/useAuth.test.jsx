@@ -276,4 +276,66 @@ describe('useAuth hydration', () => {
     expect(toast.success).not.toHaveBeenCalledWith('auth.loginSuccess');
   });
 
+  it('clears the previous account while a different provider identity is awaiting verification', async () => {
+    let emitAuthEvent;
+    let resolveNextIdentity;
+    const oldUser = { id: 'account-a', email: 'a@example.com' };
+    const newUser = { id: 'account-b', email: 'b@example.com' };
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue({ user: oldUser, access_token: 'token-a' });
+    authService.getCurrentUser.mockResolvedValueOnce(oldUser).mockImplementationOnce(
+      () => new Promise((resolve) => { resolveNextIdentity = resolve; }),
+    );
+    authService.getProfile.mockResolvedValue({ role: 'reader' });
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.profile?.role).toBe('reader'));
+    expect(result.current.user?.id).toBe(oldUser.id);
+
+    await act(async () => {
+      emitAuthEvent('SIGNED_IN', { user: newUser, access_token: 'token-b' });
+      await Promise.resolve();
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.session).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(result.current.isLoading).toBe(true);
+
+    await act(async () => { resolveNextIdentity(newUser); });
+    await waitFor(() => expect(result.current.user?.id).toBe(newUser.id));
+    expect(result.current.session?.user?.id).toBe(newUser.id);
+    expect(result.current.isAuthenticated).toBe(true);
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it('does not retain the previous account when a switched provider session cannot be verified', async () => {
+    let emitAuthEvent;
+    const oldUser = { id: 'account-a', email: 'a@example.com' };
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue({ user: oldUser, access_token: 'token-a' });
+    authService.getCurrentUser.mockResolvedValueOnce(oldUser)
+      .mockRejectedValueOnce(new Error('identity verification unavailable'));
+    authService.getProfile.mockResolvedValue({ role: 'reader' });
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.profile?.role).toBe('reader'));
+
+    await act(async () => {
+      emitAuthEvent('SIGNED_IN', {
+        user: { id: 'account-b' }, access_token: 'unverified-b',
+      });
+    });
+    await waitFor(() => expect(authService.getCurrentUser).toHaveBeenCalledTimes(2));
+    expect(result.current.user).toBeNull();
+    expect(result.current.session).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(result.current.isLoading).toBe(false);
+  });
+
 });

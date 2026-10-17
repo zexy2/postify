@@ -137,3 +137,10 @@
 - [x] Fix: password login checks current Redux session/account before applying delayed profile or reporting success, and ProtectedRoute requires matching session.user.id, user.id and isAuthenticated; no backend/RLS changes.
 - [x] Targeted 17/17 GREEN; full 178/178 Vitest (43 suites), 58/58 Chromium E2E, ESLint, Vite PWA build, 11-asset smoke (310957/320000 JS entry), npm security 0 known vulnerabilities PASS. JUnit/Playwright reports imported into Oracle evidence.
 - [ ] Real OAuth, refresh, RLS, staging protected CRUD, native zoom/AT WCAG 2.2 AA, field CWV and mobile Lighthouse release gates remain OPEN. No push/deploy.
+
+## 2026-10-18 — Authenticated account switch regression (mocked, not live service)
+
+- [x] Two RED regression tests reproduced previous account A remaining in UI while provider SIGNED_IN account B was unverified or verification failed.
+- [x] Auth hook clears existing Redux identity and sets neutral loading state when a new provider session subject differs; guarded hydration only unlocks B after matching getCurrentUser. Same-account restoration/refresh path is not force-logged-out by this condition.
+- [x] Targeted auth 12/12 GREEN; full Node 24 Vitest 180/180 (43 files) GREEN, Chromium E2E 58/58, ESLint, Vite PWA production build, 11-file smoke (311037/320000 entry bytes), npm security audit zero PASS. JUnit and Playwright JSON imported to Oracle phase 4.
+- [ ] Real provider sign-in, token refresh, staging RLS and role-based CRUD, native 200/400% zoom/assistive technology, mobile Lighthouse and field CWV remain unverified; production auth security is not established by mocked hooks. No push/deployment.
