@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — CD-001..CD-009 tasarım kararları, özellikle M-02 genel + M-01 görev ekranı sakinliği ve featured-only özel hareket ONAYLI. Responsive/WCAG uygulama çözümleri henüz onaysız.**
+**Durum: TASARIM YÖNLERİ CD-001..CD-010 ONAYLI — responsive kapsamı belirli; WCAG 2.2 AA bütün ekranlar için zorunlu kalite hedefi. Aşama 11 QA/visual polish planı ve gerçek uygulama hâlâ onaysız.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -120,3 +120,12 @@ G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir a
 ## Aşama 10 Responsive & Accessibility (ONAYSIZ)
 
 Responsive çözüm alternatifleri: **R-01 Editorial Reflow, R-02 Adaptive Marginalia, R-03 Task-first Adaptive Workbench**. Denetim ve kabul kriterleri [RESPONSIVE-ACCESSIBILITY-OPTIONS.md](./RESPONSIVE-ACCESSIBILITY-OPTIONS.md), çizim [responsive-accessibility-reference.svg](./responsive-accessibility-reference.svg). **WCAG 2.2 AA hedefi tüm alternatiflerde zorunlu; yalnız responsive sunum biçimi seçilebilir.** Henüz responsive/focus/error/border/semantic renk değişikliği onaylanmadı. Uygulama kodu değiştirilmedi.
+
+
+## 6. CD-010 ONAYLI — Responsive & Accessibility
+- **Sitewide:** R-01 Editorial Reflow; G-01 omurgası, okunabilir ve semantik mobil tek akış.
+- **Yalnız article/evidence:** R-02 Adaptive Marginalia; gerçek provenance/güncellik kısa özeti kalıcı görünür, ek kaynak detayları responsive erişilebilir kontrolle.
+- **Yalnız auth/editor/admin/knowledge:** R-03 Task-first Workbench; form-first, writing-first ve gerçek veri/rol tablolarının güvenli klavye/scroll akışı.
+- **Her ekranda zorunlu:** WCAG 2.2 AA uygunluk hedefi ve uygulama sonrası doğrulama; bu plan mevcut sitenin WCAG belgesine sahip olduğu iddiası değildir.
+- **Önceki sınırlar:** G-02 yalnız selected featured editorial cover; M-02 genel hareket, M-01 görev ekranlarında sakin.
+- **Aşama 11:** Final QA & Visual Polish uygulama **planı** hazırlanabilir; app CSS/JS veya servis kodunda hiçbir değişiklik onaylanmadı.

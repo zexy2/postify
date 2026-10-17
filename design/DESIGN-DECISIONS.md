@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 10 / Responsive & Accessibility — **denetim ve çözüm alternatifleri hazırlanıyor; Aşama 10 onayı henüz yok**.
-**Sonraki aşama:** 11 / Final QA & Visual Polish — **Aşama 10 onayı olmadan başlamayacak**.
+**Aktif aşama:** 11 / Final QA & Visual Polish — **yalnız QA/release kalite planı hazırlanıyor; Aşama 11 kullanıcı onayı henüz yok**.
+**Sonraki aşama:** Kullanıcı Aşama 11 planını onayladıktan sonra, ayrıca izin verilirse ayrı **implementasyon planı ve uygulama izni**; bu 12 aşamalı protokol kod/deploy izni değildir.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -32,8 +32,8 @@
 | 7 Homepage Design | **ONAYLANDI** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | **H-01 Issue Front** | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
 | 9 Motion & Interaction Design | **ONAYLANDI** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | **M-02 ana, makale/auth/editör/admin M-01 sakinliği; sadece selected featured kapakta özel hareket** | 2026-10-17 |
-| 10 Responsive & Accessibility | **Üç adaptasyon alternatifi ve tarama sunuldu; ONAY BEKLENİYOR** | R-01 Editorial Reflow / R-02 Adaptive Marginalia / R-03 Task-first Adaptive Workbench | — | 2026-10-17 |
-| 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
+| 10 Responsive & Accessibility | **ONAYLANDI** | R-01 Editorial Reflow / R-02 Adaptive Marginalia / R-03 Task-first Adaptive Workbench | **R-01 sitewide + R-02 sadece makale/kanıt + R-03 sadece auth/editör/admin/knowledge; WCAG 2.2 AA her ekranda zorunlu hedef** | 2026-10-17 |
+| 11 Final QA & Visual Polish | **QA ve görsel son kontrol planı hazırlanıyor; ONAY BEKLENİYOR** | Q-01/Q-02/Q-03 kalite planı seçenekleri | — | 2026-10-17 |
 
 ## Aşama 0 açık kullanıcı onayı
 **2026-10-17:** Kullanıcı önceki Stage 0 raporunun ardından **“Onaylıyorum”** dedi. Bu onay **yalnızca Aşama 0 denetimi** içindir; önceki UI commitleri, marka stratejisi, renk, tipografi veya Aşama 2 için tasarım onayı anlamına gelmez.
@@ -254,3 +254,16 @@ Araştırma `design/INNER-PAGES-OPTIONS.md` ve soyut `design/inner-pages-composi
 **Öneri, seçim değil:** R-01 site genelinde temel, R-02 sadece ilgili kaynaklı makalede, R-03 sadece gerçek görev ekranlarında. Bütün seçeneklerde WCAG 2.2 AA hedefi bağlayıcıdır; R-02/R-03 accessibility tavizi değildir. CD-005 G-02 yalnız selected featured kapakla sınırlı kalır.
 
 Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve derin yüklemeli **30** navigation salt okunur tarama: 30/30 overflow/pageerror yok; tüm örneklerde H1/alt/input label görüldü; 12px altı text, altı viewportta dar inline hedefler, article anchor accessible-name adayları ve placeholder yazar ekranında çift main landmark kontrol gerektiriyor. Home filtre paneli Escape ile kapanıp focus return sağlıyor (örneklem). Bunlar tam WCAG doğrulaması değil. APPROVED PL-01 çiftlerinin kontrastı yüksek, ama dekoratif çizgi/paper **1,70:1** olduğundan işlevsel focus/border yerine kullanılamaz. Detaylar `design/RESPONSIVE-ACCESSIBILITY-OPTIONS.md`, soyut görsel `design/responsive-accessibility-reference.svg`. Aşama 10 **kullanıcı onayı YOK**; Aşama 11 başlatılmadı. Uygulama kaynağı değiştirilmedi.
+
+
+## CD-010 — Aşama 10 Responsive & Accessibility açık kullanıcı onayı (2026-10-17)
+
+**Kullanıcının aynen onayı:** “Postify Aşama 10 için R-01 Editorial Reflow genel responsive sistemini, R-02 Adaptive Marginalia yalnızca makale ve kanıt ekranlarında, R-03 Task-first Workbench yalnızca auth, editör, admin ve knowledge görev ekranlarında kullanımıyla onaylıyorum. WCAG 2.2 AA bütün ekranlarda zorunlu kalsın. Oracle ve design belgelerine kaydet. Yalnızca Aşama 11 Final QA & Visual Polish planına geç, uygulama kodunu henüz değiştirme.”
+
+**ONAYLI:** `R-01 Editorial Reflow` site geneli; tüm rotalarda ekran daraldıkça okunur, semantik sıralı G-01 grid akışı. `R-02 Adaptive Marginalia` **yalnız makale ve kaynak/kanıt ekranlarında**: genişte yararlı kaynak/TOC rayı, mobilde görünür kısa ve doğru kanıt özeti + isteğe bağlı erişilebilir detay; bütün bilgi erişilebilir. `R-03 Task-first Workbench` **yalnız auth, editör, admin ve knowledge görev ekranlarında**: form-first, writing-first, erişilebilir tablo/role/durum ve safe keyboard/overflow.
+
+**DEĞİŞMEZ KABUL KAPISI:** Her ekranda ve bütün işlevsel durumlarda **WCAG 2.2 AA uygunluğunu gerçekleştirmek ve doğrulamak zorunlu kalite hedefidir**; “hedef” ifadesi mevcut uygulamanın şimdiden uygun olduğu anlamına gelmez. `prefers-reduced-motion`, keyboard/focus/label/name/role/status, non-text contrast, gerçek zoom/reflow ve 2.5.8 istisna değerlendirmesi ile manuel yardımcı teknoloji testleri gerekir. Harf/ikon dekorasyonu ve renk işlevsel durumun tek işareti olamaz.
+
+**SINIR:** R-02 sitewide sticky kaynak rayı veya dashboard anlamına gelmez; R-03 genel public siteye uygulanmaz. G-02 editorial kompozisyon istisnası **yalnız seçilmiş featured yayın kapaklarında**. Onaylı CD-001..CD-009 kararları korunur.
+
+**KOD/DISTRIBUTION:** Yalnızca tasarım kararı. Uygulamanın JSX/CSS, font, API, servis, kullanıcı verisi, GitHub push, build veya canlı deployment'ı değiştirilmedi. **Sadece Aşama 11 Final QA & Visual Polish planı** açıldı; testlerin uygulanması, sorunların düzeltilmesi ve siteyi yeniden tasarlama için ayrıca açık talimat gerekir.

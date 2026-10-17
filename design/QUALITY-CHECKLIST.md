@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 10 — CD-009 M-02 ana + M-01 görev ekranı sakinliği ONAYLI; responsive/a11y denetimi ve R-01/R-02/R-03 seçenekleri sunuldu, kullanıcı Aşama 10 onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 11 — CD-010 R-01 genel + R-02 makale/kanıt + R-03 auth/editör/admin/knowledge ONAYLI; Aşama 11 QA/Visual Polish planı hazırlanıyor, onay bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -41,7 +41,8 @@
 - [x] Aşama 9 M-02 Editorial Rhythm genel + M-01 sakin görev ekranları + selected featured-only özel hareket kullanıcı tarafından CD-009 ile açıkça onaylandı.
 - [x] Aşama 10 gerçek uygulama salt okunur 85 ilk görünüm + 30 yüklenmiş görünüm Chromium taraması; keyboard/filter kontrolü ve palette contrast hesabı belgelendi.
 - [x] Aşama 10 R-01/R-02/R-03 responsive politika seçenekleri ile WCAG 2.2 AA minimum kabul şartları belgelendi.
-- [ ] Aşama 10 Responsive & Accessibility kullanıcı onayı henüz verilmedi.
+- [x] Aşama 10 R-01 sitewide + R-02 yalnız article/evidence + R-03 yalnız auth/editor/admin/knowledge ve bütün ekranlarda WCAG 2.2 AA kullanıcı onayı CD-010 ile kaydedildi.
+- [ ] Aşama 11 Final QA & Visual Polish planı kullanıcı onayı henüz verilmedi; uygulama ve tam kabul testleri yapılmadı.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -63,4 +64,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Kullanıcının R-01/R-02/R-03 veya kapsamı açık hibrit yanıtını bekle; Aşama 10 onayından önce Aşama 11 Final QA & Visual Polish başlatma. Tam WCAG uyumu henüz iddia edilmez.
+**Şimdiki sonraki adım:** Yalnızca Aşama 11 Final QA & Visual Polish için ölçülebilir kabul, regresyon, görsel ve erişilebilirlik kontrol planını seçenekleriyle sun; kullanıcının Aşama 11 planı onayını bekle. Kod/test çalıştırma ve deploy yapma izni verilmedi.

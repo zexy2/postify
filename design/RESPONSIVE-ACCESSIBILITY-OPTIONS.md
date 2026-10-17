@@ -1,7 +1,7 @@
 # Postify — Aşama 10 / Responsive & Accessibility
 
 **Tarih:** 2026-10-17
-**Durum:** R-01 / R-02 / R-03 çözüm politikaları hazır, **Aşama 10 ONAY BEKLENİYOR**.
+**Durum:** **Aşama 10 CD-010 kullanıcı onayı alındı: R-01 genel + R-02 yalnız makale/kanıt + R-03 yalnız auth/editör/admin/knowledge; WCAG 2.2 AA zorunlu.** Aşağıdaki karşılaştırma tarihi araştırma olarak korunur.
 **Sınır:** Yalnızca gerçek uygulamada salt okunur denetim, tasarım seçenekleri ve belgeler. JSX/CSS, servis, veri, push veya deploy değişmedi. Aşama 11 başlatılmadı.
 
 ## Önceki bağlayıcı kararlar
@@ -94,3 +94,7 @@ Genel R-01 yayını bozmadan yalnız **auth/editor/admin/knowledge** rotalarınd
 ## 5. Karar kapısı
 
 **Aşama 10 kullanıcı onayı henüz yok.** Kullanıcı R-01/R-02/R-03 veya açıkça sınırlandırılmış hibriti seçmeli. Karar `DESIGN-DECISIONS.md` ve `DESIGN-SYSTEM.md` içine ancak açık onayla işlenebilir. **Aşama 11 Final QA & Visual Polish kullanıcı Aşama 10'u onaylamadan başlamaz.** Her aşama belgesi uygulama kodu yetkisi sayılmaz.
+
+
+## 6. Sonraki kullanıcı kararı: CD-010 (2026-10-17)
+Kullanıcı **R-01 sitewide**, **R-02 sadece makale/evidence** ve **R-03 sadece auth/editor/admin/knowledge** politikasını açıkça onayladı; **WCAG 2.2 AA bütün ekranlarda vazgeçilmez**. Bu çalışma bir uygunluk sertifikası veya uygulama izni değildir. Sadece Aşama 11 Final QA & Visual Polish kalite planı açıldı. Önceki seçenekler tarihsel kayıttır.
