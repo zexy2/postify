@@ -121,3 +121,25 @@ The user explicitly responded **“Evet”** to the request for test/build autho
 - **Regression after last patch:** ESLint PASS, Vitest **162/162**, Vite production build PASS, dependency security audit **0 known vulnerabilities**; final Chromium E2E **56/56** pass (\`job-4be2fb84eec2\`) on compiled build, valid \`robots.txt\` served as \`text/plain\`.
 - **Scope limitation:** Lighthouse accessibility **100** is only automated lab sampling, **not complete WCAG 2.2 AA conformance**; account-protected routes, real authorized editor/admin/knowledge workflows, manual VoiceOver/NVDA/TalkBack, literal 200/400% browser zoom and performance field p75 **still unverified**.
 - **Safe state:** source branch remains local; production/main worktree not modified; no remote push/deploy. Oracle next-action must prioritize mobile performance architectural changes and manual/authenticated QA rather than claim release-ready.
+
+
+## 2026-10-17 — Oracle interrupted-task recovery / mobile cover asset optimization
+
+**User explicitly requested:** `dev_agent_recover(run_id=run-96210d9920c1)`, preserve working edits and decisions, verify tests and continue from the last recorded stage.
+
+- Recovery returned the correct isolated worktree `chatgpt/ws-276e5f67e3ed` at `3285b47`, with **four uncommitted work items safely preserved**: `Hero.jsx`, generated responsive WebP assets, `src/lib/responsiveCover.js`, and a new Vitest helper test. The isolated build, old main repo and approved CD-001..011 design records were not reset or overwritten.
+- A prior **trial** to defer the mobile Sheet until clicked and apply `content-visibility` to offscreen feed cards failed 2/56 E2E regressions. Both experimental diffs were explicitly reverted before building the retained image optimization. Do not retry that trial without redesigning first-click latency and content geometry.
+- Generated 480px and 800px WebP variants for eight known **bundled** editor images. `getResponsiveCoverSrcSet()` maps these known local paths only; remote/uploaded URLs and unknown local paths are unchanged. Hero now uses responsive `srcSet/sizes` for the featured image. Chromium verified **390px/DPR1** mobile selects `/images/posts/responsive/ai-muhendisligi-480.webp` rather than the original 1200px asset; visible article art remains available. For this example **78.4 KiB original → 23.4 KiB mobile transfer candidate**. No image/video metadata or verification claim was invented.
+- Extra responsive WebP copies increase the generated PWA precache from **75 files / 1856.93 KiB** to **91 files / 2258.16 KiB**. This is a real offline-install/storage trade-off; bundled responsive variants should not be removed from offline cache without confirming fallback behavior.
+- The first image optimization build raised the entry JS above its strict **320000-byte** threshold (320491 bytes). Adding a second Terser `compress.passes` shrank the entry to **319294 bytes**, below the **unchanged** budget; build smoke passed all 11 critical artifacts. Avoid raising the budget simply to pass this check.
+- Verification after recovery: **164/164 Vitest** (43 files), ESLint pass, Vite production build pass, `verify:security` **zero known advisories**, build smoke passed. Playwright on recovered candidate originally **56/56**. An additional E2E assertion confirms the browser-selected mobile responsive hero file; **57/57 Playwright E2E PASS**, job `job-7f6d7653e447`.
+- A/B local Lighthouse 13.5 mobile, same preserved original build vs rebuilt candidate, two independent runs each:
+
+| Pass | Original Performance | Responsive-cover Performance | Original LCP | New LCP | Original TBT | New TBT |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 55 | 56 | 4668ms | 4665ms | 862ms | 841ms |
+| 2 | 55 | 55 | 4771ms | 4685ms | 848ms | 864ms |
+
+All four Lighthouse reports had **Accessibility 100, Best Practices 100, SEO 100, CLS 0**. The modest image transfer savings are grounded; **NO reliable Lighthouse performance score improvement was established**, mobile lab remains about **55/100** and remains a QA blocker. Lighthouse JSON: `/tmp/postify-recovery-lh-before-1.json`, `before-2`, `after-1`, `after-2`. These local measurements are not field p75.
+
+**What remains blocked:** real authorized admin/editor/session workflows, manual WCAG2.2 AA/AT and real 200/400% zoom, actual mobile production field Core Web Vitals, LCP/TBT/main-thread/Supabase loading architecture work, and final editorial art-direction acceptance. The assistant must **NOT** push GitHub, deploy, invent test success or mark the release ready. Capture subsequent progress as a separate Oracle checkpoint.

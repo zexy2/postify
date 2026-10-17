@@ -83,3 +83,13 @@
 - [x] Yerel mobil Lighthouse 13.5 lab: **Accessibility 96→100**, **SEO 85→100**, **Best Practices 100→100**, \`color-contrast/link-text/robots-txt\` audit PASS; son kaynakla Vitest **162/162**, Playwright **56/56**, build ve security PASS.
 - [ ] **Mobil performans KAPISI AÇIK:** Son Lighthouse lab **55/100**, **LCP ~4.7s**, **TBT ~860ms**, **CLS 0**. Entry/Supabase başlangıç JS ve main-thread kritik yük profili çıkarılacak; güvenli kod ayrıştırma kararı, karşılaştırmalı performans ölçümü ve regresyon testleri gerekiyor. Lab ≠ gerçek kullanıcı p75.
 - [ ] Manuel WCAG 2.2 AA, destekleyici teknolojiler, gerçek kullanıcı oturumlu işlemler, tüm durumların görsel kabulü ve deployment onayı açık. **Otomatik 100 Lighthouse erişilebilirlik puanı bunu kapatmaz.**
+
+
+## Oracle recovery and mobile image performance (2026-10-17)
+
+- [x] Exact interrupted Postify run `run-96210d9920c1` recovered without resetting Git; working assets preserved in isolated branch.
+- [x] Earlier failed Sheet-on-click and offscreen `content-visibility` trial **reverted** because it failed first-click/touch-target E2E. Existing menu and scroll behavior preserved.
+- [x] Local featured images given 480/800px responsive WebP variants with local-only `srcSet`, real Chromium mobile selection verified; remote media unmodified.
+- [x] Entry chunk brought under existing 320000-byte build budget (319294 bytes) via second Terser compression pass; Vitest 164/164, Chromium Playwright **57/57**, lint/build/smoke/security pass.
+- [x] Two-run mobile Lighthouse baseline/candidate comparison: score **55/55 → 55/56**, no reliable improvement; **Performance gate remains OPEN**, despite measured transfer savings for example featured image.
+- [ ] Future performance focus remains JS/hydration/main-thread and authorized data flows; no false Lighthouse performance victory or manual WCAG compliance claim.

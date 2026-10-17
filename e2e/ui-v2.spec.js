@@ -1395,3 +1395,15 @@ test.describe('Approved publication palette accessibility', () => {
     await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#A13826');
   });
 });
+
+// The approved featured issue cover should download a genuinely smaller local
+// image on narrow displays, without changing remote/user-uploaded URL rules.
+test('mobile featured cover selects a generated responsive image', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const image = page.locator('a[class*="featured"] img[class*="featuredImage"]').first();
+  await expect(image).toBeVisible();
+  await expect.poll(() => image.evaluate((node) => node.complete && node.naturalWidth > 0)).toBe(true);
+  const imageSource = await image.evaluate((node) => node.currentSrc);
+  expect(imageSource).toMatch(/\/images\/posts\/responsive\/ai-muhendisligi-480\.webp(?:\?.*)?$/);
+});
