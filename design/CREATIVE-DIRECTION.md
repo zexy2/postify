@@ -136,3 +136,6 @@ Yukarıdaki yerleşimler **nötr konsept taslaklarıdır**. Bunlarda özgül ren
 
 ## 7. Aşama 2 referans bağlantısı
 Gerçek yedi kaynak sitesi, Oracle Chromium ekran görüntüleri, üç araştırma panosu ve seçeneklerin karşılaştırmalı değerlendirmesi: [MOODBOARD-RESEARCH.md](./MOODBOARD-RESEARCH.md). Moodboard'ların hiçbiri onaylanmadı. **Aşama 3'e geçme.**
+
+## 8. Moodboard onay sınırı
+2026-10-17 CD-002: MOOD-02 ana, MOOD-01 kanıt/UX ve MOOD-03 teknik anlatımda seçici kullanım olarak onaylandı. Bu renk veya font onayı değildir.

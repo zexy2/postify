@@ -116,3 +116,6 @@
 - A+B içinde açıkça tarif ettiği alt denge/hibridi
 
 seçmesini iste. Seçim sonrası referansların hangi soyut ilkelerinin Postify'a taşınacağı ve kaçınılacak olanlar `DESIGN-DECISIONS.md` içinde onay metniyle kaydedilir. **Aşama 3 Color System'e yalnızca Stage 2 açık onayından sonra geçilir.** Şimdi **herhangi bir renk, font, grid, tasarım bileşeni, animasyon kararı ya da uygulama kodu yok**.
+
+## 7. Kullanıcı kararı (CD-002)
+2026-10-17: MOOD-02 ana editoryal yaklaşım, MOOD-01 kanıt/kullanılabilirlik ilkeleri ve MOOD-03 yalnızca uygun teknik makaleler için açıkça onaylandı. Önceki onay bekleyen bölüm tarihsel teklif kaydıdır; renk seçimi henüz yapılmadı.

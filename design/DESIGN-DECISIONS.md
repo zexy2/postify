@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 2 / Reference Research & Moodboards — **gerçek referans araştırması ve üç moodboard sunuldu; Aşama 2 onayı bekleniyor**.
-**Sonraki aşama:** 3 / Color System — **Aşama 2 kullanıcı onayı olmadan başlamayacak**.
+**Aktif aşama:** 3 / Color System — **gerçek referans araştırması ve üç moodboard sunuldu; Aşama 2 onayı bekleniyor**.
+**Sonraki aşama:** 4 / Typography System — **Aşama 2 kullanıcı onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -24,8 +24,8 @@
 | --- | --- | --- | --- | --- |
 | 0 Current Product Audit | **ONAYLANDI** | Teknik, tasarımsal ve 51-render denetimi | Kullanıcının açık yanıtı: **“Onaylıyorum”** | 2026-10-17 |
 | 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
-| 2 Reference Research & Moodboards | **Üç moodboard sunuldu; onay bekliyor** | MOOD-01 Evidence-led, MOOD-02 Independent Issue, MOOD-03 Illustrated Field Stories | — | 2026-10-17 |
-| 3 Color System | Başlanmadı | Henüz yok | — | — |
+| 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
+| 3 Color System | Alternatifler hazırlanıyor, seçim bekleniyor | Üç farklı light/dark palet ve kontrast | — | 2026-10-17 |
 | 4 Typography System | Başlanmadı | Henüz yok | — | — |
 | 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
 | 6 Component Design System | Başlanmadı | Henüz yok | — | — |
@@ -64,3 +64,10 @@
 
 ## Gelecek onay değişikliği formatı
 Her görsel karar için ID, aşama, alternatifler, önizleme referansı, gerekçe, artı/eksi, etkilenen sayfalar, erişilebilirlik/performans etkisi, kullanıcıdan gelen açık onay metni/tarihi, ilgili commit ve gerekirse geri alma notu yazılır. **Cevap verilmemesi onay sayılmaz.**
+
+## CD-002 — Kullanıcının Aşama 2 onayı (2026-10-17)
+Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana görsel referansını, MOOD-01 Evidence-led Editorial'ın kanıt ve kullanılabilirlik prensipleriyle birlikte onaylıyorum. MOOD-03 sadece uygun teknik açıklayıcı makalelerde değerlendirilsin. Kararı kaydet ve yalnızca Aşama 3 renk sistemi alternatiflerine geç.”
+
+**ONAYLANDI:** MOOD-02 ana editoryal kimlik; MOOD-01 kanıt, güven, kullanılabilirlik ve okunabilirlik disiplini; MOOD-03 yalnızca yarar sağlayan teknik açıklayıcı makalelerde destek. Bu seçim CD-001 A+B hibritini korur. MOOD-01 ve MOOD-03 bağımsız ana yön olarak seçilmedi.
+
+**ONAYLANMADI:** Belirli renk/hex, açık/koyu tema, font, grid, bileşen, hareket ve uygulama kodu. Aşama 3'te yalnızca renk seçenekleri ve ölçülü kontrast analizleri sunulacak. Kullanıcı Aşama 3'ü onaylamadan Aşama 4 açılmayacak.

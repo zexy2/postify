@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 2 — yedi gerçek yayın referansı, üç moodboard alternatifi sunuldu; kullanıcı seçimi bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 3 — renk sistemi alternatifleri hazırlanıyor; palet onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -17,7 +17,8 @@
 - [x] Aşama 1 **A+B hibrit yaratıcı stratejisi** kullanıcı tarafından açıkça onaylandı (2026-10-17).
 - [x] Aşama 2: yedi gerçek yayın sitesi, desktop/mobile kaynak taraması ve sınırlamalar belgelendi.
 - [x] Aşama 2: MOOD-01/02/03 alternatifleri, ürün uyumu ve riskleri belgelendi.
-- [ ] Aşama 2 referans/moodboard seçimi henüz onaylanmadı.
+- [x] Aşama 2 CD-002 kapsamında MOOD-02 ana, MOOD-01 kanıt/UX, MOOD-03 sınırlı teknik kullanımla onaylandı.
+- [ ] Aşama 3 renk seçimi henüz onaylanmadı.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
