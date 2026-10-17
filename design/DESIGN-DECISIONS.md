@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 5 / Grid, Layout & Spacing — **üç alternatif araştırılıyor, kullanıcı yerleşim kararı henüz yok**.
-**Sonraki aşama:** 6 / Component Design System — **Aşama 5 kullanıcı onayı olmadan başlamayacak**.
+**Aktif aşama:** 6 / Component Design System — **alternatif tasarım sistemleri araştırılıyor; Aşama 6 kullanıcı onayı henüz yok**.
+**Sonraki aşama:** 7 / Homepage Design — **Aşama 6 onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -27,8 +27,8 @@
 | 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
 | 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
 | 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
-| 5 Grid, Layout & Spacing | **3 alternatif sunuldu; ONAY BEKLENİYOR** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | — | 2026-10-17 |
-| 6 Component Design System | Başlanmadı | Henüz yok | — | — |
+| 5 Grid, Layout & Spacing | **ONAYLANDI** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | **G-01 ana sistem + G-02 yalnızca öne çıkan editoryal yayın dosyalarında** | 2026-10-17 |
+| 6 Component Design System | **Alternatifler araştırılıyor; karar bekliyor** | Bileşen aileleri/etkileşim ve durum matrisi | — | 2026-10-17 |
 | 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
 | 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
 | 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
@@ -133,3 +133,18 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 - Örnek CSS HTML sadece repo dışında. Onaylı PL-01 ve TYPE-02 aile isimlerine uyma hedefiyle hazırlanmıştır; Fraunces'ın son font dosyası/font metrikleri bu prototiplerde garanti edilmez.
 - **Öneri:** G-01'in kontrollü tasarım omurgası, ancak özgün kapaklara gerektiğinde G-02'nin sınırlı editorial sapması düşünülebilir. **Bu öneri onay değildir.**
 - **Onay durumu: BEKLENİYOR.** Grid/spacing henüz kesinleşmedi, uygulama JSX/CSS, diğer repo, push/deploy değiştirilmedi. Aşama 6, kullanıcı Aşama 5'e açık onay verene kadar kapalı.
+
+
+## CD-005 — Aşama 5 G-01 + seçici G-02 onayı (2026-10-17)
+
+**Kullanıcının tam onay metni:** “Postify Aşama 5 için G-01 Editorial Spine ana grid sistemini ve G-02 Modular Broadsheet kompozisyonlarının yalnızca öne çıkan editoryal yayın dosyalarında seçici kullanımını onaylıyorum. Kararı design belgelerine ve Oracle'a kaydet. Yalnızca Aşama 6 Component Design System alternatiflerine geç; uygulama kodunu henüz değiştirme.”
+
+**ONAYLI:** Site çapında **G-01 Editorial Spine** ana düzen ilkesi: 12 kolonlu düzen omurgası; önerideki masaüstü max container **1280px**, gutter **56px**, içerik gap **24px**, 7:5 öne çıkan içerik asimetrisi, 3 kolonlu feed, yaklaşık **715px** makale ana okuma ölçüsü; iki yan alan TOC ~170px, evidence ~210px yalnızca kullanışlı olduğu durumlarda. Mobil ilk örnekler: 390px için yaklaşık 26px, 320px için yaklaşık 20px dış gutter; küçük ekranlarda tek akış, içerik ve kanıt kaybolmaz. Spacing gramerinin 8px temel ritimle 4/8/12/16/24/32/48/64/96 aday adımları, onaylı sistemin uygulanırken gözden geçirilecek ölçü hedefidir.
+
+**SINIRLI İSTİSNA:** **G-02 Modular Broadsheet** ancak seçilmiş editoryal dosyalar / özel featured kapaklarda, gerekçe ile kullanılabilir. Bu izin, G-02'nin 1440px site genelinde max genişliği, düzensiz kartları veya bütün iç ekranlarda modüler dağılımını **onaylamaz**. Büyük editoryal kapak, arama ve kaynak bilgisinin görünürlüğünü geri plana atamaz.
+
+**SEÇİLMEYEN:** G-03 Reading Sanctuary site çapında ana sistem değil. Seçilmeyen alternatiflerin dokümantasyonu geçmiş araştırma olarak saklanacak.
+
+**UYGULAMA DURUMU:** Dokümantasyon onayı. Gerçek CSS breakpoint uyarlamaları, içerik yüksekliğine ve erişilebilirliğe göre doğrulanmalı; bu karar herhangi bir production kod değişikliği, font dosyası yükleme veya release onayı değildir. PL-01 renkleri, TYPE-02 font rolleri ve CD-002 moodboard kararı korunur.
+
+**SONRAKİ ADIM:** Sadece Aşama 6 bileşen tasarım alternatifleri. Aşama 6 onayı olmadan Aşama 7'ye geçilmez.

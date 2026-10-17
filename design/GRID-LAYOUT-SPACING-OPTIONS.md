@@ -1,7 +1,7 @@
 # Postify — Aşama 5 / Grid, Layout & Spacing Alternatifleri
 
 **Tarih:** 2026-10-17
-**Durum:** **G-01 / G-02 / G-03 alternatifleri hazır; kullanıcı Aşama 5 onayı BEKLENİYOR.**
+**Durum:** **G-01 ana grid + G-02 yalnızca öne çıkan editoryal yayın dosyalarında seçici kullanım ONAYLANDI (CD-005)**. Önceki seçenek karşılaştırmaları tarihsel araştırmadır.
 **Onaylı kararlar:** CD-001 A+B yaratıcı strateji; CD-002 MOOD-02 ana dergi karakteri ve MOOD-01 güven/kaynak disiplini; CD-003 PL-01 Oxide & Newsprint; CD-004 **TYPE-02 Fraunces + Inter + IBM Plex Mono**.
 **Sınır:** Aşağıdaki hiçbir max-width, gutter, grid column, article measure, spacing token veya breakpoint **kullanıcı tarafından onaylanmamıştır**. `src/` ve uygulama kodu değişmedi. Aşama 6 Component Design System **başlatılmadı**.
 
@@ -106,3 +106,8 @@ Bu dış görsel prototiplerin hiçbiri uygulama bundle'ına, gerçek kullanıc�
 ## 6. Aşama 5 karar kapısı
 
 Kullanıcının **G-01 / G-02 / G-03** veya sınırları belirlenmiş hibriti açıkça onaylaması bekleniyor. Rakamlar ve örnek düzenler şu anda öneridir. Onayla birlikte seçilen grid/geometri/spacing prensipleri `DESIGN-DECISIONS.md` ve `DESIGN-SYSTEM.md` içine **approved** olarak taşınır, diğer iki alternatif tarihsel kayıt olarak korunur. **Aşama 6 Component Design System ancak bu açık onayla başlayabilir.** JSX/CSS/site deploy/GitHub push yapılmadı.
+
+
+## 7. Sonradan gelen kullanıcı kararı — CD-005
+
+2026-10-17 kullanıcı açıkça **G-01 ana sistem + sadece öne çıkan editoryal yayın dosyalarında G-02** kullanımını onayladı. G-01'in genel grid ve responsive düzen ilkeleri [DESIGN-SYSTEM.md](./DESIGN-SYSTEM.md) içine aktarıldı. G-02 bütün sayfalara yayılmayacak; G-03 site geneli ana sistem değil. Bu onay **bileşen stili, uygulama kodu, CI, push veya production** izni değildir. Aşama 6 önerilerinden önceki bu araştırma arşivlendi.

@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — Aşama 3 PL-01 renkleri ve Aşama 4 TYPE-02 font aileleri ONAYLI; grid, component, motion ve ölçekler ONAYSIZ.**
+**Durum: KISMEN ONAYLI — PL-01 renkleri, TYPE-02 font aileleri ve G-01 ana grid (sınırlı G-02 feature istisnası) ONAYLI; component, motion ve henüz kararlaştırılmayan detay ölçüler ONAYSIZ.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -33,10 +33,10 @@ Durum: **PL-01 Oxide & Newsprint ONAYLANDI (CD-003, kullanıcı renk seçimini a
 Durum: **TYPE-02 Expressive Issue, kullanıcı tarafından ONAYLANDI (CD-004).** Serif **Fraunces** (editoryal başlıklar), sans **Inter** (gövde, UI ve formlar), mono **IBM Plex Mono** (kaynak/meta/kod). [TYPOGRAPHY-OPTIONS.md](./TYPOGRAPHY-OPTIONS.md) karşılaştırma ve lisans kanıtlarını içerir. **Font aileleri/rolleri onaylı; font boyutları, gerçek variable axis ayarları, font dağıtımı, grid ve spacing henüz onaysızdır.**
 
 ### Aşama 5: Grid & spacing
-Durum: **G-01/G-02/G-03 sunuldu, kullanıcı kararı bekleniyor.** Konteyner/grid/okuma ölçüleri ve responsive adayları [GRID-LAYOUT-SPACING-OPTIONS.md](./GRID-LAYOUT-SPACING-OPTIONS.md), konum eskizleri [grid-layout-reference.svg](./grid-layout-reference.svg) dosyasında. **Hiçbir yerleşim ölçüsü onaylanmış sayılmaz.**
+Durum: **G-01 Editorial Spine ana sistem + G-02 yalnızca öne çıkan editoryal dosyalarda seçici kullanım ONAYLI (CD-005).** Öncelikli container 1280px, 12-column; masaüstü gutter 56px, gap 24px, 7:5 feature, 3-col feed; makale ana ölçü yaklaşık 715px. Mobil hedef gutter 26px @390 / 20px @320, dar ekranda tek akış. **G-02'nin site çapında 1440px genişliği, modüler dağılımı ve G-03 onaylanmadı.** Detaylar [GRID-LAYOUT-SPACING-OPTIONS.md](./GRID-LAYOUT-SPACING-OPTIONS.md). Bu değerler ileriki uygulama aşamasında içerik, zoom ve cihaz davranışına göre doğrulanmalıdır.
 
 ### Aşama 6: Components
-Durum: bekliyor. Buttons, cards, forms, nav, status components, interaction states onaysız.
+Durum: **alternatif araştırması aktif, kullanıcı onayı yok.** Buttons, cards, forms, nav, evidence/status, hover/focus/loading/error durumları henüz onaysız.
 
 ### Aşama 9: Motion
 Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.

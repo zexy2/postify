@@ -46,3 +46,6 @@ Bu aşamada **17 × 3 = 51 render**; gerçek hesap gerektiren 6 sayfanın **içe
 
 ## Güncel tasarım aşaması notu (2026-10-17)
 Aşama 5 için üç farklı dış grid/okuma measure/spacing sistemi `GRID-LAYOUT-SPACING-OPTIONS.md` içinde geliştirildi. **G-01/02/03 onaylanmamıştır.** İçerik, giriş, makale ve korumalı sayfaların hiçbiri bu yeni gridle uygulanmadı; bu tablodaki “Bekliyor” durumları tüm sayfalar için geçerlidir.
+
+## Güncel Stage 5 kararı (CD-005)
+G-01 tüm rotalarda layout omurgasıdır; G-02 yalnızca onaylı istisna kapsamındaki öne çıkan editoryal dosyalar için değerlendirilebilir. Bu tablo sayfaların implementasyon durumu için geçerlidir ve hiçbir sayfa yeni sistemle **henüz uygulanmış değildir**.
