@@ -1,7 +1,7 @@
 # Postify — Design System Approval Registry
 
-**Durum: HENÜZ ONAYLANMIŞ DESIGN SYSTEM YOK.**
-Bu sayfada yalnızca **mevcut koddan tespit edilmiş** değerlerin audit envanteri bulunur; bunlar yeni tasarım için bağlayıcı değildir.
+**Durum: KISMEN ONAYLI — Aşama 3 PL-01 renk sistemi seçildi; font, grid, component, motion ve diğer aşamalar hâlâ ONAYSIZ.**
+Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
 | Alan | Çalışma branch'inde görülen | Kaynak | Onay |
@@ -27,7 +27,7 @@ Bu sayfada yalnızca **mevcut koddan tespit edilmiş** değerlerin audit envante
 
 ## Gelecekte açılacak onaylı alanlar — ŞİMDİ BOŞ
 ### Aşama 3: Color system
-Durum: **PL-01 / PL-02 / PL-03 sunuldu, onay bekliyor.** Light/dark hex değerleri, önerilen semantic durum renkleri ve WCAG kontrast ölçümleri [COLOR-SYSTEM-OPTIONS.md](./COLOR-SYSTEM-OPTIONS.md) dosyasında. Renk örnekleri [color-palette-reference.svg](./color-palette-reference.svg) dosyasında. **Henüz seçilmiş palet yok.**
+Durum: **PL-01 Oxide & Newsprint ONAYLANDI (CD-003, kullanıcı renk seçimini asistana devretti).** Light/dark hex değerleri, önerilen semantic durum renkleri ve WCAG kontrast ölçümleri [COLOR-SYSTEM-OPTIONS.md](./COLOR-SYSTEM-OPTIONS.md) dosyasında. Renk örnekleri [color-palette-reference.svg](./color-palette-reference.svg) dosyasında. **Seçili palet PL-01’dir.**
 
 ### Aşama 4: Typography
 Durum: bekliyor. Font families, lisans, variable font/performance, scale, editorial body ölçüleri ve dil desteği onaysız.
@@ -42,3 +42,22 @@ Durum: bekliyor. Buttons, cards, forms, nav, status components, interaction stat
 Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
 
 **Kural:** `DESIGN-DECISIONS.md` içindeki kullanıcı onayı olmadan bu bölümlere “approved” değeri girme ve kodu değiştirme.
+
+
+## 1. ONAYLI — Oxide & Newsprint / temel brand renkleri
+
+| Semantik rol | Light | Dark | Onay kaydı |
+| --- | --- | --- | --- |
+| background / paper | `#F4EFE6` | `#151B19` | CD-003 |
+| elevated reading surface | `#FDFBF6` | `#222A26` | CD-003 |
+| primary text / ink | `#1F2420` | `#EFEDE5` | CD-003 |
+| secondary text | `#4F5A53` | `#B7BCAF` | CD-003 |
+| primary link / button surface | `#A13826` | `#F2AC91` | CD-003 |
+| text on primary button | `#FFFFFF` | `#151B19` | CD-003 |
+| decorative companion only | `#C8B89E` | *onaysız* | CD-003 |
+
+**Kullanım ilkesi:** Birincil vurgu kontrollü; kaynak doğrulama/bildirim durumları brand vurgu ile karıştırılmaz. Araştırmadaki light ink/paper yaklaşık 13,77:1, secondary/paper 6,28:1, white/accent 6,75:1; dark primary/background 14,90:1, accent/background 9,22:1. Gerçek sayfada mixed state ve image overlay kontrastları henüz ölçülmedi.
+
+**Kapsam dışı:** Error/success/warning/info ve tüm focus/border/hover/disabled state renkleri `COLOR-SYSTEM-OPTIONS.md` içinde şimdilik adaydır; bu kararla *onaylı* duruma geçmediler. Typography ve layout da onaysızdır.
+
+**Uygulama durumu:** Tasarım dokümanına kaydedildi. `src/index.css` ve diğer uygulama kodları Aşama 3'te **değiştirilmedi**.

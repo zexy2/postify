@@ -1,7 +1,7 @@
 # Postify — Aşama 3 / Color System Alternatives
 
 **Tarih:** 2026-10-17
-**Aktif durum:** **Üç palette alternatifi sunuldu; kullanıcı Aşama 3 seçimi BEKLENİYOR.**
+**Aktif durum:** **PL-01 Oxide & Newsprint kullanıcı delegasyonuyla ONAYLANDI** (CD-003); bu belgenin diğer iki seçeneği tarihsel alternatif olarak korunur.
 **Onaylı girdiler:** CD-001 A+B Creative Direction; CD-002 MOOD-02 Independent Issue **ana** + MOOD-01 Evidence-led Editorial **kaynak, güven ve kullanılabilirlik disiplini**; MOOD-03 yalnızca ilgili teknik açıklayıcılarda seçici.
 **Kesin sınır:** Bu dosyada listelenen **hiçbir hex, kategori, light/dark yüzey, on-button rengi, semantik token veya dağılım kullanıcı tarafından onaylanmadı**. `src/`, style dosyaları, bileşenler ve canlı site **değiştirilmez**. Bir sonraki Aşama 4 Typography, Aşama 3 onayı olmadan başlatılmaz.
 
@@ -106,3 +106,6 @@ Görsellerin konuşma dışında da erişilebilmesi için yalnızca renk swatch 
 ## 6. Açık onay kapısı
 
 Kullanıcıdan **PL-01 / PL-02 / PL-03** veya örnekleri açıkça belirlenmiş **hibrit** seçimini iste; isterse aksan/zemin özel düzeltmeleri konuş. Onay geldikten sonra seçilen palet ve anlamı `DESIGN-DECISIONS.md` + `DESIGN-SYSTEM.md` içine **onaylı** olarak aktarılabilir. Ancak onay gelmeden Aşama 4 Typography başlatılamaz; UI kodu ve canlı site değiştirilmez.
+
+## 7. Renk seçimi — CD-003
+2026-10-17 kullanıcı “Sana bıraktım en modern ve profesyonel duranı seç” diyerek seçimi asistanın yapmasına izin verdi. Asistan **PL-01 Oxide & Newsprint** paletini seçti. Çekirdek light/dark renkleri `DESIGN-SYSTEM.md` içinde onaylıdır; genel semantik uyarı/focus/hover ve komponent durumları bu onayla kesinleşmedi. Font, grid ve uygulama kodu değişmedi.

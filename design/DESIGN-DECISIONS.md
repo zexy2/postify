@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 3 / Color System — **PL-01/02/03 sunuldu, kullanıcı palet kararı bekleniyor**.
-**Sonraki aşama:** 4 / Typography System — **Aşama 3 palet kararı olmadan başlamayacak**.
+**Aktif aşama:** 4 / Typography System — **üç tipografi sistemi alternatifine geçildi; kullanıcı font seçimi henüz yok**.
+**Sonraki aşama:** 5 / Grid, Layout & Spacing — **Aşama 4 font onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -25,8 +25,8 @@
 | 0 Current Product Audit | **ONAYLANDI** | Teknik, tasarımsal ve 51-render denetimi | Kullanıcının açık yanıtı: **“Onaylıyorum”** | 2026-10-17 |
 | 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
 | 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
-| 3 Color System | **Üç alternatif sunuldu, karar bekliyor** | **PL-01 Oxide & Newsprint; PL-02 Evergreen & Brass; PL-03 Ultramarine & Chalk** | — | 2026-10-17 |
-| 4 Typography System | Başlanmadı | Henüz yok | — | — |
+| 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
+| 4 Typography System | **Alternatifler hazırlanıyor; onay bekliyor** | Üç ayrı serif/sans/mono stratejisi | — | 2026-10-17 |
 | 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
 | 6 Component Design System | Başlanmadı | Henüz yok | — | — |
 | 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
@@ -74,3 +74,22 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 
 ## Aşama 3 renk alternatifleri (ONAYSIZ)
 2026-10-17: PL-01 Oxide & Newsprint; PL-02 Evergreen & Brass; PL-03 Ultramarine & Chalk. Light/dark hex, rol eşleştirmeleri, karşılaştırmalı gerekçe ve matematiksel kontrast oranları design/COLOR-SYSTEM-OPTIONS.md dosyasındadır; design/color-palette-reference.svg renk swatch sunumudur. **Kullanıcı renk paleti seçmedi.** Bir sonraki karar PL-01/02/03 veya açık hibrit; Aşama 4 kapalı, app koduna renk taşınmadı.
+
+
+## CD-003 — Aşama 3 delegasyonla onaylanan renk kararı (2026-10-17)
+
+**Kullanıcının aynen ifadesi:** “Sana bıraktım en modern ve profesyonel duranı seç”.
+
+**Yetkilendirme yorumu:** Kullanıcı, daha önce sunulan PL-01 / PL-02 / PL-03 arasından seçimi asistana devretti. Bu, yalnızca Aşama 3 renk sistemine ilişkin karardır; tipografi, grid, animasyon, uygulama veya deployment yetkisi değildir.
+
+**Seçilen ve ONAYLI palet: PL-01 — Oxide & Newsprint.** Gerekçe: MOOD-02 karakterli bağımsız dergi dili ve MOOD-01 kanıt/kullanılabilirlik disipliniyle en tutarlı, fazla kurumsal/ekolojik PL-02 ve jenerik teknoloji/SaaS hissine yakın PL-03'ten daha ayırt edici.
+
+**Kesinleşen opak brand/theme tokenları:**
+- Açık tema: paper `#F4EFE6`; surface `#FDFBF6`; primary ink `#1F2420`; secondary ink `#4F5A53`; primary interactive/link `#A13826`; interactive üstü yazı `#FFFFFF`; yardımcı dekoratif `#C8B89E` (asla body/kanıt metninin rengi değil).
+- Koyu tema: background `#151B19`; elevated surface `#222A26`; primary ink `#EFEDE5`; secondary ink `#B7BCAF`; link/button background `#F2AC91`; bu butonda ön plan `#151B19`.
+- Metin/CTA eşleşmeleri aday araştırmasında 4.5:1 üzerindedir; bu **tekil opak çiftlerin** kontrastıdır, WCAG site genelinde henüz doğrulanmadı.
+- Semantik success, error, warning, info; border, focus, disabled, hover, fotoğraf üzerinde yazı ve mikro-tipografi **bu seçimle otomatik onaylanmadı**; sonraki bileşen/erişilebilirlik kapılarında test edilerek kesinleştirilecek. Renk, anlamın tek işareti olamaz.
+
+**Değiştirme süreci:** Her onaylı temel token değişikliği gerekçe, etkilenen sayfalar, kontrast kanıtı ve kullanıcı onayı ister. **Uygulama koduna henüz dokunulmadı.**
+
+**Sonraki kapı:** Yalnızca Aşama 4 Typography System alternatifleri hazırlanır. Font kesinleşmeden Aşama 5'e geçilemez.
