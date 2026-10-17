@@ -1407,3 +1407,20 @@ test('mobile featured cover selects a generated responsive image', async ({ page
   const imageSource = await image.evaluate((node) => node.currentSrc);
   expect(imageSource).toMatch(/\/images\/posts\/responsive\/ai-muhendisligi-480\.webp(?:\?.*)?$/);
 });
+
+
+// The issue-cover resource is warmed before React but never on account pages.
+// Keep the existing responsive Hero resource selected as the actual img source.
+test('home issue cover preloads only on the publication front', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const preload = page.locator('link[data-postify-cover-preload][rel="preload"][as="image"]');
+  await expect(preload).toHaveCount(1);
+  await expect(preload).toHaveAttribute('imagesrcset', /ai-muhendisligi-480\.webp 480w/);
+  const hero = page.locator('a[class*="featured"] img[class*="featuredImage"]').first();
+  await expect(hero).toBeVisible();
+  await expect.poll(() => hero.evaluate((node) => node.currentSrc)).toMatch(/ai-muhendisligi-480\.webp/);
+
+  await page.goto('/auth/login');
+  await expect(page.locator('link[data-postify-cover-preload]')).toHaveCount(0);
+});

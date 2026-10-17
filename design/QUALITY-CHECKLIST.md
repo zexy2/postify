@@ -100,3 +100,12 @@
 - [x] Moved eager postService imports in read queries/mutations and legacy Redux async thunks to dynamic imports while preserving the same canonical data service, fallback and auth behavior.
 - [x] Production main entry **319294→309650 bytes** (saves 9644 bytes) without raising 320000-byte budget; lint, 164/164 Vitest, 57/57 Chromium E2E, build, npm security 0 passed.
 - [ ] Lighthouse mobile A/B scores baseline 58/55 vs candidate 52/60 across two passes: **not statistically meaningful improvement**, keep performance QA gate OPEN. Investigate style/main-thread, session-safe lazy initialization and real CWV next.
+
+
+## 2026-10-17 — Home LCP issue cover preload, acceptance pending
+
+- [x] Home-only responsive image preload; actual 390px browser downloads the 480px cover only once. Auth/login and article routes have no home cover preload.
+- [x] ESLint, Vitest 164/164, E2E 58/58, production build, 11-critical-file smoke, security audit zero.
+- [x] Lighthouse LCP request discoverability false to true in both candidate mobile rounds.
+- [ ] Lighthouse performance unchanged as a reliable conclusion: baseline 49/52 versus candidate 48/59 is noisy. Mobile performance release gate remains OPEN.
+- [ ] Genuine signed-in workflows, manual WCAG 2.2 AA, real zoom and field CWV remain pending; push/deployment need separate user approval.

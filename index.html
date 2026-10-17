@@ -7,6 +7,22 @@
     <meta name="description" content="Postify — okumak için değil, uygulamak için. Rehberler, karar notları, açıklayıcılar ve saha notları." />
     <meta name="theme-color" content="#A13826" />
     <title>Postify — Uygulanabilir Bilgi</title>
+    <!-- Prewarm only the home issue cover: auth/admin/article navigations must not
+         download an unrelated editorial image. The matching responsive srcSet in
+         Hero remains authoritative if a remote post replaces the fallback. -->
+    <script>
+      if (window.location.pathname === '/') {
+        const coverPreload = document.createElement('link');
+        coverPreload.rel = 'preload';
+        coverPreload.as = 'image';
+        coverPreload.href = '/images/posts/responsive/ai-muhendisligi-480.webp';
+        coverPreload.imageSrcset = '/images/posts/responsive/ai-muhendisligi-480.webp 480w, /images/posts/responsive/ai-muhendisligi-800.webp 800w, /images/posts/ai-muhendisligi.webp 1200w';
+        coverPreload.imageSizes = '(max-width: 620px) calc(100vw - 32px), (max-width: 1024px) 45vw, 420px';
+        coverPreload.fetchPriority = 'high';
+        coverPreload.dataset.postifyCoverPreload = '';
+        document.head.appendChild(coverPreload);
+      }
+    </script>
     <!-- Single Page Apps for GitHub Pages redirect handler -->
     <script type="text/javascript">
       (function(l) {

@@ -162,3 +162,14 @@ All four Lighthouse reports had **Accessibility 100, Best Practices 100, SEO 100
 
 - In each pass Lighthouse **Accessibility/SEO/Best Practices 100**, CLS 0. Main thread/score is **noisy** with conflicting A/B runs; no reliable Lighthouse improvement can be claimed from this isolated service split. Report JSON files at `/tmp/postify-lazy-lh-baseline-1.json`, `baseline-2.json`, `candidate-1.json`, `candidate-2.json`. This is not field p75 user data.
 - **QA blocker still open**: mobile Lighthouse ~52–60 lab depending on run; actual 200–400% zoom, manual screen readers, safe authenticated editor/admin/knowledge write flows, and production CWV p75/INP/LCP unverified. Need controlled browser main-thread profiling and careful future prioritization; do not risk delaying auth/session startup without explicit test coverage. Deploy and GitHub push remain explicitly unauthorized.
+
+
+## 2026-10-17 — Home-only LCP cover discovery enhancement
+
+User said “Devam”; source implementation/tests authorized, not GitHub push or production deployment.
+
+- The initial HTML head inserts a responsive image preload only for exact path /. It requests the bundled fallback cover with the same srcSet, sizes and high fetch priority as the original Hero. The authoritative featured-post source, remote uploads, evidence, user session and auth system are unchanged. Re-evaluate if the default first featured story changes because an unnecessary fallback preload would consume bandwidth.
+- New E2E test verifies exact one home preload and zero on directly opened auth/login. Real Chromium network trace at 390px confirmed responsive/ai-muhendisligi-480.webp requested exactly once on home; zero editorial image requests on auth/login; no homepage preload on an article route.
+- Validation executed: ESLint PASS, Vitest 164/164 (43 files) PASS, production build PASS, build smoke 11 critical artifacts PASS, entry 309650 bytes below unchanged 320000 byte guard, npm verify:security PASS zero known advisories, Playwright Chromium E2E 58/58 PASS (job-be6d596b2287).
+- Two alternating mobile Lighthouse 13.5 lab rounds: baseline 49 and 52 performance vs candidate 48 and 59. LCP 5201 and 5131ms baseline vs 5414 and 4690ms candidate. Lighthouse LCP image discoverability changed false to true in both candidate runs. A11y, SEO, best practices 100 and CLS0 each run. Total performance score change is NOISY, not an established win; performance QA gate remains OPEN.
+- Evidence: /tmp/postify-preload-lh-baseline-1.json and -2.json, /tmp/postify-preload-lh-candidate-1.json and -2.json; isolated test logs/job. Manual WCAG 2.2 AA, true 200/400% zoom, safe authenticated editor/admin/knowledge operations and field CWV p75 remain unverified. No remote push/deployment.
