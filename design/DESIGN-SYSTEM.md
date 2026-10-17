@@ -27,7 +27,7 @@ Bu sayfada yalnızca **mevcut koddan tespit edilmiş** değerlerin audit envante
 
 ## Gelecekte açılacak onaylı alanlar — ŞİMDİ BOŞ
 ### Aşama 3: Color system
-Durum: bekliyor. Alternatif palet, kontrast, semantic token ve light/dark örnekleri onaysız.
+Durum: **PL-01 / PL-02 / PL-03 sunuldu, onay bekliyor.** Light/dark hex değerleri, önerilen semantic durum renkleri ve WCAG kontrast ölçümleri [COLOR-SYSTEM-OPTIONS.md](./COLOR-SYSTEM-OPTIONS.md) dosyasında. Renk örnekleri [color-palette-reference.svg](./color-palette-reference.svg) dosyasında. **Henüz seçilmiş palet yok.**
 
 ### Aşama 4: Typography
 Durum: bekliyor. Font families, lisans, variable font/performance, scale, editorial body ölçüleri ve dil desteği onaysız.

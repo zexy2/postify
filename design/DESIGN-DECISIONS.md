@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 3 / Color System — **gerçek referans araştırması ve üç moodboard sunuldu; Aşama 2 onayı bekleniyor**.
-**Sonraki aşama:** 4 / Typography System — **Aşama 2 kullanıcı onayı olmadan başlamayacak**.
+**Aktif aşama:** 3 / Color System — **PL-01/02/03 sunuldu, kullanıcı palet kararı bekleniyor**.
+**Sonraki aşama:** 4 / Typography System — **Aşama 3 palet kararı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -25,7 +25,7 @@
 | 0 Current Product Audit | **ONAYLANDI** | Teknik, tasarımsal ve 51-render denetimi | Kullanıcının açık yanıtı: **“Onaylıyorum”** | 2026-10-17 |
 | 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
 | 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
-| 3 Color System | Alternatifler hazırlanıyor, seçim bekleniyor | Üç farklı light/dark palet ve kontrast | — | 2026-10-17 |
+| 3 Color System | **Üç alternatif sunuldu, karar bekliyor** | **PL-01 Oxide & Newsprint; PL-02 Evergreen & Brass; PL-03 Ultramarine & Chalk** | — | 2026-10-17 |
 | 4 Typography System | Başlanmadı | Henüz yok | — | — |
 | 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
 | 6 Component Design System | Başlanmadı | Henüz yok | — | — |
@@ -71,3 +71,6 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 **ONAYLANDI:** MOOD-02 ana editoryal kimlik; MOOD-01 kanıt, güven, kullanılabilirlik ve okunabilirlik disiplini; MOOD-03 yalnızca yarar sağlayan teknik açıklayıcı makalelerde destek. Bu seçim CD-001 A+B hibritini korur. MOOD-01 ve MOOD-03 bağımsız ana yön olarak seçilmedi.
 
 **ONAYLANMADI:** Belirli renk/hex, açık/koyu tema, font, grid, bileşen, hareket ve uygulama kodu. Aşama 3'te yalnızca renk seçenekleri ve ölçülü kontrast analizleri sunulacak. Kullanıcı Aşama 3'ü onaylamadan Aşama 4 açılmayacak.
+
+## Aşama 3 renk alternatifleri (ONAYSIZ)
+2026-10-17: PL-01 Oxide & Newsprint; PL-02 Evergreen & Brass; PL-03 Ultramarine & Chalk. Light/dark hex, rol eşleştirmeleri, karşılaştırmalı gerekçe ve matematiksel kontrast oranları design/COLOR-SYSTEM-OPTIONS.md dosyasındadır; design/color-palette-reference.svg renk swatch sunumudur. **Kullanıcı renk paleti seçmedi.** Bir sonraki karar PL-01/02/03 veya açık hibrit; Aşama 4 kapalı, app koduna renk taşınmadı.

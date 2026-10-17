@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+<title id="title">Postify Stage 3 color alternatives, not approved</title>
+<desc id="desc">Three palettes, six precise hexadecimal swatches per palette.</desc>
+<rect width="1200" height="540" fill="#ECEBE7"/>
+<text x="32" y="42" font-family="sans-serif" font-size="19" font-weight="700" fill="#202020">POSTIFY / COLOR SYSTEM / RESEARCH ONLY</text>
+<rect x="24" y="67" width="375" height="441" rx="8" fill="#FFFFFF" stroke="#D2CFC8"/>
+<text x="42" y="99" font-family="sans-serif" font-size="15" font-weight="700" fill="#222">PL-01 OXIDE &amp; NEWSPRINT</text>
+<rect x="42" y="125" width="108" height="109" fill="#F4EFE6" stroke="#AAA"/>
+<text x="42" y="250" font-family="sans-serif" font-size="10" fill="#333">PAPER</text>
+<text x="42" y="271" font-family="monospace" font-size="12" fill="#333">#F4EFE6</text>
+<rect x="158" y="125" width="108" height="109" fill="#1F2420" stroke="#AAA"/>
+<text x="158" y="250" font-family="sans-serif" font-size="10" fill="#333">INK</text>
+<text x="158" y="271" font-family="monospace" font-size="12" fill="#333">#1F2420</text>
+<rect x="274" y="125" width="108" height="109" fill="#A13826" stroke="#AAA"/>
+<text x="274" y="250" font-family="sans-serif" font-size="10" fill="#333">ACTION</text>
+<text x="274" y="271" font-family="monospace" font-size="12" fill="#333">#A13826</text>
+<rect x="42" y="301" width="108" height="109" fill="#4F5A53" stroke="#AAA"/>
+<text x="42" y="426" font-family="sans-serif" font-size="10" fill="#333">SECONDARY</text>
+<text x="42" y="447" font-family="monospace" font-size="12" fill="#333">#4F5A53</text>
+<rect x="158" y="301" width="108" height="109" fill="#151B19" stroke="#AAA"/>
+<text x="158" y="426" font-family="sans-serif" font-size="10" fill="#333">DARK BG</text>
+<text x="158" y="447" font-family="monospace" font-size="12" fill="#333">#151B19</text>
+<rect x="274" y="301" width="108" height="109" fill="#F2AC91" stroke="#AAA"/>
+<text x="274" y="426" font-family="sans-serif" font-size="10" fill="#333">DARK ACTION</text>
+<text x="274" y="447" font-family="monospace" font-size="12" fill="#333">#F2AC91</text>
+<rect x="418" y="67" width="375" height="441" rx="8" fill="#FFFFFF" stroke="#D2CFC8"/>
+<text x="436" y="99" font-family="sans-serif" font-size="15" font-weight="700" fill="#222">PL-02 EVERGREEN &amp; BRASS</text>
+<rect x="436" y="125" width="108" height="109" fill="#F2F2E9" stroke="#AAA"/>
+<text x="436" y="250" font-family="sans-serif" font-size="10" fill="#333">PAPER</text>
+<text x="436" y="271" font-family="monospace" font-size="12" fill="#333">#F2F2E9</text>
+<rect x="552" y="125" width="108" height="109" fill="#172D25" stroke="#AAA"/>
+<text x="552" y="250" font-family="sans-serif" font-size="10" fill="#333">INK</text>
+<text x="552" y="271" font-family="monospace" font-size="12" fill="#333">#172D25</text>
+<rect x="668" y="125" width="108" height="109" fill="#205642" stroke="#AAA"/>
+<text x="668" y="250" font-family="sans-serif" font-size="10" fill="#333">ACTION</text>
+<text x="668" y="271" font-family="monospace" font-size="12" fill="#333">#205642</text>
+<rect x="436" y="301" width="108" height="109" fill="#4C6258" stroke="#AAA"/>
+<text x="436" y="426" font-family="sans-serif" font-size="10" fill="#333">SECONDARY</text>
+<text x="436" y="447" font-family="monospace" font-size="12" fill="#333">#4C6258</text>
+<rect x="552" y="301" width="108" height="109" fill="#0D2019" stroke="#AAA"/>
+<text x="552" y="426" font-family="sans-serif" font-size="10" fill="#333">DARK BG</text>
+<text x="552" y="447" font-family="monospace" font-size="12" fill="#333">#0D2019</text>
+<rect x="668" y="301" width="108" height="109" fill="#C9DEA5" stroke="#AAA"/>
+<text x="668" y="426" font-family="sans-serif" font-size="10" fill="#333">DARK ACTION</text>
+<text x="668" y="447" font-family="monospace" font-size="12" fill="#333">#C9DEA5</text>
+<rect x="812" y="67" width="375" height="441" rx="8" fill="#FFFFFF" stroke="#D2CFC8"/>
+<text x="830" y="99" font-family="sans-serif" font-size="15" font-weight="700" fill="#222">PL-03 ULTRAMARINE &amp; CHALK</text>
+<rect x="830" y="125" width="108" height="109" fill="#F1F4F6" stroke="#AAA"/>
+<text x="830" y="250" font-family="sans-serif" font-size="10" fill="#333">PAPER</text>
+<text x="830" y="271" font-family="monospace" font-size="12" fill="#333">#F1F4F6</text>
+<rect x="946" y="125" width="108" height="109" fill="#18283B" stroke="#AAA"/>
+<text x="946" y="250" font-family="sans-serif" font-size="10" fill="#333">INK</text>
+<text x="946" y="271" font-family="monospace" font-size="12" fill="#333">#18283B</text>
+<rect x="1062" y="125" width="108" height="109" fill="#174D93" stroke="#AAA"/>
+<text x="1062" y="250" font-family="sans-serif" font-size="10" fill="#333">ACTION</text>
+<text x="1062" y="271" font-family="monospace" font-size="12" fill="#333">#174D93</text>
+<rect x="830" y="301" width="108" height="109" fill="#4B5B6A" stroke="#AAA"/>
+<text x="830" y="426" font-family="sans-serif" font-size="10" fill="#333">SECONDARY</text>
+<text x="830" y="447" font-family="monospace" font-size="12" fill="#333">#4B5B6A</text>
+<rect x="946" y="301" width="108" height="109" fill="#101D30" stroke="#AAA"/>
+<text x="946" y="426" font-family="sans-serif" font-size="10" fill="#333">DARK BG</text>
+<text x="946" y="447" font-family="monospace" font-size="12" fill="#333">#101D30</text>
+<rect x="1062" y="301" width="108" height="109" fill="#A6CDF2" stroke="#AAA"/>
+<text x="1062" y="426" font-family="sans-serif" font-size="10" fill="#333">DARK ACTION</text>
+<text x="1062" y="447" font-family="monospace" font-size="12" fill="#333">#A6CDF2</text>
+</svg>

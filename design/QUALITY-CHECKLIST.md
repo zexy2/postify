@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 3 — renk sistemi alternatifleri hazırlanıyor; palet onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 3 — üç renk paleti ve kontrast kanıtları sunuldu; palet kararı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -18,6 +18,8 @@
 - [x] Aşama 2: yedi gerçek yayın sitesi, desktop/mobile kaynak taraması ve sınırlamalar belgelendi.
 - [x] Aşama 2: MOOD-01/02/03 alternatifleri, ürün uyumu ve riskleri belgelendi.
 - [x] Aşama 2 CD-002 kapsamında MOOD-02 ana, MOOD-01 kanıt/UX, MOOD-03 sınırlı teknik kullanımla onaylandı.
+- [x] PL-01/02/03 light/dark ve temel metin/CTA kombinasyonları için matematiksel kontrast hesapları belgelendi.
+- [x] Kaynak CSS değiştirilmeden üç exact-hex renk örneği araştırma SVG dosyasına kaydedildi.
 - [ ] Aşama 3 renk seçimi henüz onaylanmadı.
 
 ## Bilinçli olarak açık kalan kontroller
@@ -40,4 +42,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** MOOD-01/02/03 veya açık hibrit seçimi bekle. Aşama 2 kullanıcı onayı olmadan Aşama 3 renk sistemine geçme.
+**Şimdiki sonraki adım:** Aşama 3 PL-01/02/03 veya açık hibrit seçimini bekle. Aşama 3 onayı olmadan Aşama 4 Typography System açılmaz.
