@@ -1,7 +1,7 @@
 # Postify — Aşama 4 / Typography System Alternatifleri
 
 **Tarih:** 2026-10-17
-**Durum:** Üç tipografi kombinasyonu araştırıldı ve Oracle Chromium'da denendi; **AŞAMA 4 KULLANICI ONAYI BEKLENİYOR**.
+**Durum:** Üç kombinasyon karşılaştırıldı; **TYPE-02 Expressive Issue AŞAMA 4 KULLANICI TARAFINDAN ONAYLANDI** (CD-004).
 **Onaylı öncüller:** CD-001 A+B yaratıcı strateji; CD-002 MOOD-02 ana editoryal / MOOD-01 bilgi disiplini; CD-003 **PL-01 Oxide & Newsprint** light/dark çekirdek renkler.
 **Kesin sınır:** Bu belgede geçen font aileleri, font size/scale, line-height, letter spacing, font-display politikası, veya font dosyası **henüz onaylı değildir**. CSS, JSX, kullanıcı etkileşimleri, canlı site, diğer repo ve GitHub değişmedi. Aşama 5 Grid & Spacing, kullanıcı Aşama 4 kararını açıkça verene kadar başlamaz.
 
@@ -99,3 +99,7 @@ Kanıtlar Oracle VM'de (repository dışında):
 ## 6. Sonraki karar ve sınır
 
 Kullanıcıdan **TYPE-01 / TYPE-02 / TYPE-03** veya açıkça tarif ettiği font karma eşleşmesini seçmesi/tercihi asistana devretmesi istenecek. Onay gelince font aileleri ve kullanım mantığı `DESIGN-DECISIONS.md` ve `DESIGN-SYSTEM.md` içinde **ONAYLI** yapılacak; hemen kod yazılmayacak. Ondan sonra **yalnızca Aşama 5 Grid, Layout & Spacing** alternatifleri açılabilir. Font yüzleri, lisans dosyaları ve final ölçümler ileriki uygulama aşamasında performans/reflow testleriyle tekrar kontrol edilecek.
+
+
+## 7. Sonradan gelen açık kullanıcı onayı — CD-004
+2026-10-17 kullanıcı TYPE-02 Expressive Issue seçimini açıkça onayladı: **Fraunces + Inter + IBM Plex Mono**. TYPE-01 / TYPE-03 referans olarak arşivlendi. Yukarıdaki önceki “ONAYSIZ” ifadeleri tarihsel teklif durumunu gösterir ve bu son onay tarafından geçersiz kılınır. Font aileleri ve rolleri [DESIGN-SYSTEM.md](./DESIGN-SYSTEM.md) bölüm 2'de onaylıdır. **Boyut, spacing, grid, motion, axis detayları, font paketleme ve uygulama kodu henüz onaylanmadı/değiştirilmedi**.

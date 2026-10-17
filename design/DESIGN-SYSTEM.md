@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — Aşama 3 PL-01 renk sistemi seçildi; font, grid, component, motion ve diğer aşamalar hâlâ ONAYSIZ.**
+**Durum: KISMEN ONAYLI — Aşama 3 PL-01 renkleri ve Aşama 4 TYPE-02 font aileleri ONAYLI; grid, component, motion ve ölçekler ONAYSIZ.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -30,10 +30,10 @@ Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteri
 Durum: **PL-01 Oxide & Newsprint ONAYLANDI (CD-003, kullanıcı renk seçimini asistana devretti).** Light/dark hex değerleri, önerilen semantic durum renkleri ve WCAG kontrast ölçümleri [COLOR-SYSTEM-OPTIONS.md](./COLOR-SYSTEM-OPTIONS.md) dosyasında. Renk örnekleri [color-palette-reference.svg](./color-palette-reference.svg) dosyasında. **Seçili palet PL-01’dir.**
 
 ### Aşama 4: Typography
-Durum: **ÜÇ ALTERNATİF SUNULDU; kullanıcı onayı BEKLENİYOR.** TYPE-01 Newsreader/DM Sans/IBM Plex Mono; TYPE-02 Fraunces/Inter/IBM Plex Mono; TYPE-03 Literata/IBM Plex Sans/IBM Plex Mono. [TYPOGRAPHY-OPTIONS.md](./TYPOGRAPHY-OPTIONS.md) içinde lisans, TR/EN, ekran karşılaştırması, performans ve okunabilirlik riskleri. **Hiçbir font/ölçek seçilmedi.**
+Durum: **TYPE-02 Expressive Issue, kullanıcı tarafından ONAYLANDI (CD-004).** Serif **Fraunces** (editoryal başlıklar), sans **Inter** (gövde, UI ve formlar), mono **IBM Plex Mono** (kaynak/meta/kod). [TYPOGRAPHY-OPTIONS.md](./TYPOGRAPHY-OPTIONS.md) karşılaştırma ve lisans kanıtlarını içerir. **Font aileleri/rolleri onaylı; font boyutları, gerçek variable axis ayarları, font dağıtımı, grid ve spacing henüz onaysızdır.**
 
 ### Aşama 5: Grid & spacing
-Durum: bekliyor. Columns, measure, gutters, baseline rhythm, responsive rules onaysız.
+Durum: **alternatif araştırması aktif, onay bekleniyor.** Columns, measure, gutters, baseline rhythm, responsive rules henüz onaysız.
 
 ### Aşama 6: Components
 Durum: bekliyor. Buttons, cards, forms, nav, status components, interaction states onaysız.
@@ -61,3 +61,13 @@ Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
 **Kapsam dışı:** Error/success/warning/info ve tüm focus/border/hover/disabled state renkleri `COLOR-SYSTEM-OPTIONS.md` içinde şimdilik adaydır; bu kararla *onaylı* duruma geçmediler. Typography ve layout da onaysızdır.
 
 **Uygulama durumu:** Tasarım dokümanına kaydedildi. `src/index.css` ve diğer uygulama kodları Aşama 3'te **değiştirilmedi**.
+
+
+## 2. ONAYLI — TYPE-02 Expressive Issue temel font aileleri
+| Görev | Font | Durum |
+| --- | --- | --- |
+| Kapak / H1 / editoryal alt başlık | **Fraunces** | CD-004 ONAYLI |
+| UI / uzun yazı / form / arama / okuma | **Inter** | CD-004 ONAYLI |
+| Kanıt/meta / tarih / kod / komut | **IBM Plex Mono** | CD-004 ONAYLI |
+
+**Kısıt:** Fraunces değişken SOFT/WONK eksenlerinde aşırı oyunbazlık yok; gerçek glif kapsamı, lisans dosyası, WOFF2 subset, font-display, fallback, CLS ve 200% zoom uygulamadan önce kontrol edilmeli. Bu bölüm font ölçüsü ya da sayfa layout'u için açık onay sayılmaz. `src/` henüz değişmedi.

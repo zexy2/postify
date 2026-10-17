@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 4 / Typography System — **üç tipografi sistemi alternatifine geçildi; kullanıcı font seçimi henüz yok**.
-**Sonraki aşama:** 5 / Grid, Layout & Spacing — **Aşama 4 font onayı olmadan başlamayacak**.
+**Aktif aşama:** 5 / Grid, Layout & Spacing — **üç alternatif araştırılıyor, kullanıcı yerleşim kararı henüz yok**.
+**Sonraki aşama:** 6 / Component Design System — **Aşama 5 kullanıcı onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -26,8 +26,8 @@
 | 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
 | 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
 | 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
-| 4 Typography System | **3 font sistemi incelendi; ONAY BEKLENİYOR** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | — | 2026-10-17 |
-| 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
+| 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
+| 5 Grid, Layout & Spacing | **Alternatifler hazırlanıyor, onay bekleniyor** | G-01/02/03 hazırlanacak | — | 2026-10-17 |
 | 6 Component Design System | Başlanmadı | Henüz yok | — | — |
 | 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
 | 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
@@ -106,3 +106,19 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 - Lisans (SIL OFL) ve kaynaklar, font tradeoff ve font loading riskleri `design/TYPOGRAPHY-OPTIONS.md` dosyasında.
 - **Tasarım yönetmeni önerisi: TYPE-01**; kullanıcı onayı verilmedi. TYPE-02/TYPE-03 alternatifleri açık.
 - **Sonraki karar:** TYPE-01/02/03 veya açık hibrit. Seçimden önce Aşama 5 Grid/Spacing başlamaz. JSX, CSS, build, font dosyası, GitHub push ve deployment yapılmadı.
+
+
+## CD-004 — Aşama 4 tipografi onayı (2026-10-17)
+
+**Kullanıcının açık ve aynen talebi:** “Postify Aşama 4 için TYPE-02 tipografi sistemini onaylıyorum. Oracle ve design belgelerine kaydet; yalnızca Aşama 5 Grid, Layout & Spacing alternatiflerine geç. Henüz uygulama kodunu değiştirme.”
+
+**ONAYLANAN EŞLEŞME: TYPE-02 Expressive Issue**
+- Büyük editoryal başlıklar ve uygun uzun yazı ara başlıklarında **Fraunces**. Bağımsız bir yayının dikkat çekici karakterini taşıyacak; aşırı yumuşak/oyuncu SOFT/WONK eksenleri metnin güvenilirliğini zedelemeyecek.
+- Gövde metinleri, navigasyon, butonlar, formlar ve kullanıcı arayüzü için **Inter**. Uygulanabilir bilgi okuma önceliğini korur.
+- Kod blokları, teknik komutlar, kaynak/kanıt/tarih metaverisi için **IBM Plex Mono**. Meta metinleri okunamayacak kadar küçültülmez.
+- TYPE-01 Quiet Authority ve TYPE-03 Evidence Library **ana sistem olarak seçilmedi**. İkisi tarihsel karşılaştırma olarak saklanır.
+- Silinen/değiştirilen önceki onaylı renkler yoktur: **PL-01 Oxide & Newsprint** ve önceki CD-001/CD-002 sanat yönetimi geçerlidir.
+- Aile düzeyindeki font isimleri ve kullanım rolleri onaylıdır; kesin font-size/scale, optical axis preset, tracking, line-height, heading ölçüleri, self-hosting/subset, responsive spacing, layout/grid ve uygulama bileşeni değerleri **henüz kararlaştırılmadı**; uygulanmadan önce ayrı test ve aşama onayları gerekir.
+- **Uygulama kodu değiştirilmedi**, font dosyası eklenmedi; push veya deployment yapılmadı.
+
+**Sonraki kapı:** Yalnızca Aşama 5 **Grid, Layout & Spacing** alternatiflerini hazırla ve kullanıcının kararını bekle. Aşama 6, Aşama 5 onayı olmadan başlamaz.
