@@ -1,7 +1,7 @@
 # Postify — Aşama 9 / Motion & Interaction Design Alternatifleri
 
 **Tarih:** 2026-10-17
-**Aktif aşama:** **9 / Motion & Interaction Design — üç alternatif sunuldu, kullanıcı kararı BEKLENİYOR.**
+**Aktif aşama:** **Aşama 9 ONAYLANDI: M-02 genel, M-01 görev ekranlarında; selected featured-only özel hareket (CD-009).** Diğer seçenekler tarihsel alternatiflerdir.
 **Uygulama durumu:** Postify uygulama kaynak koduna, mevcut CSS animasyonlarına, API, route, font varlıklarına, servislere, GitHub push'a ve deploy'a **dokunulmadı**. Yalnızca `design/` araştırma notları, bağımsız statik demo ve karşılaştırma görselleri.
 
 ## 0. Yetkili tasarım girdileri ve sınırlar
@@ -101,3 +101,7 @@ Kullanıcı isterse M-02'yi seçerken “article ve auth M-01 kadar sakin, sadec
 ## 6. Karar kapısı — Aşama 9 BEKLENİYOR
 
 Kullanıcının **M-01 / M-02 / M-03 veya açık kapsamlı hibrit** onayı beklenir. Kullanıcı kararından sonra ilgili motion token ve interaction kuralları `DESIGN-DECISIONS.md` ve `DESIGN-SYSTEM.md` dosyalarına onaylı kaydedilebilir. **Aşama 10 Responsive & Accessibility** bu açık onay olmadan başlamaz. Uygulama kodu ve üretim servisleri kullanıcı açıkça yetkilendirmedikçe **değiştirilmeyecek**.
+
+
+## 7. Açık kullanıcı kararı — CD-009
+2026-10-17 **M-02 Editorial Rhythm** onaylandı, makale/auth/editör/admin alanlarında M-01 sakin/hızlı etkileşim şartıyla. Özel hareket yalnızca seçili featured editoryal kapaklarda. Bu karar M-03 ve site çapında kinetik motion izni değildir; `prefers-reduced-motion` mutlaka desteklenir. Aşama 10 Responsive & Accessibility araştırmasına geçilebilir, uygulama kodu değiştirilmez.

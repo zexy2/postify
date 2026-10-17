@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 9 / Motion & Interaction Design — **hareket/etkileşim seçenekleri hazırlanıyor, Aşama 9 onayı henüz yok**.
-**Sonraki aşama:** 10 / Responsive & Accessibility — **Aşama 9 onayı olmadan başlamayacak**.
+**Aktif aşama:** 10 / Responsive & Accessibility — **denetim ve çözüm alternatifleri hazırlanıyor; Aşama 10 onayı henüz yok**.
+**Sonraki aşama:** 11 / Final QA & Visual Polish — **Aşama 10 onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -31,8 +31,8 @@
 | 6 Component Design System | **ONAYLANDI** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | **C-02 Inked Folio; CD-005 G-02 istisna sınırı korunur** | 2026-10-17 |
 | 7 Homepage Design | **ONAYLANDI** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | **H-01 Issue Front** | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
-| 9 Motion & Interaction Design | **Üç alternatif sunuldu; ONAY BEKLENİYOR** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | — | 2026-10-17 |
-| 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
+| 9 Motion & Interaction Design | **ONAYLANDI** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | **M-02 ana, makale/auth/editör/admin M-01 sakinliği; sadece selected featured kapakta özel hareket** | 2026-10-17 |
+| 10 Responsive & Accessibility | **Denetim ve seçenekler hazırlanıyor; onay bekleniyor** | Reflow, keyboard, contrast, motion ve state matrisi | — | 2026-10-17 |
 | 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
 
 ## Aşama 0 açık kullanıcı onayı
@@ -232,3 +232,16 @@ Araştırma `design/INNER-PAGES-OPTIONS.md` ve soyut `design/inner-pages-composi
 - Detaylar: `design/MOTION-INTERACTION-OPTIONS.md`, `design/motion-interaction-reference.svg`. 3 alternatif × desktop/mobile × normal/reduced = **12 Chromium koşumu**; overflow/pageerror yok, mock menü Escape focus return doğrulandı, reduced-transition 0.01ms. Bu gerçek Postify uygulaması QA değildir.
 - Yerel storyboard: `/mnt/data/postify-stage9-motion-comparison.png` ve `postify-stage9-M-01/02/03.gif` — kavramsal örnek.
 - **Aşama 9 kullanıcı kararı henüz YOK.** Önceki CD-001..008 onayları değişmedi. Hiçbir CSS/JS animasyonu uygulanmadı, Aşama 10 başlamadı, push/deploy yok.
+
+
+## CD-009 — Aşama 9 M-02 Editorial Rhythm açık kullanıcı onayı (2026-10-17)
+
+**Kullanıcının aynen kararı:** “Postify Aşama 9 için M-02 Editorial Rhythm yaklaşımını onaylıyorum. Makale, auth, editör ve admin gibi görev odaklı ekranlarda M-01 kadar sakin ve hızlı davranılsın; özel hareketler yalnızca seçilmiş featured editoryal kapaklarda kullanılsın. Oracle ve design belgelerine kaydet. Yalnızca Aşama 10 Responsive & Accessibility çalışmalarına geç, uygulama kodunu henüz değiştirme.”
+
+**ONAYLI:** **M-02 Editorial Rhythm** genel etkileşim dili. Önerilen tasarım hedefi: link/kart renk/focus/underline gibi temel UI geri bildirimleri yaklaşık **140–180ms**, açık-kapanır panel yaklaşık **220–260ms**. Gerçekten seçili featured editoryal kapakta amaçlı, hafif **260–340ms** reveal; G-02 istisnası dışında büyük cover animasyonları yok. Bunlar tasarım hedefleridir; üretilmiş CSS token onayı/gerçek test değildir.
+
+**M-01 SINIRI:** Makale okuma, auth, editör, admin ve diğer görev odaklı işlemler mümkün olduğunca anında ve sakin; hiçbir animasyon async sonucu gizlemez veya erişimi geciktirmez. Status/error/validation, copy, bookmark ve publish gerçek state ile anında görünür. **M-03** güçlü kinetik yaklaşım seçilmedi; scroll-jacking, parallax, genel stagger yok.
+
+**ZORUNLU:** `prefers-reduced-motion: reduce` dekoratif hareketleri kapatır; dokunma/klavye/mouse erişimi, Escape ve odak geri dönüşü korunur. Motion, kanıtın veya success durumunun tek sinyali değildir. Performans ve WCAG Aşama 10 denetiminde ayrı ele alınır.
+
+**UYGULAMA SINIRI:** Sadece tasarım onayı; mevcut CSS/JS/React kodu, bundle, servis, push, deploy **değiştirilmedi**. Aşama 10 yalnızca responsive/a11y araştırması ve değerlendirme alternatifleri için açıldı. Kullanıcı Aşama 10'u ayrıca onaylamadan Aşama 11 açılmaz.

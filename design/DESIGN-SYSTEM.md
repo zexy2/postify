@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — PL-01, TYPE-02, G-01 (+sınırlı G-02), C-02 Inked Folio, H-01 Homepage, INNER-02 ana + INNER-01 sakin okuma (sınırlı INNER-03 teknik rehber) ONAYLI; motion/diğer ayrıntılar ONAYSIZ.**
+**Durum: KISMEN ONAYLI — CD-001..CD-009 tasarım kararları, özellikle M-02 genel + M-01 görev ekranı sakinliği ve featured-only özel hareket ONAYLI. Responsive/WCAG uygulama çözümleri henüz onaysız.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -39,7 +39,7 @@ Durum: **G-01 Editorial Spine ana sistem + G-02 yalnızca öne çıkan editoryal
 Durum: **C-02 Inked Folio kullanıcı tarafından ONAYLANDI (CD-006).** [COMPONENT-SYSTEM-OPTIONS.md](./COMPONENT-SYSTEM-OPTIONS.md) içindeki karşılaştırma korunur; C-02 kapak/çerçeve/bölüm/CTA/forma dair karakterdir. **SİTE GENELİ GRID G-01 olarak kalır.** G-02 yalnızca seçilmiş featured dosyaların istisna kompozisyonudur. Durum semantiği, doğrulama kaynağı, son hover/motion ve pixel düzeyi ayrıntılar ayrıca incelenir.
 
 ### Aşama 9: Motion
-Durum: **M-01/M-02/M-03 seçenekleri sunuldu; kullanıcı onayı bekliyor.** Önerilen süreler, etkileşim bağlamları, prefers-reduced-motion ilkeleri, gerçek Chromium demo sonuçları [MOTION-INTERACTION-OPTIONS.md](./MOTION-INTERACTION-OPTIONS.md) içinde; soyut örnek [motion-interaction-reference.svg](./motion-interaction-reference.svg). **Hiçbir motion token, animasyon eğrisi, yeni etkileşim veya uygulama kodu onaylanmadı.**
+Durum: **M-02 Editorial Rhythm ONAYLANDI — CD-009.** Makale/auth/editör/admin ve işlevsel durumlar M-01 kadar sakin/anında; özel animasyon yalnız seçili featured editoryal kapakta. Link/kart ~140–180ms, drawer ~220–260ms, uygun featured cover ~260–340ms **hedef aralık**; CSS değeri henüz uygulanmadı. Reduced-motion dekoratif hareketleri kaldırır. [MOTION-INTERACTION-OPTIONS.md](./MOTION-INTERACTION-OPTIONS.md).
 
 **Kural:** `DESIGN-DECISIONS.md` içindeki kullanıcı onayı olmadan bu bölümlere “approved” değeri girme ve kodu değiştirme.
 
@@ -107,3 +107,11 @@ G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir a
 - **Knowledge/Admin:** Gerçek, erişilebilir tablo ve evidence durumları korunur, asılsız verified/role değişiklikleri yoktur.
 - **INNER-03:** Yalnız gerçekten adım adım kılavuzlara seçici chapter/numara; varsayılan stil değildir.
 - **Uygulama:** Henüz hiçbir JSX/CSS değiştirilmedi. Aşama 9 hareket süreleri ve etkileşimler ayrı karar kapısıdır.
+
+
+## 5. ONAYLI — CD-009 Motion & Interaction yönü
+- Varsayılan: M-02 Editorial Rhythm, amaçlı küçük hareket; link ve aktif state hiçbir durumda yalnız harekete bağlı değil.
+- Task-first alanlar: M-01 hızı/sakinliği; makale metninde scroll-reveal yok, login/editör/admin gecikmesiz.
+- G-02 özel kompozisyon izni değişmedi: yalnızca seçili featured editoryal kapak, kısa ve zarif motion.
+- `prefers-reduced-motion` için animasyon azaltılır/kapatılır, odak ve semantik durum korunur.
+- **Aşama 10:** Responsive/WCAG araştırması açık; test sonuçları gerçek mevcut siteyi ve tasarım önerilerini ayrı değerlendirmeli. Henüz uygulama JSX/CSS değişmedi.
