@@ -15,8 +15,8 @@ export default defineConfig({
         short_name: "Postify",
         description:
           "Okumak için değil, uygulamak için: rehberler, karar notları, açıklayıcılar ve saha notları.",
-        theme_color: "#b34f2d",
-        background_color: "#fbfaf7",
+        theme_color: "#A13826",
+        background_color: "#F4EFE6",
         display: "standalone",
         orientation: "portrait",
         scope: "/",
