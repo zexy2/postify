@@ -49,3 +49,8 @@ Aşama 5 için üç farklı dış grid/okuma measure/spacing sistemi `GRID-LAYOU
 
 ## Güncel Stage 5 kararı (CD-005)
 G-01 tüm rotalarda layout omurgasıdır; G-02 yalnızca onaylı istisna kapsamındaki öne çıkan editoryal dosyalar için değerlendirilebilir. Bu tablo sayfaların implementasyon durumu için geçerlidir ve hiçbir sayfa yeni sistemle **henüz uygulanmış değildir**.
+
+
+## Aşama 6 bileşen sözlüğü — bekleyen karar (2026-10-17)
+
+Mevcut component envanteri ve 17 rota için **C-01 Editorial Grammar / C-02 Inked Folio / C-03 Research Instruments** bileşen estetiği araştırıldı. Tüm seçeneklerin Home, Article, Auth, Profile, Editor, Knowledge ve Admin akışlarında aynı gerçek veri/role semantiğini koruması gerekir. `design/COMPONENT-SYSTEM-OPTIONS.md` içindeki kart/nav/form/evidence/loading/empty/error/disabled örnekleri yerleşim prototipidir ve gerçek ekran uygulanmış sayılmaz. **Aşama 6 için henüz kullanıcı seçimi yoktur; bütün sayfaların uygulama statüsü beklemede.**
