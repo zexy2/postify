@@ -74,3 +74,10 @@ Sadece `/` ana sayfa için H-01 Issue Front, H-02 Discovery Desk, H-03 Curated E
 
 ## CD-008 iç sayfa yönü (2026-10-17)
 Aşama 8'de **INNER-02 Evidence Marginalia** ana iç sayfa dili ve **INNER-01 sakin uzun okuma** kullanıcı delegasyonu kapsamında seçildi. INNER-03 yalnız gerçek teknik adım rehberlerinde yardımcı; kalan 16 rota artık bu tasarım *yönü* altında fakat **uygulama durumu hâlâ bekliyor**. `src/` unchanged; gerçek auth/publish/kanıt API testleri yapılmadı.
+
+
+## CD-010 / Aşama 10 kapsam onayı (2026-10-17)
+**17 rota genelinde R-01 Editorial Reflow** ana responsive sistem onaylandı. **R-02 Adaptive Marginalia yalnız makale/evidence**, **R-03 Task-first Workbench yalnız auth/editör/admin/knowledge** ekranlarında kullanılabilir. Bütün rotalarda ve işlevsel state'lerde **WCAG 2.2 AA uygunluğunu sağlamak ve doğrulamak zorunlu release kapısı** olarak seçildi; mevcut site buna şimdiden uygun ilan edilmedi.
+
+## Aşama 11 QA planı (ONAYSIZ)
+[FINAL-QA-VISUAL-POLISH-PLAN.md](./FINAL-QA-VISUAL-POLISH-PLAN.md) 17 rota ailesi ve public/6 protected route'lar için görsel, auth/role, UI state, TR/EN, light/dark, responsive, zoom, screen-reader, security/SEO/PWA ve performans acceptance planını içerir. QA-01/02/03 kapsam alternatifi **kullanıcı tarafından henüz seçilmedi**. Test çalıştırma, UI uygulama, push veya deploy izni verilmedi.
