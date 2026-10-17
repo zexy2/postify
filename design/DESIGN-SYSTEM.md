@@ -115,3 +115,8 @@ G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir a
 - G-02 özel kompozisyon izni değişmedi: yalnızca seçili featured editoryal kapak, kısa ve zarif motion.
 - `prefers-reduced-motion` için animasyon azaltılır/kapatılır, odak ve semantik durum korunur.
 - **Aşama 10:** Responsive/WCAG araştırması açık; test sonuçları gerçek mevcut siteyi ve tasarım önerilerini ayrı değerlendirmeli. Henüz uygulama JSX/CSS değişmedi.
+
+
+## Aşama 10 Responsive & Accessibility (ONAYSIZ)
+
+Responsive çözüm alternatifleri: **R-01 Editorial Reflow, R-02 Adaptive Marginalia, R-03 Task-first Adaptive Workbench**. Denetim ve kabul kriterleri [RESPONSIVE-ACCESSIBILITY-OPTIONS.md](./RESPONSIVE-ACCESSIBILITY-OPTIONS.md), çizim [responsive-accessibility-reference.svg](./responsive-accessibility-reference.svg). **WCAG 2.2 AA hedefi tüm alternatiflerde zorunlu; yalnız responsive sunum biçimi seçilebilir.** Henüz responsive/focus/error/border/semantic renk değişikliği onaylanmadı. Uygulama kodu değiştirilmedi.

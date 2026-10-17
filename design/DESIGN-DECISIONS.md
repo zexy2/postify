@@ -32,7 +32,7 @@
 | 7 Homepage Design | **ONAYLANDI** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | **H-01 Issue Front** | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
 | 9 Motion & Interaction Design | **ONAYLANDI** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | **M-02 ana, makale/auth/editör/admin M-01 sakinliği; sadece selected featured kapakta özel hareket** | 2026-10-17 |
-| 10 Responsive & Accessibility | **Denetim ve seçenekler hazırlanıyor; onay bekleniyor** | Reflow, keyboard, contrast, motion ve state matrisi | — | 2026-10-17 |
+| 10 Responsive & Accessibility | **Üç adaptasyon alternatifi ve tarama sunuldu; ONAY BEKLENİYOR** | R-01 Editorial Reflow / R-02 Adaptive Marginalia / R-03 Task-first Adaptive Workbench | — | 2026-10-17 |
 | 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
 
 ## Aşama 0 açık kullanıcı onayı
@@ -245,3 +245,12 @@ Araştırma `design/INNER-PAGES-OPTIONS.md` ve soyut `design/inner-pages-composi
 **ZORUNLU:** `prefers-reduced-motion: reduce` dekoratif hareketleri kapatır; dokunma/klavye/mouse erişimi, Escape ve odak geri dönüşü korunur. Motion, kanıtın veya success durumunun tek sinyali değildir. Performans ve WCAG Aşama 10 denetiminde ayrı ele alınır.
 
 **UYGULAMA SINIRI:** Sadece tasarım onayı; mevcut CSS/JS/React kodu, bundle, servis, push, deploy **değiştirilmedi**. Aşama 10 yalnızca responsive/a11y araştırması ve değerlendirme alternatifleri için açıldı. Kullanıcı Aşama 10'u ayrıca onaylamadan Aşama 11 açılmaz.
+
+
+## Aşama 10 Responsive & Accessibility seçenekleri — ONAYSIZ (2026-10-17)
+
+**R-01 Editorial Reflow:** Tüm rotalarda G-01'e bağlı content-first, mobil tek sütun ve erişilebilir görev sırası. **R-02 Adaptive Marginalia:** Yalnız makale/evidence'de genişte kaynak rayı, mobilde daima görünür kısa provenance özeti ve erişilebilir ayrıntı. **R-03 Task-first Adaptive Workbench:** Yalnız auth/editor/admin/knowledge işlev ekranlarında form, taslak, role ve status öncelikli adaptasyon.
+
+**Öneri, seçim değil:** R-01 site genelinde temel, R-02 sadece ilgili kaynaklı makalede, R-03 sadece gerçek görev ekranlarında. Bütün seçeneklerde WCAG 2.2 AA hedefi bağlayıcıdır; R-02/R-03 accessibility tavizi değildir. CD-005 G-02 yalnız selected featured kapakla sınırlı kalır.
+
+Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve derin yüklemeli **30** navigation salt okunur tarama: 30/30 overflow/pageerror yok; tüm örneklerde H1/alt/input label görüldü; 12px altı text, altı viewportta dar inline hedefler, article anchor accessible-name adayları ve placeholder yazar ekranında çift main landmark kontrol gerektiriyor. Home filtre paneli Escape ile kapanıp focus return sağlıyor (örneklem). Bunlar tam WCAG doğrulaması değil. APPROVED PL-01 çiftlerinin kontrastı yüksek, ama dekoratif çizgi/paper **1,70:1** olduğundan işlevsel focus/border yerine kullanılamaz. Detaylar `design/RESPONSIVE-ACCESSIBILITY-OPTIONS.md`, soyut görsel `design/responsive-accessibility-reference.svg`. Aşama 10 **kullanıcı onayı YOK**; Aşama 11 başlatılmadı. Uygulama kaynağı değiştirilmedi.

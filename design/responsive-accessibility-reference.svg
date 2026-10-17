@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1230" height="535" viewBox="0 0 1230 535" role="img" aria-labelledby="title desc">
+<title id="title">Postify Stage 10 responsive accessibility pattern comparison</title>
+<desc id="desc">R-01 Editorial Reflow uses content-first single column mobile, R-02 Adaptive Marginalia shows contextual evidence on large screens and inline summary mobile, R-03 Task-first Workbench puts controls before art for auth editor admin. All options require WCAG 2.2 AA; none are approved yet.</desc>
+<rect width="1230" height="535" fill="#F4EFE6"/>
+<text x="25" y="36" font-size="19" font-weight="700" fill="#1F2420" font-family="sans-serif">POSTIFY / STAGE 10 / RESPONSIVE STUDIES — UNAPPROVED</text>
+<rect x="18" y="59" width="390" height="455" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="32" y="85" font-size="14" font-weight="700" fill="#1F2420" font-family="sans-serif">R-01 / EDITORIAL REFLOW</text>
+<text x="32" y="106" font-size="12" fill="#4F5A53" font-family="sans-serif">Article flows naturally</text>
+<rect x="33" y="129" width="232" height="200" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="276" y="129" width="115" height="200" fill="#FDFBF6" stroke="#1F2420"/>
+<text x="43" y="145" font-family="monospace" font-size="10" fill="#A13826">DESKTOP</text>
+<text x="289" y="145" font-family="monospace" font-size="10" fill="#A13826">MOBILE</text>
+<rect x="44" y="158" width="150" height="32" fill="#F4EFE6" stroke="#C8B89E"/>
+<rect x="44" y="204" width="158" height="5" fill="#1F2420" opacity=".7"/>
+<rect x="44" y="224" width="184" height="5" fill="#1F2420" opacity=".7"/>
+<rect x="44" y="244" width="158" height="5" fill="#1F2420" opacity=".7"/>
+<rect x="44" y="264" width="184" height="5" fill="#1F2420" opacity=".7"/>
+<rect x="289" y="160" width="75" height="7" fill="#1F2420" opacity=".65"/>
+<rect x="289" y="187" width="90" height="7" fill="#1F2420" opacity=".65"/>
+<rect x="289" y="214" width="75" height="7" fill="#1F2420" opacity=".65"/>
+<rect x="289" y="241" width="90" height="7" fill="#1F2420" opacity=".65"/>
+<rect x="289" y="268" width="75" height="7" fill="#1F2420" opacity=".65"/>
+<line x1="33" y1="355" x2="393" y2="355" stroke="#C8B89E"/>
+<text x="33" y="384" font-family="monospace" font-size="12" fill="#1F2420">NON-NEGOTIABLE</text>
+<text x="34" y="405" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ WCAG 2.2 AA / contrast</text>
+<text x="34" y="432" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ Keyboard / visible focus</text>
+<text x="34" y="459" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ Reduced motion / 320px reflow</text>
+<text x="33" y="495" font-family="monospace" font-size="11" fill="#A13826">STAGE 10 / NOT IMPLEMENTED</text>
+<rect x="426" y="59" width="390" height="455" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="440" y="85" font-size="14" font-weight="700" fill="#1F2420" font-family="sans-serif">R-02 / ADAPTIVE MARGINALIA</text>
+<text x="440" y="106" font-size="12" fill="#4F5A53" font-family="sans-serif">Evidence visible and contextual</text>
+<rect x="441" y="129" width="232" height="200" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="684" y="129" width="115" height="200" fill="#FDFBF6" stroke="#1F2420"/>
+<text x="451" y="145" font-family="monospace" font-size="10" fill="#A13826">DESKTOP</text>
+<text x="697" y="145" font-family="monospace" font-size="10" fill="#A13826">MOBILE</text>
+<rect x="452" y="158" width="110" height="35" fill="#F4EFE6" stroke="#C8B89E"/>
+<rect x="579" y="157" width="83" height="116" fill="#F4EFE6" stroke="#A13826"/>
+<text x="588" y="177" font-size="10" font-family="monospace" fill="#A13826">SOURCE</text>
+<rect x="452" y="207" width="103" height="4" fill="#1F2420" opacity=".7"/>
+<rect x="452" y="226" width="103" height="4" fill="#1F2420" opacity=".7"/>
+<rect x="452" y="245" width="103" height="4" fill="#1F2420" opacity=".7"/>
+<rect x="452" y="264" width="103" height="4" fill="#1F2420" opacity=".7"/>
+<rect x="695" y="158" width="94" height="43" fill="#F4EFE6" stroke="#1F2420"/>
+<text x="701" y="176" font-size="9" font-family="monospace" fill="#A13826">SOURCE</text>
+<rect x="695" y="217" width="71" height="6" fill="#1F2420" opacity=".7"/>
+<rect x="695" y="243" width="90" height="6" fill="#1F2420" opacity=".7"/>
+<rect x="695" y="269" width="71" height="6" fill="#1F2420" opacity=".7"/>
+<line x1="441" y1="355" x2="801" y2="355" stroke="#C8B89E"/>
+<text x="441" y="384" font-family="monospace" font-size="12" fill="#1F2420">NON-NEGOTIABLE</text>
+<text x="442" y="405" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ WCAG 2.2 AA / contrast</text>
+<text x="442" y="432" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ Keyboard / visible focus</text>
+<text x="442" y="459" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ Reduced motion / 320px reflow</text>
+<text x="441" y="495" font-family="monospace" font-size="11" fill="#A13826">STAGE 10 / NOT IMPLEMENTED</text>
+<rect x="834" y="59" width="390" height="455" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="848" y="85" font-size="14" font-weight="700" fill="#1F2420" font-family="sans-serif">R-03 / TASK-FIRST WORKBENCH</text>
+<text x="848" y="106" font-size="12" fill="#4F5A53" font-family="sans-serif">Work first, editorial identity second</text>
+<rect x="849" y="129" width="232" height="200" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="1092" y="129" width="115" height="200" fill="#FDFBF6" stroke="#1F2420"/>
+<text x="859" y="145" font-family="monospace" font-size="10" fill="#A13826">DESKTOP</text>
+<text x="1105" y="145" font-family="monospace" font-size="10" fill="#A13826">MOBILE</text>
+<rect x="860" y="158" width="146" height="98" fill="#F4EFE6" stroke="#C8B89E"/>
+<text x="871" y="179" font-size="11" fill="#1F2420" font-family="sans-serif">WRITE / SIGN IN</text>
+<rect x="871" y="192" width="123" height="20" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="871" y="222" width="86" height="22" fill="#A13826"/>
+<rect x="1018" y="158" width="52" height="98" fill="#F4EFE6" stroke="#C8B89E"/>
+<rect x="1104" y="158" width="91" height="48" fill="#F4EFE6" stroke="#1F2420"/>
+<text x="1111" y="178" font-size="10" fill="#1F2420" font-family="sans-serif">TASK</text>
+<rect x="1105" y="222" width="85" height="10" fill="#F4EFE6" stroke="#C8B89E"/>
+<rect x="1105" y="247" width="85" height="10" fill="#F4EFE6" stroke="#C8B89E"/>
+<rect x="1105" y="272" width="85" height="10" fill="#F4EFE6" stroke="#C8B89E"/>
+<line x1="849" y1="355" x2="1209" y2="355" stroke="#C8B89E"/>
+<text x="849" y="384" font-family="monospace" font-size="12" fill="#1F2420">NON-NEGOTIABLE</text>
+<text x="850" y="405" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ WCAG 2.2 AA / contrast</text>
+<text x="850" y="432" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ Keyboard / visible focus</text>
+<text x="850" y="459" font-family="sans-serif" font-size="12" fill="#4F5A53">✓ Reduced motion / 320px reflow</text>
+<text x="849" y="495" font-family="monospace" font-size="11" fill="#A13826">STAGE 10 / NOT IMPLEMENTED</text>
+</svg>
