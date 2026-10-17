@@ -1,5 +1,5 @@
 .container {
-  width: min(1180px, calc(100% - 2rem));
+  width: min(var(--container-max), calc(100% - clamp(40px, 13.4vw, 112px)));
   min-height: calc(100vh - 180px);
   margin: 0 auto;
   padding: clamp(2.25rem, 5vw, 4.5rem) 0 5rem;
@@ -92,6 +92,8 @@
   color: var(--text-primary);
   border-bottom-color: var(--primary);
 }
+
+.tab:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 
 .content,
 .dashboard,
@@ -273,7 +275,7 @@
 }
 
 .tableWrap:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--border-focus);
   outline-offset: 3px;
 }
 
@@ -318,7 +320,7 @@
 }
 
 .roleSelect {
-  min-height: 36px;
+  min-height: 44px;
   padding: .4rem 1.75rem .4rem .15rem;
   color: var(--text-primary);
   background-color: transparent;
@@ -330,7 +332,7 @@
 }
 
 .roleSelect:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  outline: 2px solid var(--border-focus);
   outline-offset: 2px;
 }
 
@@ -355,8 +357,8 @@
 .actionBtn,
 .deleteBtn {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   color: var(--text-muted);
   background: transparent;

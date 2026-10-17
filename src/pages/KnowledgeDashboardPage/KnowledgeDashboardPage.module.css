@@ -602,6 +602,9 @@
   font-size: .75rem;
 }
 
+.correctionSources a:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 3px; }
+
+
 .correctionActions {
   display: flex;
   flex-wrap: wrap;
@@ -626,6 +629,9 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.correctionActions a:focus-visible,
+.correctionActions button:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 
 .correctionActions button:disabled {
   opacity: .5;
