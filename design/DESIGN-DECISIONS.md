@@ -31,7 +31,7 @@
 | 6 Component Design System | **ONAYLANDI** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | **C-02 Inked Folio; CD-005 G-02 istisna sınırı korunur** | 2026-10-17 |
 | 7 Homepage Design | **ONAYLANDI** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | **H-01 Issue Front** | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
-| 9 Motion & Interaction Design | **Alternatifler hazırlanıyor, karar bekleniyor** | M-01/M-02/M-03 önerileri | — | 2026-10-17 |
+| 9 Motion & Interaction Design | **Üç alternatif sunuldu; ONAY BEKLENİYOR** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | — | 2026-10-17 |
 | 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
 | 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
 
@@ -222,3 +222,13 @@ Araştırma `design/INNER-PAGES-OPTIONS.md` ve soyut `design/inner-pages-composi
 **KORUNAN:** CD-001..CD-007 (PL-01, TYPE-02, G-01 site-wide, G-02 yalnız seçilen featured dosyada, C-02, H-01) değişmedi. Kanıt yalnızca gerçek state'e dayanır. WCAG 2.2 AA ve mobil-first hedefler geçerlidir.
 
 **UYGULAMA SINIRI:** Sadece tasarım seçimi ve kalıcı belge güncellemesi; React/CSS, API, route, frontend assets, gerçek kullanıcı verisi ve çalışan servisler değişmez. **Sonraki aşama YALNIZCA Aşama 9 Motion & Interaction Design alternatifleridir; kullanıcı Aşama 9'u ayrıca seçmeden Aşama 10'a geçme.**
+
+
+## Aşama 9 hareket alternatifleri — ONAYSIZ (2026-10-17)
+
+- **M-01 Quiet Precision:** Yalnız anlamlı UI yanıtı, hover 120–150ms / drawer ~180ms, kapak animasyonu yok.
+- **M-02 Editorial Rhythm:** Kontrollü micro-interaction 140–180ms, drawer ~250ms, yalnız seçilmiş featured kapakta kısa 260–340ms reveal, rahat okuma. **Öneri, onay değil.**
+- **M-03 Kinetic Issue:** 260ms hover / 420ms drawer / 450–600ms kapak ve stagger; daha yüksek demo enerjisi ama yavaşlık ve dikkat riski.
+- Detaylar: `design/MOTION-INTERACTION-OPTIONS.md`, `design/motion-interaction-reference.svg`. 3 alternatif × desktop/mobile × normal/reduced = **12 Chromium koşumu**; overflow/pageerror yok, mock menü Escape focus return doğrulandı, reduced-transition 0.01ms. Bu gerçek Postify uygulaması QA değildir.
+- Yerel storyboard: `/mnt/data/postify-stage9-motion-comparison.png` ve `postify-stage9-M-01/02/03.gif` — kavramsal örnek.
+- **Aşama 9 kullanıcı kararı henüz YOK.** Önceki CD-001..008 onayları değişmedi. Hiçbir CSS/JS animasyonu uygulanmadı, Aşama 10 başlamadı, push/deploy yok.

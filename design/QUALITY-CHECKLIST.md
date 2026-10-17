@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 9 — CD-008 ile INNER-02 ana + INNER-01 sakin okuma, sınırlı INNER-03 seçildi; Aşama 9 motion alternatifi onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 9 — CD-008 ile INNER-02 ana + INNER-01 sakin okuma seçildi; M-01/M-02/M-03 Motion seçenekleri sunuldu, onay bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -36,6 +36,8 @@
 - [x] Aşama 8 tüm 16 iç rota için makale, yazar, auth, editör, kayıt, knowledge/admin, about/contact/404 ve durumlar tasarım koruma tablosuna alındı.
 - [x] Aşama 8 üç iç sayfa yaklaşımı (INNER-01/02/03) makale/auth/editör/yazar × 1440/768/390/320 = **48** bağımsız statik Chromium örneğinde incelendi, gözlenen yatay taşma/pageerror sıfır; gerçek app QA değildir.
 - [x] Aşama 8 INNER-02 ana + INNER-01 uzun okuma + sınırlı INNER-03 kullanıcı delegasyonuyla CD-008 olarak kararlaştırıldı.
+- [x] Aşama 9 M-01/M-02/M-03 alternatifleri, component/state performans ve reduced-motion sınırları karşılaştırıldı.
+- [x] Aşama 9 Chrome bağımsız demo 3×2×2 = 12 farklı viewport/motion tercihiyle test edildi; overflow ve JS pageerror yok, Escape sonrası focus return; reduced-motion transition ~0.01ms. Gerçek app testi değildir.
 - [ ] Aşama 9 Motion & Interaction Design henüz kullanıcı tarafından onaylanmadı.
 
 ## Bilinçli olarak açık kalan kontroller
@@ -58,4 +60,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Sadece Aşama 9 Motion & Interaction Design için üç anlamlı alternatif öner, performans ve reduced-motion risklerini kıyasla. Kullanıcı Stage 9 onayı olmadan Stage 10 Responsive & Accessibility başlatma.
+**Şimdiki sonraki adım:** Kullanıcının M-01/M-02/M-03 veya açıkça tanımlı hibrit seçimini bekle. Aşama 9 onayı olmadan Aşama 10 Responsive & Accessibility başlatma.

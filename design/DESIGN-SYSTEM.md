@@ -39,7 +39,7 @@ Durum: **G-01 Editorial Spine ana sistem + G-02 yalnızca öne çıkan editoryal
 Durum: **C-02 Inked Folio kullanıcı tarafından ONAYLANDI (CD-006).** [COMPONENT-SYSTEM-OPTIONS.md](./COMPONENT-SYSTEM-OPTIONS.md) içindeki karşılaştırma korunur; C-02 kapak/çerçeve/bölüm/CTA/forma dair karakterdir. **SİTE GENELİ GRID G-01 olarak kalır.** G-02 yalnızca seçilmiş featured dosyaların istisna kompozisyonudur. Durum semantiği, doğrulama kaynağı, son hover/motion ve pixel düzeyi ayrıntılar ayrıca incelenir.
 
 ### Aşama 9: Motion
-Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
+Durum: **M-01/M-02/M-03 seçenekleri sunuldu; kullanıcı onayı bekliyor.** Önerilen süreler, etkileşim bağlamları, prefers-reduced-motion ilkeleri, gerçek Chromium demo sonuçları [MOTION-INTERACTION-OPTIONS.md](./MOTION-INTERACTION-OPTIONS.md) içinde; soyut örnek [motion-interaction-reference.svg](./motion-interaction-reference.svg). **Hiçbir motion token, animasyon eğrisi, yeni etkileşim veya uygulama kodu onaylanmadı.**
 
 **Kural:** `DESIGN-DECISIONS.md` içindeki kullanıcı onayı olmadan bu bölümlere “approved” değeri girme ve kodu değiştirme.
 

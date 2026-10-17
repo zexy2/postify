@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
+<title id="title">Postify Stage 9 unapproved motion directions</title>
+<desc id="desc">M-01 quiet precision 130ms hover and 180ms drawer, M-02 editorial rhythm 160ms hover and 250ms drawer, M-03 kinetic issue 260ms hover and 420ms drawer. Reduced-motion removes decorative movement. These values are proposed and not applied to Postify.</desc>
+<rect width="1200" height="370" fill="#F4EFE6"/>
+<text x="26" y="35" font-family="sans-serif" font-weight="700" font-size="18" fill="#1F2420">POSTIFY / STAGE 09 / MOTION LAB — UNAPPROVED</text>
+<rect x="15" y="62" width="380" height="278" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="31" y="89" font-family="sans-serif" font-size="15" font-weight="700" fill="#1F2420">M-01 QUIET PRECISION</text>
+<text x="31" y="113" font-family="monospace" font-size="12" fill="#4F5A53">HOVER / DRAWER  130 / 180 ms</text>
+<rect x="31" y="142" width="348" height="129" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="31" y="142" width="348" height="4" fill="#1F2420"/>
+<text x="43" y="174" font-family="monospace" font-size="11" fill="#A13826">FIELD NOTE  /  01</text>
+<text x="43" y="209" font-family="serif" font-size="25" fill="#1F2420">Read with intent.</text>
+<line x1="43" y1="232" x2="239" y2="232" stroke="#C8B89E"/>
+<rect x="43" y="242" width="95" height="3" fill="#A13826"/>
+<text x="31" y="303" font-family="monospace" font-size="12" fill="#4F5A53">REDUCED MOTION  →  IMMEDIATE STATE</text>
+<rect x="412" y="62" width="380" height="278" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="428" y="89" font-family="sans-serif" font-size="15" font-weight="700" fill="#1F2420">M-02 EDITORIAL RHYTHM</text>
+<text x="428" y="113" font-family="monospace" font-size="12" fill="#4F5A53">HOVER / DRAWER  160 / 250 ms</text>
+<rect x="428" y="138" width="348" height="129" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="428" y="138" width="348" height="4" fill="#1F2420"/>
+<text x="440" y="170" font-family="monospace" font-size="11" fill="#A13826">FIELD NOTE  /  01</text>
+<text x="440" y="205" font-family="serif" font-size="25" fill="#1F2420">Read with intent.</text>
+<line x1="440" y1="228" x2="636" y2="228" stroke="#C8B89E"/>
+<rect x="440" y="238" width="125" height="3" fill="#A13826"/>
+<text x="428" y="303" font-family="monospace" font-size="12" fill="#4F5A53">REDUCED MOTION  →  IMMEDIATE STATE</text>
+<rect x="809" y="62" width="380" height="278" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="825" y="89" font-family="sans-serif" font-size="15" font-weight="700" fill="#1F2420">M-03 KINETIC ISSUE</text>
+<text x="825" y="113" font-family="monospace" font-size="12" fill="#4F5A53">HOVER / DRAWER  260 / 420 ms</text>
+<rect x="825" y="134" width="348" height="129" fill="#FDFBF6" stroke="#1F2420"/>
+<rect x="825" y="134" width="348" height="4" fill="#1F2420"/>
+<text x="837" y="166" font-family="monospace" font-size="11" fill="#A13826">FIELD NOTE  /  01</text>
+<text x="837" y="201" font-family="serif" font-size="25" fill="#1F2420">Read with intent.</text>
+<line x1="837" y1="224" x2="1033" y2="224" stroke="#C8B89E"/>
+<rect x="837" y="234" width="186" height="3" fill="#A13826"/>
+<text x="825" y="303" font-family="monospace" font-size="12" fill="#4F5A53">REDUCED MOTION  →  IMMEDIATE STATE</text>
+</svg>
