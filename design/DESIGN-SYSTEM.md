@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: TASARIM YÖNLERİ CD-001..CD-010 ONAYLI — responsive kapsamı belirli; WCAG 2.2 AA bütün ekranlar için zorunlu kalite hedefi. Aşama 11 QA/visual polish planı ve gerçek uygulama hâlâ onaysız.**
+**Durum: CD-001..CD-011 TASARIM VE QA PLAN KARARLARI ONAYLI (12/12). QA-02 Editorial Excellence ana + QA-03 güvenlik/WCAG 2.2 AA/veri bütünlüğü/performans zorunlu kapılar. Uygulama, gerçek QA yürütme, push ve deployment ONAYSIZ/YAPILMADI.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -134,3 +134,11 @@ Responsive çözüm alternatifleri: **R-01 Editorial Reflow, R-02 Adaptive Margi
 ## Aşama 11 Final QA & Visual Polish — KARAR BEKLENİYOR
 
 [FINAL-QA-VISUAL-POLISH-PLAN.md](./FINAL-QA-VISUAL-POLISH-PLAN.md): **QA-01 Essential Release Gate**, **QA-02 Editorial Excellence**, **QA-03 Reliability & Performance Assurance** ve önerilen QA-02 + zorunlu QA-03 güvenlik/a11y/hız test kapıları. Bu seçenekler **henüz onaylanmadı**; henüz hiçbir responsive UI veya onaylı görsel tasarım uygulama koduna taşınmadı. CD-010 R-01/R-02/R-03 responsive kapsamı ve WCAG 2.2 AA hedefi bağlayıcıdır. Aşama 11 plan onayı ileride verilse bile test, implementation, GitHub push veya release yetkisi ayrı gerekir.
+
+
+## 7. CD-011 ONAYLI — Final QA & Visual Polish PLAN kararı
+
+- **Ana plan:** QA-02 Editorial Excellence — bütün route ailelerinde görsel polish, tema/dil/viewport, gerçek font, responsive, before/after görsel kanıt ve kullanıcı gözden geçirmesi.
+- **Zorunlu release kapıları:** QA-03 içinden güvenlik, WCAG 2.2 AA'nın gerçek testlerle sağlanması, veri bütünlüğü ve ölçülmüş performans. QA-01'in temel işlev/regresyon kontrolleri de korunur.
+- **Kaynak:** [FINAL-QA-VISUAL-POLISH-PLAN.md](./FINAL-QA-VISUAL-POLISH-PLAN.md).
+- **Durum ayrımı:** Tasarım/QA **PLANLAMASI tamamlandı**; gerçek responsive UI/JSX/CSS/font uygulaması, test execution, QA kabulü, push ve deploy **başlamadı**. Kullanıcının ayrıca açık onayı gereklidir. Uygulama/test ve dağıtım izinleri birbirinden ayrıdır.

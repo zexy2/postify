@@ -81,3 +81,7 @@ Aşama 8'de **INNER-02 Evidence Marginalia** ana iç sayfa dili ve **INNER-01 sa
 
 ## Aşama 11 QA planı (ONAYSIZ)
 [FINAL-QA-VISUAL-POLISH-PLAN.md](./FINAL-QA-VISUAL-POLISH-PLAN.md) 17 rota ailesi ve public/6 protected route'lar için görsel, auth/role, UI state, TR/EN, light/dark, responsive, zoom, screen-reader, security/SEO/PWA ve performans acceptance planını içerir. QA-01/02/03 kapsam alternatifi **kullanıcı tarafından henüz seçilmedi**. Test çalıştırma, UI uygulama, push veya deploy izni verilmedi.
+
+
+## CD-011 onaylı kalite planı — implementation BEKLEMEDE (2026-10-17)
+Bütün 17 rota ve ilgili state'lerde **QA-02 Editorial Excellence** görsel polish planı; **QA-03 güvenlik, WCAG 2.2 AA, veri bütünlüğü ve performans** zorunlu kapılar olarak onaylandı. Buradaki onay **yalnız QA PLANIDIR**; rota satırlarındaki **Bekliyor** uygulama durumları değişmedi. Gerçek auth/editor/admin fixture'ları, font yüklenmesi, görsel before/after, manual AT, performans ve tüm testler henüz yürütülmedi. Kod yazmak, test çalıştırmak, GitHub push veya deployment yapmak kullanıcı ayrıca onaylayana kadar yasaktır.

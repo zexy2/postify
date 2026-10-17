@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 11 / Final QA & Visual Polish — **üç QA/visual polish planı belgelendi; Aşama 11 kullanıcı onayı henüz yok**.
-**Sonraki aşama:** Kullanıcı Aşama 11 planını onayladıktan sonra, ayrıca izin verilirse ayrı **implementasyon planı ve uygulama izni**; bu 12 aşamalı protokol kod/deploy izni değildir.
+**Aktif durum:** **Aşama 0–11 tasarım/QA planlama protokolü ONAYLANDI ve KAPATILDI.** Uygulama, QA testlerinin yürütülmesi, GitHub push ve deployment ayrı kullanıcı izni bekliyor.
+**Sonraki iş:** Yalnızca kullanıcı ayrıca açıkça yetkilendirirse, onaylı tasarımı ayrı izole iş akışında **uygulama / test yürütme**; GitHub push ve production deploy için ayrı onay. Bu turda hiçbirisi başlamadı.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -33,7 +33,7 @@
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
 | 9 Motion & Interaction Design | **ONAYLANDI** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | **M-02 ana, makale/auth/editör/admin M-01 sakinliği; sadece selected featured kapakta özel hareket** | 2026-10-17 |
 | 10 Responsive & Accessibility | **ONAYLANDI** | R-01 Editorial Reflow / R-02 Adaptive Marginalia / R-03 Task-first Adaptive Workbench | **R-01 sitewide + R-02 sadece makale/kanıt + R-03 sadece auth/editör/admin/knowledge; WCAG 2.2 AA her ekranda zorunlu hedef** | 2026-10-17 |
-| 11 Final QA & Visual Polish | **Üç kalite planı sunuldu; ONAY BEKLENİYOR** | QA-01 Essential Release Gate / QA-02 Editorial Excellence / QA-03 Reliability & Performance Assurance | — | 2026-10-17 |
+| 11 Final QA & Visual Polish | **ONAYLANDI — PLAN** | QA-01 Essential Release Gate / QA-02 Editorial Excellence / QA-03 Reliability & Performance Assurance | **QA-02 ana + QA-03 güvenlik, WCAG 2.2 AA, veri bütünlüğü, performans zorunlu; yalnız PLAN, execution izni yok** | 2026-10-17 |
 
 ## Aşama 0 açık kullanıcı onayı
 **2026-10-17:** Kullanıcı önceki Stage 0 raporunun ardından **“Onaylıyorum”** dedi. Bu onay **yalnızca Aşama 0 denetimi** içindir; önceki UI commitleri, marka stratejisi, renk, tipografi veya Aşama 2 için tasarım onayı anlamına gelmez.
@@ -277,3 +277,16 @@ Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve der
 - **ÖNERİ, ONAY DEĞİL:** QA-02 ana plan, QA-03'ün veri bütünlüğü/güvenlik/WCAG/performans kapıları zorunlu. Her plan WCAG 2.2 AA ve önemli işlevlerin korunması koşuluna tabidir.
 - Planın kapsamı, 17 rota/state matrisi, gerçek font, responsive/zoom, P0/P1 sıfır release gate, performance p75 hedefleri, test komutları ve yetki sırası: `design/FINAL-QA-VISUAL-POLISH-PLAN.md`.
 - **Aşama 11 kullanıcı kararı BEKLENİYOR**; hiçbir plan otomatik olarak seçilmedi. Bu aşamada testleri/uygulama işlerini başlatma, JSX/CSS/font ekleme, GitHub push veya deployment izni verilmedi. **Planın ileride onaylanması bile implementation veya release yetkisi değildir.**
+
+
+## CD-011 — Aşama 11 Final QA & Visual Polish planının açık kullanıcı onayı (2026-10-17)
+
+**Kullanıcının aynen onay metni:** “Postify Aşama 11 için QA-02 Editorial Excellence ana kalite ve görsel polish planını, QA-03 Reliability & Performance Assurance'ın güvenlik, WCAG 2.2 AA, veri bütünlüğü ve performans kapıları zorunlu olacak şekilde onaylıyorum. Oracle ve design belgelerine kaydet. Bu onay yalnızca tasarım ve QA planını kesinleştirir; uygulama kodunu değiştirme, testleri çalıştırma, push veya deployment yapma. Bunlar için ayrı onayımı bekle.”
+
+**KARAR / PLAN ONAYLANDI:** **QA-02 Editorial Excellence** ana kalite, editoryal görsel tutarlılık ve polish planı. **QA-03 Reliability & Performance Assurance** başlığı altında **güvenlik**, **WCAG 2.2 AA**, **veri bütünlüğü** ve **performans** kontrolleri **zorunlu, atlanamaz kalite kapılarıdır**. QA-01 Essential Release Gate'in temel regresyon ve işlev kontrolleri ortak taban olarak korunur.
+
+**KAPSAM:** 17 rota; TR/EN, light/dark, approved TYPE-02 gerçek fontlar; G-01 layout ve G-02 only selected featured; C-02/H-01/INNER-02/INNER-01 uyumu; WCAG 2.2 AA (sadece otomasyon değil manual AT doğrulaması), gerçek responsive ve browser zoom; korumalı auth/editor/admin/knowledge durumları güvenli staging/test hesabıyla; Vitest/ESLint/build/E2E, gerçek evidence statüsü, SEO/PWA, performans, güvenlik ve veri bütünlüğü. Kabul ve blocking koşulları \`design/FINAL-QA-VISUAL-POLISH-PLAN.md\` içindedir.
+
+**KRİTİK YETKİ AYRIMI (AÇIK KULLANICI KISITI):** Bu karar **SADECE tasarım ve QA PLANINI kesinleştirir**. Yeni arayüz henüz JSX/CSS'e **UYGULANMADI**; **testler bu turda ÇALIŞTIRILMADI**, push/deployment YAPILMADI. Her biri ayrıca açık kullanıcı izni bekler. Bu karar release acceptance veya WCAG 2.2 AA uygunluk beyanı değildir. Çalışan servisler, mevcut kullanıcı değişiklikleri ve kimlik bilgileri korunur.
+
+**PROTOKOL DURUMU:** **0–11 / 12 tasarım karar aşaması tamamlandı** (Aşama 11 yalnız **plan** onayıdır). Yeni bir tasarım aşamasına kendiliğinden geçilmez. **Sonraki adım: kullanıcının ayrı uygulama/test yürütme yetkisi vermesini bekle; dağıtım için ayrı izin.**

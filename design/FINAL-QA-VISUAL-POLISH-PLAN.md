@@ -1,7 +1,7 @@
 # POSTIFY — Aşama 11 / Final QA & Visual Polish Planı
 
 **Tarih:** 2026-10-17
-**Durum:** **QA-01 / QA-02 / QA-03 kapsam alternatifleri PLANLANDI; kullanıcı Aşama 11 onayı BEKLENİYOR.**
+**Durum:** **CD-011 ONAYLANDI — QA-02 Editorial Excellence ana plan + QA-03 güvenlik, WCAG 2.2 AA, veri bütünlüğü ve performans zorunlu kapıları.** Aşağıdaki seçenek karşılaştırmaları ilk araştırmanın tarihsel kaydıdır.
 **Yetki:** **Yalnız plan/dokümantasyon.** QA testleri bu aşamada çalıştırılmadı; yeni UI CSS/JS/React/font varlıkları yazılmadı, uygulama kaynağı veya kullanıcı verisi değiştirilmedi, GitHub push veya deploy yapılmadı.
 **Ana ilke:** Onaylı bir tasarımın **belgelenmiş olması** ile **uygulanmış / WCAG 2.2 AA ölçülmüş / yayına hazır olması** üç farklı durumdur. Bu plan sonuncusunu iddia etmez.
 
@@ -135,3 +135,14 @@ At each *future authorized* milestone store: Git SHA/worktree, date and env, tes
 **Aşama 11 alternatives currently pending:** QA-01 Essential Release Gate, QA-02 Editorial Excellence, QA-03 Reliability & Performance Assurance or a clearly scoped hybrid.
 
 **Recommended (unapproved) final plan:** **QA-02** plus the critical **QA-03 performance/security/a11y/data checks**. This can be *approved as a plan only*. Its adoption completes creative planning, **not visual reimplementation, test execution, acceptance, or launch**. When approved, ask for explicit separate implementation authorization/scope and preserve original main worktree, services, credentials and user modifications.
+
+
+## 8. CD-011 — ONAYLI kalite planı ve ayrı execution yetki kapısı
+
+**Tarih:** 2026-10-17. Kullanıcı **QA-02 Editorial Excellence** ana planı ve **QA-03'ün güvenlik, WCAG 2.2 AA, veri bütünlüğü ve performans** denetimlerini zorunlu kapılar olarak açıkça onayladı. QA-01 taban regresyon kontrolleri kapsamdan çıkarılmadı. Bu kararın birebir metni \`DESIGN-DECISIONS.md\` içindeki CD-011 kaydındadır.
+
+**Öncelikli kalite mantığı:** Gerçek görsel polish + mevcut işlevleri ve verified/claim/unknown ayrımını koruma; 17 rota, her önemli state ve korumalı akış, dark/light, TR/EN, real zoom/reflow/AT, güvenlik ve performance ölçümü; **P0/P1 açık hata ile çıkış yok**. WCAG 2.2 AA otomatik testler tek başına yeterli görülmeyen **zorunlu kabul standardıdır**, henüz doğrulanmış uygunluk iddiası değildir.
+
+**İŞLEM YETKİSİ: YOK.** Bu onay kullanıcıya göre yalnızca planı kesinleştirir. React/JSX/CSS, font veya servis kaynakları **değiştirilmez**; testler **çalıştırılmaz**; GitHub push ve deployment **yapılmaz**. Gelecekte uygulama kodlaması ve test yürütmesi için ayrı açık izin; GitHub push veya canlı dağıtım için ayrıca açık onay beklenecektir. Çalışan servis, kimlik bilgileri ve kullanıcı değişiklikleri dokunulmadan korunur.
+
+**Aşama durumu:** 12/12 onaylı planlama aşaması tamamlandı; uygulama/QA execution/release işleri **başlatılmadı**. Kullanıcı yetkisine kadar dur.
