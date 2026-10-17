@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 11 — CD-010 R-01 genel + R-02 makale/kanıt + R-03 auth/editör/admin/knowledge ONAYLI; Aşama 11 QA/Visual Polish planı hazırlanıyor, onay bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 11 — CD-010 R-01 genel + R-02 makale/kanıt + R-03 auth/editör/admin/knowledge ONAYLI; QA-01/QA-02/QA-03 Final QA & Visual Polish planları SUNULDU, kullanıcı onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -42,6 +42,7 @@
 - [x] Aşama 10 gerçek uygulama salt okunur 85 ilk görünüm + 30 yüklenmiş görünüm Chromium taraması; keyboard/filter kontrolü ve palette contrast hesabı belgelendi.
 - [x] Aşama 10 R-01/R-02/R-03 responsive politika seçenekleri ile WCAG 2.2 AA minimum kabul şartları belgelendi.
 - [x] Aşama 10 R-01 sitewide + R-02 yalnız article/evidence + R-03 yalnız auth/editor/admin/knowledge ve bütün ekranlarda WCAG 2.2 AA kullanıcı onayı CD-010 ile kaydedildi.
+- [x] Aşama 11 QA-01/QA-02/QA-03 alternatifli son kalite/estetik kontrol planı, 17 rota için işlev ve acceptance kanıtı, P0/P1 çıkış eşiği ve ayrı implementation/release yetki kapıları belgelendi.
 - [ ] Aşama 11 Final QA & Visual Polish planı kullanıcı onayı henüz verilmedi; uygulama ve tam kabul testleri yapılmadı.
 
 ## Bilinçli olarak açık kalan kontroller
@@ -64,4 +65,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Yalnızca Aşama 11 Final QA & Visual Polish için ölçülebilir kabul, regresyon, görsel ve erişilebilirlik kontrol planını seçenekleriyle sun; kullanıcının Aşama 11 planı onayını bekle. Kod/test çalıştırma ve deploy yapma izni verilmedi.
+**Şimdiki sonraki adım:** Kullanıcının QA-01 / QA-02 / QA-03 veya kapsamı açık hibrit Aşama 11 planı kararını bekle. Sonra ancak kullanıcının AYRI uygulama/test/release izni ile kod, test ve deploy aşamaları başlatılabilir. Kod/test çalıştırma/deploy izni henüz yok.

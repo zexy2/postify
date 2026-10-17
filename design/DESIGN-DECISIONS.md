@@ -1,7 +1,7 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 11 / Final QA & Visual Polish — **yalnız QA/release kalite planı hazırlanıyor; Aşama 11 kullanıcı onayı henüz yok**.
+**Aktif aşama:** 11 / Final QA & Visual Polish — **üç QA/visual polish planı belgelendi; Aşama 11 kullanıcı onayı henüz yok**.
 **Sonraki aşama:** Kullanıcı Aşama 11 planını onayladıktan sonra, ayrıca izin verilirse ayrı **implementasyon planı ve uygulama izni**; bu 12 aşamalı protokol kod/deploy izni değildir.
 
 ## Süreç kararları — kullanıcı açık talimatı
@@ -33,7 +33,7 @@
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
 | 9 Motion & Interaction Design | **ONAYLANDI** | M-01 Quiet Precision / M-02 Editorial Rhythm / M-03 Kinetic Issue | **M-02 ana, makale/auth/editör/admin M-01 sakinliği; sadece selected featured kapakta özel hareket** | 2026-10-17 |
 | 10 Responsive & Accessibility | **ONAYLANDI** | R-01 Editorial Reflow / R-02 Adaptive Marginalia / R-03 Task-first Adaptive Workbench | **R-01 sitewide + R-02 sadece makale/kanıt + R-03 sadece auth/editör/admin/knowledge; WCAG 2.2 AA her ekranda zorunlu hedef** | 2026-10-17 |
-| 11 Final QA & Visual Polish | **QA ve görsel son kontrol planı hazırlanıyor; ONAY BEKLENİYOR** | Q-01/Q-02/Q-03 kalite planı seçenekleri | — | 2026-10-17 |
+| 11 Final QA & Visual Polish | **Üç kalite planı sunuldu; ONAY BEKLENİYOR** | QA-01 Essential Release Gate / QA-02 Editorial Excellence / QA-03 Reliability & Performance Assurance | — | 2026-10-17 |
 
 ## Aşama 0 açık kullanıcı onayı
 **2026-10-17:** Kullanıcı önceki Stage 0 raporunun ardından **“Onaylıyorum”** dedi. Bu onay **yalnızca Aşama 0 denetimi** içindir; önceki UI commitleri, marka stratejisi, renk, tipografi veya Aşama 2 için tasarım onayı anlamına gelmez.
@@ -267,3 +267,13 @@ Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve der
 **SINIR:** R-02 sitewide sticky kaynak rayı veya dashboard anlamına gelmez; R-03 genel public siteye uygulanmaz. G-02 editorial kompozisyon istisnası **yalnız seçilmiş featured yayın kapaklarında**. Onaylı CD-001..CD-009 kararları korunur.
 
 **KOD/DISTRIBUTION:** Yalnızca tasarım kararı. Uygulamanın JSX/CSS, font, API, servis, kullanıcı verisi, GitHub push, build veya canlı deployment'ı değiştirilmedi. **Sadece Aşama 11 Final QA & Visual Polish planı** açıldı; testlerin uygulanması, sorunların düzeltilmesi ve siteyi yeniden tasarlama için ayrıca açık talimat gerekir.
+
+
+## Aşama 11 Final QA & Visual Polish planı alternatifleri (ONAYSIZ, 2026-10-17)
+
+- **QA-01 Essential Release Gate:** 17 route temel işlev/a11y, yeterli görsel örnek, build/unit/E2E/SEO/PWA smoke. **Risk:** üst düzey editoryal mikrodetay ve state varyasyonlarını kaçırmak.
+- **QA-02 Editorial Excellence:** QA-01 + sistematik before/after art direction, TR/EN light/dark, gerçek font/fallback ve microtype, 320–1920/zoom, H-01/C-02/INNER-02 görsel tutarlılığı, responsive featured ve evidence ayrıntıları. **Artı:** Awwwards düzeyi hedeflenen iş için en güçlü görsel kontrol; risk: yüksek gözden geçirme maliyeti.
+- **QA-03 Reliability & Performance Assurance:** QA-01 + staging auth/editor/admin/knowledge, gerçek verification/state, security, Web Vitals, düşük güçlü mobil, offline/PWA/SEO ve veri bütünlüğü. **Artı:** güçlü üretim güveni; risk: görsel mikro-polish QA-02 kadar ayrıntılı olmayabilir.
+- **ÖNERİ, ONAY DEĞİL:** QA-02 ana plan, QA-03'ün veri bütünlüğü/güvenlik/WCAG/performans kapıları zorunlu. Her plan WCAG 2.2 AA ve önemli işlevlerin korunması koşuluna tabidir.
+- Planın kapsamı, 17 rota/state matrisi, gerçek font, responsive/zoom, P0/P1 sıfır release gate, performance p75 hedefleri, test komutları ve yetki sırası: `design/FINAL-QA-VISUAL-POLISH-PLAN.md`.
+- **Aşama 11 kullanıcı kararı BEKLENİYOR**; hiçbir plan otomatik olarak seçilmedi. Bu aşamada testleri/uygulama işlerini başlatma, JSX/CSS/font ekleme, GitHub push veya deployment izni verilmedi. **Planın ileride onaylanması bile implementation veya release yetkisi değildir.**

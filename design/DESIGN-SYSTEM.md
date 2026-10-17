@@ -117,7 +117,7 @@ G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir a
 - **Aşama 10:** Responsive/WCAG araştırması açık; test sonuçları gerçek mevcut siteyi ve tasarım önerilerini ayrı değerlendirmeli. Henüz uygulama JSX/CSS değişmedi.
 
 
-## Aşama 10 Responsive & Accessibility (ONAYSIZ)
+## Aşama 10 Responsive & Accessibility (CD-010 ONAYLI; altında tarihi alternatif özeti)
 
 Responsive çözüm alternatifleri: **R-01 Editorial Reflow, R-02 Adaptive Marginalia, R-03 Task-first Adaptive Workbench**. Denetim ve kabul kriterleri [RESPONSIVE-ACCESSIBILITY-OPTIONS.md](./RESPONSIVE-ACCESSIBILITY-OPTIONS.md), çizim [responsive-accessibility-reference.svg](./responsive-accessibility-reference.svg). **WCAG 2.2 AA hedefi tüm alternatiflerde zorunlu; yalnız responsive sunum biçimi seçilebilir.** Henüz responsive/focus/error/border/semantic renk değişikliği onaylanmadı. Uygulama kodu değiştirilmedi.
 
@@ -129,3 +129,8 @@ Responsive çözüm alternatifleri: **R-01 Editorial Reflow, R-02 Adaptive Margi
 - **Her ekranda zorunlu:** WCAG 2.2 AA uygunluk hedefi ve uygulama sonrası doğrulama; bu plan mevcut sitenin WCAG belgesine sahip olduğu iddiası değildir.
 - **Önceki sınırlar:** G-02 yalnız selected featured editorial cover; M-02 genel hareket, M-01 görev ekranlarında sakin.
 - **Aşama 11:** Final QA & Visual Polish uygulama **planı** hazırlanabilir; app CSS/JS veya servis kodunda hiçbir değişiklik onaylanmadı.
+
+
+## Aşama 11 Final QA & Visual Polish — KARAR BEKLENİYOR
+
+[FINAL-QA-VISUAL-POLISH-PLAN.md](./FINAL-QA-VISUAL-POLISH-PLAN.md): **QA-01 Essential Release Gate**, **QA-02 Editorial Excellence**, **QA-03 Reliability & Performance Assurance** ve önerilen QA-02 + zorunlu QA-03 güvenlik/a11y/hız test kapıları. Bu seçenekler **henüz onaylanmadı**; henüz hiçbir responsive UI veya onaylı görsel tasarım uygulama koduna taşınmadı. CD-010 R-01/R-02/R-03 responsive kapsamı ve WCAG 2.2 AA hedefi bağlayıcıdır. Aşama 11 plan onayı ileride verilse bile test, implementation, GitHub push veya release yetkisi ayrı gerekir.
