@@ -81,3 +81,7 @@ Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
 - **Actions/Forms/States:** Belirgin birincil CTA ve okunur ikincil outline; label/invalid/helper, empty/loading/error mesajları aynı yayının görsel kimliğini taşır. Bunlar tasarım kurallarıdır, henüz kod uygulanmadı.
 - **Grid istisnası:** CD-005 G-02 kullanım sınırına dokunulamaz; varsayılan layout G-01 ve mobil tek akış.
 - **Açık alan:** Kesin border/radius/hover/focus/semantic status tokenları, motion, component JSX implementasyonu, Aşama 7 homepage seçenekleri **onaysız**.
+
+
+## Aşama 7 Homepage Design — ONAY BEKLENİYOR
+**H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition** seçenekleri [HOMEPAGE-OPTIONS.md](./HOMEPAGE-OPTIONS.md) dosyasında. [homepage-composition-reference.svg](./homepage-composition-reference.svg) yalnızca önerilerin şematik çizimidir. Önceki CD-001..006 onayları geçerlidir; H-01/02/03 ana sayfa tasarımı **henüz seçilmedi**. Bütün mockuplarda G-01 genel grid ve C-02 Inked Folio ana bileşen dili korunur; G-02 yalnızca seçili featured dosyalarda.

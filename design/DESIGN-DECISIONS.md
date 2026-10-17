@@ -29,7 +29,7 @@
 | 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
 | 5 Grid, Layout & Spacing | **ONAYLANDI** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | **G-01 ana sistem + G-02 yalnızca öne çıkan editoryal yayın dosyalarında** | 2026-10-17 |
 | 6 Component Design System | **ONAYLANDI** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | **C-02 Inked Folio; CD-005 G-02 istisna sınırı korunur** | 2026-10-17 |
-| 7 Homepage Design | **Alternatifler hazırlanıyor; kullanıcı onayı bekliyor** | Açılış ve keşif kompozisyonları | — | 2026-10-17 |
+| 7 Homepage Design | **Üç alternatif sunuldu; ONAY BEKLENİYOR** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | — | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
 | 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
 | 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
@@ -171,3 +171,15 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 **UYGULAMA SINIRI:** Belge ve kavramsal tasarım. Uygulama kodu değişmedi, push/deploy yok.
 
 **SONRAKİ KAPI:** Yalnızca Aşama 7 Homepage Design kompozisyon alternatifleri hazırlanacak; kullanıcı Aşama 7 onayı vermeden Aşama 8 iç sayfalara geçilmeyecek.
+
+
+## Aşama 7 Homepage Design alternatifleri (ONAYSIZ; 2026-10-17)
+
+- **H-01 Issue Front:** yayın vaadi + arama, belirgin featured cover; güçlü ilk ekran dergi karakteri, mobilde keşif daha aşağıda kalabilir.
+- **H-02 Discovery Desk:** arama/okuyucu görevi önde, sağda güçlü C-02 featured kapak, altta G-01 üç kolonlu arşiv; mobilde en hızlı ilk eylem. **Öneri, onay değil.**
+- **H-03 Curated Edition:** seçilmiş 3 yazılık içindekiler + featured kapak; yayın karakteri güçlü ama gerçek kürasyon/issue verisi zorunlu, mobil arama geç başlar.
+- `design/HOMEPAGE-OPTIONS.md` üç alternatifi, korunan mevcut arama/filtre/bookmark/SEO/i18n/fallback davranışlarını, karşılaştırma matrisini ve test sınırlamalarını belgeliyor. Soyut site taslakları `design/homepage-composition-reference.svg`.
+- Repo dışı bağımsız HTML/CSS prototiplerden desktop/mobile karşılaştırma ve 12 Chromium render `/mnt/data/postify-stage7-*` konuşma artefaktlarında. 12/12 yatay taşma/pageerror yok, görünür button min 44px; **bu gerçek Postify app işlev testi değil**.
+- **Font uyarısı:** Yerel Chromium online webfont çekemedi; TYPE-02 aile adları specimen CSS'te olsa da fallback font gösterildi. Nihai font görsel onayı/testi değildir.
+- `ISSUE 08` ve taslak etiketler örnek veridir, gerçek yayın veya doğrulama iddiası olarak kullanılmaz.
+- **Aşama 7 karar bekleniyor**; H-01/H-02/H-03 veya açık hibrit seçilmeden Aşama 8 Inner Pages başlamaz. `src/` dosyaları, deployment, GitHub push veya build artefaktı değiştirilmedi.

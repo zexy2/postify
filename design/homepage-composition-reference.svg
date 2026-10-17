@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="550" viewBox="0 0 1260 550" role="img" aria-labelledby="title desc">
+<title id="title">Postify Stage 7 - Unapproved Homepage Composition Alternatives</title>
+<desc id="desc">H-01: publication promise and search then featured cover. H-02: search-first panel then featured cover. H-03: three editor picks and featured cover with search below. All use a 7 to 5 main split and three-column feed; final typography and interactions are not represented.</desc>
+<rect width="1260" height="550" fill="#F4EFE6"/>
+<text x="26" y="39" font-family="sans-serif" font-size="18" font-weight="700" fill="#1F2420">POSTIFY / STAGE 07 / HOMEPAGE COMPOSITIONS - UNAPPROVED</text>
+<rect x="18" y="66" width="395" height="463" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="31" y="95" font-family="sans-serif" font-weight="700" font-size="16" fill="#1F2420">H-01 / ISSUE FRONT</text>
+<text x="31" y="114" font-family="sans-serif" font-size="12" fill="#4F5A53">Story and masthead first</text>
+<rect x="32" y="131" width="367" height="28" fill="#1F2420"/>
+<text x="41" y="150" font-family="sans-serif" font-size="11" fill="#F4EFE6">POSTIFY     HOME / SEARCH / ABOUT</text>
+<rect x="32" y="171" width="209" height="135" fill="#F4EFE6" stroke="#C8B89E"/>
+<text x="44" y="195" font-family="serif" font-size="21" fill="#1F2420">Editorial</text>
+<text x="44" y="221" font-family="serif" font-size="21" fill="#1F2420">promise</text>
+<rect x="44" y="263" width="185" height="29" fill="#FDFBF6" stroke="#1F2420"/>
+<text x="52" y="282" font-size="11" font-family="sans-serif" fill="#1F2420">Search articles ...</text>
+<rect x="252" y="171" width="147" height="135" fill="#1F2420"/>
+<text x="265" y="194" font-family="monospace" font-size="10" fill="#F2AC91">EDITOR PICK</text>
+<text x="265" y="258" font-family="serif" font-size="40" fill="#F4EFE6">08.</text>
+<rect x="32" y="319" width="367" height="40" fill="#F4EFE6" stroke="#C8B89E"/>
+<text x="44" y="344" font-family="sans-serif" font-size="12" fill="#1F2420">FORMAT / EVIDENCE / FRESHNESS / SORT</text>
+<text x="32" y="384" font-family="serif" font-size="22" fill="#1F2420">Article Archive</text>
+<rect x="32" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="41" y1="414" x2="132" y2="414" stroke="#A13826"/>
+<text x="41" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 1</text>
+<text x="41" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<rect x="158" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="167" y1="414" x2="258" y2="414" stroke="#A13826"/>
+<text x="167" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 2</text>
+<text x="167" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<rect x="284" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="293" y1="414" x2="384" y2="414" stroke="#A13826"/>
+<text x="293" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 3</text>
+<text x="293" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<text x="34" y="511" font-family="monospace" font-size="10" fill="#A13826">G-01 MAIN GRID / C-02 COMPONENTS</text>
+<rect x="431" y="66" width="395" height="463" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="444" y="95" font-family="sans-serif" font-weight="700" font-size="16" fill="#1F2420">H-02 / DISCOVERY DESK</text>
+<text x="444" y="114" font-family="sans-serif" font-size="12" fill="#4F5A53">Search and task first</text>
+<rect x="445" y="131" width="367" height="28" fill="#1F2420"/>
+<text x="454" y="150" font-family="sans-serif" font-size="11" fill="#F4EFE6">POSTIFY     HOME / SEARCH / ABOUT</text>
+<rect x="445" y="171" width="209" height="135" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="457" y="194" font-family="serif" font-size="20" fill="#1F2420">Find your</text>
+<text x="457" y="218" font-family="serif" font-size="20" fill="#1F2420">answer</text>
+<rect x="457" y="240" width="185" height="48" fill="#F4EFE6" stroke="#1F2420"/>
+<text x="464" y="269" font-size="11" font-family="sans-serif" fill="#1F2420">Search / Explore</text>
+<rect x="665" y="171" width="147" height="135" fill="#1F2420"/>
+<text x="678" y="194" font-family="monospace" font-size="10" fill="#F2AC91">EDITOR PICK</text>
+<text x="678" y="258" font-family="serif" font-size="40" fill="#F4EFE6">08.</text>
+<rect x="445" y="319" width="367" height="40" fill="#F4EFE6" stroke="#C8B89E"/>
+<text x="457" y="344" font-family="sans-serif" font-size="12" fill="#1F2420">FORMAT / EVIDENCE / FRESHNESS / SORT</text>
+<text x="445" y="384" font-family="serif" font-size="22" fill="#1F2420">Article Archive</text>
+<rect x="445" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="454" y1="414" x2="545" y2="414" stroke="#A13826"/>
+<text x="454" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 1</text>
+<text x="454" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<rect x="571" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="580" y1="414" x2="671" y2="414" stroke="#A13826"/>
+<text x="580" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 2</text>
+<text x="580" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<rect x="697" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="706" y1="414" x2="797" y2="414" stroke="#A13826"/>
+<text x="706" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 3</text>
+<text x="706" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<text x="447" y="511" font-family="monospace" font-size="10" fill="#A13826">G-01 MAIN GRID / C-02 COMPONENTS</text>
+<rect x="844" y="66" width="395" height="463" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="857" y="95" font-family="sans-serif" font-weight="700" font-size="16" fill="#1F2420">H-03 / CURATED EDITION</text>
+<text x="857" y="114" font-family="sans-serif" font-size="12" fill="#4F5A53">Editorial index first</text>
+<rect x="858" y="131" width="367" height="28" fill="#1F2420"/>
+<text x="867" y="150" font-family="sans-serif" font-size="11" fill="#F4EFE6">POSTIFY     HOME / SEARCH / ABOUT</text>
+<rect x="858" y="171" width="209" height="135" fill="#F4EFE6" stroke="#C8B89E"/>
+<text x="870" y="191" font-family="serif" font-size="20" fill="#1F2420">This issue</text>
+<text x="870" y="215" font-family="sans-serif" font-size="11" fill="#1F2420">01  AI Systems</text>
+<line x1="870" y1="222" x2="1055" y2="222" stroke="#C8B89E"/>
+<text x="870" y="241" font-family="sans-serif" font-size="11" fill="#1F2420">02  Web Standards</text>
+<line x1="870" y1="248" x2="1055" y2="248" stroke="#C8B89E"/>
+<text x="870" y="267" font-family="sans-serif" font-size="11" fill="#1F2420">03  Frontend Flow</text>
+<line x1="870" y1="274" x2="1055" y2="274" stroke="#C8B89E"/>
+<rect x="1078" y="171" width="147" height="135" fill="#1F2420"/>
+<text x="1091" y="194" font-family="monospace" font-size="10" fill="#F2AC91">EDITOR PICK</text>
+<text x="1091" y="258" font-family="serif" font-size="40" fill="#F4EFE6">08.</text>
+<rect x="858" y="319" width="367" height="40" fill="#F4EFE6" stroke="#C8B89E"/>
+<text x="870" y="344" font-family="sans-serif" font-size="12" fill="#1F2420">FORMAT / EVIDENCE / FRESHNESS / SORT</text>
+<text x="858" y="384" font-family="serif" font-size="22" fill="#1F2420">Article Archive</text>
+<rect x="858" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="867" y1="414" x2="958" y2="414" stroke="#A13826"/>
+<text x="867" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 1</text>
+<text x="867" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<rect x="984" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="993" y1="414" x2="1084" y2="414" stroke="#A13826"/>
+<text x="993" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 2</text>
+<text x="993" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<rect x="1110" y="396" width="115" height="92" fill="#FDFBF6" stroke="#C8B89E"/>
+<line x1="1119" y1="414" x2="1210" y2="414" stroke="#A13826"/>
+<text x="1119" y="433" font-family="serif" font-size="14" fill="#1F2420">Article 3</text>
+<text x="1119" y="459" font-family="sans-serif" font-size="9" fill="#4F5A53">Context / source</text>
+<text x="860" y="511" font-family="monospace" font-size="10" fill="#A13826">G-01 MAIN GRID / C-02 COMPONENTS</text>
+</svg>

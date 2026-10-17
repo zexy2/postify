@@ -57,3 +57,7 @@ Mevcut component envanteri ve 17 rota için **C-01 Editorial Grammar / C-02 Inke
 
 ## Aşama 6 — CD-006 seçimi / sayfa kapsamı
 C-02 Inked Folio ortak bileşen dili olarak onaylandı, fakat G-02 Modular Broadsheet sadece seçili featured editoryal dosyalarda kullanılabilir. Standart Home akışı, bütün iç sayfalar, formlar ve servis durumları G-01 genel gridini korur. Aşama 7 Homepage Design ile Aşama 8 Inner Pages onayı ve uygulaması **henüz yapılmadı**.
+
+
+## Aşama 7 Homepage (tasarım alternatifleri)
+Sadece `/` ana sayfa için H-01 Issue Front, H-02 Discovery Desk, H-03 Curated Edition karşılaştırıldı. Üçü de `Hero`, `EditorialFeed`, `KnowledgeCard`, `DiscoveryFilterPopover`, filtre state'leri ve read-only fallback davranışlarını bozmadan yeniden dizmeyi hedefliyor. **Onay yok, uygulama yok**. Diğer 16 route tasarım/uygulama statüsü değişmedi. `design/HOMEPAGE-OPTIONS.md` ayrıntıları içerir.
