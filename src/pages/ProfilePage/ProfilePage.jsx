@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -46,6 +46,7 @@ const ProfilePage = () => {
     location: '',
   });
   const [avatarUploading, setAvatarUploading] = useState(false);
+  const avatarInputRef = useRef(null);
 
   useEffect(() => {
     const profileData = user?.profile || user?.user_metadata;
@@ -84,8 +85,10 @@ const ProfilePage = () => {
     try {
       setAvatarUploading(true);
       const publicUrl = await storageService.uploadAvatar(file, user.id);
-      await updateProfile({ avatar_url: publicUrl });
-      toast.success(t('profile.avatarUpdated'));
+      const updateResult = await updateProfile({ avatar_url: publicUrl });
+      // The file may have uploaded while auth changed or the profile write
+      // failed. Only the confirmed profile mutation counts as success.
+      if (updateResult?.success) toast.success(t('profile.avatarUpdated'));
     } catch (error) {
       toast.error(error.message || t('profile.avatarError'));
     } finally {
@@ -131,16 +134,25 @@ const ProfilePage = () => {
           <div className={styles.identityTop}>
             <div className={styles.avatarWrapper}>
               <img src={avatarUrl} alt={displayName} className={styles.avatar} />
-              <label className={styles.avatarUpload} aria-label={en ? 'Change profile photo' : 'Profil fotoğrafını değiştir'}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAvatarChange}
-                  disabled={avatarUploading}
-                  hidden
-                />
-                <FiCamera />
-              </label>
+              <input
+                ref={avatarInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                disabled={avatarUploading}
+                hidden
+                tabIndex={-1}
+                aria-hidden="true"
+              />
+              <button
+                type="button"
+                className={styles.avatarUpload}
+                aria-label={en ? 'Change profile photo' : 'Profil fotoğrafını değiştir'}
+                disabled={avatarUploading}
+                onClick={() => avatarInputRef.current?.click()}
+              >
+                <FiCamera aria-hidden="true" />
+              </button>
             </div>
 
             <div className={styles.identityCopy}>

@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import toast from 'react-hot-toast';
+import { storageService } from '../../services/storageService';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ProfilePage from './ProfilePage';
@@ -74,6 +76,45 @@ describe('ProfilePage', () => {
     expect(screen.getByRole('heading', { name: 'Hesap profili geçici olarak kullanılamıyor.' })).toBeVisible();
     expect(screen.getByText('Oturumun korunuyor. Hesap bilgilerini yeniden yüklemek için sayfayı yenile.')).toBeVisible();
     expect(screen.getByRole('button', { name: /Tekrar Dene/i })).toBeVisible();
+  });
+
+  it('offers a keyboard-focusable 44px avatar upload button', () => {
+    render(<MemoryRouter><ProfilePage /></MemoryRouter>);
+    const trigger = screen.getByRole('button', { name: 'Profil fotoğrafını değiştir' });
+    expect(trigger).toBeVisible();
+    expect(trigger).not.toBeDisabled();
+    const fileInput = document.querySelector('input[type="file"][accept="image/*"]');
+    expect(fileInput).toBeInTheDocument();
+    expect(fileInput).toHaveAttribute('tabindex', '-1');
+    expect(trigger).toHaveAttribute('type', 'button');
+  });
+
+  it('does not announce avatar success when the follow-up profile mutation failed', async () => {
+    storageService.uploadAvatar.mockResolvedValue('https://example.com/new-avatar.png');
+    updateProfile.mockResolvedValue({ success: false, error: 'Session changed' });
+    render(<MemoryRouter><ProfilePage /></MemoryRouter>);
+
+    const fileInput = document.querySelector('input[type="file"][accept="image/*"]');
+    fireEvent.change(fileInput, {
+      target: { files: [new File(['image'], 'avatar.png', { type: 'image/png' })] },
+    });
+
+    await waitFor(() => expect(updateProfile).toHaveBeenCalledWith({
+      avatar_url: 'https://example.com/new-avatar.png',
+    }));
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Profil fotoğrafını değiştir' })).not.toBeDisabled());
+    expect(toast.success).not.toHaveBeenCalledWith('Profil fotoğrafı güncellendi');
+  });
+
+  it('announces avatar success after a confirmed profile mutation', async () => {
+    storageService.uploadAvatar.mockResolvedValue('https://example.com/new-avatar.png');
+    updateProfile.mockResolvedValue({ success: true });
+    render(<MemoryRouter><ProfilePage /></MemoryRouter>);
+    fireEvent.change(document.querySelector('input[type="file"][accept="image/*"]'), {
+      target: { files: [new File(['image'], 'avatar.png', { type: 'image/png' })] },
+    });
+    await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Profil fotoğrafı güncellendi'));
+    expect(storageService.uploadAvatar).toHaveBeenCalledWith(expect.any(File), user.id);
   });
 
   it('wires the account logout action to the authenticated session', () => {

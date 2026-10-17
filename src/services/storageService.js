@@ -4,7 +4,7 @@
  * Handles file uploads with Supabase Storage
  */
 
-import { storage, requireSupabase } from '../lib/supabase';
+import { storage } from '../lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
 const BUCKET_NAME = 'post-images';
@@ -98,16 +98,10 @@ export const storageService = {
       upsert: true,
     });
 
-    const publicUrl = storage.getPublicUrl('avatars', filePath);
-
-    // Update user profile with new avatar
-    const { error } = await requireSupabase()
-      .from('profiles')
-      .update({ avatar_url: publicUrl })
-      .eq('id', userId);
-    if (error) throw error;
-
-    return publicUrl;
+    // Only return the uploaded image URL. ProfilePage owns the single
+    // account-scoped profile mutation via useAuth.updateProfile, which checks
+    // that the authenticated session has not changed while the file uploaded.
+    return storage.getPublicUrl('avatars', filePath);
   },
 
   /**
