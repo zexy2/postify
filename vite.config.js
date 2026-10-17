@@ -13,6 +13,7 @@ export default defineConfig({
       manifest: {
         name: "Postify",
         short_name: "Postify",
+        lang: "tr",
         description:
           "Okumak için değil, uygulamak için: rehberler, karar notları, açıklayıcılar ve saha notları.",
         theme_color: "#A13826",
