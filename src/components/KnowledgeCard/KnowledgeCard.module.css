@@ -9,7 +9,7 @@
 .ordinal {
   align-self: start;
   padding-top: .18rem;
-  color: color-mix(in srgb, var(--text-muted) 82%, transparent);
+  color: var(--text-secondary);
   font-family: var(--font-mono);
   font-size: .76rem;
   font-variant-numeric: tabular-nums;

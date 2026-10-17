@@ -94,8 +94,8 @@ const KnowledgeCard = ({
         </div>
 
         <div className={styles.actions}>
-          <Link to={href} className={styles.readLink}>
-            {safeVariant === 'featured' ? t('common.readMore') : t('common.read')} <FiArrowUpRight size={14} aria-hidden="true" />
+          <Link to={href} className={styles.readLink} aria-label={`${safeVariant === 'featured' ? t('common.readMore') : t('common.read')}: ${post.title}`}>
+            {safeVariant === 'featured' ? t('common.readMore') : t('common.read')}<span className="sr-only">: {post.title}</span> <FiArrowUpRight size={14} aria-hidden="true" />
           </Link>
           <button
             type="button"

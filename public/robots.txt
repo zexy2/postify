@@ -1,0 +1,10 @@
+# Postify public editorial routes are crawlable; account workspaces are not.
+# Robots directives are not authorization; protected routes still enforce auth.
+User-agent: *
+Allow: /
+Disallow: /auth/
+Disallow: /admin
+Disallow: /profile
+Disallow: /bookmarks
+Disallow: /knowledge
+Disallow: /posts/create
