@@ -43,7 +43,7 @@
 - [x] Aşama 10 R-01/R-02/R-03 responsive politika seçenekleri ile WCAG 2.2 AA minimum kabul şartları belgelendi.
 - [x] Aşama 10 R-01 sitewide + R-02 yalnız article/evidence + R-03 yalnız auth/editor/admin/knowledge ve bütün ekranlarda WCAG 2.2 AA kullanıcı onayı CD-010 ile kaydedildi.
 - [x] Aşama 11 QA-01/QA-02/QA-03 alternatifli son kalite/estetik kontrol planı, 17 rota için işlev ve acceptance kanıtı, P0/P1 çıkış eşiği ve ayrı implementation/release yetki kapıları belgelendi.
-- [x] Aşama 11 QA-02 ana + QA-03 güvenlik/WCAG 2.2 AA/veri bütünlüğü/performans zorunlu kapılarının kullanıcı plan onayı CD-011 ile alındı.\n- [ ] Onaylı tasarımın JSX/CSS/asset implementasyonu **başlatılmadı**; ayrı uygulama izni bekleniyor.\n- [ ] Aşama 11 QA testleri veya görsel karşılaştırma **bu turda çalıştırılmadı**; ayrı test yürütme izni bekleniyor.\n- [ ] GitHub push ve production deployment **yapılmadı**; ayrı onay gerekir.\n- [ ] WCAG 2.2 AA gerçek uygulama uygunluğu **henüz doğrulanmadı**.
+- [x] Aşama 11 QA-02 ana + QA-03 güvenlik/WCAG 2.2 AA/veri bütünlüğü/performans zorunlu kapılarının kullanıcı plan onayı CD-011 ile alındı.\n- [x] Onaylı tasarımın uygulamasına **ayrı kullanıcı “Devam” izniyle başlanıldı**; PL-01/TYPE-02/G-01, H-01/C-02 ve ilgili shared/inner/task-first CSS değişiklikleri izole dalda commit edildi. **Tam 17 rota estetik kabulü henüz yapılmadı.**\n- [x] Ayrı kullanıcı **“Evet”** test/build onayından sonra Vitest, ESLint, Playwright, build, güvenlik ve sınırlı tarayıcı görsel kontrolleri gerçekten çalıştırıldı. **Tam QA-02/QA-03 release kabulü bu anlama gelmez.**\n- [ ] GitHub push ve production deployment **yapılmadı**; ayrı onay gerekir.\n- [ ] WCAG 2.2 AA gerçek uygulama uygunluğu **henüz doğrulanmadı**.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -65,4 +65,13 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** **DUR.** 12/12 tasarım ve QA **plan** aşaması onaylı. Kullanıcının ayrı açık uygulama ve test yürütme iznini bekle; GitHub push ve deploy için ayrıca açık onay olmadan ilerleme. Bu turda yalnız onay kayıtları güncellendi.
+**Şimdiki sonraki adım:** Tasarım ve QA **planı 12/12 onaylı**, izole UI **uygulaması ve testleri devam ediyor**. Son taramada 17 rota × dört genişlik × iki tema = **136 anonim erişim görünümü** ölçüldü; altı korumalı rota girişe yönlendi, girişli içerikleri test edilmedi. **56 E2E**, **162 Vitest**, ESLint/build/security başarılı; eklemeli WCAG 2.2 AA, gerçek oturumlu veri/rol akışları ve canlı Core Web Vitals **açık**. GitHub push/deploy ayrıca açık onay bekliyor.
+
+
+## 2026-10-17 / Final uygulama dilimi ve kapsam kontrolü (PLAN DEĞİL, GERÇEK İŞ)
+
+- [x] \`c94c8e4\`: Auth/login/register/profile/editor/home CTA kontrastı koyu tema \`--text-inverse\`; \`useTheme\` mobil tarayıcı theme-color açık \`#A13826\`, koyu \`#151B19\`; footer/küçük meta erişilebilir okunabilirlik; editör toolbar 44px buton; E2E regression.
+- [x] Test onayı kapsamında gerçek \`npm run lint\`, \`npm test\` **162/162**, izole \`npm run build -- --outDir /tmp/postify-final-polish-build\`, \`npm run verify:security\` **0 advisory**, Chromium E2E **56/56** geçti.
+- [x] İzole Chromium'da **17 route × 320/390/768/1440 × light/dark = 136 görüntü**; gözlenen **0 document yatay taşma, 0 pageerror, 0 eksik main landmark**. Yanlış yönlendirme iddiası yok: \`/posts/create\`, \`/posts/:id/edit\`, \`/bookmarks\`, \`/admin\`, \`/knowledge\`, \`/profile\` anonim kullanıcıyı \`/auth/login\`'e götürdü. Oturumlu içerik **test edilmedi**.
+- [ ] Gerçek authenticated staging/editor/admin/role/write-flow, 200%/400% native browser zoom ve ekran okuyucu manuel testleri, field CWV p75, tüm kritik state'lerin tasarım sahibi tarafından piksel/görsel kabulü **açık**.
+- [ ] **Release/push/deploy** ayrı kullanıcı izni olmadan yapılmaz. Otomatik regresyon / anonim görünüm başarıları **WCAG 2.2 AA sertifikası değildir**.

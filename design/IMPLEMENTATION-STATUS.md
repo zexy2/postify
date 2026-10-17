@@ -86,3 +86,25 @@ The user explicitly responded **“Evet”** to the request for test/build autho
 **Remaining:** Real authenticated editor/knowledge/admin/role modifications on safe staging fixtures, manual VoiceOver/TalkBack/NVDA and true browser 200/400% zoom, full 17-route editorial pixel QA, field Core Web Vitals and all source module implementation gaps. Do not claim full Awwwards-level final QA or release acceptance yet.
 
 **Working boundaries:** Implementation branch `chatgpt/ws-276e5f67e3ed` only, main repository unchanged; no push, no deployment. Temporary local preview services started only for this testing session should be stopped after checks.
+
+
+## 2026-10-17 — Final implementation sweep & 17-route anonymous coverage
+
+**User:** “Tamam devam”, existing implementation and test authorization continues; **NO push/deploy** permission.
+
+**Implementation commit \`c94c8e4\`:**
+- Fixed **dark-theme readability** for direct accent CTA foreground in Home, Login, Register, Profile and CreatePost: use semantic \`--text-inverse\` instead of hard-coded white, keeping light/dark PL-01 pair intent.
+- Fixed runtime **mobile browser theme-color** in \`src/hooks/useTheme.js\`: light \`#A13826\`, dark \`#151B19\` instead of legacy purple/white (PWA manifest and HTML were already PL-01).
+- Raised very small public navigation/footer/meta/auth/editor microtype while retaining editorial layout; increased rich text editor toolbar interactive buttons to 44x44; preserved semantic evidence/error/warning meaning.
+- Added Playwright dark theme regression test in \`e2e/ui-v2.spec.js\`, validating true theme toggle, meta color and 390px auth CTA computed foreground/background contrast >= 4.5:1. A **newly added** test first failed due a wrong mobile-visible toggle assumption (theme control is inside the mobile drawer), the test was corrected to toggle on desktop then measure mobile; final **56/56 passed**. This was not a product defect.
+
+**Actual successful automated checks:**
+- ESLint PASS; Vitest 42 test files / **162 tests PASS**.
+- Vite/PWA production build PASS to isolated \`/tmp/postify-final-polish-build\`.
+- \`npm run verify:security\` PASS, npm audit zero known dependency vulnerabilities.
+- Playwright Chromium **56/56 E2E tests PASS** on compiled preview \`127.0.0.1:4335\`.
+- Chromium **136/136** anonymous route/viewport/theme views: **17 routes**, four widths (320, 390, 768, 1440), two themes; no document horizontal overflow, no JS page errors, no absent main landmark.
+- Six protected route **anonymous redirects to /auth/login** as expected: Create, Edit, Bookmarks, Admin, Knowledge, Profile. They were **not** authenticated functional QA.
+- Browser proof/screenshots: \`/home/ubuntu/.oracle-dev/visual/postify-final-route-audit-20261017/route-matrix.json\` and selected PNG; regression job \`job-3f6ef7cf4679\`; route job \`job-41b59444b197\`. These are Oracle files, not public sandbox downloads.
+
+**Important limitations:** This completes the **source sweep + anonymous surface regression** but NOT full QA-02 visual acceptance, authenticated real data actions, actual WCAG 2.2 AA with manual AT/real 200/400% zoom, low-power iOS/Android, production field Core Web Vitals p75 or deployment verification. Source branch only; main and running user services untouched. Local QA server cleaned after run. Remote push/deployment remain not authorized.
