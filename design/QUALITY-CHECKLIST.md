@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 9 — CD-008 ile INNER-02 ana + INNER-01 sakin okuma seçildi; M-01/M-02/M-03 Motion seçenekleri sunuldu, onay bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 10 — CD-009 M-02 ana + M-01 görev ekranı sakinliği ONAYLI; responsive/a11y denetimi ve R-01/R-02/R-03 seçenekleri sunuldu, kullanıcı Aşama 10 onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -38,7 +38,10 @@
 - [x] Aşama 8 INNER-02 ana + INNER-01 uzun okuma + sınırlı INNER-03 kullanıcı delegasyonuyla CD-008 olarak kararlaştırıldı.
 - [x] Aşama 9 M-01/M-02/M-03 alternatifleri, component/state performans ve reduced-motion sınırları karşılaştırıldı.
 - [x] Aşama 9 Chrome bağımsız demo 3×2×2 = 12 farklı viewport/motion tercihiyle test edildi; overflow ve JS pageerror yok, Escape sonrası focus return; reduced-motion transition ~0.01ms. Gerçek app testi değildir.
-- [ ] Aşama 9 Motion & Interaction Design henüz kullanıcı tarafından onaylanmadı.
+- [x] Aşama 9 M-02 Editorial Rhythm genel + M-01 sakin görev ekranları + selected featured-only özel hareket kullanıcı tarafından CD-009 ile açıkça onaylandı.
+- [x] Aşama 10 gerçek uygulama salt okunur 85 ilk görünüm + 30 yüklenmiş görünüm Chromium taraması; keyboard/filter kontrolü ve palette contrast hesabı belgelendi.
+- [x] Aşama 10 R-01/R-02/R-03 responsive politika seçenekleri ile WCAG 2.2 AA minimum kabul şartları belgelendi.
+- [ ] Aşama 10 Responsive & Accessibility kullanıcı onayı henüz verilmedi.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -60,4 +63,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Kullanıcının M-01/M-02/M-03 veya açıkça tanımlı hibrit seçimini bekle. Aşama 9 onayı olmadan Aşama 10 Responsive & Accessibility başlatma.
+**Şimdiki sonraki adım:** Kullanıcının R-01/R-02/R-03 veya kapsamı açık hibrit yanıtını bekle; Aşama 10 onayından önce Aşama 11 Final QA & Visual Polish başlatma. Tam WCAG uyumu henüz iddia edilmez.
