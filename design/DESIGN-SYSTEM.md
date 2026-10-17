@@ -92,3 +92,8 @@ Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
 G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir arama ve tek seçilmiş featured Inked Folio kapak. Kategori/format/evidence filtreleri, arama, URL state, 3-kolonlu normal feed ve gerçek kanıt/veri akışları korunur. G-02 **yalnızca selected featured editorial dosya** istisnasıdır. H-02 ve H-03 seçilmedi. Bu onay kodlama veya iç sayfa uygulama izni değildir.
 
 **Aşama 8:** İç sayfaların tasarım alternatifleri **onaysız araştırma**; CD-007 bunlar için örtülü onay sayılmaz.
+
+
+## Aşama 8 — Inner Pages & Editorial Experience (ONAYSIZ)
+
+`INNER-01 Reading Folio` / `INNER-02 Evidence Marginalia` / `INNER-03 Chaptered Field Guide` karşılaştırmaları: [INNER-PAGES-OPTIONS.md](./INNER-PAGES-OPTIONS.md) ve [inner-pages-composition-reference.svg](./inner-pages-composition-reference.svg). Makale, yazar, kimlik doğrulama, editör, kayıtlı içerik, profile, evidence/knowledge/admin, about/contact/404 dahil 16 iç rota kapsanır. **Hiçbir iç sayfa stili/başlık düzeni/kanıt yerleşimi onaylanmış değildir.** Ana sayfada H-01, genel grid G-01 ve yalnız seçilmiş featured dosyalarda G-02 sınırlaması geçerlidir.

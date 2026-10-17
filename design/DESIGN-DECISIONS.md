@@ -194,3 +194,14 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 **KORUNACAKLAR:** Ana sayfa gerçek featured/contents/arama Ctrl-⌘K, kategoriler, type/evidence/freshness/reading/sort URL parametreleri, bookmark, load-more, zero-results, fallback, TR/EN, SEO ve gerçek kanıt bilgisini doğru gösterme. Eski mockuplardaki “ISSUE 08” gerçek bir yayın sayısı veya içerik iddiası değildir, üretim davranışı sayılmaz.
 
 **SINIRLAR:** Onay yalnızca **Aşama 7 kompozisyonu** içindir; yeni görsel iç sayfa tasarımı, font/renk/grid değişikliği, JSX/CSS yazımı, canlı deployment/push izni değildir. PL-01, TYPE-02, G-01/G-02 istisnası, C-02 Inked Folio korunur. H-01 onayından sonra **yalnızca Aşama 8 alternatifleri** hazırlanabilir.
+
+
+## Aşama 8 iç sayfa tasarım alternatifleri — ONAYSIZ (2026-10-17)
+
+**INNER-01 Reading Folio:** Okuma öncelikli, sakin 715px longform; sınırlı sidebar, gerçek kaynak açıklamaları destekleyici alanda. Artı: en kuvvetli makale ritmi; risk: kanıt görünürlüğünü aşağı itmek.
+
+**INNER-02 Evidence Marginalia:** Okuma sütunu + kısa, doğru kaynak/güncellik açıklaması + uygun ekranda marjinal kaynak/TOC alanı. Artı: MOOD-01 kanıt şeffaflığı ve MOOD-02 dergi ifadesi birlikte; risk: fazla metadata ve dar mobil alan. **Öneri, karar değil.**
+
+**INNER-03 Chaptered Field Guide:** Numerik başlıklar, bölümlenmiş teknik açıklama ve içerikte açık kanıt kutusu; artı: step-by-step rehber açıklığı; risk: her makaleyi API dokümantasyonuna dönüştürmek.
+
+Araştırma `design/INNER-PAGES-OPTIONS.md` ve soyut `design/inner-pages-composition-reference.svg` dosyalarındadır. 16 iç route için davranış/state sınırları belgelendi. Bağımsız statik makale/giriş/editör/yazar profili karşılaştırmaları `/mnt/data/postify-stage8-*`; **3×4×4=48 yerel Chromium render**, hiç yatay taşma veya pageerror gözlenmedi; **uygulama işlevi/kimlik doğrulama testi değildir**, webfont fallback olabilir. Onaylı önceki CD-001–007 kararları değişmez. **Aşama 8 kullanıcı seçimi HENÜZ YOK**, Aşama 9 başlamaz; `src/` ve deploy değişmedi.

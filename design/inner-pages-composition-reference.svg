@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1230 530" role="img" aria-labelledby="title desc">
+<title id="title">Postify Stage 8, three unapproved inner page directions</title>
+<desc id="desc">INNER-01 Reading Folio emphasizes long text and places the full evidence summary near the end; INNER-02 Evidence Marginalia puts a concise provenance panel before text plus a margin rail; INNER-03 Chaptered Field Guide shows numbered chapters and structured information. All are proposals using approved brand colors and grid principles.</desc>
+<rect width="1230" height="530" fill="#F4EFE6"/>
+<text x="26" y="37" font-family="sans-serif" font-weight="700" font-size="18" fill="#1F2420">POSTIFY / STAGE 08 / INNER EDITORIAL LANGUAGE — UNAPPROVED</text>
+<rect x="20" y="60" width="386" height="436" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="33" y="89" font-family="sans-serif" font-size="15" font-weight="700" fill="#1F2420">INNER-01 / READING FOLIO</text>
+<text x="33" y="109" font-family="sans-serif" font-size="12" fill="#4F5A53">Uninterrupted story</text>
+<rect x="33" y="127" width="360" height="27" fill="#1F2420"/>
+<text x="43" y="145" font-family="monospace" font-size="11" fill="#F4EFE6">POSTIFY     ARTICLE / 01</text>
+<text x="40" y="183" font-family="serif" font-size="22" fill="#1F2420">How do we verify?</text>
+<text x="40" y="201" font-family="sans-serif" font-size="10" fill="#4F5A53">GUIDE / CASE / SOURCE STATUS</text>
+<rect x="40" y="231" width="210" height="4" fill="#1F2420" opacity="0.55"/>
+<rect x="40" y="253" width="250" height="4" fill="#1F2420" opacity="0.76"/>
+<rect x="40" y="275" width="250" height="4" fill="#1F2420" opacity="0.76"/>
+<rect x="40" y="297" width="210" height="4" fill="#1F2420" opacity="0.55"/>
+<rect x="40" y="319" width="250" height="4" fill="#1F2420" opacity="0.76"/>
+<rect x="40" y="341" width="250" height="4" fill="#1F2420" opacity="0.76"/>
+<rect x="40" y="363" width="210" height="4" fill="#1F2420" opacity="0.55"/>
+<rect x="40" y="385" width="250" height="4" fill="#1F2420" opacity="0.76"/>
+<line x1="40" y1="424" x2="385" y2="424" stroke="#1F2420" stroke-width="2"/>
+<text x="44" y="443" font-family="monospace" font-size="10" fill="#A13826">PROVENANCE / AT END</text>
+<rect x="40" y="454" width="341" height="25" fill="#F4EFE6" stroke="#C8B89E"/>
+<rect x="424" y="60" width="386" height="436" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="437" y="89" font-family="sans-serif" font-size="15" font-weight="700" fill="#1F2420">INNER-02 / EVIDENCE MARGINALIA</text>
+<text x="437" y="109" font-family="sans-serif" font-size="12" fill="#4F5A53">Early source transparency</text>
+<rect x="437" y="127" width="360" height="27" fill="#1F2420"/>
+<text x="447" y="145" font-family="monospace" font-size="11" fill="#F4EFE6">POSTIFY     ARTICLE / 01</text>
+<text x="444" y="183" font-family="serif" font-size="22" fill="#1F2420">How do we verify?</text>
+<text x="444" y="201" font-family="sans-serif" font-size="10" fill="#4F5A53">GUIDE / CASE / SOURCE STATUS</text>
+<rect x="444" y="221" width="341" height="65" fill="#F4EFE6" stroke="#1F2420"/>
+<text x="455" y="240" font-family="monospace" font-size="10" fill="#A13826">SOURCE / CLAIM / FRESHNESS</text>
+<text x="455" y="261" font-family="sans-serif" font-size="12" fill="#1F2420">No independent check claimed</text>
+<rect x="444" y="301" width="211" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="444" y="325" width="234" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="444" y="349" width="211" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="444" y="373" width="234" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="444" y="397" width="211" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="444" y="421" width="234" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="444" y="445" width="211" height="4" fill="#1F2420" opacity=".68"/>
+<rect x="693" y="300" width="92" height="166" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="699" y="315" font-family="sans-serif" font-size="9" fill="#A13826">NOTES</text>
+<rect x="828" y="60" width="386" height="436" fill="#FDFBF6" stroke="#C8B89E"/>
+<text x="841" y="89" font-family="sans-serif" font-size="15" font-weight="700" fill="#1F2420">INNER-03 / CHAPTERED FIELD GUIDE</text>
+<text x="841" y="109" font-family="sans-serif" font-size="12" fill="#4F5A53">Structured technical steps</text>
+<rect x="841" y="127" width="360" height="27" fill="#1F2420"/>
+<text x="851" y="145" font-family="monospace" font-size="11" fill="#F4EFE6">POSTIFY     ARTICLE / 01</text>
+<text x="848" y="183" font-family="serif" font-size="22" fill="#1F2420">How do we verify?</text>
+<text x="848" y="201" font-family="sans-serif" font-size="10" fill="#4F5A53">GUIDE / CASE / SOURCE STATUS</text>
+<text x="848" y="265" font-family="serif" font-size="52" fill="#A13826">01</text>
+<text x="918" y="255" font-family="serif" font-size="18" fill="#1F2420">Test conditions</text>
+<rect x="848" y="285" width="265" height="4" fill="#1F2420" opacity=".65"/>
+<rect x="848" y="307" width="305" height="4" fill="#1F2420" opacity=".65"/>
+<rect x="848" y="329" width="265" height="4" fill="#1F2420" opacity=".65"/>
+<rect x="848" y="351" width="305" height="4" fill="#1F2420" opacity=".65"/>
+<rect x="848" y="373" width="265" height="4" fill="#1F2420" opacity=".65"/>
+<rect x="848" y="414" width="341" height="66" fill="#F4EFE6" stroke="#1F2420"/>
+<text x="858" y="435" font-family="monospace" font-size="10" fill="#A13826">EVIDENCE / STRUCTURED</text>
+<text x="858" y="457" font-family="sans-serif" font-size="11" fill="#1F2420">Author claim / Unknown</text>
+<text x="25" y="516" font-family="monospace" font-size="11" fill="#4F5A53">CONCEPT PROTOTYPES ONLY / NO VERIFIED CONTENT / STAGE 08 APPROVAL PENDING</text>
+</svg>

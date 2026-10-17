@@ -65,3 +65,8 @@ Sadece `/` ana sayfa için H-01 Issue Front, H-02 Discovery Desk, H-03 Curated E
 
 ## Aşama 7 kararı — CD-007
 **H-01 Issue Front** onaylandı. Sadece `/` rota ana sayfa kompozisyonu tasarım kararıdır; `/posts/:id` ve kalan **16 rota** yeni tasarım onayı/uygulaması bekliyor. Aşama 8 araştırması bu 16 route ve özel durumları kapsayacak. `src/` kodu değiştirilmedi.
+
+
+## Aşama 8 iç sayfa kapsamı (ONAYSIZ)
+
+`design/INNER-PAGES-OPTIONS.md` dosyasında **kalan 16 iç rota** için ortak görsel prensipler ve korunacak gerçek işlevler envantere alındı. Üç editoryal dil: INNER-01 Reading Folio, INNER-02 Evidence Marginalia, INNER-03 Chaptered Field Guide. Makale/auth/editor/yazar örnekleri karşılaştırıldı; bookmarks, profile, knowledge, admin, about, contact ve 404 için gerçek bileşen akışları ve state sınırları belgelendi, ancak **tasarım onayı veya uygulama yapılmadı**. Önceki H-01 ana sayfa kararı değişmedi.
