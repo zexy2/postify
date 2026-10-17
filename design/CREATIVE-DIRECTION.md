@@ -1,7 +1,7 @@
 # Postify — Creative Direction / Aşama 1
 
 **Tarih:** 2026-10-17
-**Durum:** **A+B HİBRİTİ KULLANICI TARAFINDAN ONAYLANDI — AŞAMA 2 REFERANS ARAŞTIRMASI AKTİF.**
+**Durum:** **A+B HİBRİTİ ONAYLANDI — AŞAMA 2 ÜÇ MOODBOARD ALTERNATİFİ SUNULDU, ONAY BEKLENİYOR.**
 **Ön koşul:** Aşama 0 kullanıcı tarafından açıkça **“Onaylıyorum”** denilerek onaylandı (2026-10-17).
 **Sınır:** Yalnızca A+B stratejisi seçildi. Aşama 2 moodboard alternatifleri henüz onaylı değil; Aşama 3 renk sistemi, Aşama 4 tipografi ve uygulama koduna **geçilmedi**.
 
@@ -133,3 +133,6 @@ Yukarıdaki yerleşimler **nötr konsept taslaklarıdır**. Bunlarda özgül ren
 
 ## 6. Onay ve sonraki kapı
 **Aşama 1 ONAYLANDI (2026-10-17):** Kullanıcının tam ifadesi: “Postify için A + B hibrit yaratıcı stratejisini onaylıyorum. Aşama 1 kararını kaydet ve yalnızca Aşama 2 referans araştırması ve moodboard çalışmalarına geç.” A bilgisinin uygulanabilirlik/kanıt düzeni + B editoryal ifade gücü hibrit olarak kabul edildi; C ana yön olarak seçilmedi. Renk, font, bileşen ve uygulama kodu seçilmedi/değiştirilmedi. **Aşama 2 moodboard onayı verilmeden Aşama 3'e geçme.**
+
+## 7. Aşama 2 referans bağlantısı
+Gerçek yedi kaynak sitesi, Oracle Chromium ekran görüntüleri, üç araştırma panosu ve seçeneklerin karşılaştırmalı değerlendirmesi: [MOODBOARD-RESEARCH.md](./MOODBOARD-RESEARCH.md). Moodboard'ların hiçbiri onaylanmadı. **Aşama 3'e geçme.**

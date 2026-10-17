@@ -1,7 +1,7 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 2 / Reference Research & Moodboards — **araştırma ve moodboard seçenekleri hazırlanıyor; Aşama 2 onayı henüz yok**.
+**Aktif aşama:** 2 / Reference Research & Moodboards — **gerçek referans araştırması ve üç moodboard sunuldu; Aşama 2 onayı bekleniyor**.
 **Sonraki aşama:** 3 / Color System — **Aşama 2 kullanıcı onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
@@ -24,7 +24,7 @@
 | --- | --- | --- | --- | --- |
 | 0 Current Product Audit | **ONAYLANDI** | Teknik, tasarımsal ve 51-render denetimi | Kullanıcının açık yanıtı: **“Onaylıyorum”** | 2026-10-17 |
 | 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
-| 2 Reference Research & Moodboards | **Araştırma aktif; onay bekliyor** | Referanslar ve karşılaştırmalı moodboard seçenekleri hazırlanıyor | — | 2026-10-17 |
+| 2 Reference Research & Moodboards | **Üç moodboard sunuldu; onay bekliyor** | MOOD-01 Evidence-led, MOOD-02 Independent Issue, MOOD-03 Illustrated Field Stories | — | 2026-10-17 |
 | 3 Color System | Başlanmadı | Henüz yok | — | — |
 | 4 Typography System | Başlanmadı | Henüz yok | — | — |
 | 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
@@ -49,6 +49,15 @@
 **Seçilen strateji (CD-001, ONAYLI):** Yaşayan Uygulama Rehberi (A) bilgi modeli ve işe yararlılık/kanıt/güncellik yaklaşımı + Bağımsız Dijital Dergi (B) özgün editoryal karakter, güçlü anlatı ve rafine kompozisyon. **C Knowledge Atlas bağımsız birincil marka kimliği olarak seçilmedi**; kanıtlanmış bağlantılı içerik keşfi sonraki UX aşamalarında gerekirse ayrıca teklif edilebilir. A+B hibriti bir renk, font, layout, hero şablonu veya UI kodu onayı değildir. Bu kararın başka konseptle değiştirilmesi kullanıcı onayı gerektirir.
 
 **Sıradaki karar:** Aşama 2 referans ve moodboard alternatiflerinin kullanıcı tarafından onaylanması. Ardından ve ancak ardından Aşama 3 renk sistemi başlatılabilir.
+
+## Aşama 2 moodboard araştırması (ONAYSIZ)
+
+**2026-10-17:** A+B stratejisine uygun üç farklı görsel ifade dengesi, gerçek yayınlardan kaynak doğrulanarak `design/MOODBOARD-RESEARCH.md` içinde belgelendi. **MOOD-01 Evidence-led Editorial, MOOD-02 Independent Issue, MOOD-03 Illustrated Field Stories**. Karşılaştırmalı gerekçeler, güçlü/zayıf yönler, Postify sayfa/akış eşleştirmeleri, reddedilecek desenler ve URL'ler kaydedildi.
+- **Gerçek araştırma:** Yedi site, Oracle Chromium 1440/390 ekran görüntüleri. Stripe Press ilk viewport'u içeriksiz göründüğü için ikincil kavramsal kaynak; kalan altı site temel referans.
+- **Görsel kanıt:** `/home/ubuntu/.oracle-dev/visual/postify-stage2/moodboard-{01,02,03}.jpg`; gerçek kaynakların screenshot'ları telif koşulları nedeniyle kamuya açık repo içine taşınmadı.
+- **Öneri, karar değil:** MOOD-02 editoryal vurgu + MOOD-01 kanıt disiplini değerlendirilebilir.
+- **Aşama 2 onayı:** **YOK.** Renk, font, grid, motion, component, uygulama kodu onayı verilmedi.
+- **Sonraki karar:** Kullanıcı MOOD-01 / MOOD-02 / MOOD-03 veya açık hibriti seçmeli; yalnızca sonra Aşama 3 renk sistemi başlayabilir.
 
 ## Stage 0 değişiklik defteri
 2026-10-17 — `design/` raporları yazıldı. **Uygulama, component, CSS, route, service, test ve build artifact kodu değişmedi.** Aşama 1'e geçilmedi. Git commit yalnızca doküman dosyalarını içermelidir; push/deploy yok.
