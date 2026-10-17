@@ -21,7 +21,7 @@ export function useTheme() {
     if (metaThemeColor) {
       metaThemeColor.setAttribute(
         'content',
-        theme === THEME.DARK ? '#1a1a2e' : '#ffffff'
+        theme === THEME.DARK ? '#151B19' : '#A13826'
       );
     }
   }, [theme]);

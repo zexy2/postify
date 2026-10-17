@@ -1360,3 +1360,38 @@ test.describe('Action Runbook', () => {
     await expect(page.getByRole('button', { name: /kopyalandı|copied/i }).first()).toBeVisible();
   });
 });
+
+// CD-003 / PL-01: dark accent surfaces must never inherit white-on-light-accent text.
+test.describe('Approved publication palette accessibility', () => {
+  test('theme metadata and auth action foreground follow the light/dark publication palette', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 844 });
+    await page.goto('/auth/login');
+    const theme = page.getByRole('button', { name: /karanlık mod|dark mode|aydınlık mod|light mode/i }).first();
+    await expect(theme).toBeVisible();
+    await theme.click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#151B19');
+    // The mobile header puts the theme switch inside its drawer. Keep dark mode
+    // selected while measuring the mobile form CTA, then restore desktop for the switch.
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    const result = await page.locator('button[type="submit"]').first().evaluate((el) => {
+      const style = getComputedStyle(el);
+      const parseRGB = (value) => (value.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+      const luminance = (rgb) => rgb.map((n) => {
+        const s = n / 255;
+        return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+      }).reduce((sum, n, index) => sum + n * [0.2126, 0.7152, 0.0722][index], 0);
+      const a = luminance(parseRGB(style.color));
+      const b = luminance(parseRGB(style.backgroundColor));
+      return { contrast: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05),
+        color: style.color, background: style.backgroundColor };
+    });
+    expect(result.contrast, `Auth CTA contrast: ${JSON.stringify(result)}`).toBeGreaterThanOrEqual(4.5);
+
+    await page.setViewportSize({ width: 1280, height: 844 });
+    await page.getByRole('button', { name: /aydınlık mod|light mode/i }).first().click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#A13826');
+  });
+});

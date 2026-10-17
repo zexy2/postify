@@ -120,7 +120,7 @@
 .formActions { display: flex; justify-content: flex-end; gap: .65rem; }
 .formActions button { min-height: 42px; display: inline-flex; align-items: center; gap: .45rem; padding: .62rem .85rem; border-radius: var(--radius-sm); font: inherit; font-size: .74rem; font-weight: 800; cursor: pointer; }
 .cancelButton { color: var(--text-secondary); background: transparent; border: 1px solid var(--border-color); }
-.saveButton { color: #fff; background: var(--primary); border: 1px solid var(--primary); }
+.saveButton { color: var(--text-inverse); background: var(--primary); border: 1px solid var(--primary); }
 
 .dashboardGrid {
   display: grid;

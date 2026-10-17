@@ -241,7 +241,7 @@
 .submitButton {
   min-height: 50px;
   padding: .72rem 1rem;
-  color: #fff;
+  color: var(--text-inverse);
   background: var(--primary);
   border: 1px solid var(--primary);
   border-radius: var(--radius-sm);
@@ -279,7 +279,7 @@
 
 .divider span {
   color: var(--text-muted);
-  font-size: .62rem;
+  font-size: .75rem;
   font-weight: 750;
   letter-spacing: .06em;
   text-transform: uppercase;

@@ -22,8 +22,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   color: var(--text-muted);
   background: transparent;
@@ -102,7 +102,7 @@
 }
 
 .ghostText { max-width: 80%; overflow: hidden; color: var(--text-secondary); font-size: .78rem; line-height: 1.6; text-overflow: ellipsis; white-space: nowrap; opacity: .45; }
-.ghostHint { flex-shrink: 0; padding: .1rem .3rem; color: var(--text-muted); background: var(--bg-tertiary); border-radius: var(--radius-sm); font-size: .6rem; opacity: .7; }
+.ghostHint { flex-shrink: 0; padding: .1rem .3rem; color: var(--text-muted); background: var(--bg-tertiary); border-radius: var(--radius-sm); font-size: .75rem; opacity: .7; }
 
 .aiLoading { position: absolute; bottom: .8rem; left: 0; display: flex; gap: 3px; pointer-events: none; }
 .aiLoading .dot { width: 4px; height: 4px; background: var(--text-muted); border-radius: 50%; animation: pulse 1.4s infinite ease-in-out; }

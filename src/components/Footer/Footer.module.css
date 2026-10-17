@@ -398,7 +398,7 @@
 
   .groupLabel {
     margin-bottom: .6rem;
-    font-size: .56rem;
+    font-size: .75rem;
   }
 
   .linkGroup a {
@@ -424,8 +424,8 @@
   }
 
   .systemLine > div:last-child { border-right: 0; }
-  .systemLine strong { font-size: .57rem; letter-spacing: .012em; }
-  .systemLine > div > span { padding-top: 0; font-size: .52rem; }
+  .systemLine strong { font-size: .75rem; letter-spacing: .012em; }
+  .systemLine > div > span { padding-top: 0; font-size: .75rem; }
   .systemLine small { display: none; }
 
   .bottomBar {
