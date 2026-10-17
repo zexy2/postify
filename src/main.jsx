@@ -18,6 +18,7 @@ import { store, persistor } from './store';
 import { queryClient } from './lib/queryClient';
 import SmoothScrollProvider from './providers/SmoothScrollProvider';
 import './lib/i18n'; // Initialize i18n
+import './assets/editorial-fonts.css';
 import './index.css';
 
 // Keep bootstrap hydration in the same editorial system-state language as route transitions.

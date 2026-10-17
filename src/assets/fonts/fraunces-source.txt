@@ -1,0 +1,3 @@
+Source: https://fonts.googleapis.com/css2?family=Fraunces:wght@300..900&family=Inter:wght@300..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap
+License: https://github.com/google/fonts/blob/main/ofl/fraunces/OFL.txt
+Subset files downloaded from Google Fonts CSS on 2026-10-17.

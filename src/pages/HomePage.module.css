@@ -28,7 +28,7 @@
 .needAction:disabled { opacity: .58; cursor: default; }
 .resetAction { color: var(--text-secondary); border-bottom: 1px solid var(--border-strong); }
 .resetAction:hover { color: var(--text-primary); border-bottom-color: var(--text-primary); }
-.needAction:focus-visible, .resetAction:focus-visible { outline: 3px solid var(--primary-light); outline-offset: 2px; }
+.needAction:focus-visible, .resetAction:focus-visible { outline: 3px solid var(--border-focus); outline-offset: 2px; }
 
 .loadMore { display: flex; justify-content: flex-end; margin-top: 1.25rem; padding-top: .8rem; border-top: 1px solid var(--border-color); }
 .loadMoreButton { display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; padding: .72rem .18rem .62rem; color: var(--text-primary); background: transparent; border: 0; border-bottom: 2px solid var(--border-strong); border-radius: 0; font: inherit; font-size: .82rem; font-weight: 800; cursor: pointer; }
@@ -119,7 +119,7 @@
 .refineToggle:focus-visible,
 .activeRefinementChip:focus-visible,
 .clearSummary:focus-visible {
-  outline: 3px solid var(--primary-light);
+  outline: 3px solid var(--border-focus);
   outline-offset: 2px;
 }
 
