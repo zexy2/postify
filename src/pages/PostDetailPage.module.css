@@ -71,7 +71,7 @@
 .mobileActionBtn:hover,
 .mobileActionBtn.bookmarked {
   color: var(--primary);
-  background: linear-gradient(90deg, var(--primary-subtle), transparent 78%);
+  background: var(--primary-subtle);
   border-color: var(--primary);
 }
 
@@ -89,7 +89,7 @@
 .railShareBtn button:hover,
 .railShareBtn button:focus-visible {
   color: var(--primary);
-  background: linear-gradient(90deg, var(--primary-subtle), transparent 78%);
+  background: var(--primary-subtle);
 }
 .railShareBtn button span {
   position: absolute;
@@ -210,9 +210,11 @@
 }
 
 .quickBrief {
-  margin: 1rem 0 0;
-  padding: .2rem 0 .2rem 1rem;
-  border-left: 2px solid color-mix(in srgb, var(--primary) 72%, var(--border-color));
+  margin: 1.25rem 0 0;
+  padding: clamp(.9rem, 2.2vw, 1.3rem) clamp(1rem, 2.5vw, 1.6rem);
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 3px 3px 0;
 }
 
 .quickBriefCopy { max-width: 68ch; min-width: 0; }
@@ -231,14 +233,18 @@
 .quickBriefCopy strong {
   display: block;
   color: var(--text-primary);
-  font-size: .85rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 570;
+  letter-spacing: -.03em;
+  line-height: 1.15;
 }
 
 .quickBriefCopy p {
-  margin: .3rem 0 0;
+  margin: .65rem 0 0;
   color: var(--text-secondary);
-  font-size: .9rem;
-  line-height: 1.55;
+  font-size: .92rem;
+  line-height: 1.62;
 }
 
 .coverWrapper {
@@ -246,7 +252,7 @@
   overflow: hidden;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-2xl);
+  border-radius: 3px;
 }
 
 .coverImage {

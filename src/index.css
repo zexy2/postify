@@ -78,9 +78,9 @@
   --info-subtle: rgba(94, 106, 210, 0.06);
   
   /* Legacy Support */
-  --gradient-start: #5e6ad2;
-  --gradient-end: #4e5abc;
-  --link-hover: #4e5abc;
+  --gradient-start: #a64628;
+  --gradient-end: #722e1a;
+  --link-hover: #8d391f;
   --shadow-color: rgba(0, 0, 0, 0.06);
   --card-border: rgba(0, 0, 0, 0.08);
   --card-shadow-hover: rgba(94, 106, 210, 0.08);
@@ -89,9 +89,9 @@
   --info-text: #4e5abc;
   
   /* Gradients — Linear style, minimal */
-  --gradient-primary: linear-gradient(135deg, #5e6ad2 0%, #4e5abc 100%);
-  --gradient-secondary: linear-gradient(135deg, #5e6ad2 0%, #3d4692 100%);
-  --gradient-subtle: linear-gradient(135deg, rgba(94, 106, 210, 0.04) 0%, rgba(94, 106, 210, 0.02) 100%);
+  --gradient-primary: linear-gradient(135deg, #a64628 0%, #8d391f 100%);
+  --gradient-secondary: linear-gradient(135deg, #944127 0%, #722e1a 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(166, 70, 40, 0.045) 0%, rgba(166, 70, 40, 0.012) 100%);
   --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%);
   --gradient-mesh: none;
   
@@ -248,9 +248,9 @@
      ═══════════════════════════════════════ */
   --gradient-start: #5e6ad2;
   --gradient-end: #4e5abc;
-  --gradient-primary: linear-gradient(135deg, #5e6ad2 0%, #4e5abc 100%);
-  --gradient-secondary: linear-gradient(135deg, #5e6ad2 0%, #3d4692 100%);
-  --gradient-subtle: linear-gradient(135deg, rgba(94, 106, 210, 0.04) 0%, rgba(94, 106, 210, 0.02) 100%);
+  --gradient-primary: linear-gradient(135deg, #a64628 0%, #8d391f 100%);
+  --gradient-secondary: linear-gradient(135deg, #944127 0%, #722e1a 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(166, 70, 40, 0.045) 0%, rgba(166, 70, 40, 0.012) 100%);
   --gradient-card-hover: linear-gradient(135deg, rgba(94, 106, 210, 0.02) 0%, transparent 100%);
   --gradient-button: linear-gradient(135deg, #5e6ad2 0%, #4e5abc 100%);
   

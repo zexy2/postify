@@ -220,10 +220,14 @@ const HomePage = ({ isHistoryRestore = false }) => {
 
   const rankedPosts = useMemo(() => sortKnowledge(filteredPosts, { mode: sortMode }), [filteredPosts, sortMode]);
   const hasSearch = query.trim().length > 0;
-  const displayPosts = hasSearch || activeCategory !== 'all' || activeType !== 'all' || readingFilter !== 'all' || freshnessFilter !== 'all' || filteredPosts.length < 2
-    ? rankedPosts
-    : rankedPosts.slice(1);
   const featuredPost = evidenceAwarePosts[0];
+  // The masthead and feed use different ranking rules. Exclude the actual
+  // masthead record rather than dropping the first ranked result blindly.
+  const isRefined = hasSearch || activeCategory !== 'all' || activeType !== 'all'
+    || readingFilter !== 'all' || freshnessFilter !== 'all' || evidenceFilter !== 'all';
+  const displayPosts = isRefined || filteredPosts.length < 2
+    ? rankedPosts
+    : rankedPosts.filter((post) => post !== featuredPost);
 
   if (isError) {
     const isTimeout = error?.code === 'CONTENT_TIMEOUT';

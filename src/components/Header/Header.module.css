@@ -27,9 +27,9 @@
   min-height: 44px;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: 1.18rem;
+  font-size: 1.36rem;
   font-weight: 650;
-  letter-spacing: -.045em;
+  letter-spacing: -.06em;
   text-decoration: none;
 }
 
@@ -54,7 +54,7 @@
   padding: .1rem .68rem 0;
   color: var(--text-muted);
   border-radius: 0;
-  font-size: .74rem;
+  font-size: .8rem;
   font-weight: 690;
   text-decoration: none;
   white-space: nowrap;

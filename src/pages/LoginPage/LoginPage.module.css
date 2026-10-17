@@ -376,10 +376,29 @@
     display: none;
   }
 
+  /* On a phone, the task (signing in) comes before the editorial pitch. */
   .card {
-    padding: 1.3rem 0 0;
-    border-left: 0;
+    order: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .context {
+    order: 1;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--border-strong);
+  }
+
+  .context h2 {
+    max-width: 16ch;
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    line-height: 1;
+  }
+
+  .context > p {
+    margin-top: .85rem;
+    font-size: .87rem;
+    line-height: 1.65;
   }
 
   .socialButtons {

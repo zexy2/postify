@@ -197,7 +197,7 @@
 }
 
 .featured:hover {
-  background: linear-gradient(90deg, color-mix(in srgb, var(--primary-subtle) 34%, transparent), transparent 62%);
+  background: color-mix(in srgb, var(--bg-secondary) 32%, transparent);
   border-top-color: var(--primary);
   border-bottom-color: var(--border-strong);
   box-shadow: none;
@@ -224,9 +224,9 @@
   padding: 1.5rem .08rem;
   border-radius: 0;
 }
-.standard:hover { background: linear-gradient(90deg, color-mix(in srgb, var(--primary-subtle) 28%, transparent), transparent 70%); }
+.standard:hover { background: color-mix(in srgb, var(--bg-secondary) 40%, transparent); }
 
-.standard .title { max-width: 31ch; font-size: clamp(1.42rem, 2.25vw, 1.9rem); }
+.standard .title { max-width: 31ch; font-size: clamp(1.55rem, 2.5vw, 2.15rem); }
 .standard .outcome { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .standard .imageLink { aspect-ratio: 4 / 3; }
 .standard .trustStrip { margin-top: .62rem; padding-block: .5rem; }
@@ -239,7 +239,7 @@
   padding: 1.18rem .08rem;
   border-radius: 0;
 }
-.compact:hover { background: linear-gradient(90deg, color-mix(in srgb, var(--primary-subtle) 24%, transparent), transparent 72%); }
+.compact:hover { background: color-mix(in srgb, var(--bg-secondary) 40%, transparent); }
 
 .compact .content {
   display: grid;

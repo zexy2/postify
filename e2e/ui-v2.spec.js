@@ -1042,6 +1042,11 @@ test.describe('Postify UI V2', () => {
     const articles = feed.locator('article');
     const overflow = await articles.evaluateAll((items) => items.map((item) => item.scrollWidth - item.clientWidth));
     expect(Math.max(...overflow)).toBeLessThanOrEqual(1);
+    // The masthead and ranked feed may order stories differently; never repeat
+    // the hero's actual story as the top recommendation in the default feed.
+    const heroHref = await page.locator('section[class*="hero"] a[class*="featured"]').getAttribute('href');
+    const feedHref = await feed.locator('[data-card-variant="featured"] a[href^="/posts/"]').first().getAttribute('href');
+    expect(feedHref).not.toBe(heroHref);
   });
 
   test('reduced motion makes footer back-to-top immediate', async ({ page }) => {
