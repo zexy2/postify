@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 6 — G-01 ana grid + seçici G-02 feature kompozisyonu CD-005 ile ONAYLI; bileşen alternatifleri ve kullanıcı kararı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 6 — G-01 ana + seçici G-02 onaylı; C-01/C-02/C-03 bileşen alternatifleri sunuldu, kullanıcı onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -27,6 +27,8 @@
 - [x] Aşama 5 G-01/02/03 grid ölçü/spacing adayı ve 17 rota için layout sorumlulukları belgelendi.
 - [x] Statik prototipte 3 seçenek × 2 sayfa × 4 viewport = 24 Chromium kontrolünde yatay taşma görülmedi (gerçek site QA değildir).
 - [x] Aşama 5 **G-01 ana sistem + G-02 yalnızca seçilmiş editoryal dosyalar** CD-005 kullanıcı onayıyla kaydedildi.
+- [x] Aşama 6 mevcut component API/rolleri, protected/empty/loading/error/verification durumları envantere bağlandı.
+- [x] Aşama 6 C-01/C-02/C-03 karşılaştırmalı bileşen örnekleri Oracle Chromium'da 1440/768/390/320px (12 statik render) görüldü; taşma/pageerror yok ve görünür buttonlar ≥44px.
 - [ ] Aşama 6 Component Design System kullanıcı onayı henüz verilmedi.
 
 ## Bilinçli olarak açık kalan kontroller
@@ -49,4 +51,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Aşama 6 bileşen alternatiflerini gerçek durumlar ve responsive örnekleriyle karşılaştırmalı sun; kullanıcı onayı olmadan Aşama 7 Homepage Design başlatma.
+**Şimdiki sonraki adım:** Kullanıcıdan C-01/C-02/C-03 veya sınırları açık hibrit için Aşama 6 kararı bekle; onay olmadan Aşama 7 Homepage Design başlatma.

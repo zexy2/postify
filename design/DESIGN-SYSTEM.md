@@ -36,7 +36,7 @@ Durum: **TYPE-02 Expressive Issue, kullanıcı tarafından ONAYLANDI (CD-004).**
 Durum: **G-01 Editorial Spine ana sistem + G-02 yalnızca öne çıkan editoryal dosyalarda seçici kullanım ONAYLI (CD-005).** Öncelikli container 1280px, 12-column; masaüstü gutter 56px, gap 24px, 7:5 feature, 3-col feed; makale ana ölçü yaklaşık 715px. Mobil hedef gutter 26px @390 / 20px @320, dar ekranda tek akış. **G-02'nin site çapında 1440px genişliği, modüler dağılımı ve G-03 onaylanmadı.** Detaylar [GRID-LAYOUT-SPACING-OPTIONS.md](./GRID-LAYOUT-SPACING-OPTIONS.md). Bu değerler ileriki uygulama aşamasında içerik, zoom ve cihaz davranışına göre doğrulanmalıdır.
 
 ### Aşama 6: Components
-Durum: **alternatif araştırması aktif, kullanıcı onayı yok.** Buttons, cards, forms, nav, evidence/status, hover/focus/loading/error durumları henüz onaysız.
+Durum: **C-01 Editorial Grammar / C-02 Inked Folio / C-03 Research Instruments karşılaştırıldı, onay bekliyor.** Kart, navigasyon, formlar, kanıt, error/empty/loading ve 44px dokunma hedefli statik örnekler: [COMPONENT-SYSTEM-OPTIONS.md](./COMPONENT-SYSTEM-OPTIONS.md) ve [component-system-reference.svg](./component-system-reference.svg). **Hiçbir bileşen formu, değişkeni, yeni durum tokenı veya hareket onaylanmadı.**
 
 ### Aşama 9: Motion
 Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.

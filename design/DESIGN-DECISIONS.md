@@ -28,7 +28,7 @@
 | 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
 | 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
 | 5 Grid, Layout & Spacing | **ONAYLANDI** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | **G-01 ana sistem + G-02 yalnızca öne çıkan editoryal yayın dosyalarında** | 2026-10-17 |
-| 6 Component Design System | **Alternatifler araştırılıyor; karar bekliyor** | Bileşen aileleri/etkileşim ve durum matrisi | — | 2026-10-17 |
+| 6 Component Design System | **Üç alternatif sunuldu; onay bekliyor** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | — | 2026-10-17 |
 | 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
 | 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
 | 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
@@ -148,3 +148,13 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 **UYGULAMA DURUMU:** Dokümantasyon onayı. Gerçek CSS breakpoint uyarlamaları, içerik yüksekliğine ve erişilebilirliğe göre doğrulanmalı; bu karar herhangi bir production kod değişikliği, font dosyası yükleme veya release onayı değildir. PL-01 renkleri, TYPE-02 font rolleri ve CD-002 moodboard kararı korunur.
 
 **SONRAKİ ADIM:** Sadece Aşama 6 bileşen tasarım alternatifleri. Aşama 6 onayı olmadan Aşama 7'ye geçilmez.
+
+
+## Aşama 6 bileşen alternatifleri — ONAYSIZ (2026-10-17)
+
+Üç farklı site çapında bileşen dili: **C-01 Editorial Grammar** (metin, kural çizgisi ve açık yüzey), **C-02 Inked Folio** (basılı yayın/çerçeve/özel featured vurgusu), **C-03 Research Instruments** (ayrıştırılmış yoğun veri/kanıt panelleri). Kart, navbar, CTA/secondary/disabled, doğrulama/provenance ve auth/search/error/loading/empty prototipleri karşılaştırıldı.
+
+- Detaylı işlevsel kapsam, önemli durum matrisi, renk semantiği sınırı, avantaj/dezavantaj/öneri ve ekran görüntüsü kanıtı: `design/COMPONENT-SYSTEM-OPTIONS.md`; vektörel kavramsal örnek: `design/component-system-reference.svg`.
+- Oracle'da repo dışında 3 variant × 4 viewport (1440/768/390/320) **12 statik Chromium render**, horizontal overflow ve pageerror yok, tüm **görünür** button yükseklikleri ≥44px ve Fraunces yüklenmiş. Tam WCAG veya çalışan uygulama testi değildir.
+- **Öneri (onay değil):** C-01 temel gramer + C-02 yalnızca CD-005 featured istisna + C-03 yalnızca gerçekten veri/kanıt yoğun işlevsel panellerde seçici kullanım. Kullanıcı aksi bir bileşen politikası da seçebilir.
+- **Onay:** YOK. C-01/C-02/C-03 veya açıklanmış hibrit seçimi kullanıcı kararı gerektirir. Aşama 7 ana sayfa, Aşama 6 onayı olmadan başlayamaz. `src/` dosyalarına dokunulmadı.
