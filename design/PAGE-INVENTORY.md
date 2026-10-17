@@ -43,3 +43,6 @@ Home: filter, zero results, fallback, loading, server timeout. Article: loading,
 
 ## QA kapsamı ve açık alan
 Bu aşamada **17 × 3 = 51 render**; gerçek hesap gerektiren 6 sayfanın **içerikleri değil redirect davranışı** tekrar teyit edildi. Ekran görüntüleri Oracle `/home/ubuntu/.oracle-dev/visual/postify-stage0`. Authenticated state ve gerçek backend testleri açık; tasarım uygulaması başlamadı. Sonraki aşama yalnızca kullanıcı Aşama 0'ı onaylayınca açılır.
+
+## Güncel tasarım aşaması notu (2026-10-17)
+Aşama 5 için üç farklı dış grid/okuma measure/spacing sistemi `GRID-LAYOUT-SPACING-OPTIONS.md` içinde geliştirildi. **G-01/02/03 onaylanmamıştır.** İçerik, giriş, makale ve korumalı sayfaların hiçbiri bu yeni gridle uygulanmadı; bu tablodaki “Bekliyor” durumları tüm sayfalar için geçerlidir.

@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 4 — PL-01 renkleri ONAYLI; TYPE-01/02/03 tipografi alternatifleri sunuldu, kullanıcı seçimi bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 5 — PL-01 renkler, TYPE-02 Fraunces/Inter/IBM Plex Mono ONAYLI; G-01/G-02/G-03 Grid/Layout/Spacing seçenekleri sunuldu, kullanıcı onayı bekliyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -23,7 +23,10 @@
 - [x] Aşama 3 PL-01 renk kararı CD-003 ile kullanıcı delegasyonu kapsamında onaylandı.
 - [x] Aşama 4 Newsreader/DM Sans, Fraunces/Inter ve Literata/IBM Plex Sans kombinasyonları lisans/okunabilirlik/karakter destekleriyle araştırıldı.
 - [x] Oracle Chromium specimen TYPE-01/02/03 1100px/390px TR/EN metin, meta ve kod ile karşılaştırıldı; fontlar loaded, örneklerde taşma ve JS hatası yok.
-- [ ] Aşama 4 tipografi sistemi henüz onaylanmadı.
+- [x] Aşama 4 TYPE-02 (Fraunces + Inter + IBM Plex Mono) açık kullanıcı onayı CD-004 ile kaydedildi.
+- [x] Aşama 5 G-01/02/03 grid ölçü/spacing adayı ve 17 rota için layout sorumlulukları belgelendi.
+- [x] Statik prototipte 3 seçenek × 2 sayfa × 4 viewport = 24 Chromium kontrolünde yatay taşma görülmedi (gerçek site QA değildir).
+- [ ] Aşama 5 Grid/Layout/Spacing kullanıcı onayı henüz verilmedi.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -45,4 +48,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Aşama 4 TYPE-01/02/03 veya açıkça tarif edilen hibrit için kullanıcı onayını bekle; onay olmadan Aşama 5 Grid, Layout & Spacing başlatma.
+**Şimdiki sonraki adım:** Kullanıcının G-01/02/03 veya açıkça sınırladığı yerleşim hibritini onaylamasını bekle. Aşama 5 onayı olmadan Aşama 6 Component Design System başlatma.
