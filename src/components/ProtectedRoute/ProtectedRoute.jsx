@@ -52,8 +52,9 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // If user exists, allow access
-  if (user || isAuthenticated) {
+  // Both conditions must agree: a session flag alone or a stale identity
+  // object must not unlock account content while authentication is unresolved.
+  if (user && isAuthenticated) {
     return children;
   }
 

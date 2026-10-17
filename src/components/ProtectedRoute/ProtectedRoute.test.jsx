@@ -55,4 +55,18 @@ describe('ProtectedRoute', () => {
     renderRoute();
     expect(screen.getByText('protected content')).toBeInTheDocument();
   });
+  it('does not unlock account content using only a stale authentication flag', () => {
+    useAuth.mockReturnValue({ isAuthenticated: true, isLoading: false, user: null });
+    renderRoute();
+    expect(screen.queryByText('protected content')).not.toBeInTheDocument();
+    expect(screen.getByText('login route')).toBeInTheDocument();
+  });
+
+  it('does not unlock account content using only a stale user object', () => {
+    useAuth.mockReturnValue({ isAuthenticated: false, isLoading: false, user: { id: 'old-user' } });
+    renderRoute();
+    expect(screen.queryByText('protected content')).not.toBeInTheDocument();
+    expect(screen.getByText('login route')).toBeInTheDocument();
+  });
+
 });

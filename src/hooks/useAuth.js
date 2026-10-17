@@ -80,8 +80,8 @@ export const useAuth = () => {
     const hydrateUser = async (session, revision) => {
       if (!session || !isMounted || revision !== authRevisionRef.current) return;
 
-      dispatch(setSession(session));
-
+      // A restored session object is not proof of the current identity.
+      // Never unlock protected UI before getUser verifies its subject.
       let currentUser;
       try {
         currentUser = await authService.getCurrentUser();
@@ -91,7 +91,12 @@ export const useAuth = () => {
       }
 
       if (!currentUser || !isMounted || revision !== authRevisionRef.current) return;
+      if (!session.user?.id || session.user.id !== currentUser.id) {
+        console.error('Auth session identity mismatch: refusing to hydrate user');
+        return;
+      }
 
+      dispatch(setSession(session));
       // Keep the authenticated identity usable even when the optional profile
       // record is temporarily unavailable. Profile data enriches the user; it
       // must not decide whether a valid Supabase session counts as signed in.
@@ -194,6 +199,12 @@ export const useAuth = () => {
           email,
           password,
         });
+
+        // Treat incomplete or contradictory auth responses as failures rather
+        // than granting protected UI access on a session snapshot alone.
+        if (!newSession?.user?.id || !newUser?.id || newSession.user.id !== newUser.id) {
+          throw new Error(t('auth.loginError'));
+        }
 
         dispatch(setSession(newSession));
 

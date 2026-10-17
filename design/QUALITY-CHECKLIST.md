@@ -117,3 +117,14 @@
 - [x] 165 Vitest, 58 E2E, lint/build/smoke/security PASS; scroll restoration and legacy fallback unit tests preserved.
 - [x] Lighthouse mobile A/B baseline60/59 versus candidate60/60; small delta, performance gate still OPEN.
 - [ ] Field performance, manual WCAG, real protected workflows, final visual acceptance, and explicit remote push/deployment approvals still pending.
+
+## 2026-10-17 — Verified auth subject and protected UI gate
+
+- [x] RED to GREEN: failed getCurrentUser after restored session cannot set authenticated UI.
+- [x] RED to GREEN: mismatched session-user subject cannot initialize user/profile.
+- [x] RED to GREEN: password login does not succeed with an unverified missing user.
+- [x] RED to GREEN: account route rejects stale flag-only and stale user-only state.
+- [x] Positive mocked SIGNED_IN callback and previous login/logout revision tests remain green.
+- [x] ESLint, Vitest 175/175, production build, critical 11-file smoke (310760/320000-byte JS entry), npm security audit 0 and Chromium E2E 58/58 PASS.
+- [ ] Actual signed-in OAuth, refresh, staging RLS and protected CRUD need fixtures and manual validation.
+- [ ] Real browser zoom 200/400%, screen reader WCAG 2.2 AA, field CWV and mobile speed release gate pending. No push/deploy without authorization.

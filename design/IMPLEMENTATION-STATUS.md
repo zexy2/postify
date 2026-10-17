@@ -198,3 +198,18 @@ Captured baseline CDP trace at 4x CPU throttle: longest task ~911ms, total layou
 Crucially, one failing unit test established that a late optional profile response could rehydrate UI login state after a SIGNED_OUT event. The hook now checks a revision after async results, guards against an old initial session snapshot and invalidates outstanding hydration on direct logout. New mock-only tests protect these cases. Real signed-in production data/auth validation still pending. Source performance/QA details in design/MOBILE-PERFORMANCE-ROOT-CAUSE-TRACKING.md.
 
 Full verification completed after source changes: ESLint PASS, Vitest 169/169 across 43 files, production build PASS, 11-artifact build smoke PASS with entry 310650 bytes below 320000, security audit 0 known vulnerabilities PASS, Chromium Playwright 58/58 E2E PASS (job-450616fe2a55). No GitHub push or deployment permission.
+
+## 2026-10-17 — Session identity verification and protected-route fail-closed QA
+
+User authorized isolated implementation and tests, NOT GitHub push, deployment, real account changes or production credential access.
+
+RED unit fixtures confirmed three categories of UI access inconsistency BEFORE fixes:
+- Restored Supabase session set isAuthenticated=true before getCurrentUser verified the session subject. A rejected identity call or a returned different user could incorrectly unlock frontend account state.
+- Direct password login reported success when the service returned a session but no verified user.
+- ProtectedRoute rendered protected account content with either an orphaned auth flag or an orphaned user object.
+
+FIX: Init session hydration now waits for a returned getCurrentUser identity that matches session.user.id before updating session and user state. Password login checks the returned session/user identity pair and rejects malformed/mismatched responses through the existing translated login failure. ProtectedRoute requires both a verified user and authenticated state. Profile enrichment still does not control a previously verified identity, and stale SIGNED_OUT / late profile revision protection remains. An additional mocked SIGNED_IN callback fixture confirms valid provider initialization still succeeds.
+
+Verification: targeted auth/route 14/14 PASS. ESLint PASS, Vitest 175/175 across 43 files PASS, Vite/PWA build PASS, security audit zero known vulnerable dependencies PASS, 11-artifact build smoke entry 310760 bytes below the unchanged 320000-byte guard PASS; Chromium Playwright 58/58 PASS, job job-c1accd337a7f. Source changes, testing and QA descriptions stored locally only.
+
+No real Supabase OAuth/refresh/RLS or signed-in admin/editor/knowledge write fixture was exercised. Manual WCAG 2.2 AA true browser zoom/AT, live field Core Web Vitals and mobile lab performance (~60) release gate remain OPEN. Performance optimization not claimed in this security slice. Push and deployment need separate permission.

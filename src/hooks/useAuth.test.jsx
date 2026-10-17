@@ -172,4 +172,67 @@ describe('useAuth hydration', () => {
     expect(result.current.isAuthenticated).toBe(false);
   });
 
+
+  it('never marks an unverified restored session authenticated if getUser fails', async () => {
+    const session = { user: { id: 'unverified-identity' }, access_token: 'fixture-token' };
+    authService.getSession.mockResolvedValue(session);
+    authService.getCurrentUser.mockRejectedValue(new Error('network authentication unavailable'));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(consoleError).toHaveBeenCalledWith('Auth user hydration error:', expect.any(Error));
+  });
+
+  it('does not substitute a different authenticated identity for the session subject', async () => {
+    authService.getSession.mockResolvedValue({ user: { id: 'account-1' }, access_token: 'fixture-token' });
+    authService.getCurrentUser.mockResolvedValue({ id: 'account-2', email: 'another@example.com' });
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(result.current.user).toBeNull();
+    expect(authService.getProfile).not.toHaveBeenCalled();
+  });
+
+  it('accepts a verified SIGNED_IN provider event after the initial empty session', async () => {
+    let authEvent;
+    authService.onAuthStateChange.mockImplementation(async (callback) => {
+      authEvent = callback;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue(null);
+    const session = { user: { id: 'oauth-user-1' }, access_token: 'oauth-token' };
+    authService.getCurrentUser.mockResolvedValue({ id: 'oauth-user-1', email: 'oauth@example.com' });
+    authService.getProfile.mockResolvedValue({ role: 'writer' });
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.isAuthenticated).toBe(false);
+
+    await act(async () => {
+      authEvent('SIGNED_IN', session);
+    });
+    await waitFor(() => expect(result.current.user?.profile?.role).toBe('writer'));
+    expect(result.current.isAuthenticated).toBe(true);
+    expect(result.current.session?.access_token).toBe('oauth-token');
+  });
+
+  it('does not call login successful if provider returns a session with no verified user', async () => {
+    authService.getSession.mockResolvedValue(null);
+    authService.login.mockResolvedValue({ session: { user: { id: 'unexpected' }, access_token: 'token' }, user: null });
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    let response;
+    await act(async () => {
+      response = await result.current.login({ email: 'missing@example.com', password: 'test' });
+    });
+    expect(response.success).toBe(false);
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(result.current.user).toBeNull();
+    expect(toast.success).not.toHaveBeenCalledWith('auth.loginSuccess');
+  });
+
 });
