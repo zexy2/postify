@@ -1,6 +1,6 @@
 # Postify — Pages & Components Inventory (Aşama 0)
 
-**Durum:** Tüm route'lar envantere alındı; Stage 0 raporu kullanıcı onayı bekliyor.
+**Durum:** Tüm route'lar envantere alındı; Aşama 0 onaylandı, Aşama 1 strateji seçimi bekleniyor.
 **Yorum:** “Denetlendi” ≠ “Yeni tasarım onaylandı/uygulandı”.
 
 ## Public routes — 11

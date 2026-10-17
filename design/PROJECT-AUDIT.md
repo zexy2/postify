@@ -1,7 +1,7 @@
 # POSTIFY — Current Product Audit (Aşama 0)
 
 **Tarih:** 2026-10-17
-**Durum:** Analiz tamamlandı; **kullanıcı onayı bekleniyor**. Aşama 1 başlatılmadı.
+**Durum:** Aşama 0, 2026-10-17 tarihinde kullanıcı tarafından onaylandı. Aşama 1 strateji alternatifleri hazır; seçim bekleniyor.
 **Depo:** `zexy2/postify` — `chatgpt/ws-48c6861345cf` / HEAD `30a5a12`; orijinal `main` ayrı.
 **Denetim yüzeyleri:** `http://127.0.0.1:4176/` (çalışma branch'i), `https://postify.zekiakgul.dev/` (canlı, salt okunur), kod, mevcut test/dokümantasyon.
 **Kod değişikliği:** YOK. Bu aşamada yalnızca `design/` raporları oluşturulur.
@@ -68,8 +68,8 @@ Bunlar **tek koşum ön gözlemidir**, Core Web Vitals alan verisi veya düzenli
 ## 8. Önerilen yeniden tasarım yaklaşımı — **yöntem, konsept kararı değil**
 Önce marka kişiliğini ve editoryal kullanıcı hedefini birlikte tanımla; görsel alternatifleri referans araştırmasında **karşılaştırmalı sun**. Sonra seçilen yön için renk, tipografi, grid, bileşen, homepage, iç sayfalar ve motion sistemini **kullanıcı onay kapılarıyla** kademeli tasarla. Her aşamada UX görevleri, state matrisi, responsive ve erişilebilirlik gözlemleri olmalı. Onay gelmeden yeni font, palet, konsept veya UI koduna geçilmez.
 
-## 9. Sıradaki aşama — 1: Brand Personality & Creative Strategy (BAŞLANMADI)
-Kullanıcı Aşama 0'ı onayladıktan sonra: ürün vaadi, hedef okur/editör personları, “ne değildir” anti-pattern'leri, yayın tonu, 2–3 yaratıcı strateji alternatifi (gerekçe, avantaj/dezavantaj, özgünlük, siteye uygunluk) ve karar matrisi hazırlanacak. Herhangi bir renk veya font henüz seçilmeyecek. **Aşama 1 başlamadan onay bekle.**
+## 9. Aşama 0 onayı ve sonraki süreç
+Kullanıcı Aşama 0 raporunu **'Onaylıyorum'** mesajıyla onayladı. Aşama 1'in üç yaratıcı strateji önerisi CREATIVE-DIRECTION.md'de karşılaştırmalı sunuldu. **Aşama 1 tasarım seçimi henüz yapılmadı**; moodboard, renk, font, grid veya kodlama için onay yok.
 
 ## 10. Kaynaklar
 `src/App.jsx`, `src/index.css`, `src/pages/*`, `src/components/*`, `src/services/*`, `src/lib/*`, `vite.config.js`, `package.json`, `playwright.config.js`, `project/premium-*.md` ve Stage0 Chromium kanıtları. Ayrıntılı rota listesi için `PAGE-INVENTORY.md`, kalite kapıları için `QUALITY-CHECKLIST.md`.

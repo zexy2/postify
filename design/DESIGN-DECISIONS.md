@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 0 / Current Product Audit — rapor hazır, **onay bekleniyor**.
-**Sonraki aşama:** 1 / Brand Personality & Creative Strategy — **başlanmadı**.
+**Aktif aşama:** 1 / Brand Personality & Creative Strategy — **üç alternatif sunuldu, kullanıcı kararı bekleniyor**.
+**Sonraki aşama:** 2 / Reference Research & Moodboards — **Aşama 1 kararı olmadan başlanmayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -22,8 +22,8 @@
 ## Tasarım onay kayıtları
 | Aşama | Status | Önerilen seçenekler | Kullanıcının seçimi | Tarih |
 | --- | --- | --- | --- | --- |
-| 0 Current Product Audit | **Onay bekliyor** | Denetim raporu | Henüz yok | 2026-10-17 |
-| 1 Brand Personality & Creative Strategy | Başlanmadı | Henüz yok | — | — |
+| 0 Current Product Audit | **ONAYLANDI** | Teknik, tasarımsal ve 51-render denetimi | Kullanıcının açık yanıtı: **“Onaylıyorum”** | 2026-10-17 |
+| 1 Brand Personality & Creative Strategy | **Alternatifler sunuldu; karar bekleniyor** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | — | 2026-10-17 |
 | 2 Reference Research & Moodboards | Başlanmadı | Henüz yok | — | — |
 | 3 Color System | Başlanmadı | Henüz yok | — | — |
 | 4 Typography System | Başlanmadı | Henüz yok | — | — |
@@ -34,6 +34,17 @@
 | 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
 | 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
 | 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
+
+## Aşama 0 açık kullanıcı onayı
+**2026-10-17:** Kullanıcı önceki Stage 0 raporunun ardından **“Onaylıyorum”** dedi. Bu onay **yalnızca Aşama 0 denetimi** içindir; önceki UI commitleri, marka stratejisi, renk, tipografi veya Aşama 2 için tasarım onayı anlamına gelmez.
+
+## Aşama 1 seçenek kaydı (SEÇİLMEDİ)
+**2026-10-17:** Mevcut ürün mimarisinden türetilmiş üç seçenek hazırlandı; tam analiz ve ASCII kompozisyon eskizleri `CREATIVE-DIRECTION.md` dosyasındadır.
+- **A: Living Field Manual** — Problem/sonuç/kanıt/kullanım, editoryal saha kaydı; risk: fazla teknik etiket.
+- **B: Independent Review** — Seçici, ifade gücü yüksek bağımsız teknoloji yayını; risk: kapak estetiği kanıt ve keşfi gölgeler.
+- **C: Knowledge Atlas** — İçerik bağları/öğrenme yolları; risk: dashboard karmaşıklığı ve gerçek bağlantı veri ihtiyacı.
+**Onay:** YOK; hiçbir birincil yön ya da hibrit seçilmedi. İlk üretilen, yanlışlıkla lifestyle bloga kayan imaj konsept kanıtı olarak **reddedildi**.
+**Sıradaki karar:** Kullanıcı A/B/C ya da tanımladığı hibriti açıkça seçince Stage 1 kaydını güncelle; yalnızca sonra Stage 2 moodboard araştırmasına geç.
 
 ## Stage 0 değişiklik defteri
 2026-10-17 — `design/` raporları yazıldı. **Uygulama, component, CSS, route, service, test ve build artifact kodu değişmedi.** Aşama 1'e geçilmedi. Git commit yalnızca doküman dosyalarını içermelidir; push/deploy yok.
