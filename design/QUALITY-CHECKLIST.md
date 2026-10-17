@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 4 — PL-01 renk paleti ONAYLI; tipografi alternatifleri hazırlanıyor, onay bekliyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 4 — PL-01 renkleri ONAYLI; TYPE-01/02/03 tipografi alternatifleri sunuldu, kullanıcı seçimi bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -21,6 +21,8 @@
 - [x] PL-01/02/03 light/dark ve temel metin/CTA kombinasyonları için matematiksel kontrast hesapları belgelendi.
 - [x] Kaynak CSS değiştirilmeden üç exact-hex renk örneği araştırma SVG dosyasına kaydedildi.
 - [x] Aşama 3 PL-01 renk kararı CD-003 ile kullanıcı delegasyonu kapsamında onaylandı.
+- [x] Aşama 4 Newsreader/DM Sans, Fraunces/Inter ve Literata/IBM Plex Sans kombinasyonları lisans/okunabilirlik/karakter destekleriyle araştırıldı.
+- [x] Oracle Chromium specimen TYPE-01/02/03 1100px/390px TR/EN metin, meta ve kod ile karşılaştırıldı; fontlar loaded, örneklerde taşma ve JS hatası yok.
 - [ ] Aşama 4 tipografi sistemi henüz onaylanmadı.
 
 ## Bilinçli olarak açık kalan kontroller
@@ -43,4 +45,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Aşama 4 için 3 tipografi eşleşmesi (serif/sans/mono), TR/EN glyph, lisans, yükleme maliyeti ve responsive örnekleri sun; kullanıcı font onayı olmadan Aşama 5’e geçme.
+**Şimdiki sonraki adım:** Aşama 4 TYPE-01/02/03 veya açıkça tarif edilen hibrit için kullanıcı onayını bekle; onay olmadan Aşama 5 Grid, Layout & Spacing başlatma.

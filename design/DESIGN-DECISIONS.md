@@ -26,7 +26,7 @@
 | 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
 | 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
 | 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
-| 4 Typography System | **Alternatifler hazırlanıyor; onay bekliyor** | Üç ayrı serif/sans/mono stratejisi | — | 2026-10-17 |
+| 4 Typography System | **3 font sistemi incelendi; ONAY BEKLENİYOR** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | — | 2026-10-17 |
 | 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
 | 6 Component Design System | Başlanmadı | Henüz yok | — | — |
 | 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
@@ -93,3 +93,16 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 **Değiştirme süreci:** Her onaylı temel token değişikliği gerekçe, etkilenen sayfalar, kontrast kanıtı ve kullanıcı onayı ister. **Uygulama koduna henüz dokunulmadı.**
 
 **Sonraki kapı:** Yalnızca Aşama 4 Typography System alternatifleri hazırlanır. Font kesinleşmeden Aşama 5'e geçilemez.
+
+
+## Aşama 4 — Tipografi karşılaştırması (ONAYSIZ)
+
+**2026-10-17:** Kullanıcının Stage3 palet seçimini asistana bırakmasına dayanılarak yalnızca **PL-01 renk sistemi** seçilmiş ve CD-003 ile onaylanmıştır. Bu delegasyon tipografi seçimini **kapsamaz**.
+
+- TYPE-01 **Quiet Authority** = Newsreader display + DM Sans body/UI + IBM Plex Mono kaynak/kod.
+- TYPE-02 **Expressive Issue** = Fraunces display + Inter body/UI + IBM Plex Mono.
+- TYPE-03 **Evidence Library** = Literata display + IBM Plex Sans body/UI + IBM Plex Mono.
+- Altı gerçek Oracle Chromium specimen (1100/390), TR/EN/technical copy ve kaynak/mono karşılaştırması repo dışındaki `/home/ubuntu/.oracle-dev/visual/postify-stage4` yolunda kayıtlı. FontFaceSet loaded; örneklerde yatay taşma ve pageerror yok. Bunlar üretim performans testi değildir.
+- Lisans (SIL OFL) ve kaynaklar, font tradeoff ve font loading riskleri `design/TYPOGRAPHY-OPTIONS.md` dosyasında.
+- **Tasarım yönetmeni önerisi: TYPE-01**; kullanıcı onayı verilmedi. TYPE-02/TYPE-03 alternatifleri açık.
+- **Sonraki karar:** TYPE-01/02/03 veya açık hibrit. Seçimden önce Aşama 5 Grid/Spacing başlamaz. JSX, CSS, build, font dosyası, GitHub push ve deployment yapılmadı.

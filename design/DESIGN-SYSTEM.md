@@ -30,7 +30,7 @@ Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteri
 Durum: **PL-01 Oxide & Newsprint ONAYLANDI (CD-003, kullanıcı renk seçimini asistana devretti).** Light/dark hex değerleri, önerilen semantic durum renkleri ve WCAG kontrast ölçümleri [COLOR-SYSTEM-OPTIONS.md](./COLOR-SYSTEM-OPTIONS.md) dosyasında. Renk örnekleri [color-palette-reference.svg](./color-palette-reference.svg) dosyasında. **Seçili palet PL-01’dir.**
 
 ### Aşama 4: Typography
-Durum: bekliyor. Font families, lisans, variable font/performance, scale, editorial body ölçüleri ve dil desteği onaysız.
+Durum: **ÜÇ ALTERNATİF SUNULDU; kullanıcı onayı BEKLENİYOR.** TYPE-01 Newsreader/DM Sans/IBM Plex Mono; TYPE-02 Fraunces/Inter/IBM Plex Mono; TYPE-03 Literata/IBM Plex Sans/IBM Plex Mono. [TYPOGRAPHY-OPTIONS.md](./TYPOGRAPHY-OPTIONS.md) içinde lisans, TR/EN, ekran karşılaştırması, performans ve okunabilirlik riskleri. **Hiçbir font/ölçek seçilmedi.**
 
 ### Aşama 5: Grid & spacing
 Durum: bekliyor. Columns, measure, gutters, baseline rhythm, responsive rules onaysız.
