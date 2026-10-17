@@ -57,3 +57,32 @@ The user explicitly responded **“Evet”** to the request for test/build autho
 **Still pending:** Complete application of approved design across all 17 route families; genuine authenticated editor/admin/knowledge with safe staging fixtures; manual WCAG 2.2 AA/NVDA/VoiceOver/TalkBack and 200–400% browser zoom acceptance; live Core Web Vitals p75 and full QA-02 editorial before/after review. These results are **incremental regression evidence, not full release acceptance or a WCAG certification**.
 
 **Authorization:** GitHub push and production deployment are **not authorized** and were not attempted. Stop only temporary preview services created for these tests; protect running user services and credentials.
+
+
+## 2026-10-17 — Shared shell and inner-page UI continuation (active implementation)
+
+**User prompt:** “Tamam devam”. The existing Oracle implementation run remains active; implementation and tests are permitted. **Remote GitHub push and live deployment remain unauthorized.**
+
+### Implemented (committed code)
+
+- **a4d3020** — Eleven CSS Modules: G-01 aligned site gutters for Header, Footer and CategoryNav; metadata readability improved in header/footer/filter/language switcher, About, Contact, Bookmarks, User and Profile; dark-theme foreground for accent buttons/badges changed to semantic `--text-inverse` rather than hard-coded white; keyboard focus contrast improved for command results/filter; saved-item controls increased to more touch-friendly sizes. No user/auth/data logic changed.
+- **605b0a5** — Four CSS Modules: task-first PasswordRecovery layout and dark-contrast submit; PostDetail article TOC disclosure focus, source-link target height and mobile summary; admin table/role/focus and 44px action controls; KnowledgeDashboard correction source/action focus. Protected route data/roles/permissions unchanged.
+
+### Verified QA (real execution on isolated worktree)
+
+| Test / audit | Outcome |
+| --- | --- |
+| `npm run lint` | PASS in both slices |
+| `npm test` | **42 files, 162 tests PASS** in both slices |
+| Vite PWA build to isolated `/tmp/postify-20261017-phase2-build` and `/tmp/postify-20261017-inner-build` | PASS both |
+| `npm run verify:security` | PASS, **0 known dependency vulnerabilities** in both |
+| Playwright `npm run test:e2e:ui` against compiled preview | **55/55 PASS** both slices (phase2 job `job-cacda0d439ad`, inner job `job-87dd04a72144`) |
+| Chromium stage2 responsive/contrast | **48/48** light/dark route/viewport cases: 0 horizontal overflow, 0 JS pageerrors, 0 measured visible accent button contrast failures |
+| Chromium stage3 responsive/contrast | **64/64** route/viewport/light-dark cases: 0 overflow, 0 pageerrors, 0 measured accent button contrast failures |
+| Example dark accent CTA | **9.22:1** foreground-background contrast in tested compiled view |
+
+**Proof:** `/home/ubuntu/.oracle-dev/visual/postify-shared-20261017/visual-audit.json` and `/home/ubuntu/.oracle-dev/visual/postify-inner-20261017/visual-audit.json` plus selected screenshots; local build/test logs under `/tmp/postify-20261017-...`. These paths are on Oracle, not user sandbox attachments. Unit and E2E results are not a full WCAG 2.2 AA certification. Visual test covers public/auth fallback without a real signed-in editor/admin session.
+
+**Remaining:** Real authenticated editor/knowledge/admin/role modifications on safe staging fixtures, manual VoiceOver/TalkBack/NVDA and true browser 200/400% zoom, full 17-route editorial pixel QA, field Core Web Vitals and all source module implementation gaps. Do not claim full Awwwards-level final QA or release acceptance yet.
+
+**Working boundaries:** Implementation branch `chatgpt/ws-276e5f67e3ed` only, main repository unchanged; no push, no deployment. Temporary local preview services started only for this testing session should be stopped after checks.
