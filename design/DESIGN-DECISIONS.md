@@ -27,7 +27,7 @@
 | 2 Reference Research & Moodboards | **ONAYLANDI** | MOOD-01, MOOD-02, MOOD-03 | **MOOD-02 ana + MOOD-01 kanıt/UX; MOOD-03 yalnız uygun teknik yazılarda** | 2026-10-17 |
 | 3 Color System | **ONAYLANDI** | PL-01 Oxide & Newsprint, PL-02 Evergreen & Brass, PL-03 Ultramarine & Chalk | **PL-01 — delegasyonla seçildi** | 2026-10-17 |
 | 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
-| 5 Grid, Layout & Spacing | **Alternatifler hazırlanıyor, onay bekleniyor** | G-01/02/03 hazırlanacak | — | 2026-10-17 |
+| 5 Grid, Layout & Spacing | **3 alternatif sunuldu; ONAY BEKLENİYOR** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | — | 2026-10-17 |
 | 6 Component Design System | Başlanmadı | Henüz yok | — | — |
 | 7 Homepage Design | Başlanmadı | Henüz yok | — | — |
 | 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
@@ -122,3 +122,14 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 - **Uygulama kodu değiştirilmedi**, font dosyası eklenmedi; push veya deployment yapılmadı.
 
 **Sonraki kapı:** Yalnızca Aşama 5 **Grid, Layout & Spacing** alternatiflerini hazırla ve kullanıcının kararını bekle. Aşama 6, Aşama 5 onayı olmadan başlamaz.
+
+
+## Aşama 5 Grid/Layout/Spacing teklifleri (ONAYSIZ)
+
+2026-10-17: **G-01 Editorial Spine** (12col dengeli 7:5, 1280px dış container, 24px gap, ~715px makale); **G-02 Modular Broadsheet** (12col değişken 8:4, 1440px dış container, 20px gap, ~740px makale); **G-03 Reading Sanctuary** (8col merkez, 1160px dış container, 32px gap, ~710px makale) alternatifleri hazırlandı.
+
+- Detaylı dış/makale/mobile/desktop/grid/breakpoint/spacing taslakları ve tradeoff matrisi `design/GRID-LAYOUT-SPACING-OPTIONS.md`; repo içinde geometrik konsept eskizleri `design/grid-layout-reference.svg` dosyasındadır.
+- 3 varyant × Home/Article × 1440/768/390/320 = **24** statik Chromium layout kontrolü (önizleme, uygulama değil); yatay taşma gözlenmedi. Makale okuma ölçüleri desktopta 715/740/710px olarak ölçüldü. Bağımsız prototip çıktıları konuşma dosyalarında.
+- Örnek CSS HTML sadece repo dışında. Onaylı PL-01 ve TYPE-02 aile isimlerine uyma hedefiyle hazırlanmıştır; Fraunces'ın son font dosyası/font metrikleri bu prototiplerde garanti edilmez.
+- **Öneri:** G-01'in kontrollü tasarım omurgası, ancak özgün kapaklara gerektiğinde G-02'nin sınırlı editorial sapması düşünülebilir. **Bu öneri onay değildir.**
+- **Onay durumu: BEKLENİYOR.** Grid/spacing henüz kesinleşmedi, uygulama JSX/CSS, diğer repo, push/deploy değiştirilmedi. Aşama 6, kullanıcı Aşama 5'e açık onay verene kadar kapalı.

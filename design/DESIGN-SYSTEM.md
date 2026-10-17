@@ -33,7 +33,7 @@ Durum: **PL-01 Oxide & Newsprint ONAYLANDI (CD-003, kullanıcı renk seçimini a
 Durum: **TYPE-02 Expressive Issue, kullanıcı tarafından ONAYLANDI (CD-004).** Serif **Fraunces** (editoryal başlıklar), sans **Inter** (gövde, UI ve formlar), mono **IBM Plex Mono** (kaynak/meta/kod). [TYPOGRAPHY-OPTIONS.md](./TYPOGRAPHY-OPTIONS.md) karşılaştırma ve lisans kanıtlarını içerir. **Font aileleri/rolleri onaylı; font boyutları, gerçek variable axis ayarları, font dağıtımı, grid ve spacing henüz onaysızdır.**
 
 ### Aşama 5: Grid & spacing
-Durum: **alternatif araştırması aktif, onay bekleniyor.** Columns, measure, gutters, baseline rhythm, responsive rules henüz onaysız.
+Durum: **G-01/G-02/G-03 sunuldu, kullanıcı kararı bekleniyor.** Konteyner/grid/okuma ölçüleri ve responsive adayları [GRID-LAYOUT-SPACING-OPTIONS.md](./GRID-LAYOUT-SPACING-OPTIONS.md), konum eskizleri [grid-layout-reference.svg](./grid-layout-reference.svg) dosyasında. **Hiçbir yerleşim ölçüsü onaylanmış sayılmaz.**
 
 ### Aşama 6: Components
 Durum: bekliyor. Buttons, cards, forms, nav, status components, interaction states onaysız.
