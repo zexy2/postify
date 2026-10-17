@@ -4,7 +4,7 @@
  * Provides authentication state and methods
  */
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -28,6 +28,7 @@ const getAuthErrorMessage = (error, fallback, t) => {
 
 export const useAuth = () => {
   const dispatch = useDispatch();
+  const authRevisionRef = useRef(0);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -72,9 +73,12 @@ export const useAuth = () => {
 
     let isMounted = true;
     let subscription;
+    // Newer auth events must invalidate older profile/session lookups.
+    // Otherwise a SIGNED_OUT event can be undone by a late profile response.
+    let authEventReceived = false;
 
-    const hydrateUser = async (session) => {
-      if (!session || !isMounted) return;
+    const hydrateUser = async (session, revision) => {
+      if (!session || !isMounted || revision !== authRevisionRef.current) return;
 
       dispatch(setSession(session));
 
@@ -86,7 +90,7 @@ export const useAuth = () => {
         return;
       }
 
-      if (!currentUser || !isMounted) return;
+      if (!currentUser || !isMounted || revision !== authRevisionRef.current) return;
 
       // Keep the authenticated identity usable even when the optional profile
       // record is temporarily unavailable. Profile data enriches the user; it
@@ -95,7 +99,7 @@ export const useAuth = () => {
 
       try {
         const profile = await authService.getProfile(currentUser.id);
-        if (isMounted) dispatch(setUser({ ...currentUser, profile }));
+        if (isMounted && revision === authRevisionRef.current) dispatch(setUser({ ...currentUser, profile }));
       } catch (err) {
         console.error("Auth profile hydration error:", err);
       }
@@ -103,6 +107,8 @@ export const useAuth = () => {
 
     const handleAuthStateChange = (event, newSession) => {
       if (!isMounted) return;
+      authEventReceived = true;
+      const revision = ++authRevisionRef.current;
 
       if (event === "SIGNED_OUT") {
         dispatch(logoutAction());
@@ -112,8 +118,8 @@ export const useAuth = () => {
 
       if (newSession) {
         // Do not await profile queries inside Supabase's auth callback.
-        void hydrateUser(newSession).finally(() => {
-          if (isMounted) dispatch(setLoading(false));
+        void hydrateUser(newSession, revision).finally(() => {
+          if (isMounted && revision === authRevisionRef.current) dispatch(setLoading(false));
         });
       }
     };
@@ -126,7 +132,11 @@ export const useAuth = () => {
         subscription = result?.data?.subscription;
 
         const currentSession = await authService.getSession();
-        if (currentSession) await hydrateUser(currentSession);
+        // A newer auth callback (especially SIGNED_OUT) outranks the
+        // potentially stale initial session snapshot.
+        if (currentSession && !authEventReceived && isMounted) {
+          await hydrateUser(currentSession, ++authRevisionRef.current);
+        }
       } catch (err) {
         console.error("Auth init error:", err);
       } finally {
@@ -241,6 +251,9 @@ export const useAuth = () => {
   const logout = useCallback(async () => {
     try {
       await authService.logout();
+      // Local logout must also invalidate in-flight user/profile hydration
+      // if a provider's SIGNED_OUT callback arrives after this promise.
+      authRevisionRef.current += 1;
       dispatch(logoutAction());
       toast.success(t("auth.logoutSuccess"));
       navigate("/");

@@ -25,6 +25,22 @@ const COPY = {
 
 const normalizeLocale = (locale = 'tr') => (String(locale).toLowerCase().startsWith('en') ? 'en' : 'tr');
 
+// A single issue can render many article dates in the same frame.
+// Construct Intl formatters once per supported language, not once per card.
+const postDateFormatters = new Map();
+const getPostDateFormatter = (locale) => {
+  let formatter = postDateFormatters.get(locale);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale === 'tr' ? 'tr-TR' : 'en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+    postDateFormatters.set(locale, formatter);
+  }
+  return formatter;
+};
+
 export function getPostType(post = {}) {
   if (post.contentType && ['guide', 'decision', 'explainer', 'fieldNote'].includes(post.contentType)) {
     return post.contentType;
@@ -53,11 +69,7 @@ export function formatPostDate(value, locale = 'tr') {
   const normalized = normalizeLocale(locale);
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '';
-  return new Intl.DateTimeFormat(normalized === 'tr' ? 'tr-TR' : 'en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(date);
+  return getPostDateFormatter(normalized).format(date);
 }
 
 export function getPostPresentation(post = {}, locale = 'tr') {

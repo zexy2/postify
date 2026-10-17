@@ -190,3 +190,11 @@ User said “Devam”; source implementation/tests authorized, not GitHub push o
 ## 2026-10-17 — No premature mobile optimization shipped
 
 Mobile A/B experiments for skipping no-config post queries and disabling mobile header blur passed ordinary code tests but showed no reliable Lighthouse score improvement (query experiment 59/60 baseline versus 56/56 candidate; header 59/60 versus 59/60). Both temporary code patches and experimental test files were deliberately reverted. The last verified source commit 3016b58 remains the basis. Evidence and profiling next steps: design/MOBILE-PERFORMANCE-ROOT-CAUSE-TRACKING.md. Mobile performance QA, actual authenticated operation tests and WCAG manual review remain open; no remote push/deployment.
+
+## 2026-10-17 — Actual Chrome CPU trace and session consistency hardening
+
+Captured baseline CDP trace at 4x CPU throttle: longest task ~911ms, total layout ~384ms. Initial feed read avoidance failed to reduce Lighthouse/trace cost and was reverted. Public article date formatter cache preserved language output and had minor 2-run mobile lab difference 59/59 to 60/60, not release-level proof.
+
+Crucially, one failing unit test established that a late optional profile response could rehydrate UI login state after a SIGNED_OUT event. The hook now checks a revision after async results, guards against an old initial session snapshot and invalidates outstanding hydration on direct logout. New mock-only tests protect these cases. Real signed-in production data/auth validation still pending. Source performance/QA details in design/MOBILE-PERFORMANCE-ROOT-CAUSE-TRACKING.md.
+
+Full verification completed after source changes: ESLint PASS, Vitest 169/169 across 43 files, production build PASS, 11-artifact build smoke PASS with entry 310650 bytes below 320000, security audit 0 known vulnerabilities PASS, Chromium Playwright 58/58 E2E PASS (job-450616fe2a55). No GitHub push or deployment permission.

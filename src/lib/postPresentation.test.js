@@ -44,4 +44,14 @@ describe('postPresentation', () => {
   it('returns an empty string for invalid dates', () => {
     expect(formatPostDate('not-a-date', 'tr')).toBe('');
   });
+
+  it('preserves locale-specific date output across repeated metadata renders', () => {
+    const timestamp = '2026-08-28T12:00:00.000Z';
+    const tr = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(timestamp));
+    const en = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(timestamp));
+    for (let index = 0; index < 12; index += 1) {
+      expect(formatPostDate(timestamp, 'tr')).toBe(tr);
+      expect(formatPostDate(timestamp, 'en')).toBe(en);
+    }
+  });
 });

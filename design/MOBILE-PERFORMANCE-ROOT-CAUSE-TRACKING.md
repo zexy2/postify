@@ -31,3 +31,24 @@ Reports: /tmp/postify-header-lh-baseline-{1,2}.json and /tmp/postify-header-lh-c
 First capture a Chromium performance trace targeting React-vendor startup tasks, forced style/layout initiators and the eager Supabase/auth dependency graph. Avoid changing eager auth initialization/RLS until test fixtures cover signed-in sessions, OAuth callback, token restoration, route authorization, sign-out and error recovery without production accounts. Only then attempt architecture-level splitting and re-test.
 
 Manual WCAG 2.2 AA (screen readers and real 200%/400% zoom), real authenticated editor/admin/knowledge operations, field p75 Core Web Vitals and final editorial visual acceptance remain open. GitHub push/deployment are NOT authorized. The experiments above were rejected and **no experimental app source changes remain**.
+
+## 2026-10-17 — CDP 4x CPU startup trace and safe follow-up
+
+Captured actual Chromium DevTools Protocol startup traces (390 CSS px and 4x CPU slowdown) from the last verified production build, saved in Oracle at:
+- /home/ubuntu/.oracle-dev/visual/postify-startup-profile-20261017/startup-trace.json
+- /home/ubuntu/.oracle-dev/visual/postify-startup-profile-20261017/startup-cpu-profile.json
+- /home/ubuntu/.oracle-dev/visual/postify-startup-profile-20261017/startup-summary.json
+
+Baseline: longest RunTask ~911ms and FunctionCall ~906ms; Layout total ~384ms and UpdateLayoutTree ~273ms. CPU sample attribution included ~409ms on the feed geometry read caller stack and ~91ms on a date-formatting caller stack. Minified frame labels are approximate; a stack name alone is NOT proof of a bottleneck.
+
+A tested candidate skipped the feed anchor read when scrollY <= 1. Targeted Vitest and full Chromium E2E 58/58 passed, but the trace retained ~902ms longest task and ~382ms layout; Lighthouse A/B baseline 59/60 versus candidate 59/60. The candidate source and temporary test changes were REVERTED. Evidence: /tmp/postify-no-first-layout-lh-baseline-{1,2}.json and candidate-{1,2}.json, candidate CDP trace in the Oracle visual startup-profile candidate folder.
+
+A smaller change to public article metadata WAS retained: getPostDateFormatter caches immutable Intl.DateTimeFormat instances per normalized language, instead of constructing one for every displayed date. A new test verifies identical Turkish and English output. Two paired Lighthouse mobile runs showed baseline 59/59 and candidate 60/60; candidate TBT 573/571ms versus baseline 580/581ms. The small difference is not sufficient to accept the mobile performance release gate. Reports: /tmp/postify-date-cache-lh-{baseline,candidate}-{1,2}.json.
+
+## Additional genuine auth-state correctness defect
+
+While preparing safe authentication test fixtures for potential future Supabase bundle splitting, a NEW failing unit test reproduced stale profile hydration restoring authenticated UI state AFTER SIGNED_OUT. This is a demonstrated state-race defect, not a hypothetical optimization concern.
+
+The useAuth hook now uses an auth revision ref: each newer auth callback invalidates pending older hydration after awaits, a direct logout invalidates in-flight requests even if SIGNED_OUT arrives later, and an initial session lookup cannot override a newer auth event. New non-production mocked tests cover delayed profile after SIGNED_OUT, stale session lookup after SIGNED_OUT, and direct logout with late profile response. Existing login and profile-enrichment tests still pass. Live account, OAuth redirect, token refresh and real RLS tests are still NOT covered; no assertion of live production conformance.
+
+Further optimization should be evidence-driven: isolate React render overhead and CSS layout via Chrome traces, and establish more complete session/OAuth fixtures before any risky Supabase lazy initialization. Mobile performance, field CWV p75, manual WCAG 2.2 AA at native zoom and assistive tech, authenticated admin/editor/knowledge operations, and final visual acceptance remain OPEN. GitHub push/deployment need separate user authorization.

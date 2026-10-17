@@ -84,4 +84,92 @@ describe('useAuth hydration', () => {
     expect(consoleError).toHaveBeenCalledWith('Login profile hydration error:', expect.any(Error));
   });
 
+
+  it('does not restore a signed-out user when a late profile request resolves', async () => {
+    let emitAuthEvent;
+    let resolveProfile;
+    const session = { user: { id: 'signed-out-during-hydration' }, access_token: 'old-token' };
+    const identity = { id: 'signed-out-during-hydration', email: 'reader@example.com' };
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue(session);
+    authService.getCurrentUser.mockResolvedValue(identity);
+    authService.getProfile.mockImplementation(() => new Promise((resolve) => {
+      resolveProfile = resolve;
+    }));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.id).toBe(identity.id));
+    expect(result.current.isAuthenticated).toBe(true);
+
+    await act(async () => {
+      emitAuthEvent('SIGNED_OUT', null);
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+
+    await act(async () => {
+      resolveProfile({ role: 'admin' });
+      await Promise.resolve();
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+  });
+
+
+  it('ignores an older session snapshot if sign-out happened while session lookup was pending', async () => {
+    let emitAuthEvent;
+    let resolveSession;
+    authService.onAuthStateChange.mockImplementation(async (listener) => {
+      emitAuthEvent = listener;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockImplementation(() => new Promise((resolve) => {
+      resolveSession = resolve;
+    }));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(authService.getSession).toHaveBeenCalledOnce());
+
+    await act(async () => {
+      emitAuthEvent('SIGNED_OUT', null);
+      resolveSession({ user: { id: 'no-longer-signed-in' }, access_token: 'stale' });
+      await Promise.resolve();
+    });
+    expect(authService.getCurrentUser).not.toHaveBeenCalled();
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it('keeps explicit logout authoritative even if the provider callback is delayed', async () => {
+    let resolveProfile;
+    const session = { user: { id: 'logout-call' }, access_token: 'old-token' };
+    const identity = { id: 'logout-call', email: 'reader@example.com' };
+    authService.getSession.mockResolvedValue(session);
+    authService.getCurrentUser.mockResolvedValue(identity);
+    authService.getProfile.mockImplementation(() => new Promise((resolve) => {
+      resolveProfile = resolve;
+    }));
+    authService.logout.mockResolvedValue(undefined);
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.user?.id).toBe(identity.id));
+
+    await act(async () => {
+      await result.current.logout();
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+
+    await act(async () => {
+      resolveProfile({ role: 'admin' });
+      await Promise.resolve();
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+  });
+
 });
