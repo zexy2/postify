@@ -75,3 +75,11 @@
 - [x] İzole Chromium'da **17 route × 320/390/768/1440 × light/dark = 136 görüntü**; gözlenen **0 document yatay taşma, 0 pageerror, 0 eksik main landmark**. Yanlış yönlendirme iddiası yok: \`/posts/create\`, \`/posts/:id/edit\`, \`/bookmarks\`, \`/admin\`, \`/knowledge\`, \`/profile\` anonim kullanıcıyı \`/auth/login\`'e götürdü. Oturumlu içerik **test edilmedi**.
 - [ ] Gerçek authenticated staging/editor/admin/role/write-flow, 200%/400% native browser zoom ve ekran okuyucu manuel testleri, field CWV p75, tüm kritik state'lerin tasarım sahibi tarafından piksel/görsel kabulü **açık**.
 - [ ] **Release/push/deploy** ayrı kullanıcı izni olmadan yapılmaz. Otomatik regresyon / anonim görünüm başarıları **WCAG 2.2 AA sertifikası değildir**.
+
+
+## Son Lighthouse QA bulguları — Yayın kararı DEĞİL (2026-10-17)
+
+- [x] \`b82db88\`: gazete kartı sıra numaralarının kontrastını düzeltti, konu başlığını içeren anlamlı okumaya devam et bağlantısı, gerçek \`robots.txt\` crawl politikası.
+- [x] Yerel mobil Lighthouse 13.5 lab: **Accessibility 96→100**, **SEO 85→100**, **Best Practices 100→100**, \`color-contrast/link-text/robots-txt\` audit PASS; son kaynakla Vitest **162/162**, Playwright **56/56**, build ve security PASS.
+- [ ] **Mobil performans KAPISI AÇIK:** Son Lighthouse lab **55/100**, **LCP ~4.7s**, **TBT ~860ms**, **CLS 0**. Entry/Supabase başlangıç JS ve main-thread kritik yük profili çıkarılacak; güvenli kod ayrıştırma kararı, karşılaştırmalı performans ölçümü ve regresyon testleri gerekiyor. Lab ≠ gerçek kullanıcı p75.
+- [ ] Manuel WCAG 2.2 AA, destekleyici teknolojiler, gerçek kullanıcı oturumlu işlemler, tüm durumların görsel kabulü ve deployment onayı açık. **Otomatik 100 Lighthouse erişilebilirlik puanı bunu kapatmaz.**
