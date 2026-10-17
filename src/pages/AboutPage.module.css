@@ -4,7 +4,7 @@
 }
 
 .container {
-  width: min(1080px, calc(100% - 2rem));
+  width: min(1080px, calc(100% - clamp(40px, 13.4vw, 112px)));
   margin: 0 auto;
 }
 
@@ -23,7 +23,7 @@
 .formatItem > span {
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: .62rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -228,7 +228,7 @@
 
 @media (max-width: 480px) {
   .container {
-    width: min(calc(100% - 1.5rem), 1080px);
+    width: min(1080px, calc(100% - clamp(40px, 13.4vw, 112px)));
   }
 
   .hero h1 {

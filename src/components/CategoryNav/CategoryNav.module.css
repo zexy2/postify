@@ -3,7 +3,7 @@
 }
 
 .inner {
-  width: min(calc(100% - 2.5rem), var(--container-max));
+  width: min(calc(100% - clamp(40px, 13.4vw, 112px)), var(--container-max));
   display: flex;
   align-items: center;
   gap: .8rem;
@@ -70,7 +70,7 @@
 
 @media (max-width: 700px) {
   .inner {
-    width: min(calc(100% - 1.5rem), var(--container-max));
+    width: min(calc(100% - clamp(40px, 13.4vw, 112px)), var(--container-max));
     gap: .55rem;
     margin-top: .25rem;
     padding-block: .2rem .3rem;
@@ -78,7 +78,7 @@
 
   .label {
     padding-right: .55rem;
-    font-size: .62rem;
+    font-size: .75rem;
   }
 
   .item { padding-inline: .65rem; }

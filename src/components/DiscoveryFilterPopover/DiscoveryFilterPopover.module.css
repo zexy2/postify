@@ -39,7 +39,7 @@
 
 .header span {
   color: var(--text-muted);
-  font-size: .7rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
@@ -93,7 +93,7 @@
 
 .sectionHeading small {
   color: var(--text-muted);
-  font-size: .64rem;
+  font-size: .75rem;
 }
 
 .optionGrid {
@@ -165,7 +165,7 @@
 .footer > span {
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: .63rem;
+  font-size: .75rem;
 }
 
 .clear {
@@ -176,7 +176,7 @@
   border: 0;
   border-bottom: 1px solid transparent;
   font: inherit;
-  font-size: .7rem;
+  font-size: .75rem;
   font-weight: 730;
   cursor: pointer;
 }
@@ -195,7 +195,7 @@
 .close:focus-visible,
 .option:focus-visible,
 .clear:focus-visible {
-  outline: 3px solid var(--primary-light);
+  outline: 3px solid var(--border-focus);
   outline-offset: 2px;
 }
 

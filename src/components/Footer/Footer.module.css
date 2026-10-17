@@ -10,7 +10,7 @@
 }
 
 .shell {
-  width: min(calc(100% - 2.5rem), var(--container-max));
+  width: min(calc(100% - clamp(40px, 13.4vw, 112px)), var(--container-max));
   margin: 0 auto;
   padding: clamp(2.8rem, 5.4vw, 4.9rem) 0 1rem;
 }
@@ -32,7 +32,7 @@
 .groupLabel {
   display: block;
   font-family: var(--font-mono);
-  font-size: .61rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .11em;
   text-transform: uppercase;
@@ -93,7 +93,7 @@
 .primaryLink {
   justify-content: space-between;
   padding: .78rem .9rem;
-  color: #fff;
+  color: var(--text-inverse);
   background: var(--primary);
   border: 1px solid var(--primary);
   border-radius: var(--radius-lg);
@@ -113,7 +113,7 @@
 }
 
 .primaryLink:hover {
-  color: #fff;
+  color: var(--text-inverse);
   background: var(--primary-hover);
   border-color: var(--primary-hover);
   transform: translateY(-1px);
@@ -166,7 +166,7 @@
   min-height: 40px;
   color: var(--text-secondary);
   font-family: var(--font-mono);
-  font-size: .66rem;
+  font-size: .75rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -213,7 +213,7 @@
 .systemLine > div > span {
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: .58rem;
+  font-size: .75rem;
   letter-spacing: .06em;
 }
 
@@ -262,7 +262,7 @@
 .systemLine small {
   max-width: 32ch;
   color: var(--text-muted);
-  font-size: .69rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
@@ -274,7 +274,7 @@
   gap: 1rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: .61rem;
+  font-size: .75rem;
 }
 
 .scrollTopButton {
@@ -327,7 +327,7 @@
   .footer { margin-top: 3.25rem; }
 
   .shell {
-    width: min(calc(100% - 1.5rem), var(--container-max));
+    width: min(calc(100% - clamp(40px, 13.4vw, 112px)), var(--container-max));
     padding-top: 2.15rem;
     padding-bottom: .6rem;
   }

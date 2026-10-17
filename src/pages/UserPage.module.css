@@ -4,7 +4,7 @@
 }
 
 .container {
-  max-width: 1220px;
+  max-width: var(--container-max);
 }
 
 .routeStatus {
@@ -21,7 +21,7 @@
 .statusEyebrow {
   color: var(--primary);
   font-family: var(--font-mono);
-  font-size: .68rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -120,7 +120,7 @@
 .authorStats span,
 .sectionHeader > strong {
   font-family: var(--font-mono);
-  font-size: .66rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -196,7 +196,7 @@
 
 .authorStats span {
   color: var(--text-muted);
-  font-size: .6rem;
+  font-size: .75rem;
 }
 
 .knowledgeSection {

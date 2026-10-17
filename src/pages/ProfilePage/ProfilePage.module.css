@@ -1,5 +1,5 @@
 .container {
-  width: min(1220px, calc(100% - 2.5rem));
+  width: min(var(--container-max), calc(100% - clamp(40px, 13.4vw, 112px)));
   margin: 0 auto;
   padding: clamp(2.5rem, 5vw, 4.25rem) 0 5rem;
 }
@@ -31,9 +31,9 @@
 .avatarUpload { position: absolute; right: -.15rem; bottom: .1rem; width: 42px; height: 42px; display: grid; place-items: center; color: var(--text-primary); background: var(--bg-primary); border: 1px solid var(--border-strong); border-radius: 50%; cursor: pointer; }
 .avatarUpload:hover, .avatarUpload:focus-within { color: var(--primary); }
 .identityCopy { min-width: 0; }
-.eyebrow { color: var(--primary); font-family: var(--font-mono); font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.eyebrow { color: var(--primary); font-family: var(--font-mono); font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .identityCopy h1 { max-width: 12ch; margin: .45rem 0 .6rem; color: var(--text-primary); font-family: var(--font-display); font-size: clamp(3.5rem, 6.5vw, 6rem); font-weight: 480; letter-spacing: -.065em; line-height: .88; text-wrap: balance; }
-.identityMeta { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .68rem; overflow-wrap: anywhere; }
+.identityMeta { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; overflow-wrap: anywhere; }
 .identityMeta i { width: 3px; height: 3px; background: var(--text-muted); border-radius: 50%; }
 .bio { max-width: 58ch; margin: 1rem 0 0; color: var(--text-secondary); font-size: .9rem; line-height: 1.68; }
 .bioPlaceholder { color: var(--text-muted); }
@@ -62,7 +62,7 @@
 .stat + .stat { padding-left: .9rem; }
 .stat:last-child { border-right: 0; }
 .stat > svg { margin-top: .15rem; color: var(--text-muted); }
-.stat span { min-width: 0; display: grid; gap: .28rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .61rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+.stat span { min-width: 0; display: grid; gap: .28rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
 .stat strong { min-width: 0; overflow-wrap: anywhere; color: var(--text-primary); font-family: var(--font-sans); font-size: .76rem; font-weight: 720; letter-spacing: 0; text-transform: none; }
 
 .actionsCard {
@@ -73,7 +73,7 @@
 }
 .cardHeading { display: grid; gap: .4rem; padding-bottom: .85rem; border-bottom: 1px solid var(--border-strong); }
 .cardHeading > span { color: var(--text-primary); font-family: var(--font-display); font-size: 1.4rem; font-weight: 560; letter-spacing: -.03em; }
-.cardHeading small { max-width: 32ch; color: var(--text-muted); font-size: .69rem; line-height: 1.5; }
+.cardHeading small { max-width: 32ch; color: var(--text-muted); font-size: .75rem; line-height: 1.5; }
 .actionList { display: grid; gap: 0; margin-top: auto; }
 .actionList a, .actionList button {
   width: 100%;
@@ -99,7 +99,7 @@
 .actionList > * > svg:last-child { color: var(--text-muted); font-size: .9rem; }
 .actionList span { min-width: 0; display: grid; gap: .18rem; }
 .actionList strong { font-size: .76rem; }
-.actionList small { color: var(--text-muted); font-size: .64rem; line-height: 1.4; }
+.actionList small { color: var(--text-muted); font-size: .75rem; line-height: 1.4; }
 .logoutAction strong, .logoutAction > svg:first-child { color: var(--danger, #b33a2b); }
 
 .editorPanel {
@@ -113,7 +113,7 @@
 .closeEditor { width: 40px; height: 40px; display: grid; place-items: center; color: var(--text-muted); background: transparent; border: 1px solid var(--border-color); border-radius: var(--radius-sm); cursor: pointer; }
 .form { display: grid; gap: 1.15rem; padding-top: 1.35rem; }
 .formRow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
-.form label { display: grid; gap: .45rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .64rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.form label { display: grid; gap: .45rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .form input, .form textarea { width: 100%; padding: .82rem .1rem .75rem; color: var(--text-primary); background: transparent; border: 0; border-bottom: 1px solid var(--border-strong); border-radius: 0; font: inherit; font-size: .84rem; text-transform: none; letter-spacing: normal; }
 .form textarea { min-height: 120px; resize: vertical; }
 .form input:focus, .form textarea:focus { outline: 2px solid var(--primary); outline-offset: 2px; border-color: var(--primary); }
@@ -145,22 +145,22 @@
 .cardTitle h2 { margin: 0; color: var(--text-primary); font-family: var(--font-display); font-size: 1.05rem; font-weight: 560; letter-spacing: -.02em; }
 .detailList { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--border-color); }
 .detailList div { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: .7rem; padding: .62rem 0; border-bottom: 1px solid var(--border-color); }
-.detailList dt { color: var(--text-muted); font-family: var(--font-mono); font-size: .61rem; text-transform: uppercase; }
-.detailList dd { min-width: 0; margin: 0; color: var(--text-secondary); font-size: .69rem; text-align: right; overflow-wrap: anywhere; }
+.detailList dt { color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase; }
+.detailList dd { min-width: 0; margin: 0; color: var(--text-secondary); font-size: .75rem; text-align: right; overflow-wrap: anywhere; }
 .detailList a { color: inherit; text-underline-offset: 3px; }
 .metricRow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
 .metricRow > div { min-width: 0; display: grid; gap: .35rem; padding: .8rem .75rem .8rem 0; background: transparent; border: 0; border-right: 1px solid var(--border-color); border-radius: 0; }
 .metricRow > div + div { padding-left: .75rem; border-right: 0; }
-.metricRow span { color: var(--text-muted); font-family: var(--font-mono); font-size: .59rem; text-transform: uppercase; }
+.metricRow span { color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase; }
 .metricRow strong { color: var(--text-primary); font-family: var(--font-display); font-size: 2.35rem; font-weight: 500; line-height: .9; }
 .centerMetric { display: grid; align-content: center; min-height: 108px; padding: .85rem 0 1rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); text-align: left; }
 .centerMetric strong { color: var(--text-primary); font-family: var(--font-display); font-size: 3.1rem; font-weight: 500; line-height: .9; }
-.centerMetric span { margin-top: .35rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .61rem; text-transform: uppercase; }
+.centerMetric span { margin-top: .35rem; color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase; }
 .cardBody { min-height: 86px; display: grid; align-content: start; gap: .4rem; padding: 1rem 0; color: var(--text-secondary); }
 .cardBody p { margin: 0; font-size: .71rem; line-height: 1.55; }
-.cardLabel { color: var(--text-muted); font-family: var(--font-mono); font-size: .58rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.cardLabel { color: var(--text-muted); font-family: var(--font-mono); font-size: .75rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
 .latestLink { display: flex; align-items: center; justify-content: space-between; gap: .6rem; color: var(--text-primary); font-size: .72rem; font-weight: 760; text-decoration: none; line-height: 1.4; }
-.cardCta { margin-top: auto; min-height: 42px; display: flex; align-items: center; gap: .45rem; padding: .55rem 0; color: var(--text-secondary); background: transparent; border: 0; border-top: 1px solid var(--border-color); border-radius: 0; font: inherit; font-size: .68rem; font-weight: 750; text-decoration: none; cursor: pointer; }
+.cardCta { margin-top: auto; min-height: 42px; display: flex; align-items: center; gap: .45rem; padding: .55rem 0; color: var(--text-secondary); background: transparent; border: 0; border-top: 1px solid var(--border-color); border-radius: 0; font: inherit; font-size: .75rem; font-weight: 750; text-decoration: none; cursor: pointer; }
 .cardCta:hover { color: var(--primary); border-color: var(--border-strong); }
 .cardCta svg:last-child { margin-left: auto; }
 
@@ -176,7 +176,7 @@
 .quickGrid > a > svg { color: var(--text-muted); font-size: 1.05rem; }
 .quickGrid span { min-width: 0; display: grid; gap: .2rem; }
 .quickGrid strong { font-size: .72rem; }
-.quickGrid small { color: var(--text-muted); font-size: .62rem; line-height: 1.35; }
+.quickGrid small { color: var(--text-muted); font-size: .75rem; line-height: 1.35; }
 
 @media (max-width: 1080px) {
   .profileGrid { grid-template-columns: 1fr; gap: 2rem; }

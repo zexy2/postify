@@ -4,7 +4,7 @@
   justify-content: center;
   gap: .38rem;
   min-width: 3.35rem;
-  min-height: 42px;
+  min-height: 44px;
   padding: .5rem .58rem;
   color: var(--text-muted);
   background: transparent;
@@ -22,7 +22,7 @@
 }
 
 .languageCode {
-  font-size: .62rem;
+  font-size: .75rem;
   font-weight: 820;
   letter-spacing: .08em;
 }
