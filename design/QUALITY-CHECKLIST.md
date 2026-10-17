@@ -128,3 +128,12 @@
 - [x] ESLint, Vitest 175/175, production build, critical 11-file smoke (310760/320000-byte JS entry), npm security audit 0 and Chromium E2E 58/58 PASS.
 - [ ] Actual signed-in OAuth, refresh, staging RLS and protected CRUD need fixtures and manual validation.
 - [ ] Real browser zoom 200/400%, screen reader WCAG 2.2 AA, field CWV and mobile speed release gate pending. No push/deploy without authorization.
+
+## 2026-10-18 — Recovered QA: delayed password login and route subject consistency
+
+- [x] Recovered run-96210d9920c1 and inspected clean e9b0cf1 baseline; main untouched. Node.js 22 failed the Node 24 knowledge verification runtime gate; used preinstalled isolated Node 24.21.0 without modifying global PATH.
+- [x] Baseline independent verification (Node 24): 175/175 Vitest, 58/58 Playwright Chromium, lint/build/smoke/security PASS; JUnit/Playwright reports imported into Oracle evidence.
+- [x] Three RED tests reproduced: delayed password-login profile response restoring account UI after SIGNED_OUT; protected route accepting absent session or mismatched session subject.
+- [x] Fix: password login checks current Redux session/account before applying delayed profile or reporting success, and ProtectedRoute requires matching session.user.id, user.id and isAuthenticated; no backend/RLS changes.
+- [x] Targeted 17/17 GREEN; full 178/178 Vitest (43 suites), 58/58 Chromium E2E, ESLint, Vite PWA build, 11-asset smoke (310957/320000 JS entry), npm security 0 known vulnerabilities PASS. JUnit/Playwright reports imported into Oracle evidence.
+- [ ] Real OAuth, refresh, RLS, staging protected CRUD, native zoom/AT WCAG 2.2 AA, field CWV and mobile Lighthouse release gates remain OPEN. No push/deploy.

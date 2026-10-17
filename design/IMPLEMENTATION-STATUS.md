@@ -213,3 +213,11 @@ FIX: Init session hydration now waits for a returned getCurrentUser identity tha
 Verification: targeted auth/route 14/14 PASS. ESLint PASS, Vitest 175/175 across 43 files PASS, Vite/PWA build PASS, security audit zero known vulnerable dependencies PASS, 11-artifact build smoke entry 310760 bytes below the unchanged 320000-byte guard PASS; Chromium Playwright 58/58 PASS, job job-c1accd337a7f. Source changes, testing and QA descriptions stored locally only.
 
 No real Supabase OAuth/refresh/RLS or signed-in admin/editor/knowledge write fixture was exercised. Manual WCAG 2.2 AA true browser zoom/AT, live field Core Web Vitals and mobile lab performance (~60) release gate remain OPEN. Performance optimization not claimed in this security slice. Push and deployment need separate permission.
+
+## 2026-10-18 — Recovery continuation: login profile race and session subject gate
+
+Recovered the same isolated branch and e9b0cf1 clean baseline. The default Node 22.23.1 failed knowledge verification (required Node 24); selected already-installed Node 24.21.0 only for QA jobs without changing global runtime. Baseline rerun: 175 unit + 58 Chromium E2E, lint, build, smoke and security PASS. Structured reporter totals imported into Oracle phase 4.
+
+Three added regression tests first failed on unmodified production source: a delayed password login profile response resurrected a signed-out account, and protected routes accepted an absent or mismatched session subject. Implemented a synchronous Redux session/user consistency check before late password-profile dispatch and login success, and required matching session subject in ProtectedRoute. Same test set then passed 17/17.
+
+Postfix full QA: Vitest 178/178 across 43 files, Playwright Chromium 58/58, ESLint PASS, Vite PWA production build PASS, smoke 11 artifacts and 310957-byte entry under 320000 budget PASS, npm audit 0 known vulnerabilities PASS. JUnit and Playwright JSON report totals imported as phase-4 evidence. No real Supabase/RLS or staging identity was used. Final visual, zoom/AT accessibility, mobile Lighthouse/field CWV and live signed-in workflows remain open. Main unchanged, no push/deployment.

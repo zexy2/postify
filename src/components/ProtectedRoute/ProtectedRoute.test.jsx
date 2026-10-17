@@ -51,7 +51,7 @@ describe('ProtectedRoute', () => {
   });
 
   it('renders protected content when a user is available', () => {
-    useAuth.mockReturnValue({ isAuthenticated: true, isLoading: false, user: { id: 'u-1' } });
+    useAuth.mockReturnValue({ isAuthenticated: true, isLoading: false, user: { id: 'u-1' }, session: { user: { id: 'u-1' } } });
     renderRoute();
     expect(screen.getByText('protected content')).toBeInTheDocument();
   });
@@ -64,6 +64,26 @@ describe('ProtectedRoute', () => {
 
   it('does not unlock account content using only a stale user object', () => {
     useAuth.mockReturnValue({ isAuthenticated: false, isLoading: false, user: { id: 'old-user' } });
+    renderRoute();
+    expect(screen.queryByText('protected content')).not.toBeInTheDocument();
+    expect(screen.getByText('login route')).toBeInTheDocument();
+  });
+
+  it('rejects a stale authenticated user without a matching verified session', () => {
+    useAuth.mockReturnValue({
+      isAuthenticated: true, isLoading: false,
+      user: { id: 'old-user' }, session: null,
+    });
+    renderRoute();
+    expect(screen.queryByText('protected content')).not.toBeInTheDocument();
+    expect(screen.getByText('login route')).toBeInTheDocument();
+  });
+
+  it('rejects a session with a different account subject', () => {
+    useAuth.mockReturnValue({
+      isAuthenticated: true, isLoading: false,
+      user: { id: 'account-a' }, session: { user: { id: 'account-b' } },
+    });
     renderRoute();
     expect(screen.queryByText('protected content')).not.toBeInTheDocument();
     expect(screen.getByText('login route')).toBeInTheDocument();

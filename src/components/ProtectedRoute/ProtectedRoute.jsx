@@ -11,7 +11,7 @@ import { useAuth } from '../../hooks/useAuth';
 import SystemStatus from '../SystemStatus';
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, isLoading, user, session } = useAuth();
   const { t } = useTranslation();
   const location = useLocation();
   const [timedOut, setTimedOut] = useState(false);
@@ -52,9 +52,9 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // Both conditions must agree: a session flag alone or a stale identity
-  // object must not unlock account content while authentication is unresolved.
-  if (user && isAuthenticated) {
+  // UI access requires a consistent session subject, authenticated flag and
+  // user identity. This supplements (never replaces) server-side RLS.
+  if (isAuthenticated && user?.id && session?.user?.id === user.id) {
     return children;
   }
 

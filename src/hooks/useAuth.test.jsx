@@ -235,4 +235,45 @@ describe('useAuth hydration', () => {
     expect(toast.success).not.toHaveBeenCalledWith('auth.loginSuccess');
   });
 
+  it('does not restore a signed-out account after delayed password-login profile enrichment', async () => {
+    let emitAuthEvent;
+    let resolveProfile;
+    const user = { id: 'password-login-race', email: 'login@example.com' };
+    const session = { user: { id: user.id }, access_token: 'login-token' };
+    authService.onAuthStateChange.mockImplementation(async (callback) => {
+      emitAuthEvent = callback;
+      return { data: { subscription: { unsubscribe: vi.fn() } } };
+    });
+    authService.getSession.mockResolvedValue(null);
+    authService.login.mockResolvedValue({ session, user });
+    authService.getProfile.mockImplementation(() => new Promise((resolve) => {
+      resolveProfile = resolve;
+    }));
+
+    const { result } = renderHook(() => useAuth(), { wrapper: createWrapper() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    let loginPromise;
+    await act(async () => {
+      loginPromise = result.current.login({ email: user.email, password: 'test-password' });
+      await Promise.resolve();
+    });
+    await waitFor(() => expect(result.current.user?.id).toBe(user.id));
+
+    await act(async () => { emitAuthEvent('SIGNED_OUT', null); });
+    expect(result.current.user).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+
+    let outcome;
+    await act(async () => {
+      resolveProfile({ role: 'admin' });
+      outcome = await loginPromise;
+    });
+    expect(result.current.user).toBeNull();
+    expect(result.current.session).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(outcome.success).toBe(false);
+    expect(toast.success).not.toHaveBeenCalledWith('auth.loginSuccess');
+  });
+
 });

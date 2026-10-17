@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useCallback, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -28,6 +28,7 @@ const getAuthErrorMessage = (error, fallback, t) => {
 
 export const useAuth = () => {
   const dispatch = useDispatch();
+  const authStore = useStore();
   const authRevisionRef = useRef(0);
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -207,17 +208,28 @@ export const useAuth = () => {
         }
 
         dispatch(setSession(newSession));
+        dispatch(setUser({ ...newUser, profile: null }));
 
-        if (newUser) {
-          dispatch(setUser({ ...newUser, profile: null }));
-          try {
-            const profile = await authService.getProfile(newUser.id);
-            dispatch(setUser({ ...newUser, profile }));
-          } catch (profileError) {
-            // Authentication already succeeded; profile enrichment may retry
-            // independently without presenting a false login failure.
-            console.error("Login profile hydration error:", profileError);
-          }
+        // A provider sign-out or account switch may happen while optional
+        // profile enrichment is pending. Never reinstate an obsolete identity.
+        const isCurrentLogin = () => {
+          const state = authStore.getState().user;
+          return state.isAuthenticated &&
+            state.user?.id === newUser.id &&
+            state.session?.user?.id === newUser.id;
+        };
+
+        try {
+          const profile = await authService.getProfile(newUser.id);
+          if (isCurrentLogin()) dispatch(setUser({ ...newUser, profile }));
+        } catch (profileError) {
+          // Authentication already succeeded; profile enrichment may retry
+          // independently without presenting a false login failure.
+          console.error("Login profile hydration error:", profileError);
+        }
+
+        if (!isCurrentLogin()) {
+          return { success: false, error: t("auth.loginError") };
         }
 
         toast.success(t("auth.loginSuccess"));
