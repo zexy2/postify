@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — PL-01, TYPE-02, G-01 (+sınırlı G-02) ve C-02 Inked Folio bileşen grameri ONAYLI; Homepage ayrıntıları, motion ve bazı durum/ölçü tokenları ONAYSIZ.**
+**Durum: KISMEN ONAYLI — PL-01, TYPE-02, G-01 (+sınırlı G-02), C-02 Inked Folio ve H-01 Issue Front Homepage ONAYLI; iç sayfalar/motion ve bazı teknik detaylar ONAYSIZ.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -85,3 +85,10 @@ Durum: bekliyor. Damping/curves/transitions/reduced-motion onaysız.
 
 ## Aşama 7 Homepage Design — ONAY BEKLENİYOR
 **H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition** seçenekleri [HOMEPAGE-OPTIONS.md](./HOMEPAGE-OPTIONS.md) dosyasında. [homepage-composition-reference.svg](./homepage-composition-reference.svg) yalnızca önerilerin şematik çizimidir. Önceki CD-001..006 onayları geçerlidir; H-01/02/03 ana sayfa tasarımı **henüz seçilmedi**. Bütün mockuplarda G-01 genel grid ve C-02 Inked Folio ana bileşen dili korunur; G-02 yalnızca seçili featured dosyalarda.
+
+
+## 4. ONAYLI — H-01 Issue Front Ana Sayfa (CD-007)
+
+G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir arama ve tek seçilmiş featured Inked Folio kapak. Kategori/format/evidence filtreleri, arama, URL state, 3-kolonlu normal feed ve gerçek kanıt/veri akışları korunur. G-02 **yalnızca selected featured editorial dosya** istisnasıdır. H-02 ve H-03 seçilmedi. Bu onay kodlama veya iç sayfa uygulama izni değildir.
+
+**Aşama 8:** İç sayfaların tasarım alternatifleri **onaysız araştırma**; CD-007 bunlar için örtülü onay sayılmaz.

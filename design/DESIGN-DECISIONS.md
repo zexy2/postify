@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 7 / Homepage Design — **ana sayfa alternatifleri hazırlanıyor; Aşama 7 kullanıcı onayı henüz yok**.
-**Sonraki aşama:** 8 / Inner Pages & Editorial Experience — **Aşama 7 onayı olmadan başlamayacak**.
+**Aktif aşama:** 8 / Inner Pages & Editorial Experience — **alternatifler araştırılıyor, kullanıcı Aşama 8 onayı henüz yok**.
+**Sonraki aşama:** 9 / Motion & Interaction Design — **Aşama 8 kullanıcı onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -29,8 +29,8 @@
 | 4 Typography System | **ONAYLANDI** | TYPE-01 Quiet Authority; TYPE-02 Expressive Issue; TYPE-03 Evidence Library | **TYPE-02 Expressive Issue: Fraunces + Inter + IBM Plex Mono** | 2026-10-17 |
 | 5 Grid, Layout & Spacing | **ONAYLANDI** | G-01 Editorial Spine, G-02 Modular Broadsheet, G-03 Reading Sanctuary | **G-01 ana sistem + G-02 yalnızca öne çıkan editoryal yayın dosyalarında** | 2026-10-17 |
 | 6 Component Design System | **ONAYLANDI** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | **C-02 Inked Folio; CD-005 G-02 istisna sınırı korunur** | 2026-10-17 |
-| 7 Homepage Design | **Üç alternatif sunuldu; ONAY BEKLENİYOR** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | — | 2026-10-17 |
-| 8 Inner Pages & Editorial Experience | Başlanmadı | Henüz yok | — | — |
+| 7 Homepage Design | **ONAYLANDI** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | **H-01 Issue Front** | 2026-10-17 |
+| 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
 | 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
 | 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
 | 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
@@ -183,3 +183,14 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 - **Font uyarısı:** Yerel Chromium online webfont çekemedi; TYPE-02 aile adları specimen CSS'te olsa da fallback font gösterildi. Nihai font görsel onayı/testi değildir.
 - `ISSUE 08` ve taslak etiketler örnek veridir, gerçek yayın veya doğrulama iddiası olarak kullanılmaz.
 - **Aşama 7 karar bekleniyor**; H-01/H-02/H-03 veya açık hibrit seçilmeden Aşama 8 Inner Pages başlamaz. `src/` dosyaları, deployment, GitHub push veya build artefaktı değiştirilmedi.
+
+
+## CD-007 — Aşama 7 H-01 Issue Front açık onay (2026-10-17)
+
+**Kullanıcının aynen ifadesi:** “Postify Aşama 7 için H-01 Issue Front ana sayfa tasarımını onaylıyorum. Oracle ve design belgelerine kaydet. Yalnızca Aşama 8 alternatiflerine geç, uygulama kodunu değiştirme.”
+
+**ONAYLI:** **H-01 Issue Front**. Yayın vaadi ve güçlü editoryal masthead ana sayfada önde, ulaşılabilir arama ve seçilmiş featured makaleye Inked Folio kapak alanı eşlik ediyor; normal feed ve arama filtreleri G-01 genel düzeninde kalıyor. G-02 yalnızca seçilen featured editoryal dosya kapağında. **H-02 Discovery Desk ve H-03 Curated Edition ana kompozisyon olarak seçilmedi.**
+
+**KORUNACAKLAR:** Ana sayfa gerçek featured/contents/arama Ctrl-⌘K, kategoriler, type/evidence/freshness/reading/sort URL parametreleri, bookmark, load-more, zero-results, fallback, TR/EN, SEO ve gerçek kanıt bilgisini doğru gösterme. Eski mockuplardaki “ISSUE 08” gerçek bir yayın sayısı veya içerik iddiası değildir, üretim davranışı sayılmaz.
+
+**SINIRLAR:** Onay yalnızca **Aşama 7 kompozisyonu** içindir; yeni görsel iç sayfa tasarımı, font/renk/grid değişikliği, JSX/CSS yazımı, canlı deployment/push izni değildir. PL-01, TYPE-02, G-01/G-02 istisnası, C-02 Inked Folio korunur. H-01 onayından sonra **yalnızca Aşama 8 alternatifleri** hazırlanabilir.

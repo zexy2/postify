@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 7 — C-02 Inked Folio ONAYLANDI; üç ana sayfa tasarım alternatifi sunuldu, kullanıcı onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 8 — H-01 Issue Front ana sayfa ONAYLANDI; iç sayfa tasarım alternatifleri hazırlanıyor, kullanıcı Aşama 8 onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -32,7 +32,8 @@
 - [x] Aşama 6 **C-02 Inked Folio** kullanıcı tarafından CD-006 ile açıkça onaylandı; G-01 genel grid ve G-02 seçici istisnası korundu.
 - [x] Aşama 7 H-01/H-02/H-03 ana sayfa kompozisyon ve görev hiyerarşileri karşılaştırıldı; arama, filtre, featured, fallback ve evidence davranışları kaynak düzeyinde koruma envanterine alındı.
 - [x] Aşama 7 üç statik homepage prototipi 1440/768/390/320 Chromium ile kontrol edildi: 12/12 yatay taşma/pageerror yok. Gerçek uygulama/ekran okuyucu testi değildir; webfontlar fallback kullandı.
-- [ ] Aşama 7 Homepage Design kullanıcı onayı henüz verilmedi.
+- [x] Aşama 7 Homepage Design **H-01 Issue Front** kullanıcı onayı CD-007 ile kaydedildi.
+- [ ] Aşama 8 Inner Pages & Editorial Experience kullanıcı onayı henüz verilmedi.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -54,4 +55,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Kullanıcının H-01/H-02/H-03 veya açıkça tanımlı hibrit ana sayfa seçimini bekle. Açık Aşama 7 onayı olmadan Aşama 8 Inner Pages & Editorial Experience başlatma.
+**Şimdiki sonraki adım:** Yalnızca Aşama 8 Inner Pages & Editorial Experience alternatiflerini, tüm rotalar ve durumlardaki sınırlamalarıyla sun. Aşama 8 onayı olmadan Aşama 9 Motion & Interaction Design başlatma.

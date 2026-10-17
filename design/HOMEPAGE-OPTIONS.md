@@ -1,7 +1,7 @@
 # Postify — Aşama 7 Homepage Design / Alternatives
 
 **Tarih:** 2026-10-17
-**Durum:** H-01, H-02, H-03 karşılaştırıldı; **kullanıcı Aşama 7 onayı bekleniyor**. Aşama 8 başlamadı, uygulama kodu değişmedi.
+**Durum:** **H-01 Issue Front kullanıcı tarafından Aşama 7 için ONAYLANDI (CD-007)**. H-02/H-03 tarihi alternatiflerdir; yalnızca Aşama 8 alternatif araştırmasına geçildi, uygulama kodu değişmedi.
 
 ## Onaylı tasarım sınırları
 
@@ -57,3 +57,7 @@ Görseller, bağlantıları bu sohbetten verilen `/mnt/data/postify-stage7-deskt
 ## Sonraki aşama kapısı
 
 **Aşama 7 ONAYSIZ:** H-01/H-02/H-03 ya da net hibrit kullanıcı tarafından onaylanmalıdır. **Aşama 8 Inner Pages & Editorial Experience** bu onay gelmeden başlamaz. Homepage seçimi de React/CSS kodlama veya push/deploy izni değildir.
+
+
+## 7. Sonradan gelen onay (CD-007)
+2026-10-17, kullanıcı **H-01 Issue Front** ana sayfasını açıkça onayladı. Onay tasarım kurgusuyla sınırlıdır: G-01 genel iskelet ve tek featured dosya için sınırlı G-02. H-02/H-03 alternatif olarak saklanır. Bu sayfadaki “onay bekleniyor” cümleleri ilk sunumun tarihsel kayıtlarıdır; **Aşama 8 Inner Pages alternatifleri şimdi hazırlanabilir, uygulama kodu yazılamaz**.

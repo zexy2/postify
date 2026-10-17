@@ -61,3 +61,7 @@ C-02 Inked Folio ortak bileşen dili olarak onaylandı, fakat G-02 Modular Broad
 
 ## Aşama 7 Homepage (tasarım alternatifleri)
 Sadece `/` ana sayfa için H-01 Issue Front, H-02 Discovery Desk, H-03 Curated Edition karşılaştırıldı. Üçü de `Hero`, `EditorialFeed`, `KnowledgeCard`, `DiscoveryFilterPopover`, filtre state'leri ve read-only fallback davranışlarını bozmadan yeniden dizmeyi hedefliyor. **Onay yok, uygulama yok**. Diğer 16 route tasarım/uygulama statüsü değişmedi. `design/HOMEPAGE-OPTIONS.md` ayrıntıları içerir.
+
+
+## Aşama 7 kararı — CD-007
+**H-01 Issue Front** onaylandı. Sadece `/` rota ana sayfa kompozisyonu tasarım kararıdır; `/posts/:id` ve kalan **16 rota** yeni tasarım onayı/uygulaması bekliyor. Aşama 8 araştırması bu 16 route ve özel durumları kapsayacak. `src/` kodu değiştirilmedi.
