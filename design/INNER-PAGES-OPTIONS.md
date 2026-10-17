@@ -1,7 +1,7 @@
 # Postify — Aşama 8 / Inner Pages & Editorial Experience
 
 **Tarih:** 2026-10-17
-**Durum:** **INNER-01 / INNER-02 / INNER-03 tasarım alternatifleri sunuldu — Aşama 8 KULLANICI ONAYI BEKLENİYOR.**
+**Durum:** **Aşama 8 delegasyonla seçildi (CD-008): INNER-02 ana + INNER-01 sakin okuma, INNER-03 yalnız gerçek teknik adım rehberleri.** Diğer teklif metinleri ilk araştırmanın tarihsel kayıtlarıdır.
 **Üretim durumu:** Yalnızca araştırma, tasarım belgesi ve bağımsız statik prototip. Postify uygulama kodu, CSS, fonksiyonlar, API, route, font asset, SEO veya deploy **değişmedi**. Aşama 9 Motion & Interaction Design **başlamadı**.
 
 ## 0. Kesin korunacak önceki onaylar
@@ -120,3 +120,7 @@ Güncel route envanteri: `design/PAGE-INVENTORY.md`. İç rotalar toplam **16** 
 ## 6. Onay kapısı
 
 **Aşama 8 onayı henüz YOK.** Kullanıcı **INNER-01 / INNER-02 / INNER-03** veya açıkça tarif edilmiş hibriti seçerse seçilen kurallar `DESIGN-DECISIONS.md` ve `DESIGN-SYSTEM.md` içinde onaylı kaydedilebilir. **Aşama 9 Motion & Interaction Design kullanıcı onayından önce başlamayacak.** Aşama 8 onayı bile uygulama kodu, push/deploy yetkisi anlamına gelmez.
+
+
+## 7. Aşama 8 kullanıcı delegasyonuna dayanan karar (CD-008)
+Kullanıcı 2026-10-17 “Olabilecek en modern gorunumu u yap” diyerek en modern iç sayfa görünümünü belirlemeyi asistana bıraktı. **INNER-02 Evidence Marginalia** ana yaklaşım, **INNER-01 Reading Folio** sakin okuma prensipleriyle; **INNER-03** yalnızca gerçek adım adım teknik rehberlerde seçici kullanılacak biçimde seçildi. Modernlik, metin/kanıt ve kontrollü desen kalitesiyle sağlanacak; sahte veri, uydurma doğrulama ve gereksiz parallax/WebGL yok. Kodlama izni olmadığı için yalnızca `design/` belgeleri değişti. Aşama 9'dan ötesi ayrı kullanıcı kararıdır.

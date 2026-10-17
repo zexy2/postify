@@ -1,6 +1,6 @@
 # Postify — Design System Approval Registry
 
-**Durum: KISMEN ONAYLI — PL-01, TYPE-02, G-01 (+sınırlı G-02), C-02 Inked Folio ve H-01 Issue Front Homepage ONAYLI; iç sayfalar/motion ve bazı teknik detaylar ONAYSIZ.**
+**Durum: KISMEN ONAYLI — PL-01, TYPE-02, G-01 (+sınırlı G-02), C-02 Inked Folio, H-01 Homepage, INNER-02 ana + INNER-01 sakin okuma (sınırlı INNER-03 teknik rehber) ONAYLI; motion/diğer ayrıntılar ONAYSIZ.**
 Aşağıdaki 0. bölüm mevcut uygulamayı gösteren onaysız baseline envanteridir. 1. bölüm ise Aşama 3 için **onaylı yeni marka renklerini** içerir; henüz uygulama CSS dosyalarına yazılmadı.
 
 ## 0. Mevcut görünüm (baseline; seçilmedi)
@@ -94,6 +94,16 @@ G-01 ana 7:5 editoryal kompozisyonda büyük yayın karakteri + ulaşılabilir a
 **Aşama 8:** İç sayfaların tasarım alternatifleri **onaysız araştırma**; CD-007 bunlar için örtülü onay sayılmaz.
 
 
-## Aşama 8 — Inner Pages & Editorial Experience (ONAYSIZ)
+## Aşama 8 — Inner Pages & Editorial Experience (CD-008 ONAYLI)
 
 `INNER-01 Reading Folio` / `INNER-02 Evidence Marginalia` / `INNER-03 Chaptered Field Guide` karşılaştırmaları: [INNER-PAGES-OPTIONS.md](./INNER-PAGES-OPTIONS.md) ve [inner-pages-composition-reference.svg](./inner-pages-composition-reference.svg). Makale, yazar, kimlik doğrulama, editör, kayıtlı içerik, profile, evidence/knowledge/admin, about/contact/404 dahil 16 iç rota kapsanır. **Hiçbir iç sayfa stili/başlık düzeni/kanıt yerleşimi onaylanmış değildir.** Ana sayfada H-01, genel grid G-01 ve yalnız seçilmiş featured dosyalarda G-02 sınırlaması geçerlidir.
+
+
+### CD-008 — Onaylı iç sayfa sistem özeti
+- **Makale:** INNER-02 kanıt marginalia ile yayına ait doğru provenance/freshness özeti, G-01 ~715px merkez metin, INNER-01 sakin okuyucu kolonunun nefesi ve daha az görsel gürültü.
+- **Mobil:** Kenar kaynak notları düşey akışa girer; uzun summary makale başlangıcını engellemez. İçerik ve arama/eylem semantiği korunur.
+- **Yazar ve About/Contact/404:** Basın yayını karakteri ama kullanılabilir metin/iyileşme görevleri önde.
+- **Auth + Editor:** Form-first mobile, writing-first editor; gerçek loading/invalid/dirty/publish readiness görünür, dekoratif hikâye operasyonun önüne geçmez.
+- **Knowledge/Admin:** Gerçek, erişilebilir tablo ve evidence durumları korunur, asılsız verified/role değişiklikleri yoktur.
+- **INNER-03:** Yalnız gerçekten adım adım kılavuzlara seçici chapter/numara; varsayılan stil değildir.
+- **Uygulama:** Henüz hiçbir JSX/CSS değiştirilmedi. Aşama 9 hareket süreleri ve etkileşimler ayrı karar kapısıdır.

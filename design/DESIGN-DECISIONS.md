@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 8 / Inner Pages & Editorial Experience — **alternatifler araştırılıyor, kullanıcı Aşama 8 onayı henüz yok**.
-**Sonraki aşama:** 9 / Motion & Interaction Design — **Aşama 8 kullanıcı onayı olmadan başlamayacak**.
+**Aktif aşama:** 9 / Motion & Interaction Design — **hareket/etkileşim seçenekleri hazırlanıyor, Aşama 9 onayı henüz yok**.
+**Sonraki aşama:** 10 / Responsive & Accessibility — **Aşama 9 onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -31,7 +31,7 @@
 | 6 Component Design System | **ONAYLANDI** | C-01 Editorial Grammar; C-02 Inked Folio; C-03 Research Instruments | **C-02 Inked Folio; CD-005 G-02 istisna sınırı korunur** | 2026-10-17 |
 | 7 Homepage Design | **ONAYLANDI** | H-01 Issue Front / H-02 Discovery Desk / H-03 Curated Edition | **H-01 Issue Front** | 2026-10-17 |
 | 8 Inner Pages & Editorial Experience | **Alternatifler hazırlanıyor, onay bekleniyor** | Makale / yazar / auth / editor / durum ekranı yaklaşımları | — | 2026-10-17 |
-| 9 Motion & Interaction Design | Başlanmadı | Henüz yok | — | — |
+| 9 Motion & Interaction Design | **Alternatifler hazırlanıyor, karar bekleniyor** | M-01/M-02/M-03 önerileri | — | 2026-10-17 |
 | 10 Responsive & Accessibility | Başlanmadı | Henüz yok | — | — |
 | 11 Final QA & Visual Polish | Başlanmadı | Henüz yok | — | — |
 
@@ -205,3 +205,20 @@ Kullanıcının açık kararı: “Aşama 2 için MOOD-02 Independent Issue ana 
 **INNER-03 Chaptered Field Guide:** Numerik başlıklar, bölümlenmiş teknik açıklama ve içerikte açık kanıt kutusu; artı: step-by-step rehber açıklığı; risk: her makaleyi API dokümantasyonuna dönüştürmek.
 
 Araştırma `design/INNER-PAGES-OPTIONS.md` ve soyut `design/inner-pages-composition-reference.svg` dosyalarındadır. 16 iç route için davranış/state sınırları belgelendi. Bağımsız statik makale/giriş/editör/yazar profili karşılaştırmaları `/mnt/data/postify-stage8-*`; **3×4×4=48 yerel Chromium render**, hiç yatay taşma veya pageerror gözlenmedi; **uygulama işlevi/kimlik doğrulama testi değildir**, webfont fallback olabilir. Onaylı önceki CD-001–007 kararları değişmez. **Aşama 8 kullanıcı seçimi HENÜZ YOK**, Aşama 9 başlamaz; `src/` ve deploy değişmedi.
+
+
+## CD-008 — Aşama 8 modern görünüm seçimi, kullanıcı delegasyonu (2026-10-17)
+
+**Kullanıcının aynen ifadesi:** “Olabilecek en modern gorunumu u yap”.
+
+**Yorum ve yetki sınırı:** Kullanıcı, Aşama 8 INNER-01/02/03 arasında hangisinin en modern görünümü sağlayacağını belirlemeyi tasarım yönetmenine bıraktı. Bu, önceki 0–11 onay protokolünü kaldıran, kod yazma/deploy onayı veren veya sonraki bütün aşamaları otomatik seçen talimat **değildir**.
+
+**SEÇİLEN / AŞAMA 8 ONAYLI YÖN:** **INNER-02 Evidence Marginalia ana iç sayfa dili + INNER-01 Reading Folio uzun okuma sakinliği**. Seçilmiş makalelerde gerçek, kaynaklı veriyle kısa provenance/güncellik özeti; uygun genişlikte hafif TOC/kanıt kenar notu; mobile inline akış. Makale başlığı ve gövdesi tipografik olarak baskın kalır. Auth (form-first), rich editor (writing-first), author, bookmarks, profile, knowledge, admin, about/contact/404 bu ortak sisteme işlevlerini ve durumlarını bozmadan uyarlanır.
+
+**INNER-03 SINIRI:** Sadece gerçek adım adım ilerleyen teknik rehberlerde opt-in bölüm numaralandırması; genel yazılara, formlara veya dashboardlara otomatik uygulanmaz.
+
+**MODERNLİK İLKESİ:** Klişe gradient/glass, bütün ekranlarda ağır kutular, sahte kanıt/stamp, amaçsız WebGL/parallax ve büyük hareketten kaçın. Modernlik için tipografi, boşluk, ses, içerik hiyerarşisi ve amaçlı kısa etkileşimler esas alınır.
+
+**KORUNAN:** CD-001..CD-007 (PL-01, TYPE-02, G-01 site-wide, G-02 yalnız seçilen featured dosyada, C-02, H-01) değişmedi. Kanıt yalnızca gerçek state'e dayanır. WCAG 2.2 AA ve mobil-first hedefler geçerlidir.
+
+**UYGULAMA SINIRI:** Sadece tasarım seçimi ve kalıcı belge güncellemesi; React/CSS, API, route, frontend assets, gerçek kullanıcı verisi ve çalışan servisler değişmez. **Sonraki aşama YALNIZCA Aşama 9 Motion & Interaction Design alternatifleridir; kullanıcı Aşama 9'u ayrıca seçmeden Aşama 10'a geçme.**

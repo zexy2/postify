@@ -70,3 +70,7 @@ Sadece `/` ana sayfa için H-01 Issue Front, H-02 Discovery Desk, H-03 Curated E
 ## Aşama 8 iç sayfa kapsamı (ONAYSIZ)
 
 `design/INNER-PAGES-OPTIONS.md` dosyasında **kalan 16 iç rota** için ortak görsel prensipler ve korunacak gerçek işlevler envantere alındı. Üç editoryal dil: INNER-01 Reading Folio, INNER-02 Evidence Marginalia, INNER-03 Chaptered Field Guide. Makale/auth/editor/yazar örnekleri karşılaştırıldı; bookmarks, profile, knowledge, admin, about, contact ve 404 için gerçek bileşen akışları ve state sınırları belgelendi, ancak **tasarım onayı veya uygulama yapılmadı**. Önceki H-01 ana sayfa kararı değişmedi.
+
+
+## CD-008 iç sayfa yönü (2026-10-17)
+Aşama 8'de **INNER-02 Evidence Marginalia** ana iç sayfa dili ve **INNER-01 sakin uzun okuma** kullanıcı delegasyonu kapsamında seçildi. INNER-03 yalnız gerçek teknik adım rehberlerinde yardımcı; kalan 16 rota artık bu tasarım *yönü* altında fakat **uygulama durumu hâlâ bekliyor**. `src/` unchanged; gerçek auth/publish/kanıt API testleri yapılmadı.

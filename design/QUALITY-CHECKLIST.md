@@ -1,6 +1,6 @@
 # Postify — Quality Checklist & Gates
 
-**Aktif aşama: 8 — H-01 Issue Front ONAYLI; üç iç sayfa tasarım alternatifi sunuldu, Aşama 8 kullanıcı onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
+**Aktif aşama: 9 — CD-008 ile INNER-02 ana + INNER-01 sakin okuma, sınırlı INNER-03 seçildi; Aşama 9 motion alternatifi onayı bekleniyor.** Her durumun güven düzeyi belirtilmelidir: **gözlendi** / **kontrol gerekli** / **erişilemedi** / **onaylanmadı**.
 
 ## Audit 0 — doğrulanan asgari kanıt
 - [x] Doğru GitHub repository ve ayrı worktree, temiz başlangıç HEAD `30a5a12` doğrulandı.
@@ -35,7 +35,8 @@
 - [x] Aşama 7 Homepage Design **H-01 Issue Front** kullanıcı onayı CD-007 ile kaydedildi.
 - [x] Aşama 8 tüm 16 iç rota için makale, yazar, auth, editör, kayıt, knowledge/admin, about/contact/404 ve durumlar tasarım koruma tablosuna alındı.
 - [x] Aşama 8 üç iç sayfa yaklaşımı (INNER-01/02/03) makale/auth/editör/yazar × 1440/768/390/320 = **48** bağımsız statik Chromium örneğinde incelendi, gözlenen yatay taşma/pageerror sıfır; gerçek app QA değildir.
-- [ ] Aşama 8 Inner Pages & Editorial Experience kullanıcı onayı henüz verilmedi.
+- [x] Aşama 8 INNER-02 ana + INNER-01 uzun okuma + sınırlı INNER-03 kullanıcı delegasyonuyla CD-008 olarak kararlaştırıldı.
+- [ ] Aşama 9 Motion & Interaction Design henüz kullanıcı tarafından onaylanmadı.
 
 ## Bilinçli olarak açık kalan kontroller
 - [ ] 200%/400% text resizing/reflow: bütün işlevler için yeniden ekran karşılaştırması.
@@ -57,4 +58,4 @@
 3. Onaylı tasarım kararını `DESIGN-SYSTEM.md`'ye taşı; uygulama ve test kanıtını ancak ilgili aşamada ekle.
 4. Branch'te yalnızca ilgili kontrollü değişiklikleri commit et; hiçbir onay olmadan push/deploy veya sonraki aşamaya geçme.
 
-**Şimdiki sonraki adım:** Kullanıcının INNER-01 / INNER-02 / INNER-03 veya açık ve sınırlı hibrit kararını bekle. Aşama 8 onayından önce Aşama 9 Motion & Interaction Design başlatma.
+**Şimdiki sonraki adım:** Sadece Aşama 9 Motion & Interaction Design için üç anlamlı alternatif öner, performans ve reduced-motion risklerini kıyasla. Kullanıcı Stage 9 onayı olmadan Stage 10 Responsive & Accessibility başlatma.
