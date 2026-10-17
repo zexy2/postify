@@ -1,9 +1,9 @@
 # Postify — Creative Direction / Aşama 1
 
 **Tarih:** 2026-10-17
-**Durum:** **ÜÇ STRATEJİ ÖNERİSİ HAZIR — KULLANICI SEÇİMİ BEKLENİYOR.**
+**Durum:** **A+B HİBRİTİ KULLANICI TARAFINDAN ONAYLANDI — AŞAMA 2 REFERANS ARAŞTIRMASI AKTİF.**
 **Ön koşul:** Aşama 0 kullanıcı tarafından açıkça **“Onaylıyorum”** denilerek onaylandı (2026-10-17).
-**Sınır:** Aşama 2 referans araştırmasına, Aşama 3 renk sistemine, Aşama 4 tipografiye veya UI kodlamaya **geçilmedi**. Bu belgede hiçbir konsept seçilmiş/onaylanmış sayılmaz.
+**Sınır:** Yalnızca A+B stratejisi seçildi. Aşama 2 moodboard alternatifleri henüz onaylı değil; Aşama 3 renk sistemi, Aşama 4 tipografi ve uygulama koduna **geçilmedi**.
 
 ## 1. Gerçek ürün temeli
 
@@ -131,5 +131,5 @@ Bu eksenlerin ağırlıkları **konsept onayı verilene kadar belirsizdir**.
 ## 5. Görsel eskizlerin statüsü
 Yukarıdaki yerleşimler **nötr konsept taslaklarıdır**. Bunlarda özgül renk, gerçek font ailesi, logo, sayfa bileşeninin son geometrisi ya da Awwwards referans araştırması seçilmez. İlk AI görsel çalışması genel yaşam tarzı yayınlarına kaydığı için **Postify tasarım referansı olarak kabul edilmedi**; karar için esas alınmaz. Aşama 2 başladığında onaylanan stratejiye uygun gerçek kaynaklı moodboard ve somut referanslar ayrıca karşılaştırılır.
 
-## 6. Karar / kapı
-**Aşama 1 kullanıcı onayı BEKLENİYOR.** Kullanıcıdan birincil strateji (**A**, **B**, **C**) ya da net tarifi yapılmış hibrit seçimi istenecek. Seçilen marka kişiliği, gerekçesi, reddedilen alternatifler ve onay metni `DESIGN-DECISIONS.md` içinde kaydedilmeden **Aşama 2'ye geçme**. Renk, font, bileşen veya uygulama kodu **kararlaştırılmadı ve değiştirilmedi**.
+## 6. Onay ve sonraki kapı
+**Aşama 1 ONAYLANDI (2026-10-17):** Kullanıcının tam ifadesi: “Postify için A + B hibrit yaratıcı stratejisini onaylıyorum. Aşama 1 kararını kaydet ve yalnızca Aşama 2 referans araştırması ve moodboard çalışmalarına geç.” A bilgisinin uygulanabilirlik/kanıt düzeni + B editoryal ifade gücü hibrit olarak kabul edildi; C ana yön olarak seçilmedi. Renk, font, bileşen ve uygulama kodu seçilmedi/değiştirilmedi. **Aşama 2 moodboard onayı verilmeden Aşama 3'e geçme.**

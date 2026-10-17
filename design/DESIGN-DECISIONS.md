@@ -1,8 +1,8 @@
 # Postify — Design Decision Ledger
 
 **Aktif protokol:** Kullanıcı talebi, 2026-10-17.
-**Aktif aşama:** 1 / Brand Personality & Creative Strategy — **üç alternatif sunuldu, kullanıcı kararı bekleniyor**.
-**Sonraki aşama:** 2 / Reference Research & Moodboards — **Aşama 1 kararı olmadan başlanmayacak**.
+**Aktif aşama:** 2 / Reference Research & Moodboards — **araştırma ve moodboard seçenekleri hazırlanıyor; Aşama 2 onayı henüz yok**.
+**Sonraki aşama:** 3 / Color System — **Aşama 2 kullanıcı onayı olmadan başlamayacak**.
 
 ## Süreç kararları — kullanıcı açık talimatı
 | Kayıt | Karar | Durum | Kapsam |
@@ -23,8 +23,8 @@
 | Aşama | Status | Önerilen seçenekler | Kullanıcının seçimi | Tarih |
 | --- | --- | --- | --- | --- |
 | 0 Current Product Audit | **ONAYLANDI** | Teknik, tasarımsal ve 51-render denetimi | Kullanıcının açık yanıtı: **“Onaylıyorum”** | 2026-10-17 |
-| 1 Brand Personality & Creative Strategy | **Alternatifler sunuldu; karar bekleniyor** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | — | 2026-10-17 |
-| 2 Reference Research & Moodboards | Başlanmadı | Henüz yok | — | — |
+| 1 Brand Personality & Creative Strategy | **ONAYLANDI** | **A: Living Field Manual, B: Independent Review, C: Knowledge Atlas** | **A+B hibriti** — kullanıcının açık onayı | 2026-10-17 |
+| 2 Reference Research & Moodboards | **Araştırma aktif; onay bekliyor** | Referanslar ve karşılaştırmalı moodboard seçenekleri hazırlanıyor | — | 2026-10-17 |
 | 3 Color System | Başlanmadı | Henüz yok | — | — |
 | 4 Typography System | Başlanmadı | Henüz yok | — | — |
 | 5 Grid, Layout & Spacing | Başlanmadı | Henüz yok | — | — |
@@ -38,13 +38,17 @@
 ## Aşama 0 açık kullanıcı onayı
 **2026-10-17:** Kullanıcı önceki Stage 0 raporunun ardından **“Onaylıyorum”** dedi. Bu onay **yalnızca Aşama 0 denetimi** içindir; önceki UI commitleri, marka stratejisi, renk, tipografi veya Aşama 2 için tasarım onayı anlamına gelmez.
 
-## Aşama 1 seçenek kaydı (SEÇİLMEDİ)
+## Aşama 1 seçenek kaydı (ÖNERİ ve KARAR geçmişi)
 **2026-10-17:** Mevcut ürün mimarisinden türetilmiş üç seçenek hazırlandı; tam analiz ve ASCII kompozisyon eskizleri `CREATIVE-DIRECTION.md` dosyasındadır.
 - **A: Living Field Manual** — Problem/sonuç/kanıt/kullanım, editoryal saha kaydı; risk: fazla teknik etiket.
 - **B: Independent Review** — Seçici, ifade gücü yüksek bağımsız teknoloji yayını; risk: kapak estetiği kanıt ve keşfi gölgeler.
 - **C: Knowledge Atlas** — İçerik bağları/öğrenme yolları; risk: dashboard karmaşıklığı ve gerçek bağlantı veri ihtiyacı.
-**Onay:** YOK; hiçbir birincil yön ya da hibrit seçilmedi. İlk üretilen, yanlışlıkla lifestyle bloga kayan imaj konsept kanıtı olarak **reddedildi**.
-**Sıradaki karar:** Kullanıcı A/B/C ya da tanımladığı hibriti açıkça seçince Stage 1 kaydını güncelle; yalnızca sonra Stage 2 moodboard araştırmasına geç.
+**İlk sunumda onay:** YOK; bu durum aşağıdaki yeni ve açık kullanıcı kararıyla değişti. İlk üretilen, yanlışlıkla lifestyle bloga kayan imaj konsept kanıtı olarak **reddedildi**.
+**Yeni açık kullanıcı onayı — 2026-10-17:** “Postify için A + B hibrit yaratıcı stratejisini onaylıyorum. Aşama 1 kararını kaydet ve yalnızca Aşama 2 referans araştırması ve moodboard çalışmalarına geç.”
+
+**Seçilen strateji (CD-001, ONAYLI):** Yaşayan Uygulama Rehberi (A) bilgi modeli ve işe yararlılık/kanıt/güncellik yaklaşımı + Bağımsız Dijital Dergi (B) özgün editoryal karakter, güçlü anlatı ve rafine kompozisyon. **C Knowledge Atlas bağımsız birincil marka kimliği olarak seçilmedi**; kanıtlanmış bağlantılı içerik keşfi sonraki UX aşamalarında gerekirse ayrıca teklif edilebilir. A+B hibriti bir renk, font, layout, hero şablonu veya UI kodu onayı değildir. Bu kararın başka konseptle değiştirilmesi kullanıcı onayı gerektirir.
+
+**Sıradaki karar:** Aşama 2 referans ve moodboard alternatiflerinin kullanıcı tarafından onaylanması. Ardından ve ancak ardından Aşama 3 renk sistemi başlatılabilir.
 
 ## Stage 0 değişiklik defteri
 2026-10-17 — `design/` raporları yazıldı. **Uygulama, component, CSS, route, service, test ve build artifact kodu değişmedi.** Aşama 1'e geçilmedi. Git commit yalnızca doküman dosyalarını içermelidir; push/deploy yok.
