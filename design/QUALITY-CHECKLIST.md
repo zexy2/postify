@@ -93,3 +93,10 @@
 - [x] Entry chunk brought under existing 320000-byte build budget (319294 bytes) via second Terser compression pass; Vitest 164/164, Chromium Playwright **57/57**, lint/build/smoke/security pass.
 - [x] Two-run mobile Lighthouse baseline/candidate comparison: score **55/55 → 55/56**, no reliable improvement; **Performance gate remains OPEN**, despite measured transfer savings for example featured image.
 - [ ] Future performance focus remains JS/hydration/main-thread and authorized data flows; no false Lighthouse performance victory or manual WCAG compliance claim.
+
+
+## Deferred post service performance experiment (2026-10-17)
+
+- [x] Moved eager postService imports in read queries/mutations and legacy Redux async thunks to dynamic imports while preserving the same canonical data service, fallback and auth behavior.
+- [x] Production main entry **319294→309650 bytes** (saves 9644 bytes) without raising 320000-byte budget; lint, 164/164 Vitest, 57/57 Chromium E2E, build, npm security 0 passed.
+- [ ] Lighthouse mobile A/B scores baseline 58/55 vs candidate 52/60 across two passes: **not statistically meaningful improvement**, keep performance QA gate OPEN. Investigate style/main-thread, session-safe lazy initialization and real CWV next.

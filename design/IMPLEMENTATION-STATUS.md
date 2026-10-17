@@ -143,3 +143,22 @@ The user explicitly responded **“Evet”** to the request for test/build autho
 All four Lighthouse reports had **Accessibility 100, Best Practices 100, SEO 100, CLS 0**. The modest image transfer savings are grounded; **NO reliable Lighthouse performance score improvement was established**, mobile lab remains about **55/100** and remains a QA blocker. Lighthouse JSON: `/tmp/postify-recovery-lh-before-1.json`, `before-2`, `after-1`, `after-2`. These local measurements are not field p75.
 
 **What remains blocked:** real authorized admin/editor/session workflows, manual WCAG2.2 AA/AT and real 200/400% zoom, actual mobile production field Core Web Vitals, LCP/TBT/main-thread/Supabase loading architecture work, and final editorial art-direction acceptance. The assistant must **NOT** push GitHub, deploy, invent test success or mark the release ready. Capture subsequent progress as a separate Oracle checkpoint.
+
+
+## 2026-10-17 — Safer deferred post-service loading (performance investigation)
+
+**Authorization and scope:** User said “Devam”, continuing already approved isolated source work and QA. No remote push, production deployment, or real production data operations.
+
+- `src/hooks/usePosts.js`: query and mutation closures dynamically import canonical postService when actual operation begins. Existing immediate **read-only** editorial fallback source remains available synchronously; TanStack Query error/retry, post invalidation, comments and remote authoritative read/writes still call the same service implementation.
+- `src/store/slices/postsSlice.js`: legacy Redux `createAsyncThunk` fetch/create/update/delete actions now dynamically import the **same** canonical service when dispatched, removing a separate eager import path. Auth initialization, Supabase session listener, RLS and permission model **not changed**. Do not claim Supabase vendor is fully lazy: `useAuth` still imports `authService` and the Supabase client at startup.
+- Verified new production entry **309650 bytes** vs recovered previous build **319294 bytes** (**9644 fewer bytes** minified; `gzip` entry about 101.38KiB vs 104.21KiB). This remains below the existing **320000-byte** build budget, with no loosening.
+- Actually executed: ESLint PASS, Vitest **164/164** (43 suites), production Vite/PWA build PASS, npm security audit **0 known vulnerabilities**, Chromium **57/57** E2E PASS (`job-a30033cd9904`). All original visual/auth/fallback/editor public browser scenarios continued to pass.
+- Two Lighthouse 13.5 mobile lab A/B passes against **the same preserved baseline** and new candidate, local isolated preview ports 4345/4346:
+
+| Pass | Baseline score | Candidate score | Baseline LCP | Candidate LCP | Baseline TBT | Candidate TBT |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 58 | 52 | 5489ms | 5111ms | 346ms | 844ms |
+| 2 | 55 | 60 | 4699ms | 4688ms | 887ms | 560ms |
+
+- In each pass Lighthouse **Accessibility/SEO/Best Practices 100**, CLS 0. Main thread/score is **noisy** with conflicting A/B runs; no reliable Lighthouse improvement can be claimed from this isolated service split. Report JSON files at `/tmp/postify-lazy-lh-baseline-1.json`, `baseline-2.json`, `candidate-1.json`, `candidate-2.json`. This is not field p75 user data.
+- **QA blocker still open**: mobile Lighthouse ~52–60 lab depending on run; actual 200–400% zoom, manual screen readers, safe authenticated editor/admin/knowledge write flows, and production CWV p75/INP/LCP unverified. Need controlled browser main-thread profiling and careful future prioritization; do not risk delaying auth/session startup without explicit test coverage. Deploy and GitHub push remain explicitly unauthorized.

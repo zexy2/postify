@@ -5,7 +5,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import postService from '../services/postService';
+// Keep the editor/write service off the first publication render path.
+// Native import() deduplicates concurrent list/mutation requests.
+const loadPostService = () => import('../services/postService').then((module) => module.default);
 import { getFallbackPost, getFallbackPosts } from '../content/fallbackPosts';
 
 export const postKeys = {
@@ -26,7 +28,7 @@ export function usePosts({ enabled = true } = {}) {
   const locale = i18n.language.startsWith('en') ? 'en' : 'tr';
   const postsQuery = useQuery({
     queryKey: postKeys.lists(locale),
-    queryFn: () => postService.getAll({ locale }),
+    queryFn: async () => (await loadPostService()).getAll({ locale }),
     enabled,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 30,
@@ -59,7 +61,7 @@ export function usePost(identifier) {
   const locale = i18n.language.startsWith('en') ? 'en' : 'tr';
   const postQuery = useQuery({
     queryKey: postKeys.detail(identifier, locale),
-    queryFn: () => postService.getById(identifier, locale),
+    queryFn: async () => (await loadPostService()).getById(identifier, locale),
     enabled: Boolean(identifier),
     staleTime: 1000 * 60 * 5,
     retry: 1,
@@ -70,7 +72,7 @@ export function usePost(identifier) {
   const remoteBacked = postQuery.data?.source === 'supabase';
   const commentsQuery = useQuery({
     queryKey: [...postKeys.detail(identifier, locale), 'comments'],
-    queryFn: () => postService.getComments(postQuery.data.id),
+    queryFn: async () => (await loadPostService()).getComments(postQuery.data.id),
     enabled: Boolean(postQuery.data?.id) && remoteBacked,
     staleTime: 1000 * 60 * 2,
     retry: 0,
@@ -97,7 +99,7 @@ export function useUserPosts(userId) {
   const locale = i18n.language.startsWith('en') ? 'en' : 'tr';
   return useQuery({
     queryKey: postKeys.user(userId, locale),
-    queryFn: () => postService.getByUserId(userId, locale),
+    queryFn: async () => (await loadPostService()).getByUserId(userId, locale),
     enabled: Boolean(userId),
     staleTime: 1000 * 60 * 5,
   });
@@ -118,7 +120,7 @@ export function useCreatePost() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: postService.create,
+    mutationFn: async (data) => (await loadPostService()).create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postKeys.all });
       toast.success(t('success.postCreated'));
@@ -131,7 +133,7 @@ export function useUpdatePost() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }) => postService.update(id, data),
+    mutationFn: async ({ id, data }) => (await loadPostService()).update(id, data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: postKeys.all }),
     onError: (error) => toast.error(error.message || t('errors.postUpdateFailed')),
   });
@@ -141,7 +143,7 @@ export function useDeletePost() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: postService.delete,
+    mutationFn: async (id) => (await loadPostService()).delete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: postKeys.all }),
     onError: (error) => toast.error(error.message || t('errors.postDeleteFailed')),
   });
