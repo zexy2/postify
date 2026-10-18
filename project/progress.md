@@ -948,3 +948,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Source40fa398 controlled experiment extracted a Supabase config flag and dynamically imported auth service / skipped post-service loading when backend absent. Existing 28 targeted auth/post tests and bounded browser UI/scroll parity passed, but the shared SDK chunk still transferred, saving only ~4.8KB first-load JavaScript.
 - Three alternating Lighthouse pairs: control median59, FCP3845ms LCP4705ms TBT578ms; candidate median58, FCP3412ms LCP4532ms TBT774ms. **TBT regression ~196ms** and worse overall score -> **full experimental revert**; no app-source change retained. Oracle jobs job-c7eae9e23f3d and job-6da42cec46f8; details `design/MOBILE-SUPABASE-LAZY-AB-2026-10-18.md`. Production stays NO-GO.
+
+## 2026-10-18 — Mobile dependency graph attribution; two performance changes rejected
+
+- Traced Radix mobile sheet + Supabase vendor/helper chunk relationship with Rollup/Vite sourcemap; bundler-only `onlyExplicitManualChunks` A/B showed 1,238 additional initial JS bytes, medians score59→60 but FCP slower by205ms, no SDK elimination.
+- Combined dynamic auth and no-backend local post service + explicit chunking removed 45,931 bytes of first-load JS (−20%), 28/28 mocked auth/post tests and bilingual browser smoke passed, but alternating Lighthouse score59→55 and TBT567→975ms. Both experiments **fully reverted**; no new frontend optimization accepted. QA: `design/MOBILE-SUPABASE-CHUNK-ISOLATION-AB-2026-10-18.md`; jobs `job-7b15281501e2`, `job-a9da5feac291`, `job-f90361265d5a`, `job-89ff79b176bd`. Real staging/OAuth/RLS still not checked. Production NO-GO.
