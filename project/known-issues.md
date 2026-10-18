@@ -51,3 +51,8 @@
 ## 2026-10-18 — Mobile startup performance is still a release gate
 
 - Reduced one synchronous initial zero-scroll home fallback anchor measurement; three paired lab Lighthouse runs show only small LCP improvements and mixed TBT. This does **not** resolve the significant React/vendor startup long task or establish better field p75 Core Web Vitals. Keep mobile performance acceptance open. Do not trade away first-menu responsiveness or back-navigation scroll accuracy.
+
+## 2026-10-18 — Blocker: complete visual CI snapshot gate
+
+- Required `.github/workflows/ci.yml` visual suite currently **81/115 screenshot failures**, with 49 geometry/dimension mismatches and 32 pixel mismatches. Only individual pre-migration Admin/Bookmark examples have been independently shown to be old baseline drift; do not presume all 81 harmless. Current full CI would not authorize main publication.
+- Staging Supabase identity/RLS/CRUD with synthetic data, manual screen-reader/WCAG2.2AA, field mobile CWV/performance target and explicit publication/rollback approval remain pending. Public production capability artifact `ready:false` is stale or backend-not-ready until authenticated verification; read-only production source remains `cba2c86`.

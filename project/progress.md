@@ -871,3 +871,9 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - RED/GREEN: remove initial `getBoundingClientRect` call from fallback anchor `useLayoutEffect` only when `window.scrollY<=1`; retain asynchronous scroll/ResizeObserver sampling, scroll-history restoration and fallback→live delta logic.
 - Three-pair local mobile Lighthouse lab: median LCP4868→4728ms, score57→59, style/layout1568→1510ms, TBT602→607ms; the gain is small, test noise remains, field CWV unavailable. Retained first-menu latency budget 3/3 passed (416/587/670ms), no Sheet deferral.
 - Detailed methods in design/HOME-INITIAL-ANCHOR-REFLOW-QA-20261018.md; no push or deployment.
+
+## 2026-10-18 — New release-readiness phase plan
+
+- User asked when Postify redesign will launch; Oracle plan revised *in the same run/worktree* from implementation cleanup to five bounded release preparation/approval stages. Production custom domain responds HTTP200, release identity `cba2c86`; local redesigned HEAD a6a6f09 was 64 commits ahead of main (no main-only changes).
+- Full visual regression gate, rather than a small sample, is now measured: **34/115 PASS and 81/115 FAIL**, all screenshot mismatches (49 size,32 pixel). CI runs this gate before the `main`-only automatic Pages deploy. Existing unit Chromium/source security passed, but publication is blocked.
+- Created fail-closed read-only `scripts/qa/release-preflight.mjs` plus node:test coverage, and explicit owner approval/staging/WCAG/performance/rollback ledger in `design/RELEASE-GO-NOGO-2026-10-18.md`. Production capability artifact read-only `ready:false`; backend truth still needs staging verification. No push/merge/deployment.

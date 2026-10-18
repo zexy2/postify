@@ -278,3 +278,7 @@ Evaluated deferring the prewarmed `Header` Radix Sheet until hamburger click wit
 ## 2026-10-18 — Avoid initial fallback anchor measurement at scroll top
 
 HomePage's `useScrollAnchorTransition` no longer reads anchor geometry synchronously on its first zero-scroll commit; when a reader scrolls, ResizeObserver/scroll handling records it, preserving existing fallback→live compensation for scrolled readers. Added regression test. Three controlled alternating Lighthouse mobile A/B runs measured small LCP/style-layout improvements with mixed TBT; mobile menu 4× CPU advisory guard passed 3/3. See `design/HOME-INITIAL-ANCHOR-REFLOW-QA-20261018.md`. No claim of significant real-user performance improvement; performance/field CWV gate remains open.
+
+## 2026-10-18 — Release-readiness pivot
+
+Release GO/NO-GO became the focus of the same Oracle worktree/run. Existing production still serves `cba2c86` (2026-09-28), redesigned branch has 64 unmerged commits; merging to main will trigger automated GitHub Pages deployment after required CI gates. Full visual snapshot CI run fails **81/115**, all screenshot comparisons (49 dimension, 32 pixels); 34 pass. Last local Vitest205/205 and Chromium functional60/60 remain valid but do not override the visual deployment gate. Staging OAuth/RLS/CRUD, manual WCAG, mobile performance acceptance, owner release authorization and documented rollback remain open. See `design/RELEASE-GO-NOGO-2026-10-18.md`; no production push/deploy.
