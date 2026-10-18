@@ -841,3 +841,10 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Dedicated 1440 light, 390 light, 320 dark and 320 at 200% text scaling QA passes with zero horizontal overflow and >=44px primary actions. Targeted Home/discovery behavior passes 5/5 and visual compare passes 6/6.
 - The visual harness also now clips the mobile command-palette baseline to the stable integer CSS-pixel dialog height. This removes a single fractional bottom-row dependency on the underlying Home scroll height while keeping the entire dialog content, focus and >=44px option checks intact; three isolated runs and the full visual suite pass deterministically.
 - Release gate: security/audit 0, unit 150/150, functional Chromium 52/52, visual/structural Chromium 108/108, eager entry 319,057 bytes.
+
+## 2026-10-18 — Postify native zoom audit (isolated local branch)
+
+- Implemented a reusable headed Chromium/Xvfb native browser zoom harness using X11 keyboard accelerators; verified actual 100%, 200%, 400% via DPR1/2/4 and CSS widths1280/640/320.
+- 27/27 route/zoom state checks had no document horizontal scroll overflow or missing main/h1; login keyboard focus and legacy import checkbox/Enter at native 400% passed. Details: `design/NATIVE-BROWSER-ZOOM-QA.md`.
+- Oracle final QA remains open (manual accessibility, server-staging auth/RLS, visual reference approval, field CWV and mobile performance). Work is isolated to local QA code, no push or deployment.
+- Source verification on the same isolated branch: job `job-880c165a4f4a` exit0 (Vitest204/204, Chromium UI60/60, lint/build/smoke/audit pass); real browser native zoom 27/27 also independently passed with explicit DPR and viewport checks. Evidence reports imported to Oracle final QA phase.

@@ -32,3 +32,9 @@
 
 ## Hosting boundary — 2026-08-28
 - GitHub Pages still returns an initial HTTP 404 for direct SPA deep links before the checked-in `404.html` fallback restores the client route. Production browser smoke classifies only that document-level behavior as expected; unexpected API/subresource errors still fail the release.
+
+## 2026-10-18 — Still-open final design/QA evidence
+
+- Native Chromium zoom was sampled automatically for nine routes at 100/200/400 (27/27 pass) using a new OS-level zoom harness. **Manual screen-reader testing, complete focus order, focus-not-obscured and all authenticated/editor/admin flows are NOT signed off**; do not claim full WCAG 2.2 AA conformance.
+- Four empty/populated bookmark pixel snapshot mismatches predate the account migration (confirmed same dimensions at source commit `7743e51`). Keep the visual reference review gate open; no mass screenshot update.
+- OAuth, authorization/RLS, profile/storage and CRUD using nonproduction Supabase accounts remain untested in this isolated QA phase. Mobile Lighthouse startup, field p75 Core Web Vitals and final visual review are still open; no push/deploy.
