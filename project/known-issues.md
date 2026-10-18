@@ -81,3 +81,7 @@
 ## 2026-10-18 — About/Contact Studio candidate awaits visual approval
 
 - Article and Author design directions were accepted in CD-013, **not** wholesale screenshot pixel approval. New About/Contact Studio pages are proposals and their 4 pre-existing visual snapshots are not silently updated. Full-site historic 81 mismatches, separate Supabase stage RLS, manual WCAG2.2 AA and performance acceptance remain open. Current production site/main unchanged.
+
+## 2026-10-18 — Six Home discovery/nav visual references still unaccepted
+
+- Historic Home no-results desktop/mobile, advanced filter popover desktop/mobile, mobile menu drawer and command palette snapshot expectations are **six distinct screenshot mismatch failures**. New functional 9/9 test matrix proves limited responsive/keyboard behavior but does NOT approve their images. Initial 44px menu close false alarm due to Chromium floating-point representation was fixed in test precision, not by reducing hit area. Screenshot CI release blocker stays open alongside owner approval for proposed About/Contact and real staging/WCAG/performance gates.

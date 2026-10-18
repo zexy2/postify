@@ -918,3 +918,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Rebuilt About and Contact static routes using same premium modern visual identity. Existing body text, trust principles, content format explanations, real mail/GitHub links and useful recovery guidance intact. Independent responsive/theme/contrast/locale 14-case browser gate and actual 320/390/1440 screenshots created. New static visual concept awaiting user review; no production changes.
 
 - About/Contact Studio complete local quality pass: Vitest205/205 (ev-3d39e17e97b26395414b), full Chromium64/64 (ev-7ce3729349552396dd2f), new Studio responsive+Turkish14/14 (ev-3b11654c704fa230e19a), whole-site native zoom27/27+focus8/8 (ev-687f020d74a3ba288986), guard7/7, lint/PWA build/smoke/security PASS. Original 4 About/Contact screenshot goldens still 4/4 FAIL, imported failed QA ev-34bc07666f15849a846a, zero baseline updates, no deploy.
+
+## 2026-10-18 — Discovery and mobile navigation release QA
+
+- Six separate discovery/nav historic screenshot variants rerun: **6/6 screenshot-only FAIL**; initial premature failure from Chromium 43.999969px measurement corrected in test to 0.01 CSS-pixel precision while retaining 44px target. No runtime CSS/source app modifications or golden rewrites.
+- Added 9 responsive, keyboard, search-reset and filter URL-state interaction tests: **9/9 PASS**. Full regression **205/205 Vitest**, **64/64 Chromium**, 7 release guards/lint/build/security PASS. Oracle events unit ev-ad635ebe396576600cd3, Chromium ev-27aa86478ad480985438, behavior ev-86ab051ad197a86813ec, failed visual ev-7a67c4e74b1564f0d633. Release still NO-GO.

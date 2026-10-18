@@ -164,8 +164,10 @@ test('Mobile navigation drawer open baseline', async ({ page }) => {
   const close = drawer.getByRole('button', { name: /close menu|menüyü kapat/i });
   await expect(close).toBeVisible();
   const closeBox = await close.boundingBox();
-  expect(closeBox?.width || 0).toBeGreaterThanOrEqual(44);
-  expect(closeBox?.height || 0).toBeGreaterThanOrEqual(44);
+  // Browser subpixel layout can return 43.999969px for a CSS 44px control.
+  // Normalize to 0.01 CSS px, retaining the 44px accessibility threshold.
+  expect(Math.round((closeBox?.width || 0) * 100) / 100).toBeGreaterThanOrEqual(44);
+  expect(Math.round((closeBox?.height || 0) * 100) / 100).toBeGreaterThanOrEqual(44);
   await settleVisualSurface(page);
   await expect(drawer).toHaveScreenshot('mobile-navigation-drawer.png');
 });

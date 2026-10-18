@@ -279,3 +279,9 @@
 - [ ] Owner has **not** yet accepted the About/Contact direction or its old goldens. Supabase staging OAuth/RLS, manual WCAG, performance budgets and all-site visual acceptance remain mandatory before publication. `design/ABOUT-CONTACT-STUDIO-CONCEPT-2026-10-18.md`.
 
 - [x] About/Contact Studio local: 205/205 Vitest, 7/7 release guards, 64/64 product Chromium, 14/14 static responsive+TR+contrast cases, lint/PWA build/smoke/security PASS; whole-site native true browser zoom 27/27 geometry and 8/8 focus PASS (About included). Revalidated 4 old About/Contact golden screenshots **4/4 FAIL (images only)** and stored failed Oracle QA, no baseline updates. New design **awaits owner visual direction approval**, not release authorization.
+
+## 2026-10-18 — Discovery/nav visual QA isolated
+
+- [x] Re-tested the six non-hero Home discovery and navigation screenshot differences: **0/6 visuals pass, all screenshot-only** after handling Chromium 43.999969px CSS subpixel measurement with 0.01px normalization while retaining 44px requirement. No snapshot baselines altered.
+- [x] Added nine behavior-first release tests spanning search reset, advanced sorting/filter persistence, keyboard Escape/focus restoration, mobile drawer/command menu 44px controls, short viewport reflow: **9/9 PASS**. Full regression 205 Vitest, 64 product Chromium, guards7, lint/build/security PASS. See `design/DISCOVERY-NAVIGATION-VISUAL-REVIEW-2026-10-18.md`.
+- [ ] Product owner visual approval for these six screenshot variants remains open; no blanket screenshot refresh or deployment.
