@@ -299,3 +299,9 @@
 - [x] Added 11 local-only Knowledge active/unavailable account behavior checks across 320/390/820/1440 and themes. Initial **9/11** exposed 38px desktop edit/reverify actions; scoped CSS minimum-height **44px** all widths; exact replay **11/11 PASS**. Mocked evidence/reverification rules and keyboard/overflow included. Oracle RED `ev-2b92ea02ed990b066b44`, GREEN `ev-58fd24a0176ae6f1f886`.
 - [ ] Historic golden acceptance, real staging OAuth/RLS/write actor tests, manual WCAG and field performance remain open; no production authorization or push.
 - [x] Postfix local wider QA: Vitest **205/205**, release guards **7/7**, ESLint and npm audit security PASS. An initial product Chromium **7/64** was invalidated by previewing old tracked `docs/` assets; after direct local Vite rebuild, identical browser run **64/64 PASS**. Browser report `ev-675c5b472205160dc22e`. Full Node 24 prebuild/exact-SHA CI was **not** rerun; these are not deployment approvals.
+
+## 2026-10-18 — SQL RLS isolation and mobile Lighthouse exact-source recheck
+
+- [x] Pinned PostgreSQL 16.15 CI container: twelve migrations applied and full `verify-verified-knowledge.sql` passed, including correction suggestions RLS and capabilities; disposable no-network synthetic container removed. **Not Supabase-hosted staging**. Oracle job `job-8c0b13e18873`.
+- [x] Fresh Node24 source build `6993777` on localhost: Lighthouse13.5 mobile 3 trials scored **59/59/56**, median **59**, **LCP 4,788ms**, **TBT 592ms**, **CLS 0**. No improvement claim; no source app optimization applied without controlled evidence. Oracle job `job-133f7908f01c`.
+- [ ] Real separated Supabase staging OAuth/session/RLS, visual acceptance (81 historic mismatches and About/Contact), manual assistive tech, mobile field CWV and owner-approved release remain **NO-GO**. Details in `design/RELEASE-SCHEMA-MOBILE-LAB-2026-10-18.md`.

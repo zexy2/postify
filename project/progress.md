@@ -933,3 +933,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Rechecked 14 Editor/Knowledge visual snapshots against legacy baselines: all failed image comparison only; did not rewrite baselines. Implemented 11 fixture-only behavioral tests for Knowledge maintenance and unavailable states at multiple viewports/themes; actual RED 9/11 surfaced 38px desktop action hit targets, scoped CSS fixed globally to 44px, actual GREEN 11/11. No provider, auth, API, RLS or production changes; review `design/EDITOR-KNOWLEDGE-RELEASE-QA-2026-10-18.md`. Production remains NO-GO, and About/Contact concepts are not accepted.
 - Knowledge change local wider QA: Vitest205/205, guard7/lint/security PASS; correct locally rebuilt candidate preview Chromium64/64 (`ev-675c5b472205160dc22e`), with 11/11 targeted contract pass. Initial 7/64 product run had tested stale committed `docs/` preview assets, not current source. Direct Vite rebuild intentionally skipped Node24 prebuild, therefore the exact release gate remains open.
+
+## 2026-10-18 — Local PostgreSQL RLS parity and Lighthouse startup diagnostic
+
+- PostgreSQL16 exact CI digest isolated no-network container: 12/12 migrations, `verify-verified-knowledge.sql` PASS, synthetic identities/roles only, container removed (`job-8c0b13e18873`). This does not substitute for real Supabase staging identity/RLS verification.
+- Exact Git source6993777 fresh Node24 local preview: three Lighthouse mobile simulated runs 59/59/56 median59, FCP3936ms, LCP4788ms, TBT592ms, CLS0 (`job-133f7908f01c`). Startup performance still below release acceptance; no speculative UI, auth or font changes. See design/RELEASE-SCHEMA-MOBILE-LAB-2026-10-18.md. Production remains NO-GO.
