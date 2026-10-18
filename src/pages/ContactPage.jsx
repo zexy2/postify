@@ -18,6 +18,10 @@ const ContactPage = () => {
       <SEO title={t('contact.title')} description={t('contact.description')} />
       <div className={styles.container}>
         <header className={styles.hero}>
+          <div className={styles.editionLine} aria-hidden="true">
+            <span>POSTIFY <span className={styles.editionMark}>✳</span> CONTACT</span>
+            <span>{isEn ? 'A conversation worth having' : 'Değerli bir konuşmaya yer var'}</span>
+          </div>
           <span className={styles.eyebrow}>{isEn ? 'CORRECTIONS / FEEDBACK / COLLABORATION' : 'DÜZELTME / GERİ BİLDİRİM / İŞ BİRLİĞİ'}</span>
           <h1>{isEn ? 'Useful knowledge gets better when readers can challenge it.' : 'Faydalı bilgi, okuyucu ona itiraz edebildiğinde gelişir.'}</h1>
           <p>{t('contact.description')}</p>

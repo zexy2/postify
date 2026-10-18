@@ -911,3 +911,10 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - User approved proceeding to adapt Article Studio into public Author page; redesigned author masthead/card/portrait motif and mobile portfolio with the exact existing post counts, reading minutes and author-tested evidence. Current browser screenshot collage generated for light/dark × mobile/desktop and an independent 9-case Article Studio-aligned author contract. Distinct visual owner signoff pending; no golden snapshot updates.
 
 - Author Studio local final verification complete on source prior to commit: 205/205 Vitest, 64/64 Chromium, 9/9 new Author functional, 7/7 release guards, lint/build/security pass. Targeted 8 old Author golden screenshots remain 8/8 failed image comparisons. Shared real browser JPG preview links and no production push, deploy or golden rewrite. Owner design signoff pending.
+
+## 2026-10-18 — Article/Author accepted style; About/Contact Studio candidate
+
+- User confirmed Article Studio as visually liked (“Heh evet beğendim bunları”) and Author Studio as good (“guzel”). Recorded scoped CD-013 design-direction acceptance, not screenshot goldens or release approval.
+- Rebuilt About and Contact static routes using same premium modern visual identity. Existing body text, trust principles, content format explanations, real mail/GitHub links and useful recovery guidance intact. Independent responsive/theme/contrast/locale 14-case browser gate and actual 320/390/1440 screenshots created. New static visual concept awaiting user review; no production changes.
+
+- About/Contact Studio complete local quality pass: Vitest205/205 (ev-3d39e17e97b26395414b), full Chromium64/64 (ev-7ce3729349552396dd2f), new Studio responsive+Turkish14/14 (ev-3b11654c704fa230e19a), whole-site native zoom27/27+focus8/8 (ev-687f020d74a3ba288986), guard7/7, lint/PWA build/smoke/security PASS. Original 4 About/Contact screenshot goldens still 4/4 FAIL, imported failed QA ev-34bc07666f15849a846a, zero baseline updates, no deploy.

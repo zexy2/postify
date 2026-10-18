@@ -42,3 +42,7 @@ The hero's reworked deep-ink surface and sans-serif title **have not been approv
 - Dedicated real Chromium native 100/200/400% zoom reflow: **27/27 PASS**; 8/8 bounded keyboard Tab focus checks **PASS**, zero observed horizontal overflow or occluded samples; no manual screen-reader certification.
 - Oracle recorded structured reports: Vitest `ev-34b12d903faffeff3b77`, product E2E `ev-0bbf159ff788da82123c`, Article semantic/theme `ev-7230dff254289c3a5d96`, native zoom `ev-a4100d683d349e079de3`. All tests ran against the local source before its tentative commit; do not present those imports as separate independent commit-SHA verification.
 - Visual snapshot comparisons were intentionally **not updated**. The previously observed 81 old screenshot mismatches and real staging Supabase auth/RLS, manual WCAG, performance release acceptance, and explicit owner deployment approval remain **NO-GO**.
+
+## Later owner decision addendum — design direction approved
+
+After the original candidate screenshots were reviewed, the user said **“Heh evet beğendim bunları”**. Article Studio's contemporary visual **direction is now approved** and logged as CD-013 in `design/DESIGN-DECISIONS.md`. Earlier passages saying pending describe the original test time, not the latest concept decision. This approval does not waive manual WCAG, visual snapshot QA, staging or release requirements.

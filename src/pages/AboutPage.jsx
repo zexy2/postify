@@ -51,7 +51,10 @@ const AboutPage = () => {
       <SEO title={t('about.title')} description={t('about.description')} />
       <div className={styles.container}>
         <header className={styles.hero}>
-          <div className={styles.heroIndex}>01 / POSTIFY</div>
+          <div className={styles.heroIndex} aria-hidden="true">
+            <span>POSTIFY <span className={styles.editionMark}>✳</span> ABOUT</span>
+            <span>{isEn ? 'A field guide for useful knowledge' : 'Faydalı bilgi için saha rehberi'}</span>
+          </div>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}>{isEn ? 'PRACTICAL KNOWLEDGE SYSTEM' : 'PRATİK BİLGİ SİSTEMİ'}</span>
             <h1>{isEn ? 'Useful knowledge should survive contact with reality.' : 'Faydalı bilgi gerçekle temas ettiğinde ayakta kalmalı.'}</h1>

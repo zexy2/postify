@@ -77,3 +77,7 @@
 ## 2026-10-18 — Author Studio prototype awaits visual approval
 
 - New public author layout is a reversible design candidate following user permission to proceed, not owner approval. The historic ten Author golden screenshots still require review, while the release-wide 81 screenshot mismatches, real nonproduction Supabase RLS, screenreader/WCAG2.2AA and mobile performance remain open. No production merge or deploy.
+
+## 2026-10-18 — About/Contact Studio candidate awaits visual approval
+
+- Article and Author design directions were accepted in CD-013, **not** wholesale screenshot pixel approval. New About/Contact Studio pages are proposals and their 4 pre-existing visual snapshots are not silently updated. Full-site historic 81 mismatches, separate Supabase stage RLS, manual WCAG2.2 AA and performance acceptance remain open. Current production site/main unchanged.

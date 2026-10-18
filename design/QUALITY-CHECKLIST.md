@@ -271,3 +271,11 @@
 - [ ] Visual acceptance of Author Studio, related old golden snapshots, real staging RLS and full release quality gates remain open. See `design/AUTHOR-STUDIO-CONCEPT-2026-10-18.md`.
 
 - [x] Author Studio prototype after full QA: Vitest **205/205**, release guards **7/7**, full product Chromium **64/64**, new Author responsive/negative scenarios **9/9** PASS; ESLint, build/PWA smoke and npm audit PASS. Existing Author golden samples **8/8 FAIL (screenshot only)** and saved as failed Oracle evidence, no snapshot overwrite. **Owner visual approval still pending.**
+
+## 2026-10-18 — Owner accepted Article and Author directions; About/Contact proposals
+
+- [x] CD-013 records owner's visual-direction approvals for Article Studio and Author Studio after direct screenshot review; exact pixel/golden acceptance and release signoff are not implied.
+- [x] Developed scoped modern **About + Contact Studio** candidates with dark ink-mastheads, large sans-serif titles, responsive real-content cards, accessible existing contact links and no fabricated contact form. Captured real Chromium light/dark desktop/mobile and constructed a 14-case contrast/navigation/responsive/localization contract.
+- [ ] Owner has **not** yet accepted the About/Contact direction or its old goldens. Supabase staging OAuth/RLS, manual WCAG, performance budgets and all-site visual acceptance remain mandatory before publication. `design/ABOUT-CONTACT-STUDIO-CONCEPT-2026-10-18.md`.
+
+- [x] About/Contact Studio local: 205/205 Vitest, 7/7 release guards, 64/64 product Chromium, 14/14 static responsive+TR+contrast cases, lint/PWA build/smoke/security PASS; whole-site native true browser zoom 27/27 geometry and 8/8 focus PASS (About included). Revalidated 4 old About/Contact golden screenshots **4/4 FAIL (images only)** and stored failed Oracle QA, no baseline updates. New design **awaits owner visual direction approval**, not release authorization.

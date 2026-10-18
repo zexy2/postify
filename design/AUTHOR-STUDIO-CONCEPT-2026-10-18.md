@@ -39,3 +39,7 @@ For iPhone-visible previews, synthetic public fallback-author screenshots were t
 - Actual preview images for synthetic fallback author were uploaded temporarily as external JPGs so they can open on iPhone: `https://tmpfiles.org/dl/1792343050.929f6feb09597a59/wJAqcTCus4l6/postify-author-studio-light-comparison.jpg` and `https://tmpfiles.org/dl/1792343050.4387b42888e79675/woAgcwCesQym/postify-author-studio-dark-comparison.jpg`. Links are ephemeral and not a controlled archive; the local untracked PNGs and JPEGs under `/tmp` are the work-in-progress record. The images contain no passwords or real user accounts.
 
 **This outcome demonstrates a working prototype, NOT final design approval or production release readiness.** Must wait for the author's visual acceptance before replacing goldens, while staging Supabase, real screen-reader/WCAG, performance target and CI/release gates remain open.
+
+## Later owner decision addendum — design direction approved
+
+After reviewing light/dark Author Studio preview images, the user answered **“guzel”**, explicitly approving the proposed Author Studio visual **direction**. This is recorded in CD-013. Earlier passages showing pending describe the original candidate state. Exact golden snapshot pixels, staging and production release approval remain open.
