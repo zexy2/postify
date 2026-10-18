@@ -263,3 +263,11 @@
 - [x] Six new design/accessibility Chromium cases (320/390/1440 × light/dark) + existing six Article release contracts **12/12 PASS**. Fixed low contrast of global light-theme author-tested badge on the dark cover; new checks require verification label contrast ≥4.5. Genuine native 100/200/400 Chromium zoom **27/27** and eight focus sequences **8/8 PASS**.
 - [ ] Article Studio is **preview only, owner design acceptance OPEN**. Do not replace goldens or claim release, full WCAG manual and Supabase staging still outstanding. See `design/ARTICLE-STUDIO-CONCEPT-2026-10-18.md`.
 - [x] Article Studio candidate final QA: 205/205 Vitest, 64/64 Chromium product, 12/12 Article responsive/contrast, 27/27 native real zoom and 8/8 bounded focus, lint/PWA build/smoke/security PASS. **Still preview-only**, all screenshot baseline acceptance/real staging/production gates OPEN.
+
+## 2026-10-18 — Author Studio adaptation, visual proposal
+
+- [x] After user agreed to adapt approved Article Studio styling to the public Author page, created a modern dark-forest masthead, large Inter name, real author-bio and role, decorative monogram, anchored published-work CTA, three real-data summary cards, lighter elevated content block, plus refreshed missing-author/error treatment. Screenshot collages captured from real local Chromium for light/dark desktop/mobile. **Only a candidate**, not owner pixel approval or golden update.
+- [x] New 9-case independent author QA covers light/dark × 320/390/1440 profile with heading/contrast/CTA/nav/author statistics/overflow and three negative 320px recovery paths. Source implementation uses no fake profile metric, no production data and no new authorized actions.
+- [ ] Visual acceptance of Author Studio, related old golden snapshots, real staging RLS and full release quality gates remain open. See `design/AUTHOR-STUDIO-CONCEPT-2026-10-18.md`.
+
+- [x] Author Studio prototype after full QA: Vitest **205/205**, release guards **7/7**, full product Chromium **64/64**, new Author responsive/negative scenarios **9/9** PASS; ESLint, build/PWA smoke and npm audit PASS. Existing Author golden samples **8/8 FAIL (screenshot only)** and saved as failed Oracle evidence, no snapshot overwrite. **Owner visual approval still pending.**

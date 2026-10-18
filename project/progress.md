@@ -905,3 +905,9 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - After owner rejected older Article layout as insufficiently modern, implemented a reversible PostDetailPage design proposal: bold Inter ink-green hero with geometric texture, photo overlap, rounded reading outcome panel, responsive pill action toolbar. Screenshots of actual current local render light/dark × mobile/desktop displayed. Not accepted as final design yet.
 - New six concept checks + six preexisting reading contracts: **12/12 PASS**; light-theme verification label on dark hero was low contrast, improved and gated WCAG-style ≥4.5 check. 27/27 native true-zoom states and8/8 focus sequences pass, overall release NO-GO still.
 - Article Studio local QA final run: 205/205 unit, 64/64 product Chromium, 12/12 Article contracts, 27/27 native zoom reflow and 8/8 sampled focus sequences, release guard7/7, lint/build/security PASS. Local proof only; waiting on owner design approval and no golden/push/deploy.
+
+## 2026-10-18 — Author Studio modern design candidate
+
+- User approved proceeding to adapt Article Studio into public Author page; redesigned author masthead/card/portrait motif and mobile portfolio with the exact existing post counts, reading minutes and author-tested evidence. Current browser screenshot collage generated for light/dark × mobile/desktop and an independent 9-case Article Studio-aligned author contract. Distinct visual owner signoff pending; no golden snapshot updates.
+
+- Author Studio local final verification complete on source prior to commit: 205/205 Vitest, 64/64 Chromium, 9/9 new Author functional, 7/7 release guards, lint/build/security pass. Targeted 8 old Author golden screenshots remain 8/8 failed image comparisons. Shared real browser JPG preview links and no production push, deploy or golden rewrite. Owner design signoff pending.

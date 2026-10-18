@@ -73,3 +73,7 @@
 ## 2026-10-18 — Article Studio variant not yet owner-approved
 
 - Article Studio is a reviewed-in-chat **design candidate**, NOT a final screen signoff. Its markup/CSS intentionally differs from the already-failing four Article golden snapshots. Those and other old visual references must not be silently refreshed; staging RLS, WCAG assistive tech/manual and mobile performance release gates remain OPEN. Style prototype is clearly isolated and can be consolidated after approval or reverted if rejected.
+
+## 2026-10-18 — Author Studio prototype awaits visual approval
+
+- New public author layout is a reversible design candidate following user permission to proceed, not owner approval. The historic ten Author golden screenshots still require review, while the release-wide 81 screenshot mismatches, real nonproduction Supabase RLS, screenreader/WCAG2.2AA and mobile performance remain open. No production merge or deploy.
