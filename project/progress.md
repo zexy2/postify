@@ -953,3 +953,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Traced Radix mobile sheet + Supabase vendor/helper chunk relationship with Rollup/Vite sourcemap; bundler-only `onlyExplicitManualChunks` A/B showed 1,238 additional initial JS bytes, medians score59→60 but FCP slower by205ms, no SDK elimination.
 - Combined dynamic auth and no-backend local post service + explicit chunking removed 45,931 bytes of first-load JS (−20%), 28/28 mocked auth/post tests and bilingual browser smoke passed, but alternating Lighthouse score59→55 and TBT567→975ms. Both experiments **fully reverted**; no new frontend optimization accepted. QA: `design/MOBILE-SUPABASE-CHUNK-ISOLATION-AB-2026-10-18.md`; jobs `job-7b15281501e2`, `job-a9da5feac291`, `job-f90361265d5a`, `job-89ff79b176bd`. Real staging/OAuth/RLS still not checked. Production NO-GO.
+
+## 2026-10-19 — Exact-source mobile CPU trace and rejected scroll-anchor guard
+
+- Recorded two real 4× CPU Chromium CDP startup timelines (~1.6s longest task; ~1.8s combined UpdateLayoutTree/Layout events) and mapped V8 samples with local sourcemaps to React DOM, `useScrollAnchorTransition` and `App`. No conclusive causal root cause yet; diagnostic proof documented in `design/MOBILE-CPU-TRACE-AND-ANCHOR-GUARD-2026-10-19.md`.
+- Tried safe `App` savePosition scroll-at-top guard: first-load feed-card DOM measurements **8→0** and scrolled/back navigation parity at 320/390px preserved, but six Lighthouse runs kept performance score59 with slightly worse LCP/TBT; first menu 3/3 each passed. Experiment **fully reverted**, no accepted app optimization. Oracle jobs `job-1d8f131f398b`, `job-2060df250e35`, `job-de3d2a8c8cfb`; production still NO-GO.
