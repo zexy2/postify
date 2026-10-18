@@ -899,3 +899,9 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Added 6 local Vite/Chromium Article semantics/containment tests (320,390,1440 × light/dark): **6/6 PASS**. Reran 20-case mixed Article/Author gate: **6 PASS +14 screenshot-only FAIL**. No golden updates, original production main untouched.
 
 - Reran full CI-equivalent visual Chromium gate with six additional Article contracts: **40/121 PASS, 81/121 screenshot FAIL**, zero new functional failures. Actual Playwright exit1, correctly imported as failed QA Oracle event `ev-c6d90a4407b920a7bd69`. No golden updates or production changes.
+
+## 2026-10-18 — More-modern Article Studio isolated concept
+
+- After owner rejected older Article layout as insufficiently modern, implemented a reversible PostDetailPage design proposal: bold Inter ink-green hero with geometric texture, photo overlap, rounded reading outcome panel, responsive pill action toolbar. Screenshots of actual current local render light/dark × mobile/desktop displayed. Not accepted as final design yet.
+- New six concept checks + six preexisting reading contracts: **12/12 PASS**; light-theme verification label on dark hero was low contrast, improved and gated WCAG-style ≥4.5 check. 27/27 native true-zoom states and8/8 focus sequences pass, overall release NO-GO still.
+- Article Studio local QA final run: 205/205 unit, 64/64 product Chromium, 12/12 Article contracts, 27/27 native zoom reflow and 8/8 sampled focus sequences, release guard7/7, lint/build/security PASS. Local proof only; waiting on owner design approval and no golden/push/deploy.

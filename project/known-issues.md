@@ -69,3 +69,7 @@
 ## 2026-10-18 — Article and Author visual signoff still pending
 
 - Four Article full-page light/dark reference images differ in height (desktop +21px, mobile +53px); ten Author portfolio/not-found/unavailable states have pixel differences (2–11%). Six semantic/responsive Article tests pass but screenshot expectations fail as before. User only approved **Home dark editorial direction CD-012**, not Article/Author pixel acceptance. No visual baseline refresh until explicit review and approval.
+
+## 2026-10-18 — Article Studio variant not yet owner-approved
+
+- Article Studio is a reviewed-in-chat **design candidate**, NOT a final screen signoff. Its markup/CSS intentionally differs from the already-failing four Article golden snapshots. Those and other old visual references must not be silently refreshed; staging RLS, WCAG assistive tech/manual and mobile performance release gates remain OPEN. Style prototype is clearly isolated and can be consolidated after approval or reverted if rejected.

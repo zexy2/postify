@@ -256,3 +256,10 @@
 - [ ] Article/Author exact visual direction NOT yet accepted as golden reference. Keep 14 screenshot mismatches OPEN until reviewed by owner; no mass `--update-snapshots`/tolerance relaxation. Full visual CI, staging OAuth/RLS and manual WCAG still release-blocking.
 
 - [x] After adding six Article accessibility/layout test cases, full Chromium visual CI suite retested: **40/121 PASS, 81 screenshot FAIL**, all failures still `toHaveScreenshot`, no new functional failures. Visual release gate remains BLOCKED; no goldens rewritten or pixel-diff tolerance lowered.
+
+## 2026-10-18 — Article Studio modern design proposal (not yet accepted)
+
+- [x] User requested a **more modern Article screen** than the old Fraunces/newsprint reading view. Built isolated Article Studio concept: dark immersive cover both themes, large readable Inter display title, overlapping rounded cover image, reworked outcome card, accessible category/evidence metadata and refined mobile action dock. Previous Home CD-012 remains unchanged; no golden snapshots or deployment.
+- [x] Six new design/accessibility Chromium cases (320/390/1440 × light/dark) + existing six Article release contracts **12/12 PASS**. Fixed low contrast of global light-theme author-tested badge on the dark cover; new checks require verification label contrast ≥4.5. Genuine native 100/200/400 Chromium zoom **27/27** and eight focus sequences **8/8 PASS**.
+- [ ] Article Studio is **preview only, owner design acceptance OPEN**. Do not replace goldens or claim release, full WCAG manual and Supabase staging still outstanding. See `design/ARTICLE-STUDIO-CONCEPT-2026-10-18.md`.
+- [x] Article Studio candidate final QA: 205/205 Vitest, 64/64 Chromium product, 12/12 Article responsive/contrast, 27/27 native real zoom and 8/8 bounded focus, lint/PWA build/smoke/security PASS. **Still preview-only**, all screenshot baseline acceptance/real staging/production gates OPEN.

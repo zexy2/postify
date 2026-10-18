@@ -759,3 +759,285 @@
 @media (prefers-reduced-motion: reduce) {
   .mobileActionBar { backdrop-filter: none; }
 }
+
+/* Article concept B — Postify Studio / contemporary immersive reading surface.
+   Scoped to this module and intentionally kept as an isolated visual proposal.
+   It does not change other routes, user data, or the approved Home design. */
+.page {
+  padding: clamp(1rem, 2.2vw, 2rem) 0 6rem;
+}
+
+.articleLayout {
+  grid-template-columns: 3.6rem minmax(0, 58rem);
+  gap: clamp(1rem, 2.3vw, 2.1rem);
+}
+
+.articleHeader {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 25rem;
+  gap: 0;
+  padding: clamp(1.7rem, 4.4vw, 3.9rem);
+  padding-bottom: clamp(3.8rem, 5.5vw, 5rem);
+  color: #faf9f5;
+  background:
+    radial-gradient(ellipse at 95% 8%, rgb(179 205 164 / 16%), transparent 39%),
+    radial-gradient(ellipse at 15% 100%, rgb(244 162 130 / 11%), transparent 45%),
+    linear-gradient(127deg, #172c2a 0%, #162323 56%, #111b1e 100%);
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: clamp(1.1rem, 2.5vw, 1.9rem);
+}
+
+.articleHeader::before {
+  position: absolute;
+  z-index: -1;
+  top: -12rem;
+  right: -14rem;
+  width: 38rem;
+  height: 38rem;
+  content: '';
+  border: 1px solid rgb(239 244 219 / 13%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6rem rgb(239 244 219 / 2%), 0 0 0 12rem rgb(239 244 219 / 2%);
+  pointer-events: none;
+}
+
+.editionLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.2rem);
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 19%);
+  color: #d8e5dd;
+  font-family: var(--font-sans);
+  font-size: .71rem;
+  font-weight: 750;
+  letter-spacing: .145em;
+  text-transform: uppercase;
+}
+
+.editionLine > span:last-child {
+  color: #b9cbc1;
+  font-weight: 550;
+  letter-spacing: .015em;
+  text-transform: none;
+}
+
+.editionAsterisk { color: #f1b393; font-size: 1.15em; }
+
+.articleHeader .meta {
+  gap: .6rem .75rem;
+  margin-bottom: clamp(1.2rem, 2vw, 1.9rem);
+  color: #c5d2ca;
+  font-size: .76rem;
+  font-weight: 500;
+}
+
+.articleHeader .contentType {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: .35rem .75rem;
+  color: #14251f;
+  background: #d3e9ce;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: .69rem;
+  font-weight: 800;
+  letter-spacing: .075em;
+}
+.articleHeader .category { color: #f8bf9f; font-weight: 650; }
+.articleHeader .metaDot { color: #63766c; }
+.articleHeader .readingMeta { color: #d6dfd8; }
+.articleHeader .readingMeta svg { color: #eab293; }
+.articleHeader .meta :global(.evidence-badge) { color: #e5eae4; }
+/* The cover stays dark even in the light theme: global success/warning tokens
+   are chosen for a light page and are not legible on this ink surface. */
+.articleHeader .meta :global(.evidence-badge strong) { color: #c8edc5; }
+.articleHeader .meta :global(.evidence-badge[data-freshness="stale"] strong),
+.articleHeader .meta :global(.evidence-badge[data-level="recheck-required"] strong) { color: #ffdea8; }
+.articleHeader .meta :global(.evidence-badge[data-level="postify-verified"] strong) { color: #f2c6af; }
+
+.articleHeader .title {
+  max-width: 19ch;
+  margin: 0 0 clamp(1rem, 2.8vw, 1.6rem);
+  color: #f8faf5;
+  font-family: var(--font-sans);
+  font-size: clamp(3.1rem, 5vw, 4.65rem);
+  font-weight: 810;
+  letter-spacing: -.075em;
+  line-height: 1.035;
+  text-wrap: balance;
+}
+
+.articleHeader .excerpt {
+  max-width: 46ch;
+  margin: 0 0 clamp(1.5rem, 2.7vw, 2.1rem);
+  color: #d1ddd6;
+  font-size: clamp(1rem, 1.45vw, 1.22rem);
+  font-weight: 430;
+  line-height: 1.58;
+}
+
+.articleHeader .authorBar {
+  width: fit-content;
+  max-width: 100%;
+  padding-top: 1.15rem;
+  border-top: 1px solid rgb(255 255 255 / 22%);
+}
+.articleHeader .author { gap: .75rem; color: #f7f9f6; }
+.articleHeader .author:hover { color: #d9ead5; }
+.articleHeader .avatar {
+  width: 2.6rem;
+  height: 2.6rem;
+  color: #253329;
+  background: #e5eada;
+  border: 1px solid rgb(255 255 255 / 40%);
+  font-family: var(--font-sans);
+}
+.articleHeader .authorInfo strong { color: #f7f9f6; font-size: .85rem; }
+.articleHeader .authorInfo small { color: #c2cfc5; }
+.articleHeader .canonicalSource { color: #f6b99a; }
+
+.coverWrapper {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - clamp(2rem, 7vw, 7rem));
+  margin: clamp(-3.5rem, -4vw, -2rem) auto 0;
+  overflow: hidden;
+  border: 5px solid var(--bg-primary);
+  border-radius: clamp(.8rem, 1.7vw, 1.35rem);
+  box-shadow: 0 26px 56px rgb(14 31 29 / 16%);
+}
+.coverImage {
+  width: 100%;
+  max-height: 28rem;
+  aspect-ratio: 2.08 / 1;
+  filter: saturate(.96) contrast(1.03);
+}
+
+.quickBrief {
+  position: relative;
+  max-width: 49rem;
+  margin: clamp(1.5rem, 3.7vw, 3rem) auto 0;
+  padding: clamp(1.35rem, 2.5vw, 2rem);
+  background: color-mix(in srgb, var(--bg-elevated) 86%, #bcd5bb 14%);
+  border: 1px solid var(--border-color);
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 30px rgb(18 29 21 / 3%);
+}
+.quickBrief::before {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  content: '↗';
+  display: grid;
+  place-items: center;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  font-size: 1.15rem;
+}
+.quickBriefCopy { max-width: 42rem; padding-right: 1.6rem; }
+.quickBriefEyebrow {
+  margin-bottom: .7rem;
+  font-family: var(--font-sans);
+  font-size: .69rem;
+  letter-spacing: .13em;
+}
+.quickBriefCopy strong {
+  max-width: 37ch;
+  font-family: var(--font-sans);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 730;
+  letter-spacing: -.045em;
+  line-height: 1.17;
+}
+.quickBriefCopy p { max-width: 68ch; font-size: .93rem; line-height: 1.65; }
+
+.articleContent {
+  max-width: 49rem;
+  margin: 0 auto;
+  padding: clamp(2.2rem, 5vw, 3.6rem) 0 0;
+}
+.plainBody { max-width: 68ch; font-size: 1.07rem; line-height: 1.86; }
+.plainBody h2 {
+  font-family: var(--font-sans);
+  font-weight: 760;
+  letter-spacing: -.055em;
+}
+
+.railWidget {
+  gap: .3rem;
+  padding: .45rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  box-shadow: 0 7px 26px rgb(18 25 22 / 5%);
+}
+.backBtn { flex-direction: column; gap: .2rem; border-bottom: 1px solid var(--border-color); }
+.railActionBtn,
+.railShareBtn button {
+  justify-content: center;
+  border: 0;
+  border-radius: .55rem;
+}
+
+@media (max-width: 980px) {
+  .articleLayout { grid-template-columns: minmax(0, 58rem); }
+  .mobileActionBar {
+    gap: .25rem;
+    padding: .35rem;
+    background: color-mix(in srgb, var(--bg-elevated) 96%, transparent);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    box-shadow: 0 8px 30px rgb(0 0 0 / 14%);
+  }
+  .mobileActionBtn,
+  .mobileShareWrap button { border: 0; border-radius: 999px; }
+  .mobileActionBtn:hover,
+  .mobileActionBtn.bookmarked { background: var(--primary-subtle); }
+}
+@media (max-width: 640px) {
+  .page { padding: .85rem 0 6rem; }
+  .articleHeader {
+    min-height: 0;
+    gap: 0;
+    padding: 1.45rem 1.35rem 4.1rem;
+    border-radius: 1.1rem;
+  }
+  .articleHeader::before { top: -9rem; right: -21rem; }
+  .editionLine { margin-bottom: 2rem; font-size: .6rem; }
+  .editionLine > span:last-child { font-size: .62rem; }
+  .articleHeader .meta { gap: .45rem .55rem; margin-bottom: 1.4rem; font-size: .7rem; }
+  .articleHeader .meta :global(.evidence-badge) { flex-basis: auto; }
+  .articleHeader .title { max-width: 17ch; font-size: clamp(2.45rem, 9.9vw, 3.85rem); letter-spacing: -.066em; line-height: 1.055; }
+  .articleHeader .excerpt { font-size: .95rem; line-height: 1.58; }
+  .articleHeader .authorBar { padding-top: .9rem; }
+  .coverWrapper {
+    width: calc(100% - 1.5rem);
+    margin-top: -2.6rem;
+    border-width: 3px;
+    border-radius: .85rem;
+    box-shadow: 0 12px 24px rgb(14 31 29 / 15%);
+  }
+  .coverImage { aspect-ratio: 1.42 / 1; max-height: none; }
+  .quickBrief {
+    margin-top: 1.25rem;
+    padding: 1.15rem;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--bg-elevated) 90%, #c5d6c6 10%);
+  }
+  .quickBrief::before { top: .9rem; right: .9rem; width: 1.65rem; height: 1.65rem; font-size: 1rem; }
+  .quickBriefCopy { padding-right: 1rem; }
+  .quickBriefCopy p { font-size: .87rem; }
+  .articleContent { padding-top: 2rem; }
+  .plainBody { font-size: 1.02rem; line-height: 1.8; }
+}
