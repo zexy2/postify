@@ -61,3 +61,7 @@
 
 - Only `production` and `github-pages` GitHub environments are visible. A separate Supabase staging project may exist externally but is not configured/available here; remote OAuth/RLS/CRUD verification remains UNTESTED. The local staging checker cannot turn public GETs into a false auth PASS and rejects production explicitly.
 - Full visual inventory confirms Home/Article visibly altered editorial layout and many images differ; detailed screenshot review and owner acceptance remain mandatory before changing goldens. Do not infer 81 expected differences from 8 older baseline drift samples.
+
+## 2026-10-18 — Home design direction approved, precise goldens still mismatched
+
+- Dark editorial Home masthead direction received explicit product owner approval (CD-012). Four full Home screenshot references remain *pixel-level pending* despite conceptual approval: mobile full height differs by 589px; desktop by 430px. Unreviewed no-results/filter states and other 73 visual cases still require manual triage and targeted visual acceptance. CI visual NO-GO remains; no blanket snapshot refresh.

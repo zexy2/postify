@@ -884,3 +884,11 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Authored fail-closed read-only Supabase staging preflight which rejects the pinned production project reference before network access. Synthetic test cases confirmed missing config/production URL/untrusted host/ref-only stage cannot be mistaken for RLS pass (4/4 PASS).
 - Sorted all 81 screenshot differences: 49 dimensions,32 pixels; captured representative before/after Home, Article and Admin mobile, documented remaining human approval. No baseline screenshots updated. `design/VISUAL-REVIEW-INVENTORY-2026-10-18.md`.
 - Integrated 7 fail-closed release/staging safety tests into the standard `npm run verify` CI chain. A separate stage project and authentic A/B/C roles are still missing; staging acceptance plan documented with negative RLS, OAuth, storage, admin and knowledge scenarios.
+
+## 2026-10-18 — Explicit dark editorial Home concept acceptance
+
+- User approved the new dark editorial main-page hero from the desktop screenshot comparison. Logged restricted CD-012: design direction accepted, not all mobile/dark pixel references or 81 visual failures signed off, and no deployment/merge authorization.
+- Inspected light/dark 390px Home previews; increased full-page height 3273→3862px is being retained for visual review rather than auto-approved. A targeted Home cover test matrix guards light/dark and desktop/mobile contrast, search, featured and minimum CTA accessibility without rewriting golden PNGs.
+
+- After reproducing and correcting stale-preview test setup, a freshly built exact-current-source production preview passed the 4/4 editorial Home checks. Do not confuse a stale `docs/` preview failure with current Vite source behavior.
+- Local QA for CD-012 after fresh build: 64/64 Chromium (includes 4 newly added Home direction/contrast cases), 205/205 Vitest, 7/7 release safeguards, lint/PWA smoke/security pass; Oracle JUnit/Playwright reports imported. No screenshot goldens replaced, staging/auth and CI visual failures stay open.

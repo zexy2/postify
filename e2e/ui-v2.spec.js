@@ -14,6 +14,42 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
   throw new Error('Discovery feed did not stabilize');
 }
 
+// The product owner approved the dark editorial Home cover art direction on
+// 2026-10-18, NOT all 81 old visual golden references. Check the invariant
+// independently of whole-page screenshots in both themes and viewports.
+for (const theme of ['light', 'dark']) {
+  for (const width of [390, 1440]) {
+    test(`approved Home dark editorial cover in ${theme} theme at ${width}px remains legible`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 850 });
+      await page.addInitScript((nextTheme) => localStorage.setItem('postify_theme', nextTheme), theme);
+      await page.goto('/');
+      const cover = page.locator('section[class*="hero"]').first();
+      await expect(cover).toBeVisible();
+      await expect(cover).toHaveCSS('background-color', theme === 'light' ? 'rgb(31, 36, 32)' : 'rgb(34, 42, 38)');
+      const heading = cover.getByRole('heading', { level: 1 });
+      await expect(heading).toBeVisible();
+      const contrast = await heading.evaluate((element) => {
+        const rgb = (value) => [...value.matchAll(/[\d.]+/g)].slice(0, 3).map((match) => Number(match[0]) / 255);
+        const lum = (value) => rgb(value).map((channel) => channel <= 0.04045
+          ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+          .reduce((total, channel, index) => total + channel * [0.2126, 0.7152, 0.0722][index], 0);
+        const textLum = lum(getComputedStyle(element).color);
+        const bgLum = lum(getComputedStyle(element.closest('section')).backgroundColor);
+        return (Math.max(textLum, bgLum) + 0.05) / (Math.min(textLum, bgLum) + 0.05);
+      });
+      expect(contrast).toBeGreaterThanOrEqual(4.5);
+      await expect(cover.getByRole('searchbox')).toBeVisible();
+      const archive = cover.getByRole('link', { name: /Browse the library|Bilgi arşivine göz at/i });
+      await expect(archive).toBeVisible();
+      const archiveBounds = await archive.boundingBox();
+      expect(archiveBounds?.height || 0).toBeGreaterThanOrEqual(44);
+      await expect(cover.locator('a[href^="/posts/"]').first()).toBeVisible();
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(overflow).toBeLessThanOrEqual(1);
+    });
+  }
+}
+
 test.describe('Postify UI V2', () => {
   test('desktop discovery has the editorial hierarchy and practical navigation', async ({ page }) => {
     await page.goto('/');

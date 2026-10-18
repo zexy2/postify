@@ -290,3 +290,13 @@ Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve der
 **KRİTİK YETKİ AYRIMI (AÇIK KULLANICI KISITI):** Bu karar **SADECE tasarım ve QA PLANINI kesinleştirir**. Yeni arayüz henüz JSX/CSS'e **UYGULANMADI**; **testler bu turda ÇALIŞTIRILMADI**, push/deployment YAPILMADI. Her biri ayrıca açık kullanıcı izni bekler. Bu karar release acceptance veya WCAG 2.2 AA uygunluk beyanı değildir. Çalışan servisler, mevcut kullanıcı değişiklikleri ve kimlik bilgileri korunur.
 
 **PROTOKOL DURUMU:** **0–11 / 12 tasarım karar aşaması tamamlandı** (Aşama 11 yalnız **plan** onayıdır). Yeni bir tasarım aşamasına kendiliğinden geçilmez. **Sonraki adım: kullanıcının ayrı uygulama/test yürütme yetkisi vermesini bekle; dağıtım için ayrı izin.**
+
+## CD-012 — Yayın öncesi ana sayfa koyu editorial yönü onayı (2026-10-18)
+
+**Kullanıcının açık yanıtı:** “Onaylıyorum” — hemen önce gösterilen eski referans / yeni tasarım karşılaştırmasında sorulan **“sağda gördüğün koyu editorial ana sayfa tasarımını onaylıyor musun?”** sorusuna yanıt.
+
+**ONAYLANAN TASARIM YÖNÜ:** H-01 Issue Front ana sayfanın light temada bile **koyu editorial kapak/hero**, güçlü Fraunces masthead, üzerinde erişilebilir açık tipografi, ölçülü Oxide & Newsprint vurgu, belirgin keşif/arama CTA'sı ve entegre featured makale kompozisyonu **hedeflenen ana görsel yön olarak kabul edildi**. Önceki CD-003 PL-01, CD-004 TYPE-02, CD-005 G-01/G-02, CD-006 C-02, CD-007 H-01 ve QA-02/QA-03 kararları değiştirilmedi. Bu karar eski açık renkli Hero referansına dönmemek için bir yön rehberidir; kullanıcı tarafından **tüm sayfanın piksel piksel kabulü değildir**.
+
+**NET SINIRLAR:** Yalnızca ana sayfanın konsept/koyu editorial cover yönü onaylıdır. 390px mobil, 1440px masaüstü, TR/EN, dark/light, farklı veri/boş durumlar, gezinme, ana sayfa alt feed, font yüklemesi ve kontrast hedefleri **ayrıca test/görsel inceleme** ister. 81 başarısız CI görsel referansının, diğer 17 rota ekranlarının veya her bir Home snapshot'ının otomatik onayı değildir. Golden snapshot'lar **bu tasarım yönü onayından hareketle topluca güncellenmeyecek**; ayrı gerçek görüntü denetimi, duyarlı durum kabulü ve tam CI tekrarı gerekir. Prod `main` merge, push, staging DB veya deployment izni verilmedi.
+
+**GÜVENİLİR QA BAĞI:** `e2e/ui-v2.spec.js` gerçek işlevsel ana sayfada light/dark × 390/1440 için koyu hero tokenlarını, başlık kontrastını, arama/keşif/featured görünürlüğünü, en az 44px arşiv CTA yüksekliğini ve yatay taşma yokluğunu bağımsız test eder. Bu görsel konsept doğrulaması screenshot referans farklarını otomatik geçmiş saymaz. Karşılaştırmalar ve 81 fark envanteri `design/VISUAL-REVIEW-INVENTORY-2026-10-18.md` içindedir.
