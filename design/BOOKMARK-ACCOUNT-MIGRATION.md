@@ -22,3 +22,20 @@ On the protected `/bookmarks` route, a legacy recovery notice appears if the arc
 Final Node24 job `job-750a0a5f179d` (exit 0): **203/203 Vitest tests**, **60/60 Chromium UI E2E**, lint, PWA production build, build smoke (11 critical artifacts; 314022-byte main entry below 320000-byte budget), and security dependency audit (0 known vulnerabilities) passed. Separate Chromium functional legacy-import verification passed **2/2** at 320px and 1440px. Importing the JUnit/JSON reports into Oracle preserves these parsed results; importing them is not execution.
 
 The optional preexisting visual snapshot comparison run showed **4 baseline image mismatches**, and its first two import tests used a hardcoded TR-only locator while the browser was in EN; those two tests were corrected and separately passed. Existing baseline images were deliberately not overwritten. A build-time runtime-status recheck-required warning for a Node 24 patch version transition remains a separate release gate, not a failure of the automated dependency audit.
+
+## 2026-10-18 — Historical visual A/B and enlarged text reflow
+
+To separate visual reference drift from the account-shelf migration, four screenshot comparisons were run from **detached, read-only old `7743e51`** source in a temporary directory, and their results were compared with the current `96cbee0` screenshot baseline attempt. The four snapshot mismatches were *already present* on the older code and showed exactly the same expected→actual dimensions in both source versions:
+
+| Snapshot | Expected | Older 7743e51 actual | 96cbee0 actual |
+| --- | --- | --- | --- |
+| Empty bookmarks, desktop | 1440×700 | 1440×620 | 1440×620 |
+| Empty bookmarks, mobile | 390×591 | 390×422 | 390×422 |
+| Populated bookmarks, desktop | 1440×814 | 1440×746 | 1440×746 |
+| Populated bookmarks, mobile | 390×1052 | 390×1098 | 390×1098 |
+
+This supports **pre-existing baseline drift, not a newly introduced screenshot-size regression caused by bookmark scoping**. Exact pixel-level design acceptance still requires separate review; no reference images were changed.
+
+An extra 320px browser regression applying `html { font-size: 200% !important; }` to the legacy import screen originally found the empty shelf grid’s intrinsic sizing forced heading/panel/CTA outside the 320px viewport (button right edge ≈447px). CSS fixed the empty grid track with `minmax(0,1fr)`, allowed contained children to wrap, and bounded both the import and back actions. Targeted Chromium regression checks keyboard focus, Space checkbox, Enter to import, 44px button height and no off-viewport button/scroll overflow. **Three of three browser cases passed after the fix**. This is browser CSS font-size enlargement and is **not** native browser 200%/400% zoom or full assistive-technology WCAG certification.
+
+A new end-to-end in-memory `redux-persist` adapter test serializes A, B and guest bookmarks to the actual v2 persisted JSON, fully restarts a store, confirms each account’s shelf is restored only when that account is verified, and confirms guest isolation. Targeted test passed; the overall QA suite includes it.
