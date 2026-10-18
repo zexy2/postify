@@ -211,3 +211,10 @@
 - [x] Expanded isolated Xvfb true-Chromium 400% zoom harness to mocked Editor/Knowledge/Admin screens. **27/27** original native zoom route checks + **8/8** keyboard focus sequences (**124 sampled positions**) PASS, including Admin Users and Posts. No account credentials or server writes used.
 - [x] Admin existing responsive/visual comparison: two new 320px focus cases and existing tab arrow-key test pass. Four existing light/dark screenshot comparisons at 390px/1440px still fail identically on old `250b532` and current code (desktop 1184→1190 height, mobile 1379→1398). **Keep visual baseline acceptance OPEN; no snapshots updated.**
 - [ ] These fake-service browser fixtures do not establish production author/admin accessibility or Supabase permissions. Manual AT/WCAG2.2AA, protected staging role/RLS tests, image baseline visual signoff, field CWV and mobile Lighthouse performance remain unfinished.
+
+## 2026-10-18 — Mobile menu initial-load/on-demand experiment rejected
+
+- [x] Built old `5ae3813` and deferred-Sheet candidate separately and compared **three alternating Lighthouse 13.5 mobile pairs**. Median score **59→60**, FCP **3860→3341ms**, LCP **4727→4343ms**, TBT **594→746ms**. Candidate initially sent 13,544 fewer JS bytes but degraded interactive menu latency.
+- [x] Actual CDP lab 4× CPU/150ms RTT + constrained throughput, three cold-context first-menu samples: baseline median **423ms** versus candidate **1382ms**. On-demand experiment therefore **reverted entirely**, keeping original Header and prewarmed E2E acceptance. No measured mobile performance release success claimed.
+- [x] New read-only `scripts/qa/mobile-menu-startup.mjs` local production-preview QA guard: prewarmed baseline **3/3 PASS**, rejected experiment **3/3 expected FAIL**, no user data or external services. Full reproducibility and limitations in `design/MOBILE-MENU-PERFORMANCE-AUDIT-20261018.md`.
+- [ ] Genuine field p75 LCP/INP/CLS, statistically reliable mobile Lighthouse performance gains and safe React startup/main-thread optimizations remain open. No push/deployment.

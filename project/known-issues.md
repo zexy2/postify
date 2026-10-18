@@ -43,3 +43,7 @@
 
 - The 320px Admin sticky table column covered keyboard-focused controls at real 400% zoom; fixed locally with a ≤360px scoped responsive fallback and confirmed by two RED→GREEN Playwright regressions. The 390px/1440px Admin screenshot snapshots still differ from runtime in exactly the same way on the old `250b532` source (4/4 reference mismatches); these **pre-existing** visual baselines remain unapproved.
 - The protected Editor/Knowledge/Admin focus tests are bounded **fake-service** samples: real RLS/permission checks and full authenticated screen reader/WCAG2.2 AA signoff remain open.
+
+## 2026-10-18 — Unresolved mobile startup performance with interaction trade-off
+
+- Safe-looking initial Sheet deferral saved ~13.5KB JS but increased throttled mobile first-menu latency from 423ms to 1382ms median and TBT from 594ms to 746ms despite some FCP/LCP improvements in three-pair Lighthouse. Experiment was fully reverted. React startup evaluation, style/layout and field CWV p75 remain open; do not claim Lighthouse performance acceptance based on one favorable run. See design/MOBILE-MENU-PERFORMANCE-AUDIT-20261018.md.

@@ -860,3 +860,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Reproduced Admin Users and Posts sticky-first-column obstruction at 320 CSS px in real native 400% Chromium and with two failing E2E tests from old detached `250b532` source. Made sticky first cells static only at widths ≤360px. New functional E2E 2/2 and bounded true-zoom Admin Tab focus 2/2 pass.
 - Extended native 400% focus sampling to editor, knowledge and admin: 8/8 sequences, 124 sampled focus positions; previous route zoom geometry 27/27 still passes. This is isolated fake-service QA, not manual AT or authenticated staging.
 - Reproduced four pre-existing Admin visual snapshot mismatches identically on old and fixed source (390 and 1440, light/dark). Preserved reference screenshots; visual approval still open.
+
+## 2026-10-18 — Mobile load versus interaction experiment, no product change accepted
+
+- Fair rebuild of baseline Git `5ae3813` versus deferred mobile menu module candidate, Lighthouse mobile A/B three alternating pairs: median performance 59→60, FCP3860→3341ms, LCP4727→4343ms, TBT594→746ms. Under constrained network/4× CPU, initial menu median 423→1382ms; rejected candidate and restored the original prewarm code and test.
+- Added `scripts/qa/mobile-menu-startup.mjs`, three-run local-only prewarm and first-menu responsiveness guard. Existing prewarmed bundle 3/3 PASS; rejected candidate 3/3 FAIL as expected. Performance release gate stays open, full methods and invalid initial unpaired exploratory scores documented in design.
