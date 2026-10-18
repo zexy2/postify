@@ -877,3 +877,10 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - User asked when Postify redesign will launch; Oracle plan revised *in the same run/worktree* from implementation cleanup to five bounded release preparation/approval stages. Production custom domain responds HTTP200, release identity `cba2c86`; local redesigned HEAD a6a6f09 was 64 commits ahead of main (no main-only changes).
 - Full visual regression gate, rather than a small sample, is now measured: **34/115 PASS and 81/115 FAIL**, all screenshot mismatches (49 size,32 pixel). CI runs this gate before the `main`-only automatic Pages deploy. Existing unit Chromium/source security passed, but publication is blocked.
 - Created fail-closed read-only `scripts/qa/release-preflight.mjs` plus node:test coverage, and explicit owner approval/staging/WCAG/performance/rollback ledger in `design/RELEASE-GO-NOGO-2026-10-18.md`. Production capability artifact read-only `ready:false`; backend truth still needs staging verification. No push/merge/deployment.
+
+## 2026-10-18 — Staging availability and visual design triage
+
+- Github repository environment names (read only): `github-pages`, `production`. No known staging Supabase URL/anon key in local process; no staging auth tests were run and production DB untouched.
+- Authored fail-closed read-only Supabase staging preflight which rejects the pinned production project reference before network access. Synthetic test cases confirmed missing config/production URL/untrusted host/ref-only stage cannot be mistaken for RLS pass (4/4 PASS).
+- Sorted all 81 screenshot differences: 49 dimensions,32 pixels; captured representative before/after Home, Article and Admin mobile, documented remaining human approval. No baseline screenshots updated. `design/VISUAL-REVIEW-INVENTORY-2026-10-18.md`.
+- Integrated 7 fail-closed release/staging safety tests into the standard `npm run verify` CI chain. A separate stage project and authentic A/B/C roles are still missing; staging acceptance plan documented with negative RLS, OAuth, storage, admin and knowledge scenarios.

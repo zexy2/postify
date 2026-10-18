@@ -56,3 +56,8 @@
 
 - Required `.github/workflows/ci.yml` visual suite currently **81/115 screenshot failures**, with 49 geometry/dimension mismatches and 32 pixel mismatches. Only individual pre-migration Admin/Bookmark examples have been independently shown to be old baseline drift; do not presume all 81 harmless. Current full CI would not authorize main publication.
 - Staging Supabase identity/RLS/CRUD with synthetic data, manual screen-reader/WCAG2.2AA, field mobile CWV/performance target and explicit publication/rollback approval remain pending. Public production capability artifact `ready:false` is stale or backend-not-ready until authenticated verification; read-only production source remains `cba2c86`.
+
+## 2026-10-18 — Staging environment is not connected
+
+- Only `production` and `github-pages` GitHub environments are visible. A separate Supabase staging project may exist externally but is not configured/available here; remote OAuth/RLS/CRUD verification remains UNTESTED. The local staging checker cannot turn public GETs into a false auth PASS and rejects production explicitly.
+- Full visual inventory confirms Home/Article visibly altered editorial layout and many images differ; detailed screenshot review and owner acceptance remain mandatory before changing goldens. Do not infer 81 expected differences from 8 older baseline drift samples.
