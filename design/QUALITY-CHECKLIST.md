@@ -311,3 +311,9 @@
 - [x] Alternating Lighthouse13.5 mobile A/B across six local production-preview runs: control median **58 / LCP 4,848ms / TBT 590ms**; feed content-visibility candidate **60 / 4,745ms / 574ms**, but third candidate run regressed to score 54 and unrendered rows caused **184px initial page-height shift**. **Candidate completely reverted**. Evidence `job-d260180207b8` and `job-212d87011803`.
 - [x] A real mobile footer trust-label clipping defect was reproduced before the fix in Turkish and English at 320/390px. Only narrow CSS wrapping changed; four new precise label/cell geometry browser tests passed **4/4**, full product Chromium suite **68/68** (`job-490b64370c70`). Details in `design/MOBILE-FEED-AB-AND-FOOTER-REFLOW-2026-10-18.md`.
 - [ ] This fix does not sign off global WCAG, 81 visual snapshot approvals, staging real authentication/RLS, field CWV or production release. **NO-GO** unchanged.
+
+## 2026-10-18 — Supabase startup lazy-loading experiment (not accepted)
+
+- [x] Split config-only flag and defer auth service/offline fallback post-service imports in experimental branch; existing mocked auth/post target suite **28/28**; local desktop/mobile text, post count and scroll behavior remained functional. Browser still fetched shared Supabase vendor dependency; JS transfer saved **4,817 bytes**, not the intended ~40KB (`job-c7eae9e23f3d`).
+- [x] Alternating mobile Lighthouse13.5 A/B pairs, three per side: control median **59 / FCP 3,845ms / LCP 4,705ms / TBT 578ms**; candidate **58 / 3,412ms / 4,532ms / 774ms**. Candidate slowed main-thread blocking by **196ms** and decreased overall score: **REJECTED; all experimental source files reverted** (`job-6da42cec46f8`). Details in `design/MOBILE-SUPABASE-LAZY-AB-2026-10-18.md`.
+- [ ] Production remains **NO-GO**: do not claim mobile CWV improvement or provider-backed staging auth/RLS validation.

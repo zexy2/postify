@@ -943,3 +943,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Controlled three alternating Lighthouse A/B pairs produced only small/noisy gains from `content-visibility:auto` on offscreen feed cards; explicit browser geometry found a 184px initial page-height jump, so the experimental CSS was **reverted**. No premature performance success or release clearance claimed (`job-d260180207b8`, `job-212d87011803`).
 - Found real clipped trust-label at 320/390px for both locales; mobile-only CSS `overflow-wrap:anywhere` + four new permanent browser assertions for visible label and cell bounds. Targeted **4/4** and complete **68/68** Chromium PASS (`job-490b64370c70`). See design/MOBILE-FEED-AB-AND-FOOTER-REFLOW-2026-10-18.md. Main untouched; release still NO-GO.
+
+## 2026-10-18 — Rejected offline SDK lazy-load candidate
+
+- Source40fa398 controlled experiment extracted a Supabase config flag and dynamically imported auth service / skipped post-service loading when backend absent. Existing 28 targeted auth/post tests and bounded browser UI/scroll parity passed, but the shared SDK chunk still transferred, saving only ~4.8KB first-load JavaScript.
+- Three alternating Lighthouse pairs: control median59, FCP3845ms LCP4705ms TBT578ms; candidate median58, FCP3412ms LCP4532ms TBT774ms. **TBT regression ~196ms** and worse overall score -> **full experimental revert**; no app-source change retained. Oracle jobs job-c7eae9e23f3d and job-6da42cec46f8; details `design/MOBILE-SUPABASE-LAZY-AB-2026-10-18.md`. Production stays NO-GO.
