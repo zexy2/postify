@@ -38,3 +38,11 @@ Optionally set `NATIVE_ZOOM_CHROME` if the system binary path differs. The scrip
 
 - Four existing bookmark screenshot baseline geometry mismatches were independently reproduced on the older `7743e51` source before the account-scope refactor, and remain awaiting visual review/approval; the zoom results do not resolve pixel-level baseline acceptance.
 - Complete manual native zoom 200/400 across all interactive authenticated/editor/admin pages, screen reader/focus review, real Supabase RLS/OAuth/CRUD, field p75 CWV and paired mobile Lighthouse improvements remain release gates.
+
+## 2026-10-18 — Settled keyboard focus at genuine 400% zoom
+
+The X11/headed Chromium harness now navigates real `Tab` key sequences on four sample routes **after allowing CSS focus transitions to finish (235ms per focus step)**. An earlier exploratory sample taken ~55ms after Tab showed the skip link above the viewport; a direct animation-timeline probe demonstrated that the skip link becomes visible after its ~160ms transform transition. That early sample was a **timing false positive**, not a persistent hidden skip link. The source CSS was not changed on that basis.
+
+The settled native 400% scan passed **4/4 sequences / 81 sampled positions**: Login 24, Home 48 (bounded traversal, not an exhaustive enumeration of all home controls), Legacy Bookmarks 2, Populated Bookmarks 7. Each sampled focused element matched `:focus-visible`, intersected the visual viewport and was not obscured at the sampled visible-area midpoint. A Home card larger than the 200px viewport was partially visible rather than completely obscured, which is expected for content taller than the viewport. Focus-not-obscured automation does **not** establish focus indicator contrast/area or complete WCAG 2.2 compliance. Screen readers, authenticated production accounts, manual visual focus traversal and touch zoom remain unverified.
+
+The reproducible test now produces `focusRuns` beside the existing 27 native zoom/semantic states in its JSON report. Execution requires an expressly isolated Xvfb environment (`NATIVE_ZOOM_ISOLATED_XVFB=1`), which prevents sending OS-level keystrokes to a normal interactive desktop session.

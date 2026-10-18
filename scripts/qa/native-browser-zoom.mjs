@@ -34,6 +34,7 @@ const browser = await chromium.launch({
 const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1, locale: 'en-US' });
 const page = await context.newPage();
 const results = [];
+const focusRuns = [];
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 
@@ -58,6 +59,51 @@ const pressNativeZoom = async (steps) => {
 };
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
+};
+
+// Tab through *visible real controls* after browser native zoom settles.
+// Allow CSS focus transitions to finish (skip link takes 160ms); do not
+// mistake a transient animation frame for a persistently hidden focus.
+const auditTabSequence = async (name, route, limit, minItems) => {
+  await page.goto(new URL(route, origin).href, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(280);
+  await page.evaluate(() => {
+    document.activeElement?.blur();
+    window.__postifyQaFocused = new WeakSet();
+  });
+  const issues = [];
+  let count = 0;
+  for (let i = 0; i < limit; i += 1) {
+    await page.keyboard.press('Tab');
+    await page.waitForTimeout(235);
+    const entry = await page.evaluate(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body || el === document.documentElement) return null;
+      if (window.__postifyQaFocused.has(el)) return { repeated: true };
+      window.__postifyQaFocused.add(el);
+      const rect = el.getBoundingClientRect();
+      const left = Math.max(0, rect.left), right = Math.min(innerWidth, rect.right);
+      const top = Math.max(0, rect.top), bottom = Math.min(innerHeight, rect.bottom);
+      const visible = right > left && bottom > top;
+      let occluded = false;
+      if (visible) {
+        const above = document.elementFromPoint((left + right) / 2, (top + bottom) / 2);
+        occluded = Boolean(above && !el.contains(above) && !above.contains(el));
+      }
+      return {
+        tag: el.tagName,
+        name: (el.getAttribute('aria-label') || el.textContent || el.id || '').trim().slice(0, 64),
+        visible, occluded, focusVisible: el.matches(':focus-visible'),
+      };
+    });
+    if (!entry || entry.repeated) break;
+    count += 1;
+    if (!entry.visible || entry.occluded || !entry.focusVisible) issues.push({ index: i, ...entry });
+  }
+  const pass = count >= minItems && issues.length === 0;
+  focusRuns.push({ name, zoom: '400%', checkedControls: count, issues, pass });
+  console.log(`${pass ? 'PASS' : 'FAIL'} 400% ${name} keyboard Tab focus: ${count} controls, ${issues.length} hidden/obscured/no-focus-ring`);
+  if (!pass) errors.push(`${name} native 400% focus audit: ${count} controls (min ${minItems}), issues ${JSON.stringify(issues)}`);
 };
 
 try {
@@ -115,11 +161,15 @@ try {
       await page.locator('article').first().waitFor();
       assert(await page.locator('article').count() === 2, '400% keyboard import did not restore both archived entries');
       console.log('PASS 400% legacy import: keyboard Space + Enter, 44px target, no clipping');
+      await auditTabSequence('login', '/auth/login', 34, 12);
+      await auditTabSequence('home', '/', 48, 18);
+      await auditTabSequence('bookmark-legacy', '/e2e/visual/bookmarks-legacy.html', 12, 2);
+      await auditTabSequence('bookmark-populated', '/e2e/visual/bookmarks-auth.html', 24, 5);
     }
   }
 } finally {
-  writeFileSync(reportPath, JSON.stringify({ results, errors }, null, 2));
+  writeFileSync(reportPath, JSON.stringify({ results, focusRuns, errors }, null, 2));
   await browser.close();
 }
-console.log(`Native browser zoom release audit: ${results.filter((r) => r.pass).length}/${results.length} route states, ${errors.length} page errors. Report ${reportPath}`);
+console.log(`Native browser zoom release audit: ${results.filter((r) => r.pass).length}/${results.length} route states, ${focusRuns.filter((r) => r.pass).length}/${focusRuns.length} keyboard focus sequences, ${errors.length} failures. Report ${reportPath}`);
 if (errors.length) process.exitCode = 1;

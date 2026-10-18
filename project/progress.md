@@ -848,3 +848,9 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - 27/27 route/zoom state checks had no document horizontal scroll overflow or missing main/h1; login keyboard focus and legacy import checkbox/Enter at native 400% passed. Details: `design/NATIVE-BROWSER-ZOOM-QA.md`.
 - Oracle final QA remains open (manual accessibility, server-staging auth/RLS, visual reference approval, field CWV and mobile performance). Work is isolated to local QA code, no push or deployment.
 - Source verification on the same isolated branch: job `job-880c165a4f4a` exit0 (Vitest204/204, Chromium UI60/60, lint/build/smoke/audit pass); real browser native zoom 27/27 also independently passed with explicit DPR and viewport checks. Evidence reports imported to Oracle final QA phase.
+
+## 2026-10-18 — Native 400% keyboard focus QA extension
+
+- Extended `scripts/qa/native-browser-zoom.mjs` to scan real Tab order after focus animations complete; checked 81 sampled focus positions on four routes (Login24, Home48, legacy bookmark import2, populated bookmarks7). All four sampled sequences pass in genuine Chromium 400% zoom, with visible `:focus-visible` state and no fully hidden/midpoint-obscured focus.
+- The skip-link top-offset warning in the first ~55ms exploratory scan was reproduced as an animation-timing artifact; after 160ms transition it enters view, so no faulty 'fix' was made.
+- Script remains restricted to explicit, separate Xvfb display. Full WCAG manual / staging / design / CWV gates remain open; no push/deployment.
