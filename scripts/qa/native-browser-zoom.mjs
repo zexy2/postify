@@ -64,13 +64,19 @@ const assert = (condition, message) => {
 // Tab through *visible real controls* after browser native zoom settles.
 // Allow CSS focus transitions to finish (skip link takes 160ms); do not
 // mistake a transient animation frame for a persistently hidden focus.
-const auditTabSequence = async (name, route, limit, minItems) => {
+const auditTabSequence = async (name, route, limit, minItems, { adminTab = null } = {}) => {
   await page.goto(new URL(route, origin).href, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(280);
+  if (adminTab !== null) {
+    await page.getByRole('tab').nth(adminTab).click();
+    await page.locator('[class*=tableWrap]').waitFor();
+  }
   await page.evaluate(() => {
     document.activeElement?.blur();
     window.__postifyQaFocused = new WeakSet();
   });
+  // Begin within the labeled horizontal-scroll region on admin tables.
+  if (adminTab !== null) await page.locator('[class*=tableWrap]').focus();
   const issues = [];
   let count = 0;
   for (let i = 0; i < limit; i += 1) {
@@ -165,6 +171,10 @@ try {
       await auditTabSequence('home', '/', 48, 18);
       await auditTabSequence('bookmark-legacy', '/e2e/visual/bookmarks-legacy.html', 12, 2);
       await auditTabSequence('bookmark-populated', '/e2e/visual/bookmarks-auth.html', 24, 5);
+      await auditTabSequence('editor', '/e2e/visual/editor.html', 55, 12);
+      await auditTabSequence('knowledge', '/e2e/visual/knowledge-auth.html', 30, 3);
+      await auditTabSequence('admin-users', '/e2e/visual/admin-auth.html', 12, 4, { adminTab: 1 });
+      await auditTabSequence('admin-posts', '/e2e/visual/admin-auth.html', 18, 9, { adminTab: 2 });
     }
   }
 } finally {

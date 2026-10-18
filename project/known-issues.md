@@ -38,3 +38,8 @@
 - Native Chromium zoom was sampled automatically for nine routes at 100/200/400 (27/27 pass) using a new OS-level zoom harness. **Manual screen-reader testing, complete focus order, focus-not-obscured and all authenticated/editor/admin flows are NOT signed off**; do not claim full WCAG 2.2 AA conformance.
 - Four empty/populated bookmark pixel snapshot mismatches predate the account migration (confirmed same dimensions at source commit `7743e51`). Keep the visual reference review gate open; no mass screenshot update.
 - OAuth, authorization/RLS, profile/storage and CRUD using nonproduction Supabase accounts remain untested in this isolated QA phase. Mobile Lighthouse startup, field p75 Core Web Vitals and final visual review are still open; no push/deploy.
+
+## 2026-10-18 — Admin snapshot drift and manual focus acceptance
+
+- The 320px Admin sticky table column covered keyboard-focused controls at real 400% zoom; fixed locally with a ≤360px scoped responsive fallback and confirmed by two RED→GREEN Playwright regressions. The 390px/1440px Admin screenshot snapshots still differ from runtime in exactly the same way on the old `250b532` source (4/4 reference mismatches); these **pre-existing** visual baselines remain unapproved.
+- The protected Editor/Knowledge/Admin focus tests are bounded **fake-service** samples: real RLS/permission checks and full authenticated screen reader/WCAG2.2 AA signoff remain open.

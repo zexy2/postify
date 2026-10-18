@@ -525,6 +525,18 @@
   }
 }
 
+/* At a 320 CSS-pixel viewport (400% zoom on 1280), the frozen first
+   table column hides focused controls in adjacent columns. Let the entire
+   table scroll horizontally instead; its labeled region remains keyboard
+   scrollable, and wider mobile layouts retain the contextual sticky cell. */
+@media (max-width: 360px) {
+  .table th:first-child,
+  .table td:first-child {
+    position: static;
+    z-index: auto;
+  }
+}
+
 .serverOnly {
   display: inline-flex;
   width: max-content;

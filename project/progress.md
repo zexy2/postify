@@ -854,3 +854,9 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 - Extended `scripts/qa/native-browser-zoom.mjs` to scan real Tab order after focus animations complete; checked 81 sampled focus positions on four routes (Login24, Home48, legacy bookmark import2, populated bookmarks7). All four sampled sequences pass in genuine Chromium 400% zoom, with visible `:focus-visible` state and no fully hidden/midpoint-obscured focus.
 - The skip-link top-offset warning in the first ~55ms exploratory scan was reproduced as an animation-timing artifact; after 160ms transition it enters view, so no faulty 'fix' was made.
 - Script remains restricted to explicit, separate Xvfb display. Full WCAG manual / staging / design / CWV gates remain open; no push/deployment.
+
+## 2026-10-18 — 400% workbench keyboard obstruction repaired locally
+
+- Reproduced Admin Users and Posts sticky-first-column obstruction at 320 CSS px in real native 400% Chromium and with two failing E2E tests from old detached `250b532` source. Made sticky first cells static only at widths ≤360px. New functional E2E 2/2 and bounded true-zoom Admin Tab focus 2/2 pass.
+- Extended native 400% focus sampling to editor, knowledge and admin: 8/8 sequences, 124 sampled focus positions; previous route zoom geometry 27/27 still passes. This is isolated fake-service QA, not manual AT or authenticated staging.
+- Reproduced four pre-existing Admin visual snapshot mismatches identically on old and fixed source (390 and 1440, light/dark). Preserved reference screenshots; visual approval still open.
