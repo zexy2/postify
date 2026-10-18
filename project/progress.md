@@ -923,3 +923,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Six separate discovery/nav historic screenshot variants rerun: **6/6 screenshot-only FAIL**; initial premature failure from Chromium 43.999969px measurement corrected in test to 0.01 CSS-pixel precision while retaining 44px target. No runtime CSS/source app modifications or golden rewrites.
 - Added 9 responsive, keyboard, search-reset and filter URL-state interaction tests: **9/9 PASS**. Full regression **205/205 Vitest**, **64/64 Chromium**, 7 release guards/lint/build/security PASS. Oracle events unit ev-ad635ebe396576600cd3, Chromium ev-27aa86478ad480985438, behavior ev-86ab051ad197a86813ec, failed visual ev-7a67c4e74b1564f0d633. Release still NO-GO.
+
+## 2026-10-18 — Auth and error-screen release QA
+
+- Reclassified 15 Auth/errors and 2 Admin recovery historical screenshot mismatches as image-only, not final visual approvals. New 12-case Login/Register/Forgot/Reset 320/390/1440 invalid-form/keyboard/touch test caught a real desktop recovery-link height **19.796875px** (2 RED), then passed **12/12** after moving existing mobile 44px link rule to global recovery styles. No network/auth provider or DB changes.
+- Final Auth safe-QA evidence Oracle: recovery invalid-form 10/12 RED `ev-3412507964aa6c2abd1c` -> 12/12 GREEN `ev-b211e8142af75f0b1998`; Vitest205/205 `ev-fffe532b78ba14954e1c`; Chromium64/64 `ev-02bec0a27e74030fb065`; release guards7/lint/build/security PASS. Visual-only failures from 17 selected original references `ev-76ffa57187a43dafce0b`, 4 post-fix screenshots `ev-5564710319bf730b380e`; no goldens rewritten or runtime auth logic changed.

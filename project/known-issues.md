@@ -85,3 +85,7 @@
 ## 2026-10-18 — Six Home discovery/nav visual references still unaccepted
 
 - Historic Home no-results desktop/mobile, advanced filter popover desktop/mobile, mobile menu drawer and command palette snapshot expectations are **six distinct screenshot mismatch failures**. New functional 9/9 test matrix proves limited responsive/keyboard behavior but does NOT approve their images. Initial 44px menu close false alarm due to Chromium floating-point representation was fixed in test precision, not by reducing hit area. Screenshot CI release blocker stays open alongside owner approval for proposed About/Contact and real staging/WCAG/performance gates.
+
+## 2026-10-18 — Auth/error screenshot acceptance separate from recovery link fix
+
+- Auth and error screens retain 15 historical pixel-difference golden mismatches (plus two Admin error goldens sampled separately); their color/font/layout changes have not been owner-accepted as precise visual goldens. Desktop forgot/reset back-to-login 19.8px touch area was a **confirmed functional issue**, fixed at local source via shared min-height44px CSS and browser RED/GREEN tests. This does not clear genuine staging OAuth/RLS, screen-reader accessibility or other release blockers.

@@ -285,3 +285,10 @@
 - [x] Re-tested the six non-hero Home discovery and navigation screenshot differences: **0/6 visuals pass, all screenshot-only** after handling Chromium 43.999969px CSS subpixel measurement with 0.01px normalization while retaining 44px requirement. No snapshot baselines altered.
 - [x] Added nine behavior-first release tests spanning search reset, advanced sorting/filter persistence, keyboard Escape/focus restoration, mobile drawer/command menu 44px controls, short viewport reflow: **9/9 PASS**. Full regression 205 Vitest, 64 product Chromium, guards7, lint/build/security PASS. See `design/DISCOVERY-NAVIGATION-VISUAL-REVIEW-2026-10-18.md`.
 - [ ] Product owner visual approval for these six screenshot variants remains open; no blanket screenshot refresh or deployment.
+
+## 2026-10-18 — Authentication and recovery functional QA
+
+- [x] Classified 15 historic Auth/errors screenshots (and 2 incidentally matched Admin error screens) as image-comparison failures, NOT functionality approval. Old sitewide visual CI remains **81 screenshot mismatches**.
+- [x] Added 12-case safe, invalid-input-only browser matrix across Login/Register/Forgot/Reset × 320/390/1440 with focus, described errors, password show/hide, 44px and overflow checks. Initial **10/12**, exposing both desktop recovery links **19.796875px** high; scoped CSS fix ensures 44px at all widths; exact test rerun **12/12 PASS**.
+- [ ] Historic 15 auth/error golden screenshots are still unaccepted. Real OAuth session and actor RLS require isolated staging; manual assistive-technology WCAG and production deployment authorization remain open. See `design/AUTH-RECOVERY-ERROR-VISUAL-QA-2026-10-18.md`.
+- [x] RED/GREEN imported for recovery link fix: 10/12→12/12, full Vitest205, product Chromium64, guards7, lint/build/security pass. Old 15 auth/error screenshots (+2 Admin) fail on pixels only, and post-fix 4 recovery screenshot rechecks still fail only on imagery. Oracle evidence `ev-3412507964aa6c2abd1c`, `ev-b211e8142af75f0b1998`, `ev-fffe532b78ba14954e1c`, `ev-02bec0a27e74030fb065`, failed images `ev-76ffa57187a43dafce0b`, `ev-5564710319bf730b380e`.
