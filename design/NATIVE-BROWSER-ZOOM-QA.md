@@ -25,13 +25,14 @@ npm run dev -- --host 127.0.0.1 --port 4414 --strictPort
 In the other isolated VM terminal:
 
 ```sh
+NATIVE_ZOOM_ISOLATED_XVFB=1 \
 NATIVE_ZOOM_BASE_URL=http://127.0.0.1:4414 \
 NATIVE_ZOOM_REPORT=/tmp/postify-native-browser-zoom.json \
 xvfb-run -a --server-args='-screen 0 1600x1050x24' \
 node scripts/qa/native-browser-zoom.mjs
 ```
 
-Optionally set `NATIVE_ZOOM_CHROME` if the system binary path differs. The script rejects non-local addresses and non-Linux/missing DISPLAY, requires actual zoom DPR/viewport changes, prints per-route results, emits a JSON report, and exits nonzero on any measured failure. Results are lab samples of the isolated current source tree, not live production evidence. No screenshot baseline images were modified, no Supabase accounts used and no deployment/push performed.
+Optionally set `NATIVE_ZOOM_CHROME` if the system binary path differs. The script rejects non-local addresses, non-Linux/default desktop displays and missing explicit `NATIVE_ZOOM_ISOLATED_XVFB=1`, requires actual zoom DPR/viewport changes, prints per-route results, emits a JSON report, and exits nonzero on any measured failure. Results are lab samples of the isolated current source tree, not live production evidence. No screenshot baseline images were modified, no Supabase accounts used and no deployment/push performed.
 
 ## Remaining blockers
 

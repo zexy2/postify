@@ -11,8 +11,10 @@ import { writeFileSync } from 'node:fs';
 
 const baseURL = process.env.NATIVE_ZOOM_BASE_URL || 'http://127.0.0.1:4414';
 const origin = new URL(baseURL);
-if (!['localhost', '127.0.0.1'].includes(origin.hostname) || process.platform !== 'linux' || !process.env.DISPLAY) {
-  throw new Error('Native zoom QA requires a localhost server and dedicated Linux/X11 DISPLAY');
+if (!['localhost', '127.0.0.1'].includes(origin.hostname) || process.platform !== 'linux' ||
+    !process.env.DISPLAY || process.env.DISPLAY.startsWith(':0') ||
+    process.env.NATIVE_ZOOM_ISOLATED_XVFB !== '1') {
+  throw new Error('Native zoom QA requires localhost and explicitly authorized dedicated Xvfb display (NATIVE_ZOOM_ISOLATED_XVFB=1)');
 }
 const browserPath = process.env.NATIVE_ZOOM_CHROME || '/usr/bin/chromium-browser';
 const reportPath = process.env.NATIVE_ZOOM_REPORT || '/tmp/postify-native-browser-zoom.json';
