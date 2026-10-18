@@ -958,3 +958,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Recorded two real 4× CPU Chromium CDP startup timelines (~1.6s longest task; ~1.8s combined UpdateLayoutTree/Layout events) and mapped V8 samples with local sourcemaps to React DOM, `useScrollAnchorTransition` and `App`. No conclusive causal root cause yet; diagnostic proof documented in `design/MOBILE-CPU-TRACE-AND-ANCHOR-GUARD-2026-10-19.md`.
 - Tried safe `App` savePosition scroll-at-top guard: first-load feed-card DOM measurements **8→0** and scrolled/back navigation parity at 320/390px preserved, but six Lighthouse runs kept performance score59 with slightly worse LCP/TBT; first menu 3/3 each passed. Experiment **fully reverted**, no accepted app optimization. Oracle jobs `job-1d8f131f398b`, `job-2060df250e35`, `job-de3d2a8c8cfb`; production still NO-GO.
+
+## 2026-10-19 — Found and corrected generated-data A/B confounder
+
+- Major QA finding: prior control sources from `git archive` lacked ignored release/runtime verification and 18 generated knowledge data files which the candidate worktree included. Featured proof badge differed and shifted layout 16–17px. Historic A/B deltas are **not code-isolated**; previous non-deployment decisions remain conservative and valid.
+- Added automated build-runtime data parity preflight (`scripts/qa/assert-runtime-artifact-parity.mjs` + 4 tests + npm command) to prevent this comparison flaw. Synchronized only temporary test fixtures: 56 files equal, 538 DOM elements identical. Repeated observer A/B with parity: 59→59 score; TBT580→553ms but FCP/LCP worsened; rejected candidate and restored app source. Full record `design/MOBILE-RUNTIME-ARTIFACT-PARITY-2026-10-19.md`; release still NO-GO.

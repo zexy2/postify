@@ -34,6 +34,7 @@
     "export:knowledge": "node scripts/export-supabase-knowledge.mjs",
     "verify:security": "node scripts/verify-release-security.mjs",
     "verify:release-guards": "node --test scripts/qa/*.test.mjs",
+    "verify:ab-runtime-parity": "node scripts/qa/assert-runtime-artifact-parity.mjs",
     "runtime:status": "node scripts/refresh-runtime-status.mjs",
     "test:e2e:visual": "playwright test -c playwright.visual.config.js"
   },
