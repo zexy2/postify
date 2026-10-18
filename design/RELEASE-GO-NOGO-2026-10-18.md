@@ -42,3 +42,9 @@ This tool is **read-only except for an explicit JSON output under `/tmp`**. It r
 ## Visual CI retest update — 2026-10-18
 
 After six new non-screenshot Article/Author release layout checks were included, the CI-equivalent Chromium visual suite was rerun in full: **40/121 pass, 81/121 fail**, all 81 failures remain screenshot comparisons. The historical 34/115 figures above refer to the earlier configuration and are not the latest suite total. The exact source test report `ev-c6d90a4407b920a7bd69` remains a **failed release gate**. Staging, manual WCAG and owner deployment approval unchanged and still pending.
+
+## Editor and Knowledge QA addendum — 2026-10-18
+
+Additional local review sampled **14 Editor/Knowledge** historic screenshot cases: **0/14 pass**, all failures at image comparison after preceding route/accessibility assertions. They form a *subset* of the legacy mismatch backlog; do **not** add 14 to the recorded all-site total of 81. Owner has not approved replacement screenshots. A new independently executed local 11-scenario behavior matrix exposed 38px Knowledge edit/reverify desktop hit targets (RED **9/11**), and the minimum 44px CSS-only correction passed the exact rerun **11/11**, both under Oracle evidence (`ev-2b92ea02ed990b066b44` and `ev-58fd24a0176ae6f1f886`). These fixture scenarios do **not** test real staging Supabase identity, RLS or writes. Production decision remains **NO-GO**.
+
+Local follow-up: source-correct preview after direct Vite rebuild gave Chromium **64/64 PASS**, Vitest **205/205**, guards/lint/security PASS (Oracle `ev-675c5b472205160dc22e`). The earlier product 7/64 failure was caused by the checked-in old `docs/` build being used by Playwright's `preview` server; that failed run remains preserved (`ev-c4f8e9c587cf58107e06`). Since the rebuild bypassed required Node24 `prebuild`, **no exact-SHA release CI was certified**. All mandatory release blockers remain NO-GO.

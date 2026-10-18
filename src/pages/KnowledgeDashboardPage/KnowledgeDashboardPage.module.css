@@ -273,7 +273,7 @@
   display: inline-flex;
   align-items: center;
   gap: .4rem;
-  min-height: 38px;
+  min-height: 44px;
   padding: .5rem .65rem;
   color: var(--text-secondary);
   background: transparent;
@@ -464,8 +464,6 @@
     flex-wrap: wrap;
   }
 
-  .actions a,
-  .actions button { min-height: 44px; }
 }
 
 @media (max-width: 520px) {
@@ -535,8 +533,6 @@
 
 
 @media (max-width: 960px) {
-  .actions a,
-  .actions button,
   .failureToggle { min-height: 44px; }
 }
 
