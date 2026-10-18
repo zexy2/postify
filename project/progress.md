@@ -938,3 +938,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - PostgreSQL16 exact CI digest isolated no-network container: 12/12 migrations, `verify-verified-knowledge.sql` PASS, synthetic identities/roles only, container removed (`job-8c0b13e18873`). This does not substitute for real Supabase staging identity/RLS verification.
 - Exact Git source6993777 fresh Node24 local preview: three Lighthouse mobile simulated runs 59/59/56 median59, FCP3936ms, LCP4788ms, TBT592ms, CLS0 (`job-133f7908f01c`). Startup performance still below release acceptance; no speculative UI, auth or font changes. See design/RELEASE-SCHEMA-MOBILE-LAB-2026-10-18.md. Production remains NO-GO.
+
+## 2026-10-18 — Controlled mobile feed optimization rejected; footer clipping fixed
+
+- Controlled three alternating Lighthouse A/B pairs produced only small/noisy gains from `content-visibility:auto` on offscreen feed cards; explicit browser geometry found a 184px initial page-height jump, so the experimental CSS was **reverted**. No premature performance success or release clearance claimed (`job-d260180207b8`, `job-212d87011803`).
+- Found real clipped trust-label at 320/390px for both locales; mobile-only CSS `overflow-wrap:anywhere` + four new permanent browser assertions for visible label and cell bounds. Targeted **4/4** and complete **68/68** Chromium PASS (`job-490b64370c70`). See design/MOBILE-FEED-AB-AND-FOOTER-REFLOW-2026-10-18.md. Main untouched; release still NO-GO.

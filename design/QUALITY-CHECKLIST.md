@@ -305,3 +305,9 @@
 - [x] Pinned PostgreSQL 16.15 CI container: twelve migrations applied and full `verify-verified-knowledge.sql` passed, including correction suggestions RLS and capabilities; disposable no-network synthetic container removed. **Not Supabase-hosted staging**. Oracle job `job-8c0b13e18873`.
 - [x] Fresh Node24 source build `6993777` on localhost: Lighthouse13.5 mobile 3 trials scored **59/59/56**, median **59**, **LCP 4,788ms**, **TBT 592ms**, **CLS 0**. No improvement claim; no source app optimization applied without controlled evidence. Oracle job `job-133f7908f01c`.
 - [ ] Real separated Supabase staging OAuth/session/RLS, visual acceptance (81 historic mismatches and About/Contact), manual assistive tech, mobile field CWV and owner-approved release remain **NO-GO**. Details in `design/RELEASE-SCHEMA-MOBILE-LAB-2026-10-18.md`.
+
+## 2026-10-18 — Mobile offscreen-content experiment and footer reflow
+
+- [x] Alternating Lighthouse13.5 mobile A/B across six local production-preview runs: control median **58 / LCP 4,848ms / TBT 590ms**; feed content-visibility candidate **60 / 4,745ms / 574ms**, but third candidate run regressed to score 54 and unrendered rows caused **184px initial page-height shift**. **Candidate completely reverted**. Evidence `job-d260180207b8` and `job-212d87011803`.
+- [x] A real mobile footer trust-label clipping defect was reproduced before the fix in Turkish and English at 320/390px. Only narrow CSS wrapping changed; four new precise label/cell geometry browser tests passed **4/4**, full product Chromium suite **68/68** (`job-490b64370c70`). Details in `design/MOBILE-FEED-AB-AND-FOOTER-REFLOW-2026-10-18.md`.
+- [ ] This fix does not sign off global WCAG, 81 visual snapshot approvals, staging real authentication/RLS, field CWV or production release. **NO-GO** unchanged.

@@ -424,7 +424,7 @@
   }
 
   .systemLine > div:last-child { border-right: 0; }
-  .systemLine strong { font-size: .75rem; letter-spacing: .012em; }
+  .systemLine strong { font-size: .75rem; letter-spacing: .012em; overflow-wrap: anywhere; }
   .systemLine > div > span { padding-top: 0; font-size: .75rem; }
   .systemLine small { display: none; }
 

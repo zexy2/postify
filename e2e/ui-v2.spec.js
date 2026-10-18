@@ -1513,3 +1513,38 @@ test('login recovery and registration links maintain 44px targets without horizo
     expect(overflow).toBeLessThanOrEqual(1);
   }
 });
+
+// WCAG 2.2 AA reflow: trust-model labels must stay inside the viewport
+// even in Turkish at 320px / 400% zoom. Hidden horizontal overflow alone
+// cannot count as success because it silently clips the last word.
+for (const width of [320, 390]) {
+  for (const language of ['tr', 'en']) {
+    test(`mobile footer trust labels reflow at ${width}px (${language})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.addInitScript((lang) => localStorage.setItem('postify_language', lang), language);
+      await page.goto('/');
+
+      const footer = page.locator('footer [class*="systemLine"]');
+      await expect(footer).toBeVisible();
+      const trustLabels = footer.locator('strong');
+      await expect(trustLabels).toHaveCount(3);
+      const lastLabel = trustLabels.last();
+      await expect(lastLabel).toHaveText(language === 'tr' ? 'Tekrarlanabilirlik' : 'Reproducibility');
+
+      const geometry = await lastLabel.evaluate((element) => {
+        const label = element.getBoundingClientRect();
+        const cell = element.closest('[class*="systemCopy"]').parentElement.getBoundingClientRect();
+        return {
+          labelLeft: label.left,
+          labelRight: label.right,
+          cellLeft: cell.left,
+          cellRight: cell.right,
+          viewport: window.innerWidth,
+        };
+      });
+      expect(geometry.labelLeft).toBeGreaterThanOrEqual(geometry.cellLeft - 1);
+      expect(geometry.labelRight).toBeLessThanOrEqual(geometry.cellRight + 1);
+      expect(geometry.labelRight).toBeLessThanOrEqual(geometry.viewport + 1);
+    });
+  }
+}
