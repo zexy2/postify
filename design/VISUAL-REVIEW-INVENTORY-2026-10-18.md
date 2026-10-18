@@ -48,3 +48,11 @@ The **4 full Home baseline screens** (`Home desktop`, `Home mobile`, `Dark theme
 ### Final QA on approved direction (current isolated source)
 
 The new responsive art-direction checks (4/4) run against a **freshly built**, exact-current-source production preview: correct dark Hero tokens for light and dark themes, WCAG contrast threshold for the hero H1, accessible search, functional featured link, ≥44px archive CTA and no document horizontal scroll at 390/1440. The entire **64/64 Chromium product E2E** suite passed, along with **205/205 Vitest**, **7/7 release/staging guard** tests, lint, PWA build and 0-known-vulnerability security audit. The test evidence is in Oracle and applies to the *local* source prior to the doc-only approval commit, not to production. The independent full visual snapshot suite has **not been rerun or rebaselined** after this decision; its last observed baseline remains 34/115 passed and 81 failed, unchanged by product code in this turn.
+
+## Article and Author visual-review batch (2026-10-18)
+
+Four Article light/dark desktop/mobile snapshot differences remain, all **height discrepancies** (desktop 2940→2961, mobile 3097→3150). Ten Author profile/not-found/service-error/public-work snapshots differ at 2–11% pixel level without image-size changes. Separate current-source browser checks for Article semantics and mobile containment passed **6/6**, but the existing fourteen screenshot checks **14/14 still fail**; no golden image updated. The old/current Article and Author comparisons were shown for owner review. Full evidence and next signoff steps: `design/ARTICLE-AUTHOR-VISUAL-TRIAGE-2026-10-18.md`.
+
+## Full CI visual gate retested after Article batch, 2026-10-18
+
+The complete Chromium visual suite now has **121** cases (the previous 115 plus six new Article reading/320px accessibility contracts). Its latest actual outcome is **40 PASS / 81 screenshot FAIL / 0 skipped**. Existing 49 image-dimension and 32 pixel comparison failures persist; none were silently accepted or suppressed. The original first-run 34/115 evidence remains historical, not the latest result. Oracle failed-QA event `ev-c6d90a4407b920a7bd69`. See `design/ARTICLE-AUTHOR-VISUAL-TRIAGE-2026-10-18.md` for the 14-case Article/Author breakdown and current screenshot review. Golden PNGs/tolerance untouched, production NO-GO.

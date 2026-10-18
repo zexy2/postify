@@ -892,3 +892,10 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - After reproducing and correcting stale-preview test setup, a freshly built exact-current-source production preview passed the 4/4 editorial Home checks. Do not confuse a stale `docs/` preview failure with current Vite source behavior.
 - Local QA for CD-012 after fresh build: 64/64 Chromium (includes 4 newly added Home direction/contrast cases), 205/205 Vitest, 7/7 release safeguards, lint/PWA smoke/security pass; Oracle JUnit/Playwright reports imported. No screenshot goldens replaced, staging/auth and CI visual failures stay open.
+
+## 2026-10-18 — Article/Author release visual triage
+
+- Compared four Article light/dark desktop/mobile and three Author mobile states expected vs actual; Article height drift desktop21px/mobile53px, Author 10 pixel-level baseline differences 2–11%. No clear runtime regression established; visual owner signoff still required.
+- Added 6 local Vite/Chromium Article semantics/containment tests (320,390,1440 × light/dark): **6/6 PASS**. Reran 20-case mixed Article/Author gate: **6 PASS +14 screenshot-only FAIL**. No golden updates, original production main untouched.
+
+- Reran full CI-equivalent visual Chromium gate with six additional Article contracts: **40/121 PASS, 81/121 screenshot FAIL**, zero new functional failures. Actual Playwright exit1, correctly imported as failed QA Oracle event `ev-c6d90a4407b920a7bd69`. No golden updates or production changes.

@@ -65,3 +65,7 @@
 ## 2026-10-18 — Home design direction approved, precise goldens still mismatched
 
 - Dark editorial Home masthead direction received explicit product owner approval (CD-012). Four full Home screenshot references remain *pixel-level pending* despite conceptual approval: mobile full height differs by 589px; desktop by 430px. Unreviewed no-results/filter states and other 73 visual cases still require manual triage and targeted visual acceptance. CI visual NO-GO remains; no blanket snapshot refresh.
+
+## 2026-10-18 — Article and Author visual signoff still pending
+
+- Four Article full-page light/dark reference images differ in height (desktop +21px, mobile +53px); ten Author portfolio/not-found/unavailable states have pixel differences (2–11%). Six semantic/responsive Article tests pass but screenshot expectations fail as before. User only approved **Home dark editorial direction CD-012**, not Article/Author pixel acceptance. No visual baseline refresh until explicit review and approval.

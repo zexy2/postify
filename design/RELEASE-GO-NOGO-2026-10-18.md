@@ -38,3 +38,7 @@ The work above can proceed without an arbitrary calendar promise. Production pub
 `node scripts/qa/release-preflight.mjs --production --visual-report /tmp/playwright-visual.json --ui-report /tmp/playwright-ui.json --vitest-report /tmp/vitest.xml --json /tmp/postify-release-preflight.json`
 
 This tool is **read-only except for an explicit JSON output under `/tmp`**. It reports branch/main divergence, CI deploy semantics, latest public release SHA and capability artifact, and external reporter counts. It intentionally exits code **2 / NO_GO** while visual, staging, manual QA, or owner-approval evidence remains pending, even when individual unit and UI reports pass. It never pushes, merges, triggers migrations or deploys. Reports supplied via flags are *not independently bound to a Git source commit*, and a passing tiny subset is rejected as a full visual test gate. Test the no-go behavior with `node --test scripts/qa/release-preflight.test.mjs`.
+
+## Visual CI retest update — 2026-10-18
+
+After six new non-screenshot Article/Author release layout checks were included, the CI-equivalent Chromium visual suite was rerun in full: **40/121 pass, 81/121 fail**, all 81 failures remain screenshot comparisons. The historical 34/115 figures above refer to the earlier configuration and are not the latest suite total. The exact source test report `ev-c6d90a4407b920a7bd69` remains a **failed release gate**. Staging, manual WCAG and owner deployment approval unchanged and still pending.

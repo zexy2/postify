@@ -248,3 +248,11 @@
 - [x] Fresh production build: four visual-direction UI tests (light/dark at 390/1440) **4/4 PASS** for approved dark Hero CSS tokens, H1 contrast ≥4.5, search, featured link, visible ≥44px archive CTA and no horizontal document overflow. Earlier 0/4 stale-prebuilt preview was an invalid source comparison, not a functional dark-theme bug.
 - [ ] No golden PNG updated by conceptual signoff. Conduct full exact-image accessibility/layout review and approved baseline changes case-by-case, then entire 115-case CI visual run; staging authenticated RLS and production release remain NO-GO pending other QA gates.
 - [x] Exact source after CD-012 approval: **64/64 Chromium product E2E**, **205/205 Vitest**, **7/7 release guard checks**, lint/build/security pass. Light/dark Home editorial invariants added, but **81/115 visual baseline differences and real staging RLS are not cleared**.
+
+## 2026-10-18 — Article and Author responsive visual triage
+
+- [x] Re-reviewed 14 existing Article/Author failing screenshot cases (4 dimension mismatches: Article desktop light/dark +21px, mobile light/dark +53px; 10 Author pixel diffs 2–11%). Separately compared old/current Article light/dark desktop/mobile and author portfolio/not-found/unavailable mobile.
+- [x] Added six non-screenshot Article reading layout invariants across 320/390/1440 × light/dark: accessible H1/title/quick-brief/cover alt, no horizontal overflow/heading clipping and ≥44px named mobile actions. Focused run: **6/6 functional PASS**, **14/14 existing screenshot comparisons still FAIL**. See `design/ARTICLE-AUTHOR-VISUAL-TRIAGE-2026-10-18.md`.
+- [ ] Article/Author exact visual direction NOT yet accepted as golden reference. Keep 14 screenshot mismatches OPEN until reviewed by owner; no mass `--update-snapshots`/tolerance relaxation. Full visual CI, staging OAuth/RLS and manual WCAG still release-blocking.
+
+- [x] After adding six Article accessibility/layout test cases, full Chromium visual CI suite retested: **40/121 PASS, 81 screenshot FAIL**, all failures still `toHaveScreenshot`, no new functional failures. Visual release gate remains BLOCKED; no goldens rewritten or pixel-diff tolerance lowered.
