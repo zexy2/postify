@@ -59,6 +59,15 @@ describe('useScrollAnchorTransition', () => {
     expect(window.scrollBy).toHaveBeenCalledWith({ top: -73.125, left: 0, behavior: 'auto' });
   });
 
+  it('skips initial layout geometry when at scroll top and starts measuring after scrolling', () => {
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
+    render(<Harness active />);
+    expect(rectSpy).not.toHaveBeenCalled();
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 560 });
+    act(() => { nextFrame?.(); });
+    expect(rectSpy).toHaveBeenCalledTimes(1);
+  });
+
   it('does not move the viewport while the reader is still at the top', () => {
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
     const { rerender } = render(<Harness active />);

@@ -47,3 +47,7 @@
 ## 2026-10-18 — Unresolved mobile startup performance with interaction trade-off
 
 - Safe-looking initial Sheet deferral saved ~13.5KB JS but increased throttled mobile first-menu latency from 423ms to 1382ms median and TBT from 594ms to 746ms despite some FCP/LCP improvements in three-pair Lighthouse. Experiment was fully reverted. React startup evaluation, style/layout and field CWV p75 remain open; do not claim Lighthouse performance acceptance based on one favorable run. See design/MOBILE-MENU-PERFORMANCE-AUDIT-20261018.md.
+
+## 2026-10-18 — Mobile startup performance is still a release gate
+
+- Reduced one synchronous initial zero-scroll home fallback anchor measurement; three paired lab Lighthouse runs show only small LCP improvements and mixed TBT. This does **not** resolve the significant React/vendor startup long task or establish better field p75 Core Web Vitals. Keep mobile performance acceptance open. Do not trade away first-menu responsiveness or back-navigation scroll accuracy.

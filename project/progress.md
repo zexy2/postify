@@ -865,3 +865,9 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Fair rebuild of baseline Git `5ae3813` versus deferred mobile menu module candidate, Lighthouse mobile A/B three alternating pairs: median performance 59→60, FCP3860→3341ms, LCP4727→4343ms, TBT594→746ms. Under constrained network/4× CPU, initial menu median 423→1382ms; rejected candidate and restored the original prewarm code and test.
 - Added `scripts/qa/mobile-menu-startup.mjs`, three-run local-only prewarm and first-menu responsiveness guard. Existing prewarmed bundle 3/3 PASS; rejected candidate 3/3 FAIL as expected. Performance release gate stays open, full methods and invalid initial unpaired exploratory scores documented in design.
+
+## 2026-10-18 — Home scroll-top startup layout optimization
+
+- RED/GREEN: remove initial `getBoundingClientRect` call from fallback anchor `useLayoutEffect` only when `window.scrollY<=1`; retain asynchronous scroll/ResizeObserver sampling, scroll-history restoration and fallback→live delta logic.
+- Three-pair local mobile Lighthouse lab: median LCP4868→4728ms, score57→59, style/layout1568→1510ms, TBT602→607ms; the gain is small, test noise remains, field CWV unavailable. Retained first-menu latency budget 3/3 passed (416/587/670ms), no Sheet deferral.
+- Detailed methods in design/HOME-INITIAL-ANCHOR-REFLOW-QA-20261018.md; no push or deployment.

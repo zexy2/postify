@@ -17,6 +17,13 @@ export function useScrollAnchorTransition({ active, selector }) {
   const anchorRef = useRef({ active, absoluteTop: null });
 
   useLayoutEffect(() => {
+    // No viewport anchoring is needed while the reader is at the top. Avoid
+    // forcing a synchronous layout during the initial home React commit;
+    // observer/scroll tracking captures the position when scrolling begins.
+    if (window.scrollY <= 1) {
+      anchorRef.current = { active, absoluteTop: null };
+      return;
+    }
     const absoluteTop = readAbsoluteTop(selector);
     if (absoluteTop === null) return;
 

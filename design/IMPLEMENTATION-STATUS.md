@@ -274,3 +274,7 @@ At 320 CSS px / native 400% Chromium, the mobile Admin table's sticky first colu
 ## 2026-10-18 — Performance experiment and first-menu guard
 
 Evaluated deferring the prewarmed `Header` Radix Sheet until hamburger click with clean local A/B production builds, three interleaved Lighthouse mobile pairs and three constrained-network 4× CPU first-interaction trials. The candidate saved ~13.5KB initial JS and median LCP ~384ms but added median TBT ~152ms and made first-menu appearance median 423→1382ms. **Rejected and reverted candidate product code and modified E2E assertions.** Added a reusable local-only performance QA script to protect navigation first-click latency. Details and exact lab conditions in `design/MOBILE-MENU-PERFORMANCE-AUDIT-20261018.md`; no score-based release gate closed.
+
+## 2026-10-18 — Avoid initial fallback anchor measurement at scroll top
+
+HomePage's `useScrollAnchorTransition` no longer reads anchor geometry synchronously on its first zero-scroll commit; when a reader scrolls, ResizeObserver/scroll handling records it, preserving existing fallback→live compensation for scrolled readers. Added regression test. Three controlled alternating Lighthouse mobile A/B runs measured small LCP/style-layout improvements with mixed TBT; mobile menu 4× CPU advisory guard passed 3/3. See `design/HOME-INITIAL-ANCHOR-REFLOW-QA-20261018.md`. No claim of significant real-user performance improvement; performance/field CWV gate remains open.
