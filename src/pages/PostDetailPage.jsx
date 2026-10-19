@@ -191,6 +191,10 @@ const PostDetailPage = () => {
             <article ref={articleRef} className={styles.articleShell}>
               {/* Header Info FIRST */}
               <header className={styles.articleHeader}>
+                <div className={styles.editionLine} aria-hidden="true">
+                  <span>POSTIFY <span className={styles.editionAsterisk}>✳</span> JOURNAL</span>
+                  <span>{i18n.language?.startsWith('en') ? 'Ideas, unpacked.' : 'Fikirler, derinlemesine.'}</span>
+                </div>
                 <div className={styles.meta}>
                   <span className={styles.contentType}>{presentation.typeLabel}</span>
                   <span className={styles.category}>{getCategoryLabel(post.category, i18n.language)}</span>
@@ -231,14 +235,6 @@ const PostDetailPage = () => {
                 )}
               </header>
 
-              <section className={styles.quickBrief} aria-label={t('article.quickBrief')}>
-                <div className={styles.quickBriefCopy}>
-                  <span className={styles.quickBriefEyebrow}>{t('article.quickBrief')}</span>
-                  <strong>{t('article.expectedOutcome')}</strong>
-                  <p>{presentation.outcome}</p>
-                </div>
-              </section>
-
               {/* Cover Image SECOND */}
               <div className={styles.coverWrapper}>
                 <ContentImage
@@ -249,6 +245,15 @@ const PostDetailPage = () => {
                   fetchPriority="high"
                 />
               </div>
+
+              <section className={styles.quickBrief} aria-label={t('article.quickBrief')}>
+                <div className={styles.quickBriefCopy}>
+                  <span className={styles.quickBriefEyebrow}>{t('article.quickBrief')}</span>
+                  <strong>{t('article.expectedOutcome')}</strong>
+                  <p>{presentation.outcome}</p>
+                </div>
+              </section>
+
 
               <div className={styles.articleContent}>
                 {post.isFallback && (
