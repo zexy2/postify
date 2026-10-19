@@ -1,12 +1,15 @@
 /* Postify / Edition 03 — an editorial cover, not a dashboard banner. */
 .hero {
   /* CD-003 Oxide & Newsprint / CD-007 H-01 selected issue cover */
-  --hero-bg: #1F2420;
-  --hero-ink: #EFEDE5;
-  --hero-muted: #D0D3C8;
-  --hero-rule: rgba(239, 237, 229, .29);
-  --hero-accent: #F2AC91;
-  --hero-paper: #F4EFE6;
+  /* Light edition: warm newsprint instead of the dark masthead. */
+  --hero-bg: #F4EFE6;
+  --hero-ink: #1F2420;
+  --hero-muted: #49564D;
+  --hero-rule: rgba(31, 36, 32, .26);
+  --hero-accent: #A13826;
+  --hero-accent-hover: #852E22;
+  --hero-on-accent: #FDFBF6;
+  --hero-paper: #FDFBF6;
   --hero-paper-ink: #1F2420;
   position: relative;
   overflow: clip;
@@ -21,6 +24,8 @@
   --hero-muted: #D0D3C8;
   --hero-rule: rgba(239, 237, 229, .29);
   --hero-accent: #F2AC91;
+  --hero-accent-hover: #FFD2BE;
+  --hero-on-accent: #1F2420;
   --hero-paper: #151B19;
   --hero-paper-ink: #EFEDE5;
 }
@@ -161,8 +166,8 @@
   transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.primaryAction { color: var(--hero-bg); background: var(--hero-accent); border: 1px solid var(--hero-accent); }
-.primaryAction:hover { color: var(--hero-bg); background: #FFD2BE; border-color: #FFD2BE; transform: translateY(-2px); }
+.primaryAction { color: var(--hero-on-accent); background: var(--hero-accent); border: 1px solid var(--hero-accent); }
+.primaryAction:hover { color: var(--hero-on-accent); background: var(--hero-accent-hover); border-color: var(--hero-accent-hover); transform: translateY(-2px); }
 .secondaryAction { color: var(--hero-ink); background: transparent; border: 1px solid var(--hero-rule); }
 .secondaryAction:hover { border-color: var(--hero-ink); background: color-mix(in srgb, var(--hero-ink) 7%, transparent); }
 .primaryAction:focus-visible, .secondaryAction:focus-visible, .featured:focus-visible { outline: 3px solid var(--hero-accent); outline-offset: 4px; }
