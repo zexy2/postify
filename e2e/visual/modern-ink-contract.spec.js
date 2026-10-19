@@ -41,6 +41,20 @@ for (const route of ['/about', '/contact']) {
         expect(info.right).toBeLessThanOrEqual(info.frameRight + 1);
         expect(info.left).toBeGreaterThanOrEqual(info.frameLeft - 1);
         expect(info.pageWidth).toBeLessThanOrEqual(info.viewportWidth + 1);
+        const accentedPhrase = h1.locator('em');
+        await expect(accentedPhrase).toBeVisible();
+        const headlineArt = await accentedPhrase.evaluate((element) => {
+          const computed = getComputedStyle(element);
+          return { font: computed.fontFamily, color: computed.color };
+        });
+        expect(headlineArt.font).toMatch(/Fraunces/i);
+        expect(headlineArt.color).toBe('rgb(242, 172, 145)');
+        const art = hero.locator('[class*="heroArtwork"]');
+        await expect(art).toBeVisible();
+        if (width <= 390) {
+          const rect = await art.boundingBox();
+          expect(rect.height).toBeLessThanOrEqual(235);
+        }
         // The outer reading canvas follows PL-01 paper by day, warm ink by night.
         const canvasColor = await page.locator('#main-content > div').first().evaluate((el) => getComputedStyle(el).backgroundColor);
         expect(canvasColor).toBe(theme === 'light' ? 'rgb(244, 239, 230)' : 'rgb(21, 27, 25)');
@@ -57,6 +71,9 @@ for (const route of ['/about', '/contact']) {
         expect(await primaryAnchor.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe('none');
 
         if (route === '/about') {
+          const artworkStatement = art.locator('[class*="artworkStatement"]');
+          await expect(artworkStatement).toBeVisible();
+          expect(await artworkStatement.evaluate((element) => getComputedStyle(element).color)).toBe('rgb(244, 239, 230)');
           await expect(page.getByRole('region', { name: /no magic score/i }).locator('article')).toHaveCount(4);
           await expect(page.getByRole('region', { name: /the shape follows/i }).locator('article')).toHaveCount(4);
           await expect(page.locator('#main-content').getByRole('link', { name: /explore knowledge/i })).toHaveAttribute('href', '/');
@@ -65,6 +82,10 @@ for (const route of ['/about', '/contact']) {
           const channels = page.getByRole('region', { name: /direct channels/i });
           await expect(channels.getByRole('link', { name: /zekiakgul09@gmail.com/i })).toHaveAttribute('href', 'mailto:zekiakgul09@gmail.com');
           await expect(channels.getByRole('link', { name: /@zexy2/i })).toHaveAttribute('href', 'https://github.com/zexy2');
+          for (const link of await channels.locator('a').all()) {
+            const box = await link.boundingBox();
+            expect(box.height).toBeGreaterThanOrEqual(44);
+          }
           await expect(page.getByRole('region', { name: /good reasons to reach out/i }).locator(':scope > div:last-child > div')).toHaveCount(3);
           await expect(page.locator('main form')).toHaveCount(0);
         }

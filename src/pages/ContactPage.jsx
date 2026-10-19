@@ -25,17 +25,17 @@ const ContactPage = () => {
           <div className={styles.heroBody}>
             <div className={styles.heroCopy}>
               <span className={styles.eyebrow}>{isEn ? 'CORRECTIONS / FEEDBACK / COLLABORATION' : 'DÜZELTME / GERİ BİLDİRİM / İŞ BİRLİĞİ'}</span>
-              <h1>{isEn ? 'Useful knowledge gets better when readers can challenge it.' : 'Faydalı bilgi, okuyucu ona itiraz edebildiğinde gelişir.'}</h1>
+              <h1>{isEn ? <>Useful knowledge gets better when readers can <em>challenge it.</em></> : <>Faydalı bilgi, okuyucu ona itiraz edebildiğinde <em>gelişir.</em></>}</h1>
               <p>{t('contact.description')}</p>
               <a className={styles.heroLink} href="#contact-channel-title">
                 {isEn ? 'Find a direct channel' : 'Doğrudan iletişime geç'} <FiArrowUpRight aria-hidden="true" />
               </a>
             </div>
             <div className={styles.heroArtwork} aria-hidden="true">
-              <span className={styles.artworkLabel}>AN OPEN CHANNEL</span>
+              <span className={styles.artworkLabel}>{isEn ? 'AN OPEN CHANNEL' : 'AÇIK İLETİŞİM'}</span>
               <span className={styles.artworkGlyph}>↗</span>
-              <span className={styles.artworkWordmark}>LET’S<br />CONNECT<span>✳</span></span>
-              <span className={styles.artworkFooter}>BETTER TOGETHER / POSTIFY</span>
+              <span className={styles.artworkWordmark}>{isEn ? <>LET’S<br />CONNECT</> : <>BİRLİKTE<br />KONUŞALIM</>}<span>✳</span></span>
+              <span className={styles.artworkFooter}>{isEn ? 'BETTER TOGETHER / POSTIFY' : 'BİRLİKTE DAHA İYİ / POSTIFY'}</span>
             </div>
           </div>
         </header>
@@ -51,7 +51,7 @@ const ContactPage = () => {
               <FiMail aria-hidden="true" />
               <span className={styles.channelCopy}>
                 <small>{t('contact.email')}</small>
-                <strong>zekiakgul09@gmail.com</strong>
+                <strong>zekiakgul09@<wbr />gmail.com</strong>
               </span>
               <FiArrowUpRight aria-hidden="true" />
             </a>
