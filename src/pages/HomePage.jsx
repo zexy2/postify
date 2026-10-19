@@ -27,6 +27,7 @@ const DiscoveryFilterPopover = React.lazy(() => import('../components/DiscoveryF
 
 const HomePage = ({ isHistoryRestore = false }) => {
   const { t, i18n } = useTranslation();
+  const isEnglish = i18n.language?.startsWith('en');
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
@@ -168,17 +169,17 @@ const HomePage = ({ isHistoryRestore = false }) => {
   };
 
   const activeRefinements = [
-    freshnessFilter === 'current' ? { id: 'freshness', label: i18n.language?.startsWith('en') ? 'Current evidence' : 'Güncel kanıt' } : null,
+    freshnessFilter === 'current' ? { id: 'freshness', label: isEnglish ? 'Current evidence' : 'Güncel kanıt' } : null,
     evidenceFilter !== 'all' ? {
       id: 'evidence',
       label: evidenceFilter === 'author'
-        ? (i18n.language?.startsWith('en') ? 'Author tested' : 'Yazar test etti')
+        ? (isEnglish ? 'Author tested' : 'Yazar test etti')
         : evidenceFilter === 'community'
-          ? (i18n.language?.startsWith('en') ? 'Community confirmed' : 'Topluluk doğruladı')
+          ? (isEnglish ? 'Community confirmed' : 'Topluluk doğruladı')
           : 'Postify verified',
     } : null,
-    sortMode === 'latest' ? { id: 'sort', label: i18n.language?.startsWith('en') ? 'Latest' : 'En yeni' } : null,
-    readingFilter === 'quick' ? { id: 'reading', label: i18n.language?.startsWith('en') ? '≤ 5 min' : '≤ 5 dk' } : null,
+    sortMode === 'latest' ? { id: 'sort', label: isEnglish ? 'Latest' : 'En yeni' } : null,
+    readingFilter === 'quick' ? { id: 'reading', label: isEnglish ? '≤ 5 min' : '≤ 5 dk' } : null,
   ].filter(Boolean);
 
   useEffect(() => {
@@ -263,10 +264,10 @@ const HomePage = ({ isHistoryRestore = false }) => {
       <CategoryNav categories={categories} activeCategory={activeCategory} onChange={handleCategoryChange} />
 
       <section id="knowledge-feed" className={`container ${styles.postsSection}`}>
-        <div className={styles.typeFilter} role="group" aria-label={i18n.language?.startsWith('en') ? 'Discovery filters' : 'Keşif filtreleri'}>
+        <div className={styles.typeFilter} role="group" aria-label={isEnglish ? 'Discovery filters' : 'Keşif filtreleri'}>
           <div className={styles.filterToolbar}>
-            <div className={styles.filterCluster} role="group" aria-label={i18n.language?.startsWith('en') ? 'Content format' : 'İçerik biçimi'}>
-              <span className={styles.filterClusterLabel} aria-hidden="true">{i18n.language?.startsWith('en') ? 'Format' : 'Biçim'}</span>
+            <div className={styles.filterCluster} role="group" aria-label={isEnglish ? 'Content format' : 'İçerik biçimi'}>
+              <span className={styles.filterClusterLabel} aria-hidden="true">{isEnglish ? 'Format' : 'Biçim'}</span>
               <div className={styles.filterClusterControls} onFocusCapture={(event) => event.target?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' })}>
                 <button
                   type="button"
@@ -274,7 +275,7 @@ const HomePage = ({ isHistoryRestore = false }) => {
                   aria-pressed={activeType === 'all'}
                   onClick={() => handleTypeChange('all')}
                 >
-                  {i18n.language?.startsWith('en') ? 'All formats' : 'Tüm biçimler'}
+                  {isEnglish ? 'All formats' : 'Tüm biçimler'}
                 </button>
                 {contentTypes.map((type) => (
                   <button
@@ -295,15 +296,15 @@ const HomePage = ({ isHistoryRestore = false }) => {
                 ref={refineToggleRef}
                 type="button"
                 className={`${styles.refineToggle} ${refineOpen ? styles.refineToggleOpen : ''}`}
-                aria-label={i18n.language?.startsWith('en') ? 'Filters' : 'Filtreler'}
+                aria-label={isEnglish ? 'Filters' : 'Filtreler'}
                 aria-haspopup="dialog"
                 aria-expanded={refineOpen}
                 aria-controls="advanced-discovery-filters"
                 onClick={() => setRefineOpen((open) => !open)}
               >
                 <FiSliders size={15} aria-hidden="true" />
-                <span>{i18n.language?.startsWith('en') ? 'Filters' : 'Filtreler'}</span>
-                {activeRefinementCount > 0 && <span className={styles.refineCount} aria-label={i18n.language?.startsWith('en') ? `${activeRefinementCount} active filters` : `${activeRefinementCount} aktif filtre`}>{activeRefinementCount}</span>}
+                <span>{isEnglish ? 'Filters' : 'Filtreler'}</span>
+                {activeRefinementCount > 0 && <span className={styles.refineCount} aria-label={isEnglish ? `${activeRefinementCount} active filters` : `${activeRefinementCount} aktif filtre`}>{activeRefinementCount}</span>}
                 <FiChevronDown className={styles.refineChevron} size={15} aria-hidden="true" />
               </button>
 
@@ -311,7 +312,7 @@ const HomePage = ({ isHistoryRestore = false }) => {
                 <React.Suspense fallback={null}>
                   <DiscoveryFilterPopover
                     anchorRef={refineToggleRef}
-                    isEnglish={i18n.language?.startsWith('en')}
+                    isEnglish={isEnglish}
                     resultCount={filteredPosts.length}
                     activeRefinementCount={activeRefinementCount}
                     freshnessFilter={freshnessFilter}
@@ -334,11 +335,11 @@ const HomePage = ({ isHistoryRestore = false }) => {
           </div>
 
           {activeRefinements.length > 0 && (
-            <div className={styles.activeRefinements} aria-label={i18n.language?.startsWith('en') ? 'Active filters' : 'Aktif filtreler'}>
-              <span className={styles.activeRefinementLabel}>{i18n.language?.startsWith('en') ? 'Active' : 'Aktif'}</span>
+            <div className={styles.activeRefinements} aria-label={isEnglish ? 'Active filters' : 'Aktif filtreler'}>
+              <span className={styles.activeRefinementLabel}>{isEnglish ? 'Active' : 'Aktif'}</span>
               <div className={styles.activeRefinementList}>
                 {activeRefinements.map((filter) => (
-                  <button key={filter.id} type="button" className={styles.activeRefinementChip} aria-label={i18n.language?.startsWith('en') ? `Remove ${filter.label}` : `${filter.label} filtresini kaldır`} onClick={() => clearRefinement(filter.id)}>
+                  <button key={filter.id} type="button" className={styles.activeRefinementChip} aria-label={isEnglish ? `Remove ${filter.label}` : `${filter.label} filtresini kaldır`} onClick={() => clearRefinement(filter.id)}>
                     <span>{filter.label}</span>
                     <FiX size={13} aria-hidden="true" />
                   </button>
@@ -346,7 +347,7 @@ const HomePage = ({ isHistoryRestore = false }) => {
               </div>
               {activeRefinements.length > 1 && (
                 <button type="button" className={styles.clearSummary} onClick={clearRefinements}>
-                  {i18n.language?.startsWith('en') ? 'Clear all' : 'Tümünü temizle'}
+                  {isEnglish ? 'Clear all' : 'Tümünü temizle'}
                 </button>
               )}
             </div>
@@ -366,12 +367,12 @@ const HomePage = ({ isHistoryRestore = false }) => {
           <div className={styles.noResults} data-home-state="empty" aria-live="polite">
             <FiSearch size={32} />
             <h3>{hasSearch || activeCategory !== 'all' || activeType !== 'all' || readingFilter !== 'all' ? t('common.noResults') : t('home.noContent')}</h3>
-            <p>{hasSearch ? `${t('common.noResultsFor')}: “${query}”` : activeCategory !== 'all' ? t('home.noCategoryResults') : activeType !== 'all' ? (i18n.language?.startsWith('en') ? 'No stories match this format yet.' : 'Bu biçimde eşleşen yazı henüz yok.') : readingFilter !== 'all' ? (i18n.language?.startsWith('en') ? 'No quick reads match these filters yet.' : 'Bu filtrelerde kısa okuma bulunamadı.') : t('home.noContentHint')}</p>
+            <p>{hasSearch ? `${t('common.noResultsFor')}: “${query}”` : activeCategory !== 'all' ? t('home.noCategoryResults') : activeType !== 'all' ? (isEnglish ? 'No stories match this format yet.' : 'Bu biçimde eşleşen yazı henüz yok.') : readingFilter !== 'all' ? (isEnglish ? 'No quick reads match these filters yet.' : 'Bu filtrelerde kısa okuma bulunamadı.') : t('home.noContentHint')}</p>
             {(hasSearch || activeCategory !== 'all' || activeType !== 'all' || readingFilter !== 'all' || freshnessFilter !== 'all') && (
               <div className={styles.noResultsActions}>
                 {hasSearch && (
                   <button className={styles.needAction} type="button" disabled={gapSaved || requestGapMutation.isPending} onClick={async () => { try { if (isAuthenticated && knowledgeBackendReady) await requestGapMutation.mutateAsync(query); else addKnowledgeGap(window.localStorage, query); setGapSaved(true); } catch { addKnowledgeGap(window.localStorage, query); setGapSaved(true); } }}>
-                    {gapSaved ? (isAuthenticated && knowledgeBackendReady ? (i18n.language?.startsWith('en') ? 'Need recorded' : 'İhtiyaç kaydedildi') : (i18n.language?.startsWith('en') ? 'Need saved on this device' : 'İhtiyaç bu cihaza kaydedildi')) : (i18n.language?.startsWith('en') ? 'I need this solution' : 'Bu çözüme ihtiyacım var')}
+                    {gapSaved ? (isAuthenticated && knowledgeBackendReady ? (isEnglish ? 'Need recorded' : 'İhtiyaç kaydedildi') : (isEnglish ? 'Need saved on this device' : 'İhtiyaç bu cihaza kaydedildi')) : (isEnglish ? 'I need this solution' : 'Bu çözüme ihtiyacım var')}
                   </button>
                 )}
                 <button className={styles.resetAction} type="button" onClick={() => { setQuery(''); setActiveCategory('all'); setActiveType('all'); setReadingFilter('all'); setFreshnessFilter('all'); setSearchParams({}, { replace: true }); }}>

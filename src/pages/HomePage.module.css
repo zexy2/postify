@@ -23,7 +23,7 @@
   --bg-elevated: #FDFBF6;
   --text-primary: #1F2420;
   --text-secondary: #4F5A53;
-  --text-muted: #4F5A53;
+  --text-muted: #39453D; /* stronger PL-01 ink: ordinal-on-paper WCAG contrast */
   --text-inverse: #FFFFFF;
   --border-color: rgba(31, 36, 32, .18);
   --border-strong: rgba(31, 36, 32, .40);

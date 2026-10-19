@@ -2,26 +2,11 @@
  * Built-in editorial covers have responsive copies. Never synthesize a
  * srcSet for remote/customer-uploaded URLs (which have no such files).
  */
-const LOCAL_COVERS = new Set([
-  'ai-muhendisligi',
-  'edge-mimarileri',
-  'frontend-performansi',
-  'gelistirici-akisi',
-  'teknik-yazarlik',
-  'urun-tasarimi',
-  'urun-telemetrisi',
-  'web-standartlari',
-]);
+const LOCAL_COVER_PATH = /^\/images\/posts\/(ai-muhendisligi|edge-mimarileri|frontend-performansi|gelistirici-akisi|teknik-yazarlik|urun-tasarimi|urun-telemetrisi|web-standartlari)\.webp$/;
 
 export function getResponsiveCoverSrcSet(src) {
-  if (typeof src !== 'string') return undefined;
-  const match = /^\/images\/posts\/([a-z0-9-]+)\.webp$/.exec(src);
-  if (!match || !LOCAL_COVERS.has(match[1])) return undefined;
-
-  const stem = match[1];
-  return [
-    `/images/posts/responsive/${stem}-480.webp 480w`,
-    `/images/posts/responsive/${stem}-800.webp 800w`,
-    `${src} 1200w`,
-  ].join(', ');
+  const match = typeof src === 'string' && LOCAL_COVER_PATH.exec(src);
+  if (!match) return undefined;
+  const path = `/images/posts/responsive/${match[1]}`;
+  return `${path}-480.webp 480w, ${path}-800.webp 800w, ${src} 1200w`;
 }
