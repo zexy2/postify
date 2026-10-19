@@ -379,6 +379,7 @@ const HomePage = ({ isHistoryRestore = false }) => {
           </div>
         ) : (
           <EditorialFeed
+            fx
             posts={displayPosts.slice(0, visiblePostCount)}
             onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
             bookmarkedIds={bookmarkedIds}
