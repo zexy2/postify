@@ -2,6 +2,8 @@ import { readFile, stat } from 'node:fs/promises';
 
 const required = [
   'docs/index.html',
+  'docs/about/index.html',
+  'docs/contact/index.html',
   'docs/404.html',
   'docs/llms.txt',
   'docs/verification-runs.json',
@@ -35,6 +37,19 @@ if (!html.includes('Postify — Uygulanabilir Bilgi')) {
 }
 if (!html.includes('name="description"')) {
   throw new Error('Static description metadata is missing');
+}
+
+for (const [route, title] of [['about', 'Hakkımızda — Postify'], ['contact', 'İletişim — Postify']]) {
+  const routeHtml = await readFile('docs/' + route + '/index.html', 'utf8');
+  if (!routeHtml.includes('<title>' + title + '</title>') ||
+      !routeHtml.includes('rel="canonical" href="https://postify.zekiakgul.dev/' + route + '"') ||
+      !routeHtml.includes('<div id="root"></div>')) {
+    throw new Error('Public direct-URL shell metadata or React mount is invalid: ' + route);
+  }
+  const homepageAsset = html.match(/src="(\/assets\/index-[^"]+\.js)"/)?.[1];
+  if (!homepageAsset || !routeHtml.includes('src="' + homepageAsset + '"')) {
+    throw new Error('Public direct-URL shell must share the same compiled entry as homepage: ' + route);
+  }
 }
 
 const entryMatch = html.match(/<script[^>]+type="module"[^>]+src="\/assets\/(index-[^"]+\.js)"/)
