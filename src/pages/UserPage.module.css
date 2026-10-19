@@ -280,3 +280,34 @@
   .statusAction, .exploreLink { transition: none; }
   .statusAction:hover, .exploreLink:hover { transform: none; }
 }
+
+/* Authors on warm newsprint in light mode; preserve the ink-green dark edition. */
+:global(html:not([data-theme='dark'])) .authorHeader {
+  color: #21332a;
+  background:
+    radial-gradient(ellipse at 90% 6%, rgb(143 173 136 / 20%), transparent 42%),
+    radial-gradient(ellipse at 10% 100%, rgb(194 127 101 / 12%), transparent 48%),
+    linear-gradient(125deg, #e4e8dc, #efeadf 70%, #f2eee6);
+  border-color: rgb(35 49 41 / 15%);
+}
+:global(html:not([data-theme='dark'])) .authorHeader::before {
+  border-color: rgb(35 49 41 / 14%);
+  box-shadow: 0 0 0 5rem rgb(35 49 41 / 2%), 0 0 0 11rem rgb(35 49 41 / 2%);
+}
+:global(html:not([data-theme='dark'])) .editionLine { color: #395343; border-bottom-color: rgb(35 49 41 / 18%); }
+:global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: #566b5e; }
+:global(html:not([data-theme='dark'])) .editionMark { color: #a64225; }
+:global(html:not([data-theme='dark'])) .eyebrow { color: #274734; background: rgb(44 74 56 / 8%); border-color: rgb(44 74 56 / 19%); }
+:global(html:not([data-theme='dark'])) .identity h1 { color: #1d2e25; }
+:global(html:not([data-theme='dark'])) .handle { color: #566e5d; }
+:global(html:not([data-theme='dark'])) .bio { color: #405748; }
+:global(html:not([data-theme='dark'])) .exploreLink { color: #fdfbf6; background: #2c4a38; }
+:global(html:not([data-theme='dark'])) .exploreLink:hover { color: #fdfbf6; background: #385d46; }
+:global(html:not([data-theme='dark'])) .portrait { color: #2e4a37; background: radial-gradient(circle at 50% 50%, #d9e3d2, #c9d9c3 65%, #b9cdb6); }
+:global(html:not([data-theme='dark'])) .portraitRing { border-color: rgb(44 74 56 / 20%); }
+:global(html:not([data-theme='dark'])) .portraitEdition { color: #fdfbf6; background: #2c4a38; }
+
+@media (max-width: 520px) {
+  .authorStats > div { min-height: 5.65rem; }
+  .authorStats strong { font-size: clamp(1.25rem, 5vw, 1.65rem); }
+}

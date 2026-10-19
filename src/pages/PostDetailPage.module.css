@@ -1041,3 +1041,44 @@
   .articleContent { padding-top: 2rem; }
   .plainBody { font-size: 1.02rem; line-height: 1.8; }
 }
+
+/* Light edition: match the reading cover to the chosen light theme.
+   Dark mode keeps the original ink-green Studio treatment above. */
+:global(html:not([data-theme='dark'])) .articleHeader {
+  color: #223129;
+  background:
+    radial-gradient(ellipse at 95% 8%, rgb(145 169 133 / 19%), transparent 43%),
+    radial-gradient(ellipse at 10% 100%, rgb(192 125 99 / 10%), transparent 46%),
+    linear-gradient(127deg, #e5e9dd, #eeeae1 68%, #f0ece3);
+  border-color: rgb(35 49 41 / 14%);
+}
+:global(html:not([data-theme='dark'])) .articleHeader::before {
+  border-color: rgb(35 49 41 / 13%);
+  box-shadow: 0 0 0 6rem rgb(35 49 41 / 2%), 0 0 0 12rem rgb(35 49 41 / 2%);
+}
+:global(html:not([data-theme='dark'])) .editionLine {
+  color: #35483d;
+  border-bottom-color: rgb(35 49 41 / 19%);
+}
+:global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: #566a5e; }
+:global(html:not([data-theme='dark'])) .editionAsterisk { color: #a64225; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta { color: #465d4e; }
+:global(html:not([data-theme='dark'])) .articleHeader .contentType { color: #fdfbf6; background: #2c4a38; }
+:global(html:not([data-theme='dark'])) .articleHeader .category { color: #8f3c29; }
+:global(html:not([data-theme='dark'])) .articleHeader .metaDot { color: #768579; }
+:global(html:not([data-theme='dark'])) .articleHeader .readingMeta { color: #475e50; }
+:global(html:not([data-theme='dark'])) .articleHeader .readingMeta svg { color: #a64225; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge) { color: #35483d; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge strong) { color: #255235; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge[data-freshness="stale"] strong),
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge[data-level="recheck-required"] strong) { color: #785208; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge[data-level="postify-verified"] strong) { color: #924026; }
+:global(html:not([data-theme='dark'])) .articleHeader .title { color: #1d2d25; }
+:global(html:not([data-theme='dark'])) .articleHeader .excerpt { color: #445b4e; }
+:global(html:not([data-theme='dark'])) .articleHeader .authorBar { border-top-color: rgb(35 49 41 / 22%); }
+:global(html:not([data-theme='dark'])) .articleHeader .author { color: #263b2f; }
+:global(html:not([data-theme='dark'])) .articleHeader .author:hover { color: #a64225; }
+:global(html:not([data-theme='dark'])) .articleHeader .avatar { color: #fdfbf6; background: #2c4a38; border-color: rgb(35 49 41 / 20%); }
+:global(html:not([data-theme='dark'])) .articleHeader .authorInfo strong { color: #1d2d25; }
+:global(html:not([data-theme='dark'])) .articleHeader .authorInfo small { color: #54685b; }
+:global(html:not([data-theme='dark'])) .articleHeader .canonicalSource { color: #8f3c29; }
