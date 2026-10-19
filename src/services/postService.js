@@ -148,7 +148,7 @@ const getAuthors = async (client, authorIds) => {
 
   const { data, error } = await client
     .from('profiles')
-    .select('id, full_name, username, email, avatar_url, bio, role')
+    .select('id, full_name, username, avatar_url, bio, role')
     .in('id', authorIds);
 
   if (error) throw error;
