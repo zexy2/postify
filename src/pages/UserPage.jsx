@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { FiArrowLeft, FiBookOpen, FiCheckCircle, FiClock } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowUpRight, FiBookOpen, FiCheckCircle, FiClock } from 'react-icons/fi';
 import { useUser, useUserPosts } from '../hooks/usePosts';
 import { useBookmarks } from '../hooks/useBookmarks';
 import EditorialFeed from '../components/EditorialFeed';
@@ -57,12 +57,26 @@ const UserPage = () => {
       <SEO title={user.name} description={user.bio} />
       <main className={`container ${styles.container}`}>
         <header className={styles.authorHeader}>
-          <div className={styles.monogram} aria-hidden="true">{(user.name || 'P')[0].toUpperCase()}</div>
-          <div className={styles.identity}>
-            <span className={styles.eyebrow}><FiCheckCircle /> {roleLabel}</span>
-            <h1>{user.name}</h1>
-            {user.username && <p className={styles.handle}>@{user.username}</p>}
-            {user.bio && <p className={styles.bio}>{user.bio}</p>}
+          <div className={styles.editionLine} aria-hidden="true">
+            <span>POSTIFY <span className={styles.editionMark}>✳</span> AUTHORS</span>
+            <span>{en ? 'People behind the ideas' : 'Fikirlerin arkasındaki insanlar'}</span>
+          </div>
+          <div className={styles.heroContent}>
+            <div className={styles.identity}>
+              <span className={styles.eyebrow}><FiCheckCircle aria-hidden="true" /> {roleLabel}</span>
+              <h1>{user.name}</h1>
+              {user.username && <p className={styles.handle}>@{user.username}</p>}
+              {user.bio && <p className={styles.bio}>{user.bio}</p>}
+              <a className={styles.exploreLink} href="#published-work">
+                {en ? 'Explore published work' : 'Yayınlanan yazıları keşfet'}
+                <FiArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+            <div className={styles.portrait} aria-hidden="true">
+              <div className={styles.portraitRing} />
+              <span className={styles.monogram}>{(user.name || 'P')[0].toUpperCase()}</span>
+              <span className={styles.portraitEdition}>P / AUTHOR</span>
+            </div>
           </div>
         </header>
 
@@ -84,7 +98,7 @@ const UserPage = () => {
           </div>
         </section>
 
-        <section className={styles.knowledgeSection}>
+        <section id="published-work" className={styles.knowledgeSection}>
           <div className={styles.sectionHeader}>
             <div>
               <span className={styles.sectionEyebrow}>{en ? 'Knowledge portfolio' : 'Bilgi portföyü'}</span>
