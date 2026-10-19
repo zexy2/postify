@@ -92,6 +92,12 @@ const Footer = () => {
           </nav>
         </div>
 
+        {/* Decorative signature from the 21st.dev Dithered Footer concept.
+            The actual navigation and footer headings stay accessible above. */}
+        <div className={styles.signatureBand} aria-hidden="true">
+          <div className={styles.ditherField} />
+        </div>
+
         <div className={styles.systemLine} aria-label={isEnglish ? 'Postify trust model' : 'Postify güven modeli'}>
           <div>
             <span>01</span>
