@@ -5,6 +5,7 @@ import styles from './Hero.module.css';
 import ContentImage from '../ContentImage/ContentImage';
 import { getPostPresentation } from '../../lib/postPresentation';
 import { getCategoryLabel } from '../../lib/categoryLabels';
+import { getResponsiveCoverSrcSet } from '../../lib/responsiveCover';
 
 export default function Hero({
   showSearch = true,
@@ -70,6 +71,8 @@ export default function Hero({
                   className={styles.featuredImage}
                   loading="eager"
                   fetchPriority="high"
+                  srcSet={getResponsiveCoverSrcSet(featuredPost.coverImageUrl)}
+                  sizes="(max-width: 620px) calc(100vw - 32px), (max-width: 1024px) 45vw, 420px"
                   decoding="async"
                 />
                 <span className={styles.featuredType}>{presentation?.typeLabel}</span>
