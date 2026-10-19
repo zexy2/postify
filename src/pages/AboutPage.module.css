@@ -134,6 +134,10 @@
   color: #151B19; background: #F2AC91;
   font: 750 .84rem/1.3 var(--font-sans);
   text-decoration: none; transition: transform .2s ease, background .2s ease;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
 }
 .heroLink:hover { background: #FFD2BE; transform: translateY(-2px); }
 .heroArtwork {
