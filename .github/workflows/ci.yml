@@ -280,6 +280,17 @@ jobs:
       - name: Probe production capability and machine-readable artifacts
         run: |
           node --input-type=module <<'NODE'
+          // Hosted static shells must return successful HTML, not a 404 SPA redirect.
+          for (const [route, title] of [['about', 'Hakkımızda — Postify'], ['contact', 'İletişim — Postify']]) {
+            const response=await fetch('https://postify.zekiakgul.dev/'+route+'?direct=1&t='+Date.now(),{cache:'no-store'});
+            if(response.status!==200) throw new Error('Direct /'+route+' returned HTTP '+response.status);
+            if(!response.headers.get('content-type')?.includes('text/html')) throw new Error('Direct /'+route+' is not HTML');
+            const html=await response.text();
+            if(!html.includes('<title>'+title+'</title>') || !html.includes('rel="canonical" href="https://postify.zekiakgul.dev/'+route+'"')) {
+              throw new Error('Direct /'+route+' served the wrong static route shell');
+            }
+            console.log('Direct /'+route+' HTTP 200');
+          }
           for(const path of ['/','/llms.txt','/verification-runs.json','/runtime-release-status.json','/knowledge-backend-status.json','/knowledge/node-json-dogrulama.tr.json']){
             const response=await fetch(`https://postify.zekiakgul.dev${path}?smoke=${Date.now()}`,{cache:'no-store'});
             if(!response.ok) throw new Error(`${path} returned ${response.status}`);
