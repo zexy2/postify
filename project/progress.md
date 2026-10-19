@@ -968,3 +968,8 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - Full current isolated-source visual suite at `4942307`: **182 cases, 101 PASS, 81 screenshot FAIL, 0 skipped**, Playwright raw exit1 (job `job-72aa3c90e627`), imported to Oracle as **failed QA** `ev-e3d5aeff7680dd3be75c`. Current 81 split: **53 size / 28 pixels**; earlier historical 121-case run had 40 pass, 81 fail with 49 size / 32 pixel. Do not misrepresent either as a green visual gate.
 - Added repeatable **read-only** owner review gallery builder (`scripts/qa/build-visual-review.py`, four local tests pass). The current temporary local gallery contains 81 expected/actual/diff triplets and an itemized manifest; its 81-case decision register is `design/VISUAL-OWNER-ACCEPTANCE-REGISTER-2026-10-19.md`. About/Contact have 8 owner-pending dimension mismatches, notably mobile About +588px and Contact +760px. No goldens or app source changed; owner review and production approval still pending.
+
+## 2026-10-19 — About/Contact modern concept feedback recorded (CD-014)
+
+- User asked for more modern than the previously coded forest Studio pages, viewed AI-generated violet-on-ink comparison **concepts**, and answered “Tamqm”. Record as a **narrow exploratory visual direction** only (CD-014), **not** new code or exact visual-pixel signoff. Prior render's invented contact form/addresses/copy are not requirements. Approved global PL-01 remains unaffected.
+- Scoped next steps and QA/owner gates: `design/ABOUT-CONTACT-NEXT-GENERATION-DIRECTION-2026-10-19.md`. No production, golden or app-code changes in this decision capture; staging and other 81 visual cases remain NO-GO.
