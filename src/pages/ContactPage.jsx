@@ -22,9 +22,22 @@ const ContactPage = () => {
             <span>POSTIFY <span className={styles.editionMark}>✳</span> CONTACT</span>
             <span>{isEn ? 'A conversation worth having' : 'Değerli bir konuşmaya yer var'}</span>
           </div>
-          <span className={styles.eyebrow}>{isEn ? 'CORRECTIONS / FEEDBACK / COLLABORATION' : 'DÜZELTME / GERİ BİLDİRİM / İŞ BİRLİĞİ'}</span>
-          <h1>{isEn ? 'Useful knowledge gets better when readers can challenge it.' : 'Faydalı bilgi, okuyucu ona itiraz edebildiğinde gelişir.'}</h1>
-          <p>{t('contact.description')}</p>
+          <div className={styles.heroBody}>
+            <div className={styles.heroCopy}>
+              <span className={styles.eyebrow}>{isEn ? 'CORRECTIONS / FEEDBACK / COLLABORATION' : 'DÜZELTME / GERİ BİLDİRİM / İŞ BİRLİĞİ'}</span>
+              <h1>{isEn ? 'Useful knowledge gets better when readers can challenge it.' : 'Faydalı bilgi, okuyucu ona itiraz edebildiğinde gelişir.'}</h1>
+              <p>{t('contact.description')}</p>
+              <a className={styles.heroLink} href="#contact-channel-title">
+                {isEn ? 'Find a direct channel' : 'Doğrudan iletişime geç'} <FiArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+            <div className={styles.heroArtwork} aria-hidden="true">
+              <span className={styles.artworkLabel}>AN OPEN CHANNEL</span>
+              <span className={styles.artworkGlyph}>↗</span>
+              <span className={styles.artworkWordmark}>LET’S<br />CONNECT<span>✳</span></span>
+              <span className={styles.artworkFooter}>BETTER TOGETHER / POSTIFY</span>
+            </div>
+          </div>
         </header>
 
         <section className={styles.channelSection} aria-labelledby="contact-channel-title">

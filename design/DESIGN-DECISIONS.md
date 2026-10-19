@@ -314,3 +314,11 @@ Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve der
 **Decision (narrow):** treat this response as permission to **explore** a bolder, less generic, dark-violet editorial direction for **About and Contact only**. The AI visuals were **synthetic** and are not current Postify screenshots, build artifacts, evidence that any code exists, or pixel-perfect acceptance. Preserve the actual product copy/routes/channels and do not implement illustrated but fictitious working contact forms, email accounts, office hours or statistics.
 
 **Prior decisions remain:** PL-01 Oxide & Newsprint (CD-003) is still global; CD-012 Home and CD-013 Article/Author remain intact. Do not apply violet globally without explicit palette/system approval. Need to show **actual coded previews** to secure scoped owner visual approval. No golden PNG updates, GitHub push, production deploy, or release signoff. 81 visual diffs, staging/OAuth/RLS, AT/WCAG and field CWV remain NO-GO. Execution plan: `design/ABOUT-CONTACT-NEXT-GENERATION-DIRECTION-2026-10-19.md`.
+
+## CD-015 — Staged release workflow accepted as development plan (2026-10-19)
+
+**Owner context:** asked whether to wait for every feature or ship increments; assistant proposed private preview first, then a strictly gated read-only public slice, then separately verified authenticated increments. Owner replied **"tamam devam edelim"**.
+
+**Scope:** Proceed with this incremental *development/review* strategy in the existing Oracle run/worktree, not an immediately authorized public push/deployment. Keep current public main unchanged, keep 81 screenshot goldens pending until explicit owner design decisions, verify all staged features' security and WCAG gates, and never treat hiding links as access control. Source of truth: `design/INCREMENTAL-RELEASE-STRATEGY-2026-10-19.md`.
+
+**First local candidate:** Code a narrowly scoped CD-014 dark-violet About/Contact proposal with real copy and contact routes only, retain global approved PL-01. Deliver real Chromium screenshots for owner visual acceptance. External staging/public URL, real OAuth/RLS validation, GitHub push, main merge and production deployment each require their own separate authorization and prerequisites. No screenshot baseline accepted by this choice.

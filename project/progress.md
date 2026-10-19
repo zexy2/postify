@@ -973,3 +973,10 @@ Production check after the batch: root returned HTTP 200 and serves the newer Po
 
 - User asked for more modern than the previously coded forest Studio pages, viewed AI-generated violet-on-ink comparison **concepts**, and answered “Tamqm”. Record as a **narrow exploratory visual direction** only (CD-014), **not** new code or exact visual-pixel signoff. Prior render's invented contact form/addresses/copy are not requirements. Approved global PL-01 remains unaffected.
 - Scoped next steps and QA/owner gates: `design/ABOUT-CONTACT-NEXT-GENERATION-DIRECTION-2026-10-19.md`. No production, golden or app-code changes in this decision capture; staging and other 81 visual cases remain NO-GO.
+
+## 2026-10-19 — Progressive release workflow, real About/Contact violet design coding
+
+- Revised existing Oracle task (same `run-96210d9920c1`, same clean isolated worktree) to stepwise release: local preview, owner review, read-only public slice when independently safe, gated authenticated increments later. Nothing deployed.
+- Coded new deep-violet About and Contact pages, preserved all real text, accessibility semantics, contact destinations, correction copy and internal CTA routes. No synthetic form/global recolor. Added 18 new responsive/semantic/link tests and ran with prior static contracts: **32/32 PASS**; full product Chromium **68/68 PASS**; Vitest205/205, guards/lint/build/security/smoke pass.
+- Eight *real* compiled Chrome screenshots captured at 390/1440 light/dark, no horizontal document overflow or JS page errors. Four user-visible preview collages delivered. Await owner design acceptance and all release gates; production remains **NO-GO**. See `design/ABOUT-CONTACT-INK-PREVIEW-2026-10-19.md`.
+- Mobile Lighthouse lab for compiled candidate: About81/100, Contact80/100 (single run each), TBT164/161ms, CLS0; no field/p75 or homepage speed claims. Preview screenshots and staged deployment gate remain user review pending.

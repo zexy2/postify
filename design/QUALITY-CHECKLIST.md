@@ -343,3 +343,12 @@
 - [x] Generated read-only owner comparison gallery, 81 triples **expected/actual/diff (243 PNGs)** with area/diff filters, **81 PENDING_OWNER** statuses and a full decision matrix. `scripts/qa/build-visual-review.py` and `scripts/qa/test_build_visual_review.py` (**4/4 passed**). Temporary-only HTML/images at `/tmp/postify-owner-review-4942307`; summary `design/VISUAL-OWNER-ACCEPTANCE-REGISTER-2026-10-19.md`.
 - [ ] Owner must explicitly review and decide on **About/Contact (8 of 8 dimension mismatches)**, including mobile About **+588px** and Contact **+760px**, before any scoped golden refresh. Remaining **73** also require case-specific human acceptance; do not auto-approve their snapshots or loosen diff tolerance.
 - [ ] Isolated provider staging OAuth/session/actor RLS/CRUD, manual WCAG 2.2 AA with assistive tech, real field mobile CWV, exact-source PR CI and separately authorized production release all remain **NO-GO**.
+
+## 2026-10-19 — CD-014 real About/Contact modern preview, staged release plan
+
+- [x] Oracle active run replan to private review → scoped safe public slice → later actor-authenticated increments. Old release QA evidence/gates retained. `design/INCREMENTAL-RELEASE-STRATEGY-2026-10-19.md`.
+- [x] Built actual React/CSS local dark-violet About/Contact with existing copy, internal nav, mailto and GitHub; no fake contact form, global palette change, snapshot rebase or deployment.
+- [x] Node24 Vitest **205/205**, release guards, lint, production build, security audit **0 issues**, exact candidate Vite build smoke **11 files, entry 314094/320000 B**, product Chromium **68/68**, static/modern contrast/responsive and link contract **32/32** (320–1440, TR/EN and themes). First new contract run 8 failures from ambiguous repeated footer link selector; corrected selector, rerun **32/32 PASS**. `design/ABOUT-CONTACT-INK-PREVIEW-2026-10-19.md`.
+- [x] Captured eight real Chrome screenshots (About and Contact, light/dark, desktop1440/mobile390), browser overflow0 and pageerror0 in sampled routes. Shared four actual paired previews as chat JPEG attachments.
+- [ ] Owner visual acceptance of coded screens, 81 historical screenshot goldens, hosted staging auth/RLS, manual native screen-reader WCAG, mobile field CWV, CI & production release remain **NO-GO**.
+- [x] About/Contact local single-run Lighthouse mobile: **81 / 80 performance**, FCP3196/3293ms, LCP3638/3730ms, TBT164/161ms, CLS0/0; simulated lab only (`job-e5717e604edc`), *not* field CWV or all-site release performance acceptance.
