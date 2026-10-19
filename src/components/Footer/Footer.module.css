@@ -225,8 +225,21 @@
   isolation: isolate;
   height: clamp(15.5rem, 25vw, 20.5rem);
   overflow: hidden;
-  background: var(--bg-secondary);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-secondary) 88%, var(--primary-subtle)), var(--bg-secondary) 65%);
   border-top: 1px solid var(--border-strong);
+}
+
+/* Quiet editorial label to balance the oversized dot-cutout mark. */
+.signatureBand::before {
+  content: "POSTIFY / FIELD NOTES";
+  position: absolute;
+  z-index: 2;
+  top: .9rem;
+  inset-inline-start: .75rem;
+  color: var(--text-secondary);
+  font: 700 .64rem / 1.5 var(--font-mono);
+  letter-spacing: .16em;
+  pointer-events: none;
 }
 
 .ditherField {
@@ -266,9 +279,10 @@
   display: block;
   color: var(--bg-secondary);
   font-family: var(--font-sans);
-  font-size: clamp(5.5rem, 19.4vw, 18rem);
+  /* Keep the T/I visibly separate, even on wide desktop screens. */
+  font-size: clamp(5.5rem, 19.4vw, 16.6rem);
   font-weight: 900;
-  letter-spacing: -.10em;
+  letter-spacing: .018em;
   line-height: .81;
   white-space: nowrap;
   user-select: none;
@@ -285,8 +299,7 @@
 
 @supports not (mask-image: radial-gradient(circle, #000, transparent)) {
   .ditherField { opacity: .16; }
-  .signatureBand::after {
-  content: "POSTIFY"; color: var(--text-primary); }
+  .signatureBand::after { color: var(--text-primary); }
 }
 
 .systemLine {
@@ -398,8 +411,8 @@
 @media (max-width: 560px) {
   .signatureBand { height: clamp(11rem, 39vw, 13rem); }
   .ditherField { inset: .75rem -4rem 0 0; }
-  .signatureBand::after {
-  content: "POSTIFY"; inset-inline-start: .25rem; font-size: 19.6vw; letter-spacing: -.095em; }
+  .signatureBand::before { top: .55rem; inset-inline-start: .5rem; font-size: .53rem; letter-spacing: .11em; }
+  .signatureBand::after { inset-inline-start: .25rem; font-size: 19.6vw; letter-spacing: .018em; }
   .footer { margin-top: 3.25rem; }
 
   .shell {
