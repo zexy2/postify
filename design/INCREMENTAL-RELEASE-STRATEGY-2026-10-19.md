@@ -12,7 +12,7 @@
 
 ## First increment (this turn)
 
-- Scoped dark-violet About + Contact proposal from CD-014; preserve actual routes, public contact channels, localized copy. Do NOT fabricate a contact form or submission action. Approved global PL-01/Home/Article/Author remain unchanged.
+- Scoped modern editorial About + Contact under CD-016 and approved CD-003 PL-01; preserve actual routes, public contact channels, localized copy. Do NOT fabricate a contact form or submission action. Approved global PL-01/Home/Article/Author remain unchanged.
 - Build a real React/CSS candidate in isolated branch; inspect actual local Chromium mobile/desktop light/dark views. Preserve reduced-motion and minimum 44px targets.
 - 81 historical screenshots including eight About/Contact cases remain owner-pending; CD-014 is exploration, not pixel approval.
 

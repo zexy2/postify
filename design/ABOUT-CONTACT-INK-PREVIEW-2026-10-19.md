@@ -27,3 +27,7 @@
 ## Single-run mobile Lighthouse laboratory result
 
 Same exact local production Vite build and Lighthouse 13.5 with simulated mobile network/CPU throttling, **one run per route**, no provider login: **About performance 81/100, FCP 3196ms, LCP 3638ms, TBT 164ms, CLS 0**; **Contact 80/100, FCP 3293ms, LCP 3730ms, TBT 161ms, CLS 0**. Raw JSON in Oracle temporary artifacts: `/tmp/postify-violet-lh-about.json` and `/tmp/postify-violet-lh-contact.json`; job `job-e5717e604edc`. These are neither a paired baseline-vs-candidate improvement measurement nor real field p75 Core Web Vitals, so **not production release acceptance**. Home route performance remains unresolved (~59 in earlier comparable lab).
+
+## OWNER PALETTE CORRECTION — historical evidence, not active preview
+
+All 2026-10-19 violet screenshots, lab scores and SHA evidence above describe the withdrawn candidate 6054461, NOT the current proposed design. User stated that purple did not belong in the earlier approved palette. CD-016 supersedes CD-014's violet art direction: do not show these violet screenshots as current/accepted design. New actual screenshots and QA evidence are needed for the PL-01 recolored candidate; old passing tests do not verify newly recolored CSS.

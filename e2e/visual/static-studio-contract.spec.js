@@ -17,6 +17,9 @@ for (const { route, title } of cases) {
         await page.goto(route);
         const heading = page.getByRole('heading', { level: 1, name: title });
         await expect(heading).toBeVisible();
+        // Vite route CSS may arrive just after the semantic H1 is visible.
+        // Wait for the actual page font rather than snapshotting the global fallback.
+        await expect.poll(() => heading.evaluate((h1) => getComputedStyle(h1).fontFamily)).toMatch(/Inter|sans-serif/i);
         const geometric = await heading.evaluate((h1) => {
           const panel = h1.closest('header');
           const frame = panel.getBoundingClientRect();

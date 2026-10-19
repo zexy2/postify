@@ -322,3 +322,13 @@ Mevcut *uygulanmamış* frontend için Chromium hızlı **85** navigation ve der
 **Scope:** Proceed with this incremental *development/review* strategy in the existing Oracle run/worktree, not an immediately authorized public push/deployment. Keep current public main unchanged, keep 81 screenshot goldens pending until explicit owner design decisions, verify all staged features' security and WCAG gates, and never treat hiding links as access control. Source of truth: `design/INCREMENTAL-RELEASE-STRATEGY-2026-10-19.md`.
 
 **First local candidate:** Code a narrowly scoped CD-014 dark-violet About/Contact proposal with real copy and contact routes only, retain global approved PL-01. Deliver real Chromium screenshots for owner visual acceptance. External staging/public URL, real OAuth/RLS validation, GitHub push, main merge and production deployment each require their own separate authorization and prerequisites. No screenshot baseline accepted by this choice.
+
+## CD-016 — Owner palette correction: PL-01 is immutable in About/Contact (2026-10-19)
+
+**User's exact correction:** “mor renkler ne alaka biz renk secimini yapmistik zaten oncesinden mor yoktu”.
+
+**Decision:** Earlier CD-014 violet direction and CD-015 dark-violet candidate wording were a **misinterpretation** of “more modern”, and are **withdrawn** as a design direction. The previously approved **CD-003 PL-01 — Oxide & Newsprint remains in force on every page**, including About and Contact. Asking for a more ambitious editorial layout never authorized a new violet palette. Preserve CD-014 as historical exploration evidence, not active guidance.
+
+**Binding palette:** Light paper #F4EFE6, surface #FDFBF6, ink #1F2420, secondary #4F5A53, interactive oxide #A13826 / white foreground; dark ground #151B19, surface #222A26, text #EFEDE5, secondary #B7BCAF, accent #F2AC91 / dark foreground #151B19. References: design/COLOR-SYSTEM-OPTIONS.md and CD-003. Use global theme variables for reading content and approved dark palette for editorial masthead/artwork. No violet including route-scoped overrides without a new explicit palette approval.
+
+**Execution:** Recolor newly composed About/Contact CSS, preserve modern editorial type/layout and true links/content, update test assertions, verify in browser. No production change, public staging, snapshot rebaseline or deployment authorization. Existing 81 visual mismatches and hosted Supabase/AT/CWV gates remain open.

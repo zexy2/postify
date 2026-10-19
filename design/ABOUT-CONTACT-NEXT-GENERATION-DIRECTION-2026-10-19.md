@@ -27,3 +27,7 @@ The current About/Contact Studio implementation uses dark forest/oxide mastheads
 ## Explicit decision boundary
 
 The owner's “Tamqm” after seeing a purple AI **concept** authorizes proceeding with a *design investigation* in this narrowed direction. It does **not** establish consent to publish, invent a message form, claim the AI images are implemented code, refresh 81 snapshot goldens, or replace the already approved global design tokens. Treat any future owner request for a sitewide violet redesign as an architectural/design-system choice needing its own scope decision.
+
+## 2026-10-19 OWNER CORRECTION — SUPERSEDED ART DIRECTION
+
+Do not implement violet from this earlier AI concept. The owner explicitly reminded us that brand colors had already been selected: CD-003 PL-01 Oxide & Newsprint. CD-016 overrides the violet-specific paragraphs above. Keep editorial/typographic ambition while using ONLY PL-01 across About/Contact.

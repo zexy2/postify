@@ -352,3 +352,10 @@
 - [x] Captured eight real Chrome screenshots (About and Contact, light/dark, desktop1440/mobile390), browser overflow0 and pageerror0 in sampled routes. Shared four actual paired previews as chat JPEG attachments.
 - [ ] Owner visual acceptance of coded screens, 81 historical screenshot goldens, hosted staging auth/RLS, manual native screen-reader WCAG, mobile field CWV, CI & production release remain **NO-GO**.
 - [x] About/Contact local single-run Lighthouse mobile: **81 / 80 performance**, FCP3196/3293ms, LCP3638/3730ms, TBT164/161ms, CLS0/0; simulated lab only (`job-e5717e604edc`), *not* field CWV or all-site release performance acceptance.
+
+## 2026-10-19 — Owner correction CD-016 / About+Contact color compliance
+
+- [x] Earlier violet attempt deviated from the approved CD-003 PL-01 palette. Owner explicitly rejected violet; CD-014/015 violet-specific direction superseded by CD-016.
+- [x] Recolored About/Contact CSS only to approved light paper/oxide and dark ink/coral tokens, retained editorial structure, semantics and real email/GitHub links. New visual assertions test PL-01 in light and dark; no purple color remains in those page styles.
+- [ ] Owner review of actual new PL-01 screenshots, plus release gates. Earlier violet samples are not valid current design evidence.
+- [x] Final corrected PL-01 candidate: Chromium product **68/68 PASS** on exact fresh build, eight real screenshot/color samples with no page errors or overflow (job job-2d9d68032749, exit0). These do not approve historical 81 visual goldens.

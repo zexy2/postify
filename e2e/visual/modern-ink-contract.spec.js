@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-// Contract is scoped to the approved exploratory direction (CD-014):
+// Contract is scoped to the modern editorial layout, restored owner-approved CD-003 PL-01 palette:
 // implemented website, real destinations, no fabricated contact submission.
 for (const route of ['/about', '/contact']) {
   for (const theme of ['light', 'dark']) {
     for (const width of [320, 390, 768, 1440]) {
-      test(`violet ink ${route} ${theme} ${width}px preserves public semantics`, async ({ page }) => {
+      test(`oxide editorial ${route} ${theme} ${width}px preserves public semantics`, async ({ page }) => {
         await page.setViewportSize({ width, height: 860 });
         await page.addInitScript((value) => {
           localStorage.setItem('postify_theme', value);
@@ -36,11 +36,14 @@ for (const route of ['/about', '/contact']) {
           };
         });
         expect(info.background).toMatch(/radial-gradient/i);
-        expect(info.background).toMatch(/116, 46, 232|137, 67, 226/i);
-        expect(info.front).toMatch(/rgb\(255, 250, 255\)|rgb\(255, 250, 255\)/);
+        expect(info.background).toMatch(/161, 56, 38/i);
+        expect(info.front).toBe('rgb(239, 237, 229)');
         expect(info.right).toBeLessThanOrEqual(info.frameRight + 1);
         expect(info.left).toBeGreaterThanOrEqual(info.frameLeft - 1);
         expect(info.pageWidth).toBeLessThanOrEqual(info.viewportWidth + 1);
+        // The outer reading canvas follows PL-01 paper by day, warm ink by night.
+        const canvasColor = await page.locator('#main-content > div').first().evaluate((el) => getComputedStyle(el).backgroundColor);
+        expect(canvasColor).toBe(theme === 'light' ? 'rgb(244, 239, 230)' : 'rgb(21, 27, 25)');
         expect(errors).toEqual([]);
 
         const primaryAnchor = hero.locator('a[href^="#"]').first();
@@ -71,7 +74,7 @@ for (const route of ['/about', '/contact']) {
 }
 
 for (const route of ['/about', '/contact']) {
-  test(`violet ink ${route} Turkish 320px preserves localized copy without side scroll`, async ({ page }) => {
+  test(`oxide editorial ${route} Turkish 320px preserves localized copy without side scroll`, async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
     await page.goto(route);
