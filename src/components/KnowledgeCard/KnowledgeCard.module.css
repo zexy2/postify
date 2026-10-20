@@ -707,3 +707,9 @@
 @media (prefers-reduced-motion: reduce) {
   :global([data-showcase="true"]) .standard::before { display: none; }
 }
+
+/* 200% text scaling: long editorial titles must stay inside narrow cards. */
+@media (max-width: 620px) {
+  .titleLink { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .title { min-width: 0; overflow-wrap: anywhere; }
+}

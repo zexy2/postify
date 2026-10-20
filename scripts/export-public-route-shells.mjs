@@ -30,6 +30,8 @@ export async function exportPublicRouteShells(outputDir) {
 
   for (const [route, metadata] of Object.entries(PUBLIC_ROUTE_SHELLS)) {
     const html = homepage
+      // The homepage cover preload is not relevant on About/Contact routes.
+      .replace(/\s*<link rel="preload" as="image"[^>]+>/, '')
       .replace(/<title>[^<]+<\/title>/, '<title>' + metadata.title + '</title>')
       .replace(/<meta name="description" content="[^"]+"/, '<meta name="description" content="' + metadata.description + '"')
       .replace('</head>', '  <link rel="canonical" href="https://postify.zekiakgul.dev/' + route + '" />\n  </head>');
