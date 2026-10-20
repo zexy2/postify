@@ -713,3 +713,46 @@
   .titleLink { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .title { min-width: 0; overflow-wrap: anywhere; }
 }
+
+/* Reading desk lead story: type has the full reading width. In the narrower
+   editorial column a 50/50 split made Turkish titles six or more lines long. */
+@media (min-width: 1060px) {
+  :global([data-showcase="true"]) .featured {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto clamp(290px, 24vw, 350px);
+    min-height: 0;
+    border-radius: 4px;
+  }
+  :global([data-showcase="true"]) .featured > .ordinal { grid-column: 1; grid-row: 1; }
+  :global([data-showcase="true"]) .featured > .content {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    padding: clamp(3.6rem, 5vw, 5.3rem) clamp(1.7rem, 3.3vw, 3.25rem) 2.2rem;
+  }
+  :global([data-showcase="true"]) .featured .title {
+    max-width: 19ch;
+    margin: clamp(.9rem, 1.7vw, 1.6rem) 0 1.05rem;
+    font-size: clamp(2.85rem, 4.3vw, 4.65rem);
+    line-height: 1.045;
+    letter-spacing: -.055em;
+    text-wrap: balance;
+  }
+  :global([data-showcase="true"]) .featured .outcome { max-width: 46ch; }
+  :global([data-showcase="true"]) .featured .trustStrip {
+    margin: clamp(1.1rem, 2.8vw, 2.2rem) 0 0;
+    padding: .8rem 0 0;
+    border-top: 1px solid var(--border-color);
+  }
+  :global([data-showcase="true"]) .featured > .imageLink {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 290px;
+    height: auto;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+  :global([data-showcase="true"]) .featured > .imageLink::after {
+    background: linear-gradient(180deg, rgb(18 36 28 / 15%), transparent 52%);
+  }
+}

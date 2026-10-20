@@ -564,3 +564,18 @@
   .loginButton:hover,
   .mobileLogin:hover { transform: none; }
 }
+
+/* Actual content formats are categories, not an ordered four-step workflow. */
+@media (min-width: 961px) {
+  .desktopNav { justify-content: center; gap: clamp(.4rem, 1.3vw, 1.4rem); }
+  .desktopNavIndex { display: none; }
+  .desktopNav a {
+    padding-inline: clamp(.25rem, .7vw, .75rem);
+    font-size: .81rem;
+    font-weight: 650;
+    letter-spacing: -.025em;
+  }
+  .desktopNav a::after { left: .3rem; right: .3rem; height: 3px; }
+  .desktopNav a:hover, .desktopNav a.active { background: transparent; }
+  .desktopNav a.active { color: var(--text-primary); }
+}

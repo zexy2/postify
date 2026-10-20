@@ -333,3 +333,115 @@
   .discoveryControls { padding-block: .6rem; }
   .formatSelect, .refineToggle { background: transparent; }
 }
+
+/* Studio edition / discovery as a two-column reading desk, not a toolbar
+   placed above another identical-width column of cards. */
+@media (min-width: 1060px) {
+  .postsSection {
+    display: grid;
+    grid-template-columns: minmax(206px, .285fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 3.6vw, 4.8rem);
+    align-items: start;
+    padding-top: clamp(2.8rem, 5vw, 4.9rem);
+  }
+  .sectionHeader {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 1.6rem;
+    margin-bottom: clamp(2.2rem, 4.2vw, 3.8rem);
+    padding-bottom: clamp(1.35rem, 2.3vw, 2.2rem);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .sectionTitle {
+    max-width: 16ch;
+    font-size: clamp(3.9rem, 5.65vw, 5.95rem);
+    line-height: .96;
+    letter-spacing: -.063em;
+  }
+  .sectionSubtitle {
+    align-self: end;
+    margin-bottom: .4rem;
+    padding: .5rem 0 .3rem;
+    background: transparent;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+  }
+  .discoveryControls {
+    grid-column: 1;
+    grid-row: 2;
+    position: sticky;
+    top: calc(var(--header-height) + 1.2rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.4rem, 2.5vw, 2.6rem);
+    align-items: stretch;
+    min-width: 0;
+    max-height: calc(100vh - var(--header-height) - 2.4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: 0;
+    padding: 1.55rem clamp(1.2rem, 2.35vw, 2.5rem) 1.55rem 0;
+    border: 0;
+    border-top: 2px solid var(--primary);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 0;
+    background: transparent;
+  }
+  .discoveryControls :global(nav) { display: grid; align-items: start; gap: .65rem; }
+  .discoveryControls :global(nav > div) { width: 100%; max-width: none; }
+  .discoveryControls :global(nav > label) { font-size: .69rem; letter-spacing: .04em; }
+  .discoveryControls :global(nav select),
+  .discoveryControls .formatSelect {
+    height: 56px;
+    padding-left: 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+    font-size: .94rem;
+    font-weight: 620;
+    letter-spacing: -.02em;
+  }
+  .discoveryControls :global(nav select):focus-visible,
+  .discoveryControls .formatSelect:focus-visible { outline-offset: 2px; }
+  .filterToolbar, .filterCluster { flex-direction: column; align-items: stretch; gap: .65rem; }
+  .filterCluster { flex: 0 1 auto; width: 100%; }
+  .filterClusterLabel { font-size: .69rem; font-weight: 740; letter-spacing: .04em; }
+  .formatSelectWrap { width: 100%; flex: 0 1 auto; }
+  .refineMenu { width: 100%; margin-top: .2rem; }
+  .refineToggle {
+    width: 100%;
+    min-height: 50px;
+    justify-content: space-between;
+    padding-inline: 0;
+    border: 0;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+    font-size: .79rem;
+  }
+  .activeRefinements { flex-wrap: wrap; }
+  .postsSection > :global([data-knowledge-feed]),
+  .postsSection > .noResults,
+  .postsSection > .loadMore { grid-column: 2; min-width: 0; }
+  .postsSection > :global([data-knowledge-feed]),
+  .postsSection > .noResults { grid-row: 2; }
+  .postsSection > .loadMore { grid-row: 3; }
+}
+@media (min-width: 1060px) and (max-height: 700px) {
+  .discoveryControls { position: relative; top: auto; max-height: none; overflow: visible; }
+}
+
+/* Sticky elements must not establish their own scroll container. The controls
+   already fit within the reading rail; let the document own vertical scroll. */
+@media (min-width: 1060px) {
+  .discoveryControls { max-height: none; overflow: visible; overscroll-behavior: auto; }
+}
+
+/* Root overflow:hidden creates a second scroll container and defeats sticky
+   sidebars. Scope the modern overflow:clip fix to Home; keep other pages as-is. */
+@supports (overflow: clip) {
+  :global(html):has(.page),
+  :global(body):has(.page) { overflow-x: clip; overflow-y: visible; }
+}
