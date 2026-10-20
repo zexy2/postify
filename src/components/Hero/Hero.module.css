@@ -458,3 +458,44 @@
   .featuredContent strong { font-size: 1.9rem; }
   .featuredExcerpt { -webkit-line-clamp: 2; }
 }
+
+/* Motion edition 05: one composed first impression; the image inspection
+   sweep is user-triggered, never a constant distracting animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .masthead .title { animation: mastheadArrival 650ms cubic-bezier(.2,.75,.2,1) both; }
+  .featuredVisual .featuredImage { animation: coverArrival 950ms cubic-bezier(.2,.72,.18,1) both; }
+}
+@keyframes mastheadArrival {
+  from { opacity: .25; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes coverArrival {
+  from { opacity: .76; transform: scale(1.045); }
+  to { opacity: 1; transform: scale(1); }
+}
+.featuredVisual::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(245 222 201 / 3%) 38%,
+    rgb(250 221 190 / 23%) 50%,
+    rgb(245 222 201 / 3%) 59%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .featuredVisual::before { transition: transform 900ms cubic-bezier(.2,.72,.18,1), opacity 200ms ease; }
+  .featured:hover .featuredVisual::before,
+  .featured:focus-within .featuredVisual::before { opacity: 1; transform: translateY(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead .title, .featuredVisual .featuredImage { animation: none; }
+  .featuredVisual::before { display: none; }
+}

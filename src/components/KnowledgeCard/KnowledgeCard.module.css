@@ -683,3 +683,27 @@
   background: #294b36;
   border-color: #294b36;
 }
+
+/* Home discovery: a thin proof-trail follows deliberate card focus/hover.
+   Static default and keyboard focus remain fully readable. */
+:global([data-showcase="true"]) .standard::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  bottom: -1px;
+  inset-inline-start: 0;
+  width: min(38%, 18rem);
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-showcase="true"]) .standard::before { transition: transform 420ms cubic-bezier(.22,.73,.21,1); }
+  :global([data-showcase="true"]) .standard:hover::before,
+  :global([data-showcase="true"]) .standard:focus-within::before { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global([data-showcase="true"]) .standard::before { display: none; }
+}

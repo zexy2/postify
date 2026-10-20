@@ -1082,3 +1082,21 @@
 :global(html:not([data-theme='dark'])) .articleHeader .authorInfo strong { color: #1d2d25; }
 :global(html:not([data-theme='dark'])) .articleHeader .authorInfo small { color: #54685b; }
 :global(html:not([data-theme='dark'])) .articleHeader .canonicalSource { color: #8f3c29; }
+
+/* Mobile reading dock: 44px targets retained, with less content occlusion. */
+@media (max-width: 980px) {
+  .mobileActionBar {
+    bottom: max(.2rem, env(safe-area-inset-bottom));
+    gap: .05rem;
+    padding: 0 .2rem;
+    background: color-mix(in srgb, var(--bg-primary) 97%, transparent);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    box-shadow: 0 6px 23px rgb(20 31 24 / 13%);
+  }
+  .mobileActionBtn, .mobileShareWrap button { border-radius: 999px; }
+  .mobileActionBtn:hover,
+  .mobileActionBtn.bookmarked,
+  .mobileShareWrap button:hover,
+  .mobileShareWrap button:focus-visible { background: var(--primary-subtle); border-bottom-color: transparent; }
+}
