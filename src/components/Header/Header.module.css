@@ -579,3 +579,13 @@
   .desktopNav a:hover, .desktopNav a.active { background: transparent; }
   .desktopNav a.active { color: var(--text-primary); }
 }
+
+/* On small screens the navigation is always opaque. Avoid a costly live blur
+   layer behind the sticky toolbar during first paint and scrolling. */
+@media (max-width: 960px) {
+  .header {
+    background: var(--bg-primary);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
