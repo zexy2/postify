@@ -756,3 +756,11 @@
     background: linear-gradient(180deg, rgb(18 36 28 / 15%), transparent 52%);
   }
 }
+
+/* Evidence is a product signal, not an ornamental label. The compressed
+   showcase hides field captions; never hide the nested live evidence badge. */
+:global([data-showcase="true"]) .featured .evidenceFact :global(.evidence-badge),
+:global([data-showcase="true"]) .standard .evidenceFact :global(.evidence-badge) {
+  display: inline-flex;
+  visibility: visible;
+}

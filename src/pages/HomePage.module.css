@@ -445,3 +445,12 @@
   :global(html):has(.page),
   :global(body):has(.page) { overflow-x: clip; overflow-y: visible; }
 }
+
+/* Discovery's sticky reading rail establishes a stacking context. Its filter
+   sheet must paint above adjacent story cards, even after the page scrolls. */
+@media (min-width: 1060px) {
+  .discoveryControls { z-index: calc(var(--z-dropdown) - 1); }
+}
+@media (max-width: 1059px) {
+  .discoveryControls { position: relative; z-index: calc(var(--z-dropdown) - 1); }
+}

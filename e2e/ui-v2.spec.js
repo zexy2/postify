@@ -46,9 +46,8 @@ test.describe('Postify UI V2', () => {
       await expect(link).toHaveAttribute('aria-current', 'page');
       await expect(explore).not.toHaveAttribute('aria-current', 'page');
 
-      const activeFilter = page.getByRole('group', { name: /content format|içerik biçimi/i })
-        .getByRole('button', { name: item.filter });
-      await expect(activeFilter).toHaveAttribute('aria-pressed', 'true');
+      const activeFilter = page.getByRole('combobox', { name: /content format|içerik biçimi/i });
+      await expect(activeFilter).toHaveValue(item.type);
       await expect(page.locator('#knowledge-feed')).toBeInViewport();
       expect(await page.locator('#knowledge-feed [data-card-variant]').count()).toBeGreaterThan(0);
 
@@ -74,7 +73,7 @@ test.describe('Postify UI V2', () => {
       await guides.click();
 
       await expect(page).toHaveURL(/[?&]type=guide#knowledge-feed$/);
-      await expect(page.getByRole('button', { name: /^rehber$|^guide$/i })).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByRole('combobox', { name: /content format|içerik biçimi/i })).toHaveValue('guide');
       await expect(page.locator('#knowledge-feed')).toBeInViewport();
 
       await footer.scrollIntoViewIfNeeded();
@@ -99,7 +98,8 @@ test.describe('Postify UI V2', () => {
       await refineToggle.click();
       await expect(refineToggle).toHaveAttribute('aria-expanded', 'true');
       const latest = page.getByRole('button', { name: /^latest$|^en yeni$/i });
-      await latest.scrollIntoViewIfNeeded();
+      // The filter sheet owns its scroll position. Scrolling the document before
+      // selecting an option can move the fixed sheet behind the sticky header.
       const beforeFilterTop = await feed.evaluate((element) => element.getBoundingClientRect().top);
       await latest.click();
       await expect(page).toHaveURL(/type=guide.*sort=latest$/);
@@ -432,7 +432,7 @@ test.describe('Postify UI V2', () => {
       page.getByRole('link', { name: /browse the library|bilgi arşivine göz at/i }),
       page.getByRole('link', { name: /contribute|katkı yap/i }),
       page.getByRole('button', { name: /add to bookmarks|favorilere ekle/i }).first(),
-      page.locator('main').getByRole('button', { name: /all formats|tüm formatlar/i }).first(),
+      page.getByRole('combobox', { name: /content format|içerik biçimi/i }),
     ];
     for (const target of touchTargets) {
       await expect(target).toBeVisible();
@@ -446,7 +446,7 @@ test.describe('Postify UI V2', () => {
     }
 
     for (const railButton of [
-      page.getByRole('navigation', { name: /topics|konu başlıkları/i }).getByRole('button').last(),
+      page.getByRole('navigation', { name: /topics|konu başlıkları/i }).getByRole('combobox'),
       page.getByRole('group', { name: /discovery filters|keşif filtreleri/i }).getByRole('button').last(),
     ]) {
       await railButton.focus();
@@ -482,13 +482,14 @@ test.describe('Postify UI V2', () => {
   test('V3 topic navigation changes discovery context without mobile overflow', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const topicNav = page.locator('nav').filter({ has: page.getByRole('button', { name: /^tümü$|^all$/i }) }).first();
-    await expect(topicNav.getByText(/^konular$|^topics$/i)).toBeVisible();
-    const topicButtons = topicNav.getByRole('button');
-    expect(await topicButtons.count()).toBeGreaterThan(1);
-    await expect(topicButtons.first()).toHaveAttribute('aria-pressed', 'true');
-    await topicButtons.nth(1).click();
-    await expect(topicButtons.nth(1)).toHaveAttribute('aria-pressed', 'true');
+    const topicNav = page.getByRole('navigation', { name: /topics|konu başlıkları/i });
+    await expect(topicNav).toBeVisible();
+    const topicSelect = topicNav.getByRole('combobox');
+    await expect(topicSelect.getByRole('option').first()).toHaveText(/tüm konular|all topics/i);
+    const selected = await topicSelect.getByRole('option').nth(1).getAttribute('value');
+    await topicSelect.selectOption(selected);
+    await expect(topicSelect).toHaveValue(selected);
+    await expect(page).toHaveURL(/category=/);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
   });
@@ -900,12 +901,11 @@ test.describe('Postify UI V2', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(filters.getByRole('group', { name: /evidence and ordering|kanıt ve sıralama/i })).toHaveCount(0);
 
-    const desktop = await formatGroup.evaluate((element) => ({
-      rows: new Set([...element.querySelectorAll('button')].map((button) => Math.round(button.getBoundingClientRect().top))).size,
-      labelSize: parseFloat(getComputedStyle(element.querySelector('[aria-hidden="true"]')).fontSize),
-    }));
-    expect(desktop.rows).toBe(1);
-    expect(desktop.labelSize).toBeGreaterThanOrEqual(11);
+    const formatSelect = formatGroup.getByRole('combobox');
+    await expect(formatSelect).toBeVisible();
+    await expect(formatSelect).toHaveValue('all');
+    const desktop = await formatSelect.boundingBox();
+    expect(desktop?.height || 0).toBeGreaterThanOrEqual(44);
 
     const beforeOpenHeight = await filters.evaluate((element) => element.getBoundingClientRect().height);
     await toggle.click();
@@ -934,17 +934,11 @@ test.describe('Postify UI V2', () => {
     const filters = page.getByRole('group', { name: /discovery filters|keşif filtreleri/i });
     const formatGroup = filters.getByRole('group', { name: /content format|içerik biçimi/i });
     const toggle = filters.getByRole('button', { name: /^filters$|^filtreler$/i });
-    await expect(formatGroup.getByRole('button', { name: /tüm biçimler|all formats/i })).toBeVisible();
-
-    const primaryGeometry = await formatGroup.evaluate((element) => {
-      const buttons = [...element.querySelectorAll('button')];
-      return {
-        rows: new Set(buttons.map((button) => Math.round(button.getBoundingClientRect().top))).size,
-        minHeight: Math.min(...buttons.map((button) => button.getBoundingClientRect().height)),
-      };
-    });
-    expect(primaryGeometry.rows).toBe(1);
-    expect(primaryGeometry.minHeight).toBeGreaterThanOrEqual(44);
+    const formatSelect = formatGroup.getByRole('combobox');
+    await expect(formatSelect).toBeVisible();
+    await expect(formatSelect).toHaveValue('all');
+    const primaryGeometry = await formatSelect.boundingBox();
+    expect(primaryGeometry?.height || 0).toBeGreaterThanOrEqual(44);
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 
     const beforeOpenHeight = await filters.evaluate((element) => element.getBoundingClientRect().height);
@@ -1027,7 +1021,7 @@ test.describe('Postify UI V2', () => {
 
     await expect(menu).toHaveAttribute('aria-expanded', 'false');
     await expect(page).toHaveURL(/[?&]type=guide#knowledge-feed$/);
-    await expect(page.getByRole('button', { name: /^rehber$|^guide$/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('combobox', { name: /content format|içerik biçimi/i })).toHaveValue('guide');
     await expect(page.locator('#knowledge-feed')).toBeInViewport();
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -1042,8 +1036,8 @@ test.describe('Postify UI V2', () => {
     await expect(feed.locator('[data-card-variant="featured"]')).toHaveCount(1);
     await expect(feed.locator('[data-card-variant="standard"]')).toHaveCount(3);
     expect(await feed.locator('[data-card-variant="compact"]').count()).toBeGreaterThan(0);
-    await expect(feed.getByText(/^kanıt$|^evidence$/i).first()).toBeVisible();
-    await expect(feed.getByText(/^güncellik$|^freshness$/i).first()).toBeVisible();
+    await expect(feed.locator('article[data-card-variant=featured] .evidence-badge')).toBeVisible();
+    await expect(feed.locator('article[data-card-variant=featured] [data-freshness] strong').last()).toBeVisible();
     const articles = feed.locator('article');
     const overflow = await articles.evaluateAll((items) => items.map((item) => item.scrollWidth - item.clientWidth));
     expect(Math.max(...overflow)).toBeLessThanOrEqual(1);
@@ -1071,7 +1065,7 @@ test.describe('Postify UI V2', () => {
 test.describe('Verified Knowledge V1', () => {
   test('discovery exposes evidence and freshness controls', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText(/yazar test etti|author tested/i).first()).toBeVisible();
+    await expect(page.locator('#knowledge-feed article .evidence-badge').first()).toBeVisible();
     await page.getByRole('button', { name: /^filters$|^filtreler$/i }).click();
     await expect(page.getByRole('button', { name: /güncel kanıt|current evidence/i })).toBeVisible();
   });
