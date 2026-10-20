@@ -2,3 +2,18 @@
   display: grid;
   border-bottom: 1px solid var(--border-strong);
 }
+
+/* Issue index: below the lead story, three supporting articles read as one
+   editorial contact sheet instead of three indistinguishable horizontal rows.
+   Keep the article order, native links and evidence content untouched. */
+@media (min-width: 1180px) {
+  .feedContainer[data-showcase='true'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(.85rem, 1.6vw, 1.55rem);
+    align-items: stretch;
+  }
+  .feedContainer[data-showcase='true'] > :first-child,
+  .feedContainer[data-showcase='true'] > [data-card-variant='compact'] {
+    grid-column: 1 / -1;
+  }
+}

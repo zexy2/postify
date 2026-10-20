@@ -764,3 +764,73 @@
   display: inline-flex;
   visibility: visible;
 }
+
+/* Supporting stories form an editorial contact sheet below the lead story.
+   This changes composition rather than replacing images or hiding evidence. */
+@media (min-width: 1180px) {
+  :global([data-showcase='true']) .standard {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+    min-width: 0;
+    margin: 0 0 clamp(1.35rem, 2.6vw, 2.4rem);
+    padding: 0 0 1.05rem;
+    background: transparent;
+    border-top: 2px solid var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+    transform: none;
+    box-shadow: none;
+  }
+  :global([data-showcase='true']) .standard:hover {
+    background: transparent;
+    border-top-color: var(--primary);
+    transform: none;
+    box-shadow: none;
+  }
+  :global([data-showcase='true']) .standard > .imageLink {
+    order: -2;
+    width: 100%;
+    min-height: 0;
+    margin: 0 0 .95rem;
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+  }
+  :global([data-showcase='true']) .standard > .ordinal {
+    order: -1;
+    padding: 0 0 .85rem;
+    font-size: .72rem;
+    letter-spacing: .12em;
+  }
+  :global([data-showcase='true']) .standard > .content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+  }
+  :global([data-showcase='true']) .standard .meta { gap: .3rem .5rem; font-size: .7rem; }
+  :global([data-showcase='true']) .standard .title {
+    max-width: 18ch;
+    margin: .7rem 0 .6rem;
+    font-size: clamp(1.5rem, 2.06vw, 1.97rem);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+  :global([data-showcase='true']) .standard .outcome {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    font-size: .76rem;
+    line-height: 1.62;
+  }
+  :global([data-showcase='true']) .standard .trustStrip {
+    margin-top: auto;
+    padding-top: .95rem;
+    border-top: 0;
+  }
+  :global([data-showcase='true']) .standard .actions { margin-top: .35rem; }
+  :global([data-showcase='true']) .standard .image { height: 100%; }
+}
