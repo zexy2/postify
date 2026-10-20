@@ -62,7 +62,7 @@
 
 .postsSection { scroll-margin-top: 76px; padding-top: clamp(1.65rem, 3.4vw, 2.8rem); padding-bottom: var(--space-3xl); }
 .sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin: 0 0 clamp(1.5rem, 2.4vw, 2.1rem); }
-.sectionTitle { display: flex; align-items: center; gap: .55rem; margin: .44rem 0 0; color: var(--text-primary); font-family: var(--font-display); font-size: clamp(2rem, 3.15vw, 2.9rem); font-weight: 550; letter-spacing: -.045em; line-height: 1.04; text-wrap: balance; }
+.sectionTitle { display: flex; align-items: center; gap: .55rem; margin: .65rem 0 0; color: var(--text-primary); font-family: var(--font-display); font-size: clamp(2.35rem, 4.1vw, 3.7rem); font-weight: 520; letter-spacing: -.055em; line-height: .99; text-wrap: balance; }
 .sectionSubtitle { flex: 0 0 auto; display: inline-flex; align-items: center; margin: 0 0 .25rem; padding: .42rem .6rem; color: var(--text-secondary); background: var(--bg-secondary); border-radius: 4px; font-family: var(--font-mono); font-size: .64rem; font-weight: 730; letter-spacing: .035em; }
 
 .noResults { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: .35rem 1rem; align-items: start; padding: 1.35rem 0 1.5rem; color: var(--text-muted); border-top: 2px solid var(--text-primary); border-bottom: 1px solid var(--border-strong); text-align: left; }
@@ -291,4 +291,45 @@
 
 @media (max-width: 620px) {
   .sectionTitle { font-size: clamp(1.7rem, 8.8vw, 2.25rem); }
+}
+
+/* Discovery edition 04 — thin editorial rule instead of a form-like filter panel. */
+.sectionEyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  margin-right: .65rem;
+  vertical-align: middle;
+  background: var(--primary);
+}
+.discoveryControls {
+  position: relative;
+  padding: 1.05rem .12rem 1rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+.formatSelect,
+.refineToggle {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+.formatSelect:hover,
+.refineToggle:hover,
+.refineToggleOpen {
+  background: color-mix(in srgb, var(--bg-elevated) 55%, transparent);
+  border-bottom-color: var(--primary);
+}
+.discoveryControls :global(select) {
+  letter-spacing: -.005em;
+}
+@media (max-width: 560px) {
+  .sectionTitle { font-size: clamp(2rem, 10.2vw, 2.8rem); }
+  .discoveryControls { padding-block: .6rem; }
+  .formatSelect, .refineToggle { background: transparent; }
 }
