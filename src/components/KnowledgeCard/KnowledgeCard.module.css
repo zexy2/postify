@@ -140,8 +140,8 @@
 }
 
 .readLink:hover { color: var(--primary); }
-.readLink svg { transition: transform var(--transition-fast); }
-.readLink:hover svg { transform: translate(2px, -2px); }
+.readLink::after { content: '↗'; transition: transform var(--transition-fast); }
+.readLink:hover::after { transform: translate(2px, -2px); }
 
 .bookmark {
   display: inline-grid;
@@ -833,4 +833,90 @@
   }
   :global([data-showcase='true']) .standard .actions { margin-top: .35rem; }
   :global([data-showcase='true']) .standard .image { height: 100%; }
+}
+
+/* 15 / Mobile archive index. The former compact rows hid their explicit
+   reading link and repeated field captions around a small heading. Keep the
+   factual values and native links, but make each issue entry easy to scan. */
+@media (max-width: 620px) {
+  :global([data-showcase='true']) .compact {
+    grid-template-columns: clamp(2.65rem, 12vw, 3.15rem) minmax(0, 1fr);
+    gap: clamp(.75rem, 3vw, 1.1rem);
+    align-items: start;
+    padding: clamp(1.45rem, 4vw, 1.9rem) 0;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  :global([data-showcase='true']) .compact > .ordinal {
+    padding-top: .03em;
+    color: var(--primary);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 8.5vw, 2.8rem);
+    font-weight: 430;
+    line-height: 1;
+    letter-spacing: -.08em;
+  }
+  :global([data-showcase='true']) .compact > .content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'meta'
+      'title'
+      'trust'
+      'actions';
+    gap: 0;
+    min-width: 0;
+  }
+  :global([data-showcase='true']) .compact .meta { gap: .32rem .55rem; font-size: .67rem; }
+  :global([data-showcase='true']) .compact .title {
+    max-width: 25ch;
+    margin: .7rem 0 .8rem;
+    font-size: clamp(1.3rem, 5.6vw, 1.75rem);
+    font-weight: 540;
+    line-height: 1.14;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+  :global([data-showcase='true']) .compact .trustStrip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem .8rem;
+    margin: 0;
+    padding: .65rem 0 0;
+    border-top: 1px solid var(--border-color);
+  }
+  :global([data-showcase='true']) .compact .trustStrip > div {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  /* The headings remain accessible to assistive tech; values stay visible. */
+  :global([data-showcase='true']) .compact .trustStrip > div > span:first-child:not(.evidence-badge) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  /* The live evidence badge already states freshness ('Güncel'). Avoid
+     printing the same state twice; the badge remains fully visible. */
+  :global([data-showcase='true']) .compact .trustStrip > .freshnessFact { display: none; }
+  :global([data-showcase='true']) .compact .trustStrip strong { font-size: .72rem; }
+  :global([data-showcase='true']) .compact .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .65rem;
+    margin-top: .35rem;
+  }
+  :global([data-showcase='true']) .compact .readLink {
+    display: inline-flex;
+    min-height: 44px;
+    font-size: .76rem;
+    color: var(--primary);
+  }
+  :global([data-showcase='true']) .compact .bookmark { flex: 0 0 44px; }
 }

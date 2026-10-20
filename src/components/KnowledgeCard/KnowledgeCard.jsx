@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FiArrowUpRight, FiBookmark, FiClock } from 'react-icons/fi';
+import { FiBookmark, FiClock } from 'react-icons/fi';
 import ContentImage from '../ContentImage/ContentImage';
 import EvidenceBadge from '../EvidenceBadge';
 import { summarizeCommunityEvidence } from '../../lib/communityEvidence';
@@ -95,7 +95,7 @@ const KnowledgeCard = ({
 
         <div className={styles.actions}>
           <Link to={href} className={styles.readLink}>
-            {isFeatured ? t('common.readMore') : t('common.read')} <FiArrowUpRight size={14} aria-hidden="true" />
+            {isFeatured ? t('common.readMore') : t('common.read')}
           </Link>
           <button
             type="button"
