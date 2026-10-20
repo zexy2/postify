@@ -394,3 +394,24 @@
     min-height: 44px;
   }
 }
+
+/* A sign-in is a task, not a three-step marketing story. Keep the form early,
+   with a compact editorial preface on small screens. */
+.contextList { font-family: var(--font-sans); font-size: .8rem; letter-spacing: -.01em; }
+.contextList li { grid-template-columns: minmax(0, 1fr); }
+.contextList li::before { display: none; }
+@media (max-width: 920px) {
+  .container { gap: 1.55rem; }
+  .context h2 { max-width: 17ch; font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: .99; }
+  .context > p { margin-top: .85rem; }
+}
+@media (max-width: 560px) {
+  .container { gap: 1.15rem; padding-top: .85rem; }
+  .eyebrow { letter-spacing: .04em; }
+  .context h2 { max-width: 18ch; margin-top: .4rem; font-size: clamp(2rem, 8.2vw, 2.7rem); line-height: 1.02; }
+  .context > p { margin-top: .65rem; font-size: .85rem; line-height: 1.55; }
+  .card { padding-top: 1rem; }
+  .header { padding-bottom: .8rem; }
+  .title { font-size: clamp(2.65rem, 10vw, 3.5rem); }
+  .form { margin-top: .95rem; gap: 1rem; }
+}

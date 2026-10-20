@@ -501,17 +501,22 @@ test.describe('Postify UI V2', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
 
-    const topicNav = page.getByRole('navigation', { name: 'Topics' });
+    // Discovery uses a native select now; assert the English-facing labels and
+    // canonical stored category values, not the removed legacy chip buttons.
+    const topics = page.getByRole('combobox', { name: 'Topics' });
     for (const label of ['Product design', 'Developer tools']) {
-      await expect(topicNav.getByRole('button', { name: new RegExp(label, 'i') })).toBeVisible();
+      await expect(topics.getByRole('option', { name: label, exact: true })).toHaveCount(1);
     }
     for (const rawLabel of ['Ürün tasarımı', 'Geliştirici araçları']) {
-      await expect(topicNav.getByRole('button', { name: new RegExp(rawLabel, 'i') })).toHaveCount(0);
+      await expect(topics.getByRole('option', { name: rawLabel, exact: true })).toHaveCount(0);
     }
+    await topics.selectOption({ label: 'Product design' });
+    await expect(page).toHaveURL(/category=%C3%9Cr%C3%BCn/);
+    await topics.selectOption('all');
 
     const search = page.getByRole('searchbox');
     await search.fill('Product design');
-    await expect(page.locator('#knowledge-feed').getByText('Product design', { exact: true }).first()).toBeVisible();
+    await expect(page.locator('#knowledge-feed article').getByText('Product design', { exact: true }).first()).toBeVisible();
 
     await page.goto('/users/postify');
     await expect(page.getByRole('heading', { level: 1, name: 'Postify Editor' })).toBeVisible();
