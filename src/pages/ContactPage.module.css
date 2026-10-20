@@ -161,3 +161,36 @@
   .channel, .heroLink { transition: none; }
   .channel:hover, .heroLink:hover { transform: none; }
 }
+
+/* Quality loop 02: Contact uses a warm, open invitation rather than reusing
+   About's evidence-green cover. Different identity, same editorial grid. */
+:global(html:not([data-theme='dark'])) .hero {
+  color: #302722;
+  background:
+    radial-gradient(circle at 94% 12%, rgb(188 99 70 / 22%), transparent 46%),
+    linear-gradient(135deg, #f1e5d9 0%, #f7eee3 59%, #f1ddd0 100%);
+  border-color: rgb(153 71 47 / 23%);
+}
+:global(html:not([data-theme='dark'])) .hero::before { border-color: rgb(153 71 47 / 18%); box-shadow: 0 0 0 6rem rgb(153 71 47 / 4%), 0 0 0 12rem rgb(153 71 47 / 2%); }
+:global(html:not([data-theme='dark'])) .editionLine { color: #58463c; border-bottom-color: rgb(103 71 53 / 24%); }
+:global(html:not([data-theme='dark'])) .hero .editionMark,
+:global(html:not([data-theme='dark'])) .hero .eyebrow { color: #9e3f29; }
+:global(html:not([data-theme='dark'])) .hero h1 { color: #302722; }
+:global(html:not([data-theme='dark'])) .hero h1 em { color: #a0422a; }
+:global(html:not([data-theme='dark'])) .heroCopy > p { color: #5d4b40; }
+:global(html:not([data-theme='dark'])) .heroLink,
+:global(html:not([data-theme='dark'])) .heroLink:hover { color: #fff9f0; background: #8d3b27; border-color: #8d3b27; }
+:global(html:not([data-theme='dark'])) .heroArtwork {
+  background: radial-gradient(ellipse at 63% 31%, #f7c3a7, transparent 50%), linear-gradient(145deg, #cf7957 0%, #a94e33 57%, #703321 100%);
+  border-color: rgb(153 71 47 / 24%);
+  box-shadow: 0 22px 58px rgb(116 51 31 / 16%);
+}
+:global(html:not([data-theme='dark'])) .artworkGlyph { color: #fce5d4; opacity: .82; }
+:global(html:not([data-theme='dark'])) .artworkLabel,
+:global(html:not([data-theme='dark'])) .artworkFooter { color: #ffede3; }
+:global(html:not([data-theme='dark'])) .artworkWordmark { color: #fffaf2; }
+:global(html:not([data-theme='dark'])) .artworkWordmark span { color: #ffe1cf; }
+/* Dark still distinguishes the contact chapter with warmer undertones. */
+:global(html[data-theme='dark']) .hero {
+  background: radial-gradient(ellipse at 88% 23%, rgb(174 69 43 / 27%), transparent 48%), linear-gradient(132deg, #2b211d 0%, #1b1a18 57%, #34241e 100%);
+}

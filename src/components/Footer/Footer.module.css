@@ -244,7 +244,7 @@
 
 .ditherField {
   position: absolute;
-  inset: 1.5rem -5rem 0 0;
+  inset: 1.5rem 0 0 0;
   background: radial-gradient(
     circle 21rem at 52% 65%,
     color-mix(in srgb, var(--primary) 55%, var(--bg-primary)),
@@ -410,9 +410,9 @@
 
 @media (max-width: 560px) {
   .signatureBand { height: clamp(11rem, 39vw, 13rem); }
-  .ditherField { inset: .75rem -4rem 0 0; }
+  .ditherField { inset: .75rem 0 0 0; }
   .signatureBand::before { top: .55rem; inset-inline-start: .5rem; font-size: .53rem; letter-spacing: .11em; }
-  .signatureBand::after { inset-inline-start: .25rem; font-size: 19.6vw; letter-spacing: .018em; }
+  .signatureBand::after { inset-inline-start: .25rem; font-size: 18.2vw; letter-spacing: .018em; }
   .footer { margin-top: 3.25rem; }
 
   .shell {
@@ -495,27 +495,25 @@
     font-size: .76rem;
   }
 
-  .systemLine {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
+  /* Mobile edition: three readable editorial rows, not cramped 3-column labels. */
+  .systemLine { grid-template-columns: minmax(0, 1fr); }
   .systemLine > div,
   .systemLine > div:first-child {
     min-width: 0;
-    min-height: 52px;
-    display: flex;
-    justify-content: center;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
     align-items: center;
-    gap: .32rem;
-    padding: 0 .35rem;
-    border-right: 1px solid var(--border-strong);
-    text-align: center;
+    gap: .65rem;
+    padding: .7rem .1rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
   }
-
-  .systemLine > div:last-child { border-right: 0; }
-  .systemLine strong { font-size: .57rem; letter-spacing: .012em; }
-  .systemLine > div > span { padding-top: 0; font-size: .52rem; }
-  .systemLine small { display: none; }
+  .systemLine > div:last-child { border-bottom: 0; }
+  .systemLine strong { font-size: .69rem; overflow-wrap: anywhere; }
+  .systemLine > div > span { padding-top: 0; font-size: .57rem; }
+  .systemLine small { display: block; font-size: .66rem; }
 
   .bottomBar {
     min-height: 58px;
