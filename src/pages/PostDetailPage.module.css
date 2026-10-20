@@ -1300,3 +1300,40 @@
   .quickBriefCopy strong { font-size: 1.58rem; }
   .quickBriefCopy p { margin-top: .7rem; font-size: .91rem; }
 }
+
+/* Reading tools belong in the article's metadata flow, not across its text.
+   The fixed pill previously obscured the first mobile outcome heading. */
+@media (max-width: 980px) {
+  .articleHeader .mobileActionBar,
+  .articleHeader .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+    position: static;
+    inset: auto;
+    display: flex;
+    width: max-content;
+    max-width: 100%;
+    margin: clamp(.9rem, 2.5vw, 1.4rem) 0 0;
+    padding: .2rem 0;
+    color: var(--text-primary);
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    transform: none;
+    animation: none;
+  }
+  .articleHeader .mobileActionBar .mobileActionBtn,
+  .articleHeader .mobileActionBar .mobileShareWrap button {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 0;
+  }
+  .page:has(:focus-visible) .articleHeader .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  .articleHeader .mobileActionBarHidden { opacity: 0; pointer-events: none; }
+}

@@ -312,7 +312,7 @@ test.describe('Postify UI V2', () => {
     await expect(mobileActionBar).toHaveCSS('opacity', '0');
   });
 
-  test('mobile article toast clears the floating action bar', async ({ page }) => {
+  test('mobile article feedback does not obscure inline reading actions', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     await expect(page.locator('#knowledge-feed')).toBeVisible();
@@ -341,8 +341,10 @@ test.describe('Postify UI V2', () => {
 
       const overlapX = Math.max(0, Math.min(barBox.x + barBox.width, toastBox.x + toastBox.width) - Math.max(barBox.x, toastBox.x));
       const overlapY = Math.max(0, Math.min(barBox.y + barBox.height, toastBox.y + toastBox.height) - Math.max(barBox.y, toastBox.y));
+      // The reading actions now sit inline below the author rather than
+      // floating across the text; both regions must remain independently usable.
       expect(overlapX * overlapY).toBe(0);
-      expect(toastBox.y + toastBox.height).toBeLessThanOrEqual(barBox.y - 8);
+      await expect(actionBar).toHaveCSS('position', 'static');
     }
   });
 

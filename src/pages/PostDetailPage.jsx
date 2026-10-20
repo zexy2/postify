@@ -223,6 +223,28 @@ const PostDetailPage = () => {
                   </Link>
                 </div>
 
+                {/* Inline mobile reading actions: never cover the article text. */}
+                <div data-mobile-article-tools className={`${styles.mobileActionBar} ${isFooterVisible ? styles.mobileActionBarHidden : ''}`} aria-label={t('article.tools')}>
+                  <button type="button" className={styles.mobileActionBtn} aria-label={t('common.back')} onClick={handleBack}>
+                    <FiArrowLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.mobileActionBtn} ${isBookmarked ? styles.bookmarked : ''}`}
+                    onClick={() => toggleBookmark(post.id, post)}
+                    aria-label={isBookmarked ? t('bookmarks.removeFromBookmarks') : t('bookmarks.addToBookmarks')}
+                  >
+                    <FiBookmark size={18} />
+                  </button>
+                  <a href="#comments-section" className={styles.mobileActionBtn} aria-label={t('posts.comments')}>
+                    <FiMessageCircle size={18} />
+                    <small>{comments.length}</small>
+                  </a>
+                  <div className={styles.mobileShareWrap}>
+                    <CopyLinkButton url={pageUrl} compact />
+                  </div>
+                </div>
+
                 {post.canonicalSourceUrl && (
                   <a
                     href={post.canonicalSourceUrl}
@@ -356,28 +378,6 @@ const PostDetailPage = () => {
               ) : <span />}
             </nav>
           )}
-        </div>
-
-        {/* Mobile Sticky Action Bar */}
-        <div data-mobile-article-tools className={`${styles.mobileActionBar} ${isFooterVisible ? styles.mobileActionBarHidden : ''}`} aria-label={t('article.tools')}>
-          <button type="button" className={styles.mobileActionBtn} aria-label={t('common.back')} onClick={handleBack}>
-            <FiArrowLeft size={18} />
-          </button>
-          <button
-            type="button"
-            className={`${styles.mobileActionBtn} ${isBookmarked ? styles.bookmarked : ''}`}
-            onClick={() => toggleBookmark(post.id, post)}
-            aria-label={isBookmarked ? t('bookmarks.removeFromBookmarks') : t('bookmarks.addToBookmarks')}
-          >
-            <FiBookmark size={18} />
-          </button>
-          <a href="#comments-section" className={styles.mobileActionBtn} aria-label={t('posts.comments')}>
-            <FiMessageCircle size={18} />
-            <small>{comments.length}</small>
-          </a>
-          <div className={styles.mobileShareWrap}>
-            <CopyLinkButton url={pageUrl} compact />
-          </div>
         </div>
       </div>
     </>
