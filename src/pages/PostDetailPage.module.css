@@ -1337,3 +1337,20 @@
   }
   .articleHeader .mobileActionBarHidden { opacity: 0; pointer-events: none; }
 }
+
+/* Keep the same low-noise offline notice within the journal reading column.
+   Previously this CSS-module class had no rule and inherited default p text. */
+.fallbackNotice {
+  display: grid;
+  gap: .25rem;
+  margin: 0 0 clamp(1.35rem, 2vw, 1.9rem);
+  padding: .75rem 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-sans);
+  font-size: .81rem;
+  line-height: 1.6;
+}
+.fallbackNotice strong { color: var(--text-primary); font-size: .81rem; font-weight: 690; }

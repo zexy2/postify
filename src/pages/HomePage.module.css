@@ -454,3 +454,37 @@
 @media (max-width: 1059px) {
   .discoveryControls { position: relative; z-index: calc(var(--z-dropdown) - 1); }
 }
+
+/* Offline archive is useful service information, not a critical red alert.
+   Preserve the live-region and both messages, but give them a quieter
+   editorial colophon treatment between the masthead and the reading desk. */
+.fallbackNotice {
+  display: grid;
+  grid-template-columns: minmax(13rem, .38fr) minmax(0, 1fr);
+  align-items: start;
+  gap: .35rem clamp(.8rem, 2vw, 1.6rem);
+  margin-top: clamp(.55rem, 1.2vw, 1rem);
+  padding: .7rem 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+}
+.fallbackNotice strong {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  font-weight: 680;
+  letter-spacing: -.015em;
+  line-height: 1.5;
+}
+.fallbackNotice span {
+  max-width: none;
+  font-size: .72rem;
+  line-height: 1.6;
+}
+@media (max-width: 620px) {
+  .fallbackNotice { grid-template-columns: minmax(0, 1fr); gap: .2rem; padding: .7rem 0; }
+}
