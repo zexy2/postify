@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Original Postify visual study for developer workflow"><defs>
+<linearGradient id="bg" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#152820"/><stop offset=".57" stop-color="#28473a"/><stop offset="1" stop-color="#4b5f4c"/></linearGradient>
+<linearGradient id="oxide" x1="0" x2="1"><stop stop-color="#f5b893"/><stop offset="1" stop-color="#a55b43"/></linearGradient>
+<linearGradient id="surface" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#49685b"/><stop offset="1" stop-color="#172d26"/></linearGradient>
+<pattern id="grid" width="45" height="45" patternUnits="userSpaceOnUse"><path d="M45 0H0V45" stroke="#ecddbf" stroke-opacity=".09" fill="none"/></pattern>
+<pattern id="dots" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#ffdfbe" opacity=".4"/></pattern>
+<clipPath id="clip"><rect width="1200" height="800" /></clipPath></defs>
+<g clip-path="url(#clip)"><rect width="1200" height="800" fill="url(#bg)"/><rect width="1200" height="800" fill="url(#grid)"/>
+<rect x="36" y="36" width="1128" height="728" fill="none" stroke="#e9e2c6" opacity=".3"/>
+<text x="68" y="72" fill="#ebe6d2" font-family="monospace" font-size="14" letter-spacing="3">POSTIFY / LAB NOTE</text>
+<text x="1132" y="72" text-anchor="end" fill="#ebe6d2" opacity=".84" font-family="monospace" font-size="14" letter-spacing="2">03  /  PROOF OF SHIP</text>
+<path d="M-120 140C200 0 260 300 470 168S950 70 1330 182" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-108 172C200 32 260 332 470 200S950 102 1330 214" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-96 204C200 64 260 364 470 232S950 134 1330 246" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-84 236C200 96 260 396 470 264S950 166 1330 278" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-72 268C200 128 260 428 470 296S950 198 1330 310" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-60 300C200 160 260 460 470 328S950 230 1330 342" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-48 332C200 192 260 492 470 360S950 262 1330 374" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-36 364C200 224 260 524 470 392S950 294 1330 406" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-24 396C200 256 260 556 470 424S950 326 1330 438" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M-12 428C200 288 260 588 470 456S950 358 1330 470" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M0 460C200 320 260 620 470 488S950 390 1330 502" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M12 492C200 352 260 652 470 520S950 422 1330 534" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M24 524C200 384 260 684 470 552S950 454 1330 566" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M36 556C200 416 260 716 470 584S950 486 1330 598" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M48 588C200 448 260 748 470 616S950 518 1330 630" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M60 620C200 480 260 780 470 648S950 550 1330 662" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<path d="M72 652C200 512 260 812 470 680S950 582 1330 694" stroke="#dbdfbe" stroke-opacity=".08" fill="none"/>
+<rect x="152" y="196" width="900" height="411" fill="#162d26" fill-opacity=".4" stroke="#cfdabf" stroke-opacity=".27"/>
+<path d="M215 405 H985" stroke="#cfdec8" stroke-width="2" stroke-dasharray="6 10" opacity=".7"/>
+<circle cx="278" cy="405" r="108" fill="none" stroke="#cddccc" stroke-opacity=".13"/>
+<circle cx="278" cy="405" r="76" fill="url(#surface)" stroke="#d8d9ba" stroke-opacity=".46"/>
+<path d="M278 365L318 405L278 445L238 405Z" fill="#d5e3ce" fill-opacity=".08" stroke="#f4b995" stroke-width="2"/>
+<circle cx="278" cy="405" r="9" fill="#f4c4a7"/>
+<text x="278" y="535" text-anchor="middle" font-size="15" font-family="monospace" fill="#f4e6c9" letter-spacing="2">01</text>
+<circle cx="518" cy="405" r="108" fill="none" stroke="#cddccc" stroke-opacity=".13"/>
+<circle cx="518" cy="405" r="76" fill="url(#surface)" stroke="#d8d9ba" stroke-opacity=".46"/>
+<path d="M518 365L558 405L518 445L478 405Z" fill="#d5e3ce" fill-opacity=".08" stroke="#f4b995" stroke-width="2"/>
+<circle cx="518" cy="405" r="9" fill="#f4c4a7"/>
+<text x="518" y="535" text-anchor="middle" font-size="15" font-family="monospace" fill="#f4e6c9" letter-spacing="2">02</text>
+<circle cx="758" cy="405" r="108" fill="none" stroke="#cddccc" stroke-opacity=".13"/>
+<circle cx="758" cy="405" r="76" fill="url(#surface)" stroke="#d8d9ba" stroke-opacity=".46"/>
+<path d="M758 365L798 405L758 445L718 405Z" fill="#d5e3ce" fill-opacity=".08" stroke="#f4b995" stroke-width="2"/>
+<circle cx="758" cy="405" r="9" fill="#f4c4a7"/>
+<text x="758" y="535" text-anchor="middle" font-size="15" font-family="monospace" fill="#f4e6c9" letter-spacing="2">03</text>
+<rect x="926" y="333" width="144" height="144" rx="5" fill="#d1e3c9" fill-opacity=".09" stroke="#c3d7bb" stroke-width="2"/>
+<circle cx="998" cy="405" r="50" fill="url(#oxide)"/><path d="M979 405l14 16 27-32" fill="none" stroke="#253b30" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="998" y="535" text-anchor="middle" font-size="15" font-family="monospace" fill="#f4e6c9" letter-spacing="2">04</text>
+<path d="M518 297C630 180 858 190 998 312" fill="none" stroke="#eab997" stroke-width="1.5" stroke-dasharray="4 8" opacity=".9"/>
+<text x="1122" y="730" font-family="monospace" font-size="12" fill="#efe6d1" text-anchor="end" letter-spacing="2">BUILD / TEST / TRACE / RELEASE</text>
+</g></svg>
