@@ -920,3 +920,18 @@
   }
   :global([data-showcase='true']) .compact .bookmark { flex: 0 0 44px; }
 }
+
+/* 18 / Compact index reading order. The former meta/actions row
+   placed the reading link before the title on tablet and desktop. */
+@media (min-width: 621px) {
+  :global([data-showcase='true']) .compact .content {
+    grid-template-areas:
+      "meta meta"
+      "title title"
+      "trust actions";
+    align-items: end;
+  }
+  :global([data-showcase='true']) .compact .actions { align-self: end; }
+  /* Freshness is already stated in the visible evidence badge. */
+  :global([data-showcase='true']) .compact .trustStrip > .freshnessFact { display: none; }
+}
