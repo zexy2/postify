@@ -1607,3 +1607,52 @@
     justify-content: center;
   }
 }
+
+/* Edition 32 — comments and their share action are article content.
+   Preserve real text at enlarged sizes; never use clipping as a substitute
+   for reflow. Short comments links remain >=44px tap targets. */
+@media (max-width: 980px) {
+  .commentsSection,
+  .commentsSection .sectionHeading,
+  .commentsSection .sectionHeading > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .commentsSection .sectionHeading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: min(1rem, 16px);
+  }
+  .commentsSection h2 {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .commentsSection .commentHint,
+  .commentsSection .comment p,
+  .commentsSection .comment strong {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .commentsSection .sectionHeading > button {
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+  .commentsSection .sectionHeading > button span { min-width: 0; overflow-wrap: anywhere; }
+}
+@media (max-width: 980px) {
+  .commentsSection .sectionEyebrow {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+}

@@ -325,6 +325,53 @@ test.describe('Postify UI V2', () => {
     }
   });
 
+  test('mobile site header and article comments remain usable with enlarged text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const comments = page.locator('#comments-section');
+      await expect(comments).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await page.evaluate(() => {
+        const selectors = [
+          'header:first-of-type a[class*="logo_"]',
+          'header:first-of-type button[aria-expanded]',
+          'section[class*="commentsSection_"]',
+          'section[class*="commentsSection_"] div[class*="sectionHeading_"]',
+          'section[class*="commentsSection_"] h2',
+          'section[class*="commentsSection_"] div[class*="sectionHeading_"] > button',
+          'section[class*="commentsSection_"] p[class*="commentHint_"]',
+        ];
+        const bad = selectors.filter((selector) => {
+          const e = document.querySelector(selector);
+          if (!e) return true;
+          const rect = e.getBoundingClientRect();
+          return e.scrollWidth > e.clientWidth + 1 || rect.right > innerWidth + 1 || rect.left < -1;
+        });
+        const logo = document.querySelector('header:first-of-type a[class*="logo_"]');
+        const menu = document.querySelector('header:first-of-type button[aria-expanded]');
+        const copy = document.querySelector('section[class*="commentsSection_"] div[class*="sectionHeading_"] > button');
+        return {
+          bad,
+          logo: logo?.getAttribute('aria-label'),
+          menuWidth: menu?.getBoundingClientRect().width,
+          copyWidth: copy?.getBoundingClientRect().width,
+          copyHeight: copy?.getBoundingClientRect().height,
+        };
+      });
+      expect(result.bad).toEqual([]);
+      expect(result.logo).toBe('Postify');
+      expect(result.menuWidth).toBeGreaterThanOrEqual(44);
+      expect(result.copyWidth).toBeGreaterThanOrEqual(44);
+      expect(result.copyHeight).toBeGreaterThanOrEqual(44);
+    }
+  });
+
   test('article reading actions stay tappable and contained with enlarged text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');
