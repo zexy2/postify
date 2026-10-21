@@ -576,3 +576,9 @@
   .featured::before, .featured::after { transition: none; }
   .featured:hover::before, .featured:focus-visible::before { transform: none; }
 }
+
+/* Edition 17 experimental mobile first paint: keep the deliberate cover
+   movement on desktop, but make narrow reading surfaces immediately stable. */
+@media (max-width: 950px) and (prefers-reduced-motion: no-preference) {
+  .featuredVisual .featuredImage { animation: none; }
+}
