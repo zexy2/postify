@@ -1354,3 +1354,108 @@
   line-height: 1.6;
 }
 .fallbackNotice strong { color: var(--text-primary); font-size: .81rem; font-weight: 690; }
+
+/* Edition 20 — a chapter atlas, not another card. Real article headings are
+   navigable in their reading order, with the active section echoed in ink.
+   Keep short articles and the original touch disclosure unchanged. */
+@media (min-width: 1200px) {
+  .articleContent:has(> .articleOutline) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(10.5rem, 12.5rem);
+    align-items: start;
+    gap: 0 clamp(1.45rem, 3vw, 2.5rem);
+    max-width: 58rem;
+  }
+  .articleContent:has(> .articleOutline) > .body {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
+  .articleContent:has(> .articleOutline) > .articleOutline {
+    position: sticky;
+    top: calc(var(--header-height) + 1.3rem);
+    display: block;
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    max-height: calc(100vh - var(--header-height) - 2.8rem);
+    margin: 0;
+    padding: 1.15rem 0 .55rem 1rem;
+    overflow-y: auto;
+    background: transparent;
+    border-top: 2px solid var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+    border-left: 1px solid var(--border-color);
+    scrollbar-width: thin;
+  }
+  .articleContent:has(> .articleOutline) > :not(.articleOutline):not(.body) {
+    grid-column: 1 / -1;
+  }
+  .articleOutline > span {
+    padding: 0 0 .8rem;
+    font-family: var(--font-sans);
+    font-size: .72rem;
+    font-weight: 750;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .articleOutline ol {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    counter-reset: chapter;
+    list-style: none;
+  }
+  .articleOutline li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.65rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: .45rem;
+    min-width: 0;
+    margin: 0;
+    padding: .5rem 0;
+    border-top: 1px solid var(--border-color);
+    counter-increment: chapter;
+  }
+  .articleOutline li::before {
+    content: counter(chapter, decimal-leading-zero);
+    color: var(--text-muted);
+    font: 700 .68rem / 1.5 var(--font-mono);
+  }
+  .articleOutline li[data-level='3'] { margin-left: 0; }
+  .articleOutline a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: .3rem 0;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: .77rem;
+    font-weight: 620;
+    line-height: 1.43;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .articleOutline li[data-active='true']::before,
+  .articleOutline li[data-active='true'] a {
+    color: var(--primary);
+  }
+  .articleOutline li[data-active='true'] a { font-weight: 840; }
+  .articleOutline a:focus-visible { outline: 3px solid var(--border-focus); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .articleOutline a { scroll-behavior: auto; }
+}
+
+/* The intermediate two-column index is still touch-accessible on tablets. */
+@media (min-width: 781px) and (max-width: 1199px) {
+  .articleOutline a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

@@ -218,6 +218,44 @@ test.describe('Postify UI V2', () => {
     await expect(article.locator(':scope > section dl')).toHaveCount(0);
   });
 
+  test('long-form chapter atlas tracks actual reading position without obscuring mobile content', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/posts/node-json-dogrulama');
+    const atlas = page.locator('article nav[class*="articleOutline_"]').first();
+    await expect(atlas).toBeVisible();
+    await expect(atlas).toHaveCSS('position', 'sticky');
+    const links = atlas.locator('a[href^="#section-"]');
+    expect(await links.count()).toBeGreaterThanOrEqual(2);
+    const finalLink = links.last();
+    const targetId = (await finalLink.getAttribute('href')).slice(1);
+    await page.evaluate((id) => document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'instant' }), targetId);
+    await expect(finalLink).toHaveAttribute('aria-current', 'location');
+    const visualOrder = await page.evaluate(() => {
+      const nav = document.querySelector('article nav[class*="articleOutline_"]');
+      const body = document.querySelector('article div[class*="_body_"]');
+      return { navLeft: nav.getBoundingClientRect().left, bodyRight: body.getBoundingClientRect().right };
+    });
+    expect(visualOrder.navLeft).toBeGreaterThanOrEqual(visualOrder.bodyRight - 1);
+
+    await page.setViewportSize({ width: 980, height: 844 });
+    await page.goto('/posts/node-json-dogrulama');
+    await expect(atlas).toBeVisible();
+    for (const height of await atlas.locator('a').evaluateAll((items) => items.map((item) => item.getBoundingClientRect().height))) {
+      expect(height).toBeGreaterThanOrEqual(44);
+    }
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/posts/node-json-dogrulama');
+    await expect(atlas).toBeHidden();
+    const mobileAtlas = page.locator('article details[class*="articleOutlineDisclosure_"]');
+    await expect(mobileAtlas).toBeVisible();
+    await mobileAtlas.locator('summary').click();
+    await expect(mobileAtlas).toHaveAttribute('open', '');
+    expect(await mobileAtlas.locator('a[href^="#section-"]').count()).toBeGreaterThanOrEqual(2);
+    const overflow = await page.evaluate(() => Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+
   test('article evidence disclosure stays compact and text-safe', async ({ page }) => {
     for (const config of [
       { width: 390, height: 844, scale: false },
