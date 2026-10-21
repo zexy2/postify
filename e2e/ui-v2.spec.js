@@ -15,6 +15,39 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('early mobile menu tap does not wait for an outstanding image load', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.route('**/images/posts/responsive/ai-muhendisligi-*.webp', async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return route.continue();
+    });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const trigger = page.locator('header button[aria-expanded]').first();
+    await expect(trigger).toBeVisible();
+    await trigger.click();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 4_000 });
+    await page.keyboard.press('Escape');
+    await expect(trigger).toBeFocused();
+  });
+
+  test('mobile Sheet prewarms after page load while the first menu stays fast', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await expect.poll(async () => page.evaluate(() => performance.getEntriesByType('resource')
+      .some((entry) => /\/assets\/sheet-[^/]+\.js/.test(entry.name))), { timeout: 5_000 }).toBe(true);
+    const timings = await page.evaluate(() => ({
+      load: performance.getEntriesByType('navigation')[0].loadEventEnd,
+      sheet: performance.getEntriesByType('resource').find((entry) => /\/assets\/sheet-[^/]+\.js/.test(entry.name))?.startTime,
+    }));
+    expect(timings.sheet).toBeGreaterThanOrEqual(timings.load - 5);
+    const trigger = page.locator('header button[aria-expanded]').first();
+    await trigger.click();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 500 });
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+  });
+
   test('slow editorial bundle shows accessible loading status instead of an empty shelf', async ({ page }) => {
     const shell = await (await page.request.get('/')).text();
     const entry = shell.match(/<script[^>]+src="(\/assets\/index-[^" ]+\.js)"/)?.[1];
