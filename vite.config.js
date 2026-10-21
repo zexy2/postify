@@ -86,6 +86,8 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
+        // Keep shared Radix helpers out of the optional Supabase vendor.
+        onlyExplicitManualChunks: true,
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;
 
