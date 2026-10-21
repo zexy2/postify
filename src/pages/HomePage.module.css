@@ -488,3 +488,13 @@
 @media (max-width: 620px) {
   .fallbackNotice { grid-template-columns: minmax(0, 1fr); gap: .2rem; padding: .7rem 0; }
 }
+
+/* Edition 25 — the live result count must not force the editorial heading
+   outside the viewport when readers enlarge type. Keep the regular one-line
+   layout where it fits; wrap the count only when space actually runs out. */
+@media (max-width: 640px) {
+  .sectionHeader { flex-wrap: wrap; }
+  .sectionHeader > div { min-width: 0; max-width: 100%; }
+  .sectionTitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .sectionSubtitle { max-width: 100%; margin-left: auto; }
+}

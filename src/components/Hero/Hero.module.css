@@ -582,3 +582,18 @@
 @media (max-width: 950px) and (prefers-reduced-motion: no-preference) {
   .featuredVisual .featuredImage { animation: none; }
 }
+
+/* Edition 25 — at 200%/400% reader text sizing, lengthy Turkish words must
+   reflow inside the actual mobile editorial column instead of escaping the
+   clipped Hero canvas. At default scale no sizes or composition change. */
+@media (max-width: 640px) {
+  .masthead { min-width: 0; }
+  .masthead .eyebrow,
+  .masthead .title,
+  .featuredContent strong {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+}

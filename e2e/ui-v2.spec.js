@@ -985,6 +985,49 @@ test.describe('Postify UI V2', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
+  test('Home masthead and discovery count reflow at enlarged mobile text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) {
+      for (const scale of [200, 400]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto('/');
+        const title = page.getByRole('heading', { level: 1 });
+        await expect(title).toBeVisible();
+        await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(280);
+        const geometry = await page.evaluate(() => {
+          const hero = document.querySelector('section[class*="hero_"]');
+          const heading = hero.querySelector('h1');
+          const eyebrow = hero.querySelector('span[class*="eyebrow_"]');
+          const feed = document.querySelector('#knowledge-feed');
+          const title = feed.querySelector('h2[class*="sectionTitle_"]');
+          const count = feed.querySelector('p[class*="sectionSubtitle_"]');
+          const fits = (element) => {
+            const rect = element.getBoundingClientRect();
+            return rect.right <= innerWidth + 1 && rect.left >= -1 && element.scrollWidth <= element.clientWidth + 1;
+          };
+          return {
+            heading: fits(heading), eyebrow: fits(eyebrow),
+            feedTitle: fits(title), resultCount: fits(count),
+            scrollableDocument: document.documentElement.scrollWidth > innerWidth + 1,
+          };
+        });
+        expect(geometry.heading).toBe(true);
+        expect(geometry.eyebrow).toBe(true);
+        expect(geometry.feedTitle).toBe(true);
+        expect(geometry.resultCount).toBe(true);
+        expect(geometry.scrollableDocument).toBe(false);
+      }
+    }
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  });
+
   test('footer endpaper keeps its title and links legible at 200 percent text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');
