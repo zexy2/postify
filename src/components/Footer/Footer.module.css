@@ -645,3 +645,32 @@
   .statement::after { left: clamp(1.6rem, 6vw, 2.1rem); bottom: 1.75rem; }
   .statement .primaryLink { min-height: 52px; }
 }
+
+/* Edition 24 — the endpaper must still be readable with 200% text. Prefer
+   actual wrapping over clipping the signature headline or forcing sideways
+   navigation. At normal desktop widths the existing editorial grid remains. */
+@media (max-width: 560px) {
+  .statement { padding-inline: clamp(1rem, 6vw, 2.1rem); }
+  .statementTitle {
+    max-width: 100%;
+    font-size: clamp(1.25rem, 11vw, 3.5rem);
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .indexGrid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  }
+}
+.linkGroup a > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+/* A 200%-text, tablet-width viewport cannot preserve three trust-signal
+   columns. Allow the content to determine its column count before clipping. */
+@media (min-width: 561px) and (max-width: 960px) {
+  .systemLine { grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+  .systemLine > div { min-width: 0; }
+  .systemLine strong { overflow-wrap: anywhere; }
+}

@@ -985,6 +985,58 @@ test.describe('Postify UI V2', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
+  test('footer endpaper keeps its title and links legible at 200 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/contact');
+      await page.getByRole('heading', { name: /faydalı bilgi kullanılabilir kalmalı/i }).waitFor();
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(150);
+      const result = await page.locator('footer').evaluate((footer) => {
+        const title = footer.querySelector('h2[id="footer-statement-title"]');
+        const navs = [...footer.querySelectorAll('nav')];
+        const links = navs.flatMap((nav) => [...nav.querySelectorAll('a')]);
+        const index = footer.querySelector('div[class*="indexGrid_"]');
+        return {
+          titleClipped: title.scrollWidth > title.clientWidth + 1,
+          clippedNavs: navs.filter((nav) => nav.scrollWidth > nav.clientWidth + 1).length,
+          clippedLinks: links.filter((link) => link.scrollWidth > link.clientWidth + 1).length,
+          titleLegible: title.textContent.includes('kullanılabilir'),
+          indexColumnCount: getComputedStyle(index).gridTemplateColumns.split(' ').length,
+        };
+      });
+      expect(result.titleLegible).toBe(true);
+      expect(result.titleClipped).toBe(false);
+      expect(result.clippedNavs).toBe(0);
+      expect(result.clippedLinks).toBe(0);
+      expect(result.indexColumnCount).toBe(1);
+    }
+    await page.setViewportSize({ width: 390, height: 850 });
+    await page.goto('/contact');
+    await page.locator('footer nav').first().waitFor();
+    const baseline = await page.locator('footer div[class*="indexGrid_"]').evaluate((index) =>
+      getComputedStyle(index).gridTemplateColumns.split(' ').length);
+    expect(baseline).toBe(2);
+    await page.setViewportSize({ width: 768, height: 850 });
+    await page.goto('/contact');
+    await page.locator('footer nav').first().waitFor();
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    await page.evaluate(() => document.fonts.ready);
+    const trust = await page.locator('footer div[class*="systemLine_"]').evaluate((element) => ({
+      columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+      clipped: element.scrollWidth > element.clientWidth + 1,
+      offscreen: [...element.querySelectorAll('strong')].some((item) => item.getBoundingClientRect().right > innerWidth + 1),
+    }));
+    expect(trust.columns).toBeLessThan(3);
+    expect(trust.clipped).toBe(false);
+    expect(trust.offscreen).toBe(false);
+  });
+
   test('contact brief composes locally and hands off only to email', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
     const submittedRequests = [];
