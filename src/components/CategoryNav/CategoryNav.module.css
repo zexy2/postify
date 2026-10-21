@@ -63,3 +63,76 @@
 @media (prefers-reduced-motion: reduce) {
   .select { transition: none; }
 }
+
+
+/* Edition 21: a practical contents index with real archive counts, rather
+   than hiding a full editorial rail behind another native select. */
+.topicIndex { display: none; }
+@media (min-width: 1060px) {
+  .nav > .label, .nav > .selectWrap { display: none; }
+  .topicIndex { display: grid; gap: .6rem; min-width: 0; }
+  .indexHeading {
+    display: block;
+    padding-bottom: .85rem;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: .77rem;
+    font-weight: 730;
+    line-height: 1.4;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .indexList {
+    display: grid;
+    gap: 0;
+    max-height: min(264px, 36vh);
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: var(--border-strong) transparent;
+    scrollbar-width: thin;
+  }
+  .indexItem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .7rem;
+    min-height: 44px;
+    width: 100%;
+    padding: .55rem .45rem .55rem 0;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 0;
+    border-left: 2px solid transparent;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    font: inherit;
+    font-size: .79rem;
+    font-weight: 620;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+    transition: color var(--transition-fast), background var(--transition-fast), padding var(--transition-fast);
+  }
+  .indexItem:hover { color: var(--text-primary); background: color-mix(in srgb, var(--bg-secondary) 64%, transparent); }
+  .indexItem.active {
+    padding-left: .65rem;
+    color: var(--primary);
+    border-left-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 6%, transparent);
+    font-weight: 800;
+  }
+  .indexItem:focus-visible { outline: 3px solid var(--border-focus); outline-offset: -3px; }
+  .indexName { min-width: 0; overflow-wrap: anywhere; }
+  .indexCount {
+    justify-self: end;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    font-weight: 720;
+    font-variant-numeric: tabular-nums;
+  }
+  .indexItem.active .indexCount { color: var(--primary); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .indexItem { transition: none; }
+}

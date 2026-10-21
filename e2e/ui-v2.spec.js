@@ -519,6 +519,36 @@ test.describe('Postify UI V2', () => {
 
 
 
+  test('desktop topic index shows real archive counts and preserves other filters', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/?type=guide#knowledge-feed');
+    const nav = page.getByRole('navigation', { name: /topics|konu başlıkları/i });
+    const index = nav.locator('[data-topic-index]');
+    await expect(index).toBeVisible();
+    await expect(nav.getByRole('combobox')).toBeHidden();
+    const topics = index.getByRole('button');
+    expect(await topics.count()).toBeGreaterThan(2);
+    const totals = await topics.evaluateAll((items) => items.map((element) =>
+      Number(element.querySelector('span:last-child')?.textContent)));
+    expect(totals[0]).toBeGreaterThan(0);
+    expect(totals.slice(1).reduce((sum, count) => sum + count, 0)).toBe(totals[0]);
+    expect((await topics.first().getAttribute('aria-pressed'))).toBe('true');
+    const selectedTopic = topics.nth(1);
+    const selectedLabel = await selectedTopic.locator('span').first().innerText();
+    await selectedTopic.click();
+    await expect(selectedTopic).toHaveAttribute('aria-pressed', 'true');
+    await expect(page).toHaveURL(/type=guide.*category=/);
+    await expect(page.getByRole('heading', { level: 2, name: selectedLabel })).toBeVisible();
+    await topics.first().click();
+    await expect(page).toHaveURL(/type=guide/);
+    await expect(page).not.toHaveURL(/category=/);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(index).toBeHidden();
+    await expect(nav.getByRole('combobox')).toBeVisible();
+    expect(await page.evaluate(() => document.body.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  });
+
   test('V3 topic navigation changes discovery context without mobile overflow', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');

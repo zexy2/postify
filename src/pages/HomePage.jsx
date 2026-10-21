@@ -198,6 +198,14 @@ const HomePage = ({ isHistoryRestore = false }) => {
     [evidenceAwarePosts],
   );
 
+  // Counts describe the full loaded archive; other refinements do not
+  // silently change the meaning of the topic index.
+  const topicCounts = useMemo(() => evidenceAwarePosts.reduce((counts, post) => {
+    counts.all += 1;
+    if (post.category) counts[post.category] = (counts[post.category] || 0) + 1;
+    return counts;
+  }, { all: 0 }), [evidenceAwarePosts]);
+
   const filteredPosts = useMemo(() => {
     const normalizedQuery = debouncedQuery.trim().toLocaleLowerCase(i18n.language);
     return evidenceAwarePosts.filter((post) => {
@@ -273,7 +281,7 @@ const HomePage = ({ isHistoryRestore = false }) => {
         </div>
 
         <div className={styles.discoveryControls}>
-          <CategoryNav categories={categories} activeCategory={activeCategory} onChange={handleCategoryChange} />
+          <CategoryNav categories={categories} counts={topicCounts} activeCategory={activeCategory} onChange={handleCategoryChange} />
           <div className={styles.typeFilter} role="group" aria-label={isEnglish ? 'Discovery filters' : 'Keşif filtreleri'}>
             <div className={styles.filterToolbar}>
               <div className={styles.filterCluster} role="group" aria-label={isEnglish ? 'Content format' : 'İçerik biçimi'}>
