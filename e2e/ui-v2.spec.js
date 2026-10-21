@@ -985,6 +985,59 @@ test.describe('Postify UI V2', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
+  test('contact brief composes locally and hands off only to email', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    const submittedRequests = [];
+    page.on('request', (request) => {
+      if (request.method() === 'POST') submittedRequests.push(request.url());
+    });
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/contact');
+      const desk = page.getByRole('region', { name: /mesajını işe yarar hale getir|give your message a useful shape/i });
+      await expect(desk).toBeVisible();
+      const reasons = desk.getByRole('group', { name: /mesajın amacı|message purpose/i });
+      const initial = reasons.getByRole('button', { name: /düzeltme|correction/i });
+      await expect(initial).toHaveAttribute('aria-pressed', 'true');
+      await expect(desk.getByRole('button', { name: /açıklama ekle|add details/i })).toBeDisabled();
+      await expect(desk.getByRole('link', { name: /e-posta uygulamasında aç|open in email app/i })).toHaveCount(0);
+
+      await desk.getByLabel(/sayfa veya referans|page or reference/i).fill('https://example.org/docs#claim');
+      await desk.getByLabel(/bilmemiz gereken nedir|what should we know/i).fill('Çalışan örnekte beklenen sonuç farklı.');
+      const handoff = desk.getByRole('link', { name: /e-posta uygulamasında aç|open in email app/i });
+      await expect(handoff).toBeVisible();
+      let url = new URL(await handoff.getAttribute('href'));
+      expect(url.protocol).toBe('mailto:');
+      expect(url.pathname).toBe('zekiakgul09@gmail.com');
+      expect(url.searchParams.get('subject')).toContain('Düzeltme');
+      expect(url.searchParams.get('body')).toContain('https://example.org/docs#claim');
+      expect(url.searchParams.get('body')).toContain('Çalışan örnekte beklenen sonuç farklı.');
+
+      await reasons.getByRole('button', { name: /faydalı konu|useful topic/i }).click();
+      await expect(reasons.getByRole('button', { name: /faydalı konu|useful topic/i })).toHaveAttribute('aria-pressed', 'true');
+      await expect(initial).toHaveAttribute('aria-pressed', 'false');
+      url = new URL(await handoff.getAttribute('href'));
+      expect(url.searchParams.get('subject')).toContain('Faydalı konu');
+      expect(url.searchParams.get('body')).toContain('Çalışan örnekte beklenen sonuç farklı.');
+      expect(submittedRequests).toEqual([]);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(overflow).toBeLessThanOrEqual(1);
+
+      await page.reload();
+      await expect(desk.getByLabel(/bilmemiz gereken nedir|what should we know/i)).toHaveValue('');
+      await expect(desk.getByRole('link', { name: /e-posta uygulamasında aç|open in email app/i })).toHaveCount(0);
+    }
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'en'));
+    await page.goto('/contact');
+    const desk = page.getByRole('region', { name: 'Give your message a useful shape.' });
+    await expect(desk.getByRole('button', { name: /add details/i })).toBeDisabled();
+    await desk.getByLabel('What should we know?').fill('Please verify the steps.');
+    const englishUrl = new URL(await desk.getByRole('link', { name: 'Open in email app' }).getAttribute('href'));
+    expect(englishUrl.searchParams.get('subject')).toContain('Correction');
+    expect(englishUrl.searchParams.get('body')).toContain('Please verify the steps.');
+    expect(submittedRequests).toEqual([]);
+  });
+
   test('contact page is a correction-first public channel index', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/contact');
