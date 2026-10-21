@@ -418,6 +418,45 @@ test.describe('Postify UI V2', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
+  test('author publication index links to real work and keeps mobile disclosure readable', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/users/fallback-editor');
+    const index = page.getByRole('complementary', { name: /yazar yayın dizini|author publication index/i });
+    await expect(index).toBeVisible();
+    await expect(index).toHaveCSS('position', 'sticky');
+    const links = index.getByRole('navigation', { name: /yayınlanan çalışmalara göz at|browse published work/i }).getByRole('link');
+    const cardLinks = page.locator('#published-work [data-card-variant] a[href^="/posts/"]');
+    const archiveCount = await page.locator('#published-work [data-card-variant]').count();
+    expect(archiveCount).toBeGreaterThanOrEqual(3);
+    await expect(links).toHaveCount(archiveCount);
+    const hrefs = await links.evaluateAll((items) => items.map((item) => item.getAttribute('href')));
+    const cardHrefs = await cardLinks.evaluateAll((items) => [...new Set(items.map((item) => item.getAttribute('href')))]);
+    expect(hrefs).toEqual(cardHrefs);
+    await expect(index.getByText(/okuma dizini|reading index/i)).toBeVisible();
+    for (const box of await links.evaluateAll((items) => items.map((item) => item.getBoundingClientRect().height))) {
+      expect(box).toBeGreaterThanOrEqual(44);
+    }
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/users/fallback-editor');
+    await expect(index).toBeHidden();
+    const mobileIndex = page.locator('details[class*="portfolioIndexMobile_"]');
+    await expect(mobileIndex).toBeVisible();
+    await expect(mobileIndex).not.toHaveAttribute('open', '');
+    const summary = mobileIndex.locator('summary');
+    expect((await summary.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    await summary.click();
+    await expect(mobileIndex).toHaveAttribute('open', '');
+    const mobileLinks = mobileIndex.getByRole('navigation').getByRole('link');
+    await expect(mobileLinks).toHaveCount(archiveCount);
+    await expect(mobileLinks.first()).toHaveAttribute('href', hrefs[0]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+    await mobileLinks.first().click();
+    await expect(page).toHaveURL(/\/posts\//);
+    expect(page.url()).toContain(hrefs[0]);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  });
+
   test('V3 public author portfolio stays mobile-safe and knowledge-first', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/users/fallback-editor');
