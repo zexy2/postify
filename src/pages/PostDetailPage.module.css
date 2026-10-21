@@ -1459,3 +1459,12 @@
     min-height: 44px;
   }
 }
+
+/* Round 27: long article chapter labels should wrap on enlarged reader text,
+   rather than stretching the already narrow editorial column offscreen. */
+.plainBody h2, .plainBody h3 {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}

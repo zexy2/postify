@@ -325,6 +325,50 @@ test.describe('Postify UI V2', () => {
     }
   });
 
+  test('article code remains copyable and independently scrollable at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) {
+      for (const scale of [200, 400]) {
+        await page.setViewportSize({ width, height: 850 });
+        await page.goto('/posts/node-json-dogrulama');
+        const card = page.locator('[class*="codeBlock_"]').first();
+        const copy = card.getByRole('button', { name: /^kopyala$|^copy$/i });
+        await expect(copy).toBeVisible();
+        await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(210);
+        const dimensions = await card.evaluate((element) => {
+          const pre = element.querySelector('pre');
+          const toolbar = element.querySelector('[class*="toolbar_"]');
+          const button = toolbar.querySelector('button');
+          const code = pre.querySelector('code');
+          const fits = (node) => {
+            const rect = node.getBoundingClientRect();
+            const parentRect = element.getBoundingClientRect();
+            return rect.left >= parentRect.left - 1 && rect.right <= parentRect.right + 1;
+          };
+          return {
+            cardFits: fits(element) && element.scrollWidth <= element.clientWidth + 1,
+            toolbarFits: fits(toolbar) && toolbar.scrollWidth <= toolbar.clientWidth + 1,
+            buttonFits: fits(button),
+            buttonHeight: button.getBoundingClientRect().height,
+            internalCodeScroll: pre.scrollWidth > pre.clientWidth,
+            preservesNewlines: code.textContent.includes('\n'),
+          };
+        });
+        expect(dimensions.cardFits).toBe(true);
+        expect(dimensions.toolbarFits).toBe(true);
+        expect(dimensions.buttonFits).toBe(true);
+        expect(dimensions.buttonHeight).toBeGreaterThanOrEqual(44);
+        expect(dimensions.internalCodeScroll).toBe(true);
+        expect(dimensions.preservesNewlines).toBe(true);
+      }
+    }
+  });
+
   test('mobile article and editor controls stay touch-safe and contained', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/posts/node-json-dogrulama');
