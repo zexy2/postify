@@ -325,6 +325,58 @@ test.describe('Postify UI V2', () => {
     }
   });
 
+  test('evidence contract and verification checklist remain readable at enlarged text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const proof = page.locator('section.knowledge-evidence');
+      await expect(proof).toBeVisible();
+      const details = proof.locator('details.knowledge-evidence__details');
+      await details.evaluate((el) => { el.open = true; });
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(180);
+      const info = await page.evaluate(() => {
+        const selectors = [
+          '.knowledge-evidence__header',
+          '#knowledge-evidence-title',
+          '.knowledge-evidence__header > strong',
+          '.knowledge-evidence__details > summary',
+          '.knowledge-evidence__execution',
+          '.knowledge-evidence__contract',
+          '.knowledge-evidence__contract > div',
+          '.knowledge-evidence__contract dt',
+          '.knowledge-evidence__contract dd',
+          '.knowledge-evidence__artifact',
+          'section[class*="runbook_"]',
+          'section[class*="runbook_"] div[class*="header_"]',
+          '#verification-runbook-title',
+          'section[class*="runbook_"] ol',
+          'section[class*="runbook_"] label',
+        ];
+        const bad = selectors.filter((selector) => {
+          const el = document.querySelector(selector);
+          if (!el) return true;
+          const rect = el.getBoundingClientRect();
+          return el.scrollWidth > el.clientWidth + 1
+            || rect.right > innerWidth + 1 || rect.left < -1;
+        });
+        return {
+          bad,
+          contract: document.querySelector('.knowledge-evidence__contract')?.textContent || '',
+          stepCount: document.querySelectorAll('section[class*="runbook_"] li').length,
+        };
+      });
+      expect(info.bad).toEqual([]);
+      expect(info.contract).toMatch(/Yerelde çalıştır/);
+      expect(info.stepCount).toBeGreaterThan(0);
+    }
+  });
+
   test('article edition, excerpt, author and reading brief reflow with magnified text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');
