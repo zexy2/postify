@@ -854,3 +854,46 @@ body:has([role="dialog"]) [data-rht-toaster] {
    to break instead of stretching the expanded disclosure 120px wider. */
 .knowledge-evidence h3,
 .knowledge-evidence__details-body > div > h3 { max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+
+/* Edition 30 — feedback must remain actionable at enlarged reader text.
+   Allow its summary, controls and shelf to consume additional lines instead
+   of stretching the entire clipped article track; never hide copy. */
+.local-evidence-actions,
+.local-evidence-actions > div,
+.local-evidence-actions__summary,
+.local-evidence-actions__summary > div,
+.local-evidence-actions__buttons,
+.local-evidence-actions__shelf,
+.local-evidence-actions__context-form,
+.local-evidence-actions__context-heading,
+.local-evidence-actions__form-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+.local-evidence-actions { padding: min(1.25rem, 20px); }
+.local-evidence-actions > div:first-child,
+.local-evidence-actions__summary > div { flex-wrap: wrap; }
+.local-evidence-actions__buttons,
+.local-evidence-actions__shelf,
+.local-evidence-actions__form-actions { gap: min(.5rem, 8px); }
+.local-evidence-actions__buttons > *,
+.local-evidence-actions__shelf > *,
+.local-evidence-actions__form-actions > * { flex-shrink: 1; min-width: 0; max-width: 100%; }
+.local-evidence-actions button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  padding: 8px 10px;
+}
+.local-evidence-actions small,
+.local-evidence-actions p,
+.local-evidence-actions strong,
+.local-evidence-actions span,
+.local-evidence-actions label {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.local-evidence-actions__context-form { padding: min(1rem, 16px); grid-template-columns: minmax(0, 1fr); }

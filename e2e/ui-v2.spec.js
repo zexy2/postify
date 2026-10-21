@@ -325,6 +325,79 @@ test.describe('Postify UI V2', () => {
     }
   });
 
+  test('mobile article outline retains all links at enlarged reader text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const outline = page.locator('details[class*="articleOutlineDisclosure_"]');
+      await expect(outline).toBeVisible();
+      await outline.evaluate((el) => { el.open = true; });
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const m = await outline.evaluate((el) => {
+        const targets = [el, el.querySelector('summary'), el.querySelector('nav'),
+          ...el.querySelectorAll('li'), ...el.querySelectorAll('a')];
+        const bad = targets.filter((item) => {
+          const r = item.getBoundingClientRect();
+          return item.scrollWidth > item.clientWidth + 1 || r.right > innerWidth + 1 || r.left < -1;
+        });
+        return { bad: bad.map((e) => e.textContent.trim().slice(0, 24)),
+          links: el.querySelectorAll('a').length };
+      });
+      expect(m.bad).toEqual([]);
+      expect(m.links).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  test('reader feedback buttons and shelf reflow inside their card at 400 percent', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const panel = page.locator('section.local-evidence-actions');
+      await expect(panel).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(160);
+      const geometry = await panel.evaluate((element) => {
+        const selectors = [
+          '.local-evidence-actions__summary',
+          '.local-evidence-actions__summary small',
+          '.local-evidence-actions__buttons',
+          '.local-evidence-actions__shelf',
+          '.local-evidence-actions__buttons button',
+          '.local-evidence-actions__shelf button',
+        ];
+        const rect = element.getBoundingClientRect();
+        const bad = selectors.flatMap((selector) => [...element.querySelectorAll(selector)])
+          .filter((node) => {
+            const box = node.getBoundingClientRect();
+            return node.scrollWidth > node.clientWidth + 1
+              || box.right > rect.right + 1 || box.left < rect.left - 1;
+          }).map((node) => node.textContent.trim().slice(0, 32));
+        return {
+          bad,
+          panelOverflow: element.scrollWidth - element.clientWidth,
+          controls: element.querySelectorAll('button').length,
+          firstLabel: element.querySelector('.local-evidence-actions__buttons button')?.textContent,
+          shelfButtons: element.querySelectorAll('.local-evidence-actions__shelf button').length,
+        };
+      });
+      expect(geometry.bad).toEqual([]);
+      expect(geometry.panelOverflow).toBeLessThanOrEqual(1);
+      expect(geometry.controls).toBeGreaterThanOrEqual(5);
+      expect(geometry.shelfButtons).toBe(3);
+      expect(geometry.firstLabel).toMatch(/Çalıştı/);
+    }
+  });
+
   test('evidence contract and verification checklist remain readable at enlarged text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');

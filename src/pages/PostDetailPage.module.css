@@ -1524,3 +1524,37 @@
     column-gap: min(1.4rem, 28px);
   }
 }
+
+/* Edition 30 — the reading outline must use small, fixed disclosure
+   furniture even if prose is enlarged fourfold. Headings and links reflow. */
+.articleOutlineDisclosure,
+.articleOutlineDisclosure summary,
+.articleOutlineDisclosure nav,
+.articleOutlineDisclosure ol,
+.articleOutlineDisclosure li {
+  min-width: 0;
+  max-width: 100%;
+}
+.articleOutlineDisclosure summary {
+  gap: min(1rem, 12px);
+  flex-wrap: wrap;
+}
+.articleOutlineDisclosure summary span,
+.articleOutlineDisclosure a {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+/* Links stay at least 44px wide for mobile touch, even when their words
+   are short; only the decorative summary span may shrink to zero. */
+.articleOutlineDisclosure a { min-width: 44px; }
+.articleOutlineDisclosure summary small {
+  min-width: 26px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  flex: 0 0 auto;
+}
+.articleOutlineDisclosure ol { padding-left: min(1.1rem, 22px); grid-template-columns: minmax(0, 1fr); }
+.articleOutlineDisclosure li[data-level='3'] { margin-left: min(.5rem, 12px); }
