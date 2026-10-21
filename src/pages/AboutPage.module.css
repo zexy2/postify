@@ -292,3 +292,30 @@
   background: linear-gradient(0deg, rgb(36 63 46 / 97%) 0%, rgb(36 63 46 / 62%) 60%, transparent 100%);
 }
 :global(html:not([data-theme='dark'])) .artworkStatement em { color: #fac0a4; }
+
+/* Round 26: textual section headings are content, not decoration. Allow
+   magnified Turkish/English words to wrap inside their allocated columns,
+   rather than enlarging an implicit grid/flex min-content width off-screen. */
+.statement > div,
+.sectionHeading > div,
+.modelRow > h3,
+.modelRow > p,
+.cta > div { min-width: 0; max-width: 100%; }
+.statement h2,
+.sectionHeading h2,
+.modelRow h3,
+.cta h2,
+.artworkStatement {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+/* The artwork wordmark deliberately spans its own inset panel; constrain
+   text only, retaining the full-bleed gradient background and image geometry. */
+.artworkStatement { max-width: none; }
+@media (max-width: 600px) {
+  .statement,
+  .sectionHeading { grid-template-columns: minmax(0, 1fr); }
+  .cta > div { flex: 1 1 100%; }
+}

@@ -15,6 +15,42 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('About chapters and editorial call to action reflow at 200 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/about');
+      await expect(page.locator('#about-statement-title')).toBeVisible();
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(230);
+      const info = await page.evaluate(() => {
+        const elements = [
+          document.querySelector('div[class*="artworkStatement_"]'),
+          document.querySelector('#about-statement-title'),
+          document.querySelector('#trust-model-title'),
+          document.querySelector('section[class*="cta_"] h2'),
+        ];
+        const fits = elements.map((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.left >= -1 && rect.right <= innerWidth + 1
+            && element.scrollWidth <= element.clientWidth + 1;
+        });
+        return {
+          fits,
+          bodyOverflow: document.body.scrollWidth - innerWidth,
+          documentOverflow: document.documentElement.scrollWidth - innerWidth,
+        };
+      });
+      expect(info.fits).toEqual([true, true, true, true]);
+      expect(info.bodyOverflow).toBeLessThanOrEqual(1);
+      expect(info.documentOverflow).toBeLessThanOrEqual(1);
+    }
+  });
+
   test('desktop discovery has the editorial hierarchy and practical navigation', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
