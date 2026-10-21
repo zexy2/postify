@@ -1420,6 +1420,63 @@ test.describe('Postify UI V2', () => {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   });
 
+  test('footer navigation and trust copy fit at 400 percent reader text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/contact');
+      const footer = page.locator('footer').first();
+      await expect(footer).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await footer.evaluate((el) => {
+        const nodes = [
+          el.querySelector('#footer-statement-title'),
+          el.querySelector('[class*="statementText_"]'),
+          el.querySelector('[class*="brandLink_"]'),
+          el.querySelector('[class*="brandBlock_"] p'),
+          ...el.querySelectorAll('nav a'),
+          ...el.querySelectorAll('[class*="systemLine_"] strong, [class*="systemLine_"] small'),
+          el.querySelector('[class*="bottomBar_"]'),
+          el.querySelector('button[class*="scrollTopButton_"]'),
+        ].filter(Boolean);
+        const bad = nodes.filter((node) => {
+          const rect = node.getBoundingClientRect();
+          return node.scrollWidth > node.clientWidth + 1
+            || rect.right > innerWidth + 1 || rect.left < -1;
+        }).map((node) => node.textContent.trim().slice(0, 30));
+        return {
+          widthOverflow: document.body.scrollWidth - innerWidth,
+          footerOverflow: el.scrollWidth - el.clientWidth,
+          clipped: bad,
+          checkedNodes: nodes.length,
+          navCount: el.querySelectorAll('nav a').length,
+          label: el.querySelector('#footer-statement-title')?.textContent,
+        };
+      });
+      expect(result.footerOverflow).toBeLessThanOrEqual(1);
+      expect(result.clipped).toEqual([]);
+      expect(result.checkedNodes).toBeGreaterThan(16);
+      expect(result.navCount).toBe(8);
+      expect(result.label).toContain('kullanılabilir');
+    }
+    // Contact has unrelated 400% overflows in its hero and form; audit the
+    // article separately rather than claiming the entire site passes reflow.
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/posts/node-json-dogrulama');
+      await expect(page.locator('article')).toBeVisible();
+      await page.addStyleTag({ content: 'html { font-size: 400% !important; }' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(150);
+      const bodyExtra = await page.evaluate(() => document.body.scrollWidth - innerWidth);
+      expect(bodyExtra).toBeLessThanOrEqual(1);
+    }
+  });
+
   test('footer endpaper keeps its title and links legible at 200 percent text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');
