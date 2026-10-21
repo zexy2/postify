@@ -547,3 +547,101 @@
   .ditherField { animation: none; transform: none; transition: none; }
   .signatureBand .ditherField { background: var(--primary); }
 }
+
+/* Edition 16 — the closing invitation is a full-page editorial endpaper,
+   not another low-contrast text strip. Invert the current color tokens so the
+   light and dark themes each get their own distinct, accessible composition. */
+.statement {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1.25fr) minmax(235px, .55fr);
+  align-items: end;
+  min-height: clamp(25rem, 37vw, 33rem);
+  gap: clamp(1.8rem, 5vw, 5rem);
+  padding: clamp(2rem, 5.5vw, 5rem);
+  color: var(--bg-primary);
+  background: var(--text-primary);
+  border: 1px solid var(--text-primary);
+  border-radius: 2px;
+}
+.statement::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -10rem;
+  right: -7rem;
+  width: clamp(18rem, 38vw, 34rem);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--bg-primary) 24%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 clamp(4.2rem, 9vw, 8rem) color-mix(in srgb, var(--bg-primary) 3%, transparent),
+    inset 0 0 0 clamp(4rem, 9vw, 8rem) color-mix(in srgb, var(--primary) 8%, transparent);
+  pointer-events: none;
+}
+.statement::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: clamp(2rem, 5.5vw, 5rem);
+  bottom: clamp(1.05rem, 2vw, 1.8rem);
+  width: clamp(3rem, 10vw, 8rem);
+  height: 2px;
+  background: var(--primary);
+  pointer-events: none;
+}
+.statementCopy,
+.primaryActions { position: relative; z-index: 1; }
+.statementCopy { max-width: 840px; }
+.statement .eyebrow {
+  color: var(--bg-primary);
+  letter-spacing: .2em;
+}
+.statementTitle {
+  max-width: 11.5ch;
+  margin: clamp(1.1rem, 2vw, 2rem) 0 clamp(1.1rem, 2.4vw, 2.1rem);
+  color: var(--bg-primary);
+  font-size: clamp(3.3rem, 6.65vw, 7rem);
+  line-height: .89;
+  letter-spacing: -.072em;
+}
+.statementText {
+  max-width: 42ch;
+  color: var(--bg-secondary);
+  font-size: clamp(.95rem, 1.25vw, 1.14rem);
+  line-height: 1.65;
+}
+.statement .primaryLink {
+  min-height: 60px;
+  padding: .95rem 1.1rem;
+  color: var(--bg-primary);
+  border-radius: 1px;
+}
+.statement .primaryLink:hover,
+.statement .primaryLink:focus-visible { color: var(--bg-primary); }
+.statement .secondaryLink {
+  color: var(--bg-primary);
+  border-bottom-color: color-mix(in srgb, var(--bg-primary) 50%, transparent);
+}
+.statement .secondaryLink:hover { color: var(--bg-primary); border-color: var(--primary); }
+@media (max-width: 860px) {
+  .statement {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    align-items: start;
+    gap: clamp(1.4rem, 5vw, 2.6rem);
+  }
+  .statementTitle {
+    font-size: clamp(2.7rem, 8.4vw, 5.1rem);
+    line-height: .94;
+  }
+  .statement .primaryActions { justify-self: start; width: min(100%, 420px); }
+}
+@media (max-width: 560px) {
+  .statement { padding: clamp(1.6rem, 6vw, 2.1rem); padding-bottom: 3.8rem; }
+  .statementTitle { max-width: 11.5ch; font-size: clamp(2.55rem, 11vw, 3.5rem); }
+  .statement::before { width: 18rem; top: -10rem; right: -11rem; }
+  .statement::after { left: clamp(1.6rem, 6vw, 2.1rem); bottom: 1.75rem; }
+  .statement .primaryLink { min-height: 52px; }
+}
