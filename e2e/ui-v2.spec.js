@@ -325,6 +325,43 @@ test.describe('Postify UI V2', () => {
     }
   });
 
+  test('article edition, excerpt, author and reading brief reflow with magnified text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      await expect(page.locator('header[class*="articleHeader_"]')).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(210);
+      const result = await page.evaluate(() => {
+        const selectors = [
+          'header[class*="articleHeader_"] div[class*="editionLine_"]',
+          'header[class*="articleHeader_"] p[class*="excerpt_"]',
+          'header[class*="articleHeader_"] div[class*="authorBar_"]',
+          'header[class*="articleHeader_"] div[class*="authorInfo_"] strong',
+          'section[class*="quickBrief_"] div[class*="quickBriefCopy_"]',
+          'section[class*="quickBrief_"] div[class*="quickBriefCopy_"] strong',
+          'div[class*="articleContent_"] div[class*="plainBody_"] > p',
+        ];
+        const bad = selectors.filter((selector) => {
+          const el = document.querySelector(selector);
+          if (!el) return true;
+          const rect = el.getBoundingClientRect();
+          return el.scrollWidth > el.clientWidth + 1
+            || rect.right > innerWidth + 1 || rect.left < -1;
+        });
+        const articleTitle = document.querySelector('header[class*="articleHeader_"] h1');
+        return { bad, text: articleTitle?.textContent };
+      });
+      expect(result.bad).toEqual([]);
+      expect(result.text).toMatch(/Node\.js/);
+    }
+  });
+
   test('article code remains copyable and independently scrollable at 400 percent text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');

@@ -1468,3 +1468,59 @@
   overflow-wrap: anywhere;
   hyphens: auto;
 }
+
+/* Edition 28 — keep meaning-bearing article copy visible when reader text
+   reaches 200–400%. Natural wrapping wins over stretching a clipped cover.
+   No code blocks or artwork are changed, and regular-scale spacing remains. */
+.articleShell,
+.articleHeader,
+.articleHeader .authorBar,
+.articleHeader .author,
+.articleHeader .authorInfo,
+.quickBrief,
+.quickBriefCopy,
+.articleContent,
+.plainBody { min-width: 0; max-width: 100%; }
+
+.editionLine { flex-wrap: wrap; }
+.editionLine > span,
+.articleHeader .meta > *,
+.articleHeader .title,
+.articleHeader .excerpt,
+.articleHeader .authorInfo strong,
+.articleHeader .authorInfo small,
+.quickBriefCopy > *,
+.fallbackNotice,
+.plainBody > p,
+.plainBody > li {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.articleHeader .author { max-width: 100%; }
+.articleHeader .authorInfo { flex: 1 1 auto; }
+
+@media (max-width: 980px) {
+  /* Decorative inset space and avatars must not grow fourfold with text. */
+  .articleHeader .avatar,
+  :global(html:not([data-theme='dark'])) .articleHeader .avatar {
+    flex: 0 0 auto;
+    width: min(2.4rem, 48px);
+    height: min(2.4rem, 48px);
+  }
+  .quickBrief { padding: min(1.15rem, 22px); }
+  .quickBriefCopy { padding-right: min(1rem, 16px); }
+}
+
+/* An avatar-to-author gap and the field-guide's sidebar column are inset
+   furniture, not text. Limit their growth when text is magnified fourfold. */
+@media (max-width: 980px) {
+  .articleHeader .author { gap: min(.75rem, 14px); }
+}
+@media (min-width: 641px) and (max-width: 980px) {
+  .quickBriefCopy {
+    grid-template-columns: minmax(min(7rem, 30%), .28fr) minmax(0, 1fr);
+    column-gap: min(1.4rem, 28px);
+  }
+}
