@@ -15,6 +15,20 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('the editorial feed remains functional when split from the opening hero', async ({ page }) => {
+    await page.goto('/');
+    const search = page.getByRole('searchbox').first();
+    await expect(search).toBeVisible();
+    const feed = page.locator('[data-knowledge-feed="v3"]');
+    await expect(feed).toBeVisible();
+    expect(await feed.locator('article[data-card-variant]').count()).toBeGreaterThanOrEqual(4);
+    await expect(feed.locator('[data-card-variant="featured"]')).toHaveCount(1);
+    await search.fill('Node.js');
+    await expect(page.locator('#knowledge-feed')).toBeVisible();
+    await search.fill('');
+    await expect(feed.locator('article[data-card-variant]').first()).toBeVisible();
+  });
+
   test('About chapters and editorial call to action reflow at 200 percent text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');

@@ -6,7 +6,8 @@ import { FiArrowRight, FiChevronDown, FiSearch, FiSliders, FiX } from 'react-ico
 import Hero from '../components/Hero';
 import CategoryNav from '../components/CategoryNav';
 import { getCategoryLabel } from '../lib/categoryLabels';
-import EditorialFeed from '../components/EditorialFeed';
+// Keep the hero on the initial render path; the editorial feed is below the fold.
+const EditorialFeed = React.lazy(() => import('../components/EditorialFeed'));
 import SEO from '../components/SEO';
 import { usePosts } from '../hooks/usePosts';
 import { useScrollAnchorTransition } from '../hooks/useScrollAnchorTransition';
@@ -386,12 +387,14 @@ const HomePage = ({ isHistoryRestore = false }) => {
             )}
           </div>
         ) : (
-          <EditorialFeed
-            fx
-            posts={displayPosts.slice(0, visiblePostCount)}
-            onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
-            bookmarkedIds={bookmarkedIds}
-          />
+          <React.Suspense fallback={null}>
+            <EditorialFeed
+              fx
+              posts={displayPosts.slice(0, visiblePostCount)}
+              onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
+              bookmarkedIds={bookmarkedIds}
+            />
+          </React.Suspense>
         )}
 
         {displayPosts.length > visiblePostCount && (
