@@ -387,7 +387,12 @@ const HomePage = ({ isHistoryRestore = false }) => {
             )}
           </div>
         ) : (
-          <React.Suspense fallback={null}>
+          <React.Suspense fallback={
+            <div className={styles.feedLoading} role="status">
+              <span className={styles.feedLoadingMark} aria-hidden="true" />
+              <span>{t('common.loading')}</span>
+            </div>
+          }>
             <EditorialFeed
               fx
               posts={displayPosts.slice(0, visiblePostCount)}

@@ -15,6 +15,24 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('slow editorial bundle shows accessible loading status instead of an empty shelf', async ({ page }) => {
+    const shell = await (await page.request.get('/')).text();
+    const entry = shell.match(/<script[^>]+src="(\/assets\/index-[^" ]+\.js)"/)?.[1];
+    expect(entry).toBeTruthy();
+    await page.route('**/assets/index-*.js', async (route) => {
+      const pathname = new URL(route.request().url()).pathname;
+      if (pathname === entry) return route.continue();
+      await new Promise((resolve) => setTimeout(resolve, 900));
+      return route.continue();
+    });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const loading = page.locator('[role="status"][class*="feedLoading_"]');
+    await expect(loading).toBeVisible();
+    await expect(loading).toContainText(/yükleniyor|loading/i);
+    await expect(page.locator('[data-knowledge-feed="v3"]')).toBeVisible();
+    await expect(loading).toHaveCount(0);
+  });
+
   test('the editorial feed remains functional when split from the opening hero', async ({ page }) => {
     await page.goto('/');
     const search = page.getByRole('searchbox').first();

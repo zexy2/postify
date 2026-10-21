@@ -498,3 +498,27 @@
   .sectionTitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
   .sectionSubtitle { max-width: 100%; margin-left: auto; }
 }
+
+/* Edition 34 — the late-loaded editorial cards must not masquerade as an
+   empty result. A modest reserved reading surface reduces abrupt changes
+   without injecting extra JavaScript into the critical Hero path. */
+.feedLoading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: clamp(200px, 28vw, 320px);
+  padding: 28px 0;
+  border-top: 1px solid var(--border-strong);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.feedLoadingMark {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 1px;
+  margin-top: .64em;
+  background: var(--primary);
+}
