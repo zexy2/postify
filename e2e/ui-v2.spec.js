@@ -325,6 +325,44 @@ test.describe('Postify UI V2', () => {
     }
   });
 
+  test('article reading actions stay tappable and contained with enlarged text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const bar = page.locator('[data-mobile-article-tools]');
+      await expect(bar).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await bar.evaluate((el) => {
+        const bounds = el.getBoundingClientRect();
+        const controls = [...el.querySelectorAll('button, a')];
+        return {
+          barOverflow: el.scrollWidth - el.clientWidth,
+          offscreen: controls.some((control) => {
+            const rect = control.getBoundingClientRect();
+            return rect.left < bounds.left - 1 || rect.right > bounds.right + 1
+              || rect.left < -1 || rect.right > innerWidth + 1;
+          }),
+          untappable: controls.some((control) => {
+            const rect = control.getBoundingClientRect();
+            return rect.width < 44 || rect.height < 44;
+          }),
+          count: controls.length,
+          labels: controls.map((control) => control.getAttribute('aria-label')),
+        };
+      });
+      expect(result.barOverflow).toBeLessThanOrEqual(1);
+      expect(result.offscreen).toBe(false);
+      expect(result.untappable).toBe(false);
+      expect(result.count).toBe(4);
+      expect(result.labels.every(Boolean)).toBe(true);
+    }
+  });
+
   test('mobile article outline retains all links at enlarged reader text', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('postify_language', 'tr');

@@ -1558,3 +1558,52 @@
 }
 .articleOutlineDisclosure ol { padding-left: min(1.1rem, 22px); grid-template-columns: minmax(0, 1fr); }
 .articleOutlineDisclosure li[data-level='3'] { margin-left: min(.5rem, 12px); }
+
+/* Edition 31 — article tools are navigation, not a decorative text line.
+   Cap rem-scaled icon padding and let the four actions wrap at 400% text;
+   preserve 44px physical touch targets and the original accessible labels. */
+@media (max-width: 980px) {
+  .articleHeader .mobileActionBar,
+  .articleHeader .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+    width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px 0;
+  }
+  .articleHeader .mobileActionBar .mobileActionBtn {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+    gap: 2px;
+    justify-content: center;
+  }
+  .articleHeader .mobileShareWrap { min-width: 0; max-width: 100%; flex-shrink: 1; }
+  .articleHeader .mobileShareWrap button {
+    min-width: 44px;
+    min-height: 44px;
+    height: 44px;
+    max-width: 100%;
+    padding: 0 9px;
+    gap: 6px;
+  }
+  .articleHeader .mobileShareWrap button > span {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+@media (max-width: 390px) {
+  .articleHeader .mobileShareWrap button {
+    width: 44px;
+    min-width: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+    justify-content: center;
+  }
+}
