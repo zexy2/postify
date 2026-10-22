@@ -15,6 +15,22 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('featured summary follows English locale and hero filter never advertises the command-palette shortcut', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'en'));
+    await page.goto('/');
+    const hero = page.locator('section[class*="hero_"]').first();
+    const featured = hero.locator('a[class*="featured_"]');
+    await expect(featured.locator('strong')).toContainText('An AI feature is a system');
+    await expect(featured.locator('[class*="featuredExcerpt_"]'))
+      .toContainText('Design AI as a measurable and safe product system');
+    await expect(hero.locator('[class*="searchHint_"]')).toHaveText('FILTER');
+    await expect(hero.locator('input[type="search"]')).toBeVisible();
+    await page.keyboard.press('Control+K');
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+  });
+
   test('early mobile menu tap does not wait for an outstanding image load', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.route('**/images/posts/responsive/ai-muhendisligi-*.webp', async (route) => {
@@ -1474,6 +1490,33 @@ test.describe('Postify UI V2', () => {
       await page.waitForTimeout(150);
       const bodyExtra = await page.evaluate(() => document.body.scrollWidth - innerWidth);
       expect(bodyExtra).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('contact channels and local brief reflow at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/contact');
+      await expect(page.getByRole('heading', { name: /doğrudan kanallar/i })).toBeVisible();
+      await expect(page.locator('[class*="draftDesk"]')).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const snapshot = await page.evaluate(() => ({
+        bodyOverflow: document.body.scrollWidth - innerWidth,
+        footerOverflow: document.querySelector('footer').scrollWidth - document.querySelector('footer').clientWidth,
+        channelCount: document.querySelectorAll('main a[href^="mailto:"], main a[href^="https://"]').length,
+        inputCount: document.querySelectorAll('main input, main textarea').length,
+        hasDraft: !!document.querySelector('[class*="draftDesk"]'),
+      }));
+      expect(snapshot.bodyOverflow, `Contact ${width}px / ${scale}%`).toBeLessThanOrEqual(1);
+      expect(snapshot.footerOverflow).toBeLessThanOrEqual(1);
+      expect(snapshot.channelCount).toBeGreaterThanOrEqual(1);
+      expect(snapshot.inputCount).toBeGreaterThanOrEqual(1);
+      expect(snapshot.hasDraft).toBe(true);
     }
   });
 

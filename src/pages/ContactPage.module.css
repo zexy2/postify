@@ -259,3 +259,38 @@
   .draftPreview { border-left: 0; border-top: 1px solid var(--border-color); padding: 1.5rem; }
 }
 @media (prefers-reduced-motion: reduce) { .draftChoice { transition: none; } }
+
+/* Round37: reflow the actual Contact reading/compose UI at 200–400% text.
+   Cap decorative gutters and icon tracks, never shrink user-scaled type. */
+@media (max-width: 520px) {
+  .hero { padding: min(1.2rem, 24px); }
+  .editionLine { flex-wrap: wrap; gap: min(1.5rem, 14px); overflow-wrap: anywhere; }
+  .editionLine > span { min-width: 0; overflow-wrap: anywhere; }
+  .heroBody { min-width: 0; gap: min(1.4rem, 24px); }
+  .heroCopy, .heroCopy > p { min-width: 0; overflow-wrap: anywhere; }
+  .heroLink { max-width: 100%; padding-inline: min(1.25rem, 18px); overflow-wrap: anywhere; }
+  .heroArtwork { padding: min(.95rem, 16px); }
+  .artworkWordmark { max-width: 100%; overflow-wrap: anywhere; }
+  .artworkWordmark span { display: inline; overflow-wrap: anywhere; }
+  .sectionHeading, .sectionHeading h2 { min-width: 0; overflow-wrap: anywhere; }
+  .channel {
+    grid-template-columns: minmax(0, min(2.8rem, 44px)) minmax(0, 1fr) minmax(0, min(1.5rem, 24px));
+    gap: min(.8rem, 12px); padding-inline: min(.65rem, 12px);
+  }
+  .channel > svg:nth-of-type(1) { width: min(2.8rem, 44px); height: min(2.8rem, 44px); padding: min(.7rem, 10px); }
+  .channel > svg:last-of-type { width: min(1.4rem, 24px); height: min(1.4rem, 24px); }
+  .channel:first-child strong, .channelCopy :is(small,strong) { overflow-wrap: anywhere; }
+  .reasonRow { padding: min(1.4rem, 20px); }
+  .reasonRow :is(strong,p) { overflow-wrap: anywhere; }
+  .note { min-width: 0; grid-template-columns: minmax(0, 1fr); padding: min(1.3rem, 20px); }
+  .note > * { min-width: 0; overflow-wrap: anywhere; }
+  .draftEditor { padding-inline: 0; }
+  .draftChoice { gap: min(.5rem, 8px); padding-inline: min(.85rem, 12px); overflow-wrap: anywhere; }
+  .draftFields :is(input,textarea) { padding-inline: min(1rem, 14px); }
+  .draftPreview { padding: min(1.5rem, 20px); }
+  .previewHeading { flex-wrap: wrap; }
+  .previewHeading > span { min-width: 0; overflow-wrap: anywhere; }
+  .previewMeta { grid-template-columns: minmax(0, min(4.2rem, 76px)) minmax(0, 1fr); gap: min(.55rem, 10px); }
+  .composeAction { flex-wrap: wrap; gap: min(1rem, 12px); padding-inline: min(1rem, 14px); overflow-wrap: anywhere; }
+  .previewPrivacy, .draftIntro { overflow-wrap: anywhere; }
+}
