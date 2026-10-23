@@ -1183,6 +1183,41 @@ test.describe('Postify UI V2', () => {
     await expect(toaster).toHaveCSS('pointer-events', 'none');
   });
 
+  test('login headings, social actions and password toggle reflow at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    for (const width of [320, 390]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/auth/login');
+      await expect(page.locator('#email')).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await page.evaluate(() => {
+        const elements = [
+          document.querySelector('main h1'),
+          document.querySelector('main h2'),
+          ...document.querySelectorAll('main button[class*="socialButton_"]'),
+          document.querySelector('main button[class*="passwordToggle_"]'),
+          ...document.querySelectorAll('main input'),
+        ].filter(Boolean);
+        const clipped = elements.filter((el) => {
+          const r = el.getBoundingClientRect();
+          return el.scrollWidth > el.clientWidth + 1 || r.left < -1 || r.right > innerWidth + 1;
+        }).map((el) => el.textContent?.trim().slice(0, 32) || el.tagName);
+        return {
+          bodyExtra: document.body.scrollWidth - innerWidth,
+          clipped,
+          socialButtons: document.querySelectorAll('main button[class*="socialButton_"]').length,
+          tinyTargets: [...document.querySelectorAll('main button[class*="socialButton_"]')]
+            .filter(el => el.getBoundingClientRect().height < 44).length,
+        };
+      });
+      expect(result.bodyExtra).toBeLessThanOrEqual(1);
+      expect(result.clipped).toEqual([]);
+      expect(result.socialButtons).toBe(2);
+      expect(result.tinyTargets).toBe(0);
+    }
+  });
+
   test('login surface remains clear and operable', async ({ page }) => {
     await page.goto('/auth/login');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
