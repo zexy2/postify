@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { exportPublicRouteShells, PUBLIC_ROUTE_SHELLS } from '../export-public-route-shells.mjs';
+import { exportPublicRouteShells, PUBLIC_ROUTE_SHELLS, PUBLIC_ARTICLE_SHELLS } from '../export-public-route-shells.mjs';
 
 const fixture = '<!doctype html><html lang="tr"><head>' +
   '<meta name="description" content="Home page" />' +
@@ -29,7 +29,26 @@ test('dedicated public shells share hashed Vite entrypoint and route canonical m
       assert.doesNotMatch(html, /<title>Postify — Uygulanabilir Bilgi<\/title>/);
     }
     await assert.rejects(stat(join(temp, 'login', 'index.html')), { code: 'ENOENT' });
+    const publishedSlugs = [
+      'ai-muhendisligi', 'edge-mimarileri', 'frontend-performansi',
+      'gelistirici-akisi', 'node-json-dogrulama', 'teknik-yazarlik',
+      'urun-tasarimi', 'urun-telemetrisi', 'web-standartlari',
+    ];
+    assert.deepEqual(Object.keys(PUBLIC_ARTICLE_SHELLS).sort(), publishedSlugs.sort());
+    for (const slug of publishedSlugs) {
+      const html = await readFile(join(temp, 'posts', slug, 'index.html'), 'utf8');
+      assert.match(html, /<div id="root"><\/div>/);
+      assert.match(html, /src="\/assets\/index-fixture123\.js"/);
+      assert.match(html, new RegExp(`rel="canonical" href="https://postify.zekiakgul.dev/posts/${slug}"`));
+      assert.match(html, /name="description" content="[^"]+"/);
+      assert.match(html, /<title>[^<]+<\/title>/);
+      assert.doesNotMatch(html, /<title>Postify — Uygulanabilir Bilgi<\/title>/);
+    }
     await assert.rejects(stat(join(temp, 'posts', 'index.html')), { code: 'ENOENT' });
+    await assert.rejects(stat(join(temp, 'posts', 'private-editor-post', 'index.html')), { code: 'ENOENT' });
+    await assert.rejects(stat(join(temp, 'posts', 'node-json-dogrulama', 'edit', 'index.html')), { code: 'ENOENT' });
+    await assert.rejects(stat(join(temp, 'auth', 'login', 'index.html')), { code: 'ENOENT' });
+    await assert.rejects(stat(join(temp, 'admin', 'index.html')), { code: 'ENOENT' });
   } finally {
     await rm(temp, { recursive: true, force: true });
   }
