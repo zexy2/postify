@@ -15,6 +15,71 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('About public reading chapters remain readable at 400 percent text on narrow screens', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    for (const width of [320, 390]) for (const theme of ['light', 'dark']) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/about');
+      await expect(page.locator('[class*="modelRow_"]')).toHaveCount(4);
+      await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const metrics = await page.evaluate(() => {
+        const content = [
+          ...document.querySelectorAll('main h1, main h2, main h3'),
+          ...document.querySelectorAll('main [class*="heroCopy_"] > p'),
+          ...document.querySelectorAll('main [class*="modelRow_"] p, main [class*="formatItem_"] p'),
+          ...document.querySelectorAll('main [class*="ctaActions_"] a'),
+        ];
+        const clipped = content.filter(el => {
+          const r = el.getBoundingClientRect();
+          return r.left < -1 || r.right > innerWidth + 1 || el.scrollWidth > el.clientWidth + 1;
+        }).map(el => el.textContent?.trim().slice(0, 28));
+        return { bodyOverhang: document.body.scrollWidth - innerWidth, clipped, contentCount: content.length };
+      });
+      expect(metrics.bodyOverhang).toBeLessThanOrEqual(1);
+      expect(metrics.clipped).toEqual([]);
+      expect(metrics.contentCount).toBeGreaterThan(15);
+    }
+  });
+
+  test('Home reading actions and archive filters reflow at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    for (const width of [320, 390]) for (const theme of ['light', 'dark']) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/');
+      await expect(page.locator('[data-knowledge-feed="v3"]')).toBeVisible();
+      await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const metrics = await page.evaluate(() => {
+        const content = [
+          document.querySelector('main [class*="heroActions_"] a[href="#knowledge-feed"]'),
+          document.querySelector('main [class*="heroActions_"] a[href="/posts/create"]'),
+          document.querySelector('main [class*="copy_"] [class*="subtitle_"]'),
+          document.querySelector('main [class*="sectionHeader_"] [class*="sectionTitle_"]'),
+        ].filter(Boolean);
+        const clipped = content.filter(el => {
+          const r = el.getBoundingClientRect();
+          return r.left < -1 || r.right > innerWidth + 1 || el.scrollWidth > el.clientWidth + 1;
+        }).map(el => el.textContent?.trim().slice(0, 28));
+        const controls = [...document.querySelectorAll('main select')];
+        return {
+          bodyOverhang: document.body.scrollWidth - innerWidth,
+          clipped,
+          contentCount: content.length,
+          filterCount: controls.length,
+          tinyControls: controls.filter(el => el.getBoundingClientRect().height < 44).length,
+        };
+      });
+      expect(metrics.bodyOverhang).toBeLessThanOrEqual(1);
+      expect(metrics.clipped).toEqual([]);
+      expect(metrics.contentCount).toBe(4);
+      expect(metrics.filterCount).toBeGreaterThanOrEqual(2);
+      expect(metrics.tinyControls).toBe(0);
+    }
+  });
+
   test('featured summary follows English locale and hero filter never advertises the command-palette shortcut', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('postify_language', 'en'));
     await page.goto('/');
