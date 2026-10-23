@@ -2063,3 +2063,38 @@ test.describe('Action Runbook', () => {
     await expect(page.getByRole('button', { name: /kopyalandı|copied/i }).first()).toBeVisible();
   });
 });
+
+test.describe('Author folio large-text reflow', () => {
+  test('author headings and evidence facts stay in view at synthetic 400% text on 320/390 light/dark', async ({ page }) => {
+    for (const width of [320, 390]) for (const theme of ['light', 'dark']) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/users/postify');
+      await page.evaluate((value) => { localStorage.setItem('postify_theme', value); localStorage.setItem('postify_language', 'tr'); }, theme);
+      await page.reload();
+      await page.locator('main h2').first().waitFor({ state: 'visible', timeout: 10_000 });
+      await page.locator('main [class*="freshnessFact"]').first().waitFor({ state: 'visible', timeout: 10_000 });
+      await page.addStyleTag({ content: 'html { font-size: 400% !important }' });
+      const metrics = await page.evaluate(() => {
+        const viewport = document.documentElement.clientWidth;
+        const section = document.querySelector('main h2');
+        const heading = document.querySelector('main h1');
+        const cardFacts = [...document.querySelectorAll('main [class*="freshnessFact"]')];
+        return {
+          viewport,
+          bodyWidth: document.body.scrollWidth,
+          rootWidth: document.documentElement.scrollWidth,
+          headingVisible: !!heading && getComputedStyle(heading).visibility !== 'hidden',
+          sectionVisible: !!section && getComputedStyle(section).visibility !== 'hidden',
+          factCount: cardFacts.length,
+          factsInBounds: cardFacts.every((element) => element.getBoundingClientRect().right <= viewport + 1),
+        };
+      });
+      expect(metrics.headingVisible).toBe(true);
+      expect(metrics.sectionVisible).toBe(true);
+      expect(metrics.factCount).toBeGreaterThan(0);
+      expect(metrics.factsInBounds).toBe(true);
+      expect(metrics.bodyWidth).toBeLessThanOrEqual(metrics.viewport + 1);
+      expect(metrics.rootWidth).toBeLessThanOrEqual(metrics.viewport + 1);
+    }
+  });
+});

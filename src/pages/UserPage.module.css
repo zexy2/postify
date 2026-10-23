@@ -595,3 +595,27 @@
 @media (prefers-reduced-motion: reduce) {
   .publicationLink { transition: none; }
 }
+
+/* Round 40: 400% text reflow keeps the author folio and publication count
+   within narrow reading viewports without hiding information. */
+@media (max-width: 520px) {
+  .editionLine { min-width: 0; flex-wrap: wrap; }
+  .editionLine > span { min-width: 0; overflow-wrap: anywhere; }
+  .eyebrow, .exploreLink { max-width: 100%; overflow-wrap: anywhere; }
+  .bio, .handle, .publicationDetails { min-width: 0; overflow-wrap: anywhere; }
+  .exploreLink { flex-wrap: wrap; }
+  .authorStats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr)); }
+  .authorStats > div, .authorStats span { min-width: 0; overflow-wrap: anywhere; }
+  .sectionHeader { min-width: 0; gap: min(1rem, 12px); }
+  .sectionHeader > div { min-width: 0; flex: 1 1 0; }
+  .sectionEyebrow, .sectionHeader h2 { min-width: 0; overflow-wrap: anywhere; }
+  .sectionHeader > strong { min-width: 0; max-width: 20vw; height: auto; overflow-wrap: anywhere; }
+  .publicationLink {
+    grid-template-columns: min(1.5rem, 24px) minmax(0, 1fr) min(1rem, 16px);
+    gap: min(.65rem, 10px);
+  }
+  .publicationType, .publicationDetails small { overflow-wrap: anywhere; }
+  .portfolioIndexMobile summary { flex-wrap: wrap; gap: min(.85rem, 12px); }
+  .portfolioIndexMobile summary > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .portfolioIndexMobile summary strong { min-width: 0; }
+}

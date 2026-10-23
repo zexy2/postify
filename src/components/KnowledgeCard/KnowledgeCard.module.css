@@ -935,3 +935,19 @@
   /* Freshness is already stated in the visible evidence badge. */
   :global([data-showcase='true']) .compact .trustStrip > .freshnessFact { display: none; }
 }
+
+/* Round 40: evidence labels are readable at large text zoom; no clipped facts. */
+@media (max-width: 620px) {
+  .meta > *, .outcome > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .standard .trustStrip > div { min-width: 0; max-width: 100%; }
+  .outcome { grid-template-columns: minmax(0, 1fr); }
+  .featured, .standard, .compact { gap: min(.75rem, 12px); }
+  .priority, .meta, .outcome, .title, .content { min-width: 0; overflow-wrap: anywhere; }
+  .actions { min-width: 0; flex-wrap: wrap; }
+  .readLink, .compact .readLink { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .trustStrip > div, .trustStrip > div > span {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
