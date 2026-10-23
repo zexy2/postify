@@ -319,3 +319,48 @@
   .sectionHeading { grid-template-columns: minmax(0, 1fr); }
   .cta > div { flex: 1 1 100%; }
 }
+
+/* Round 42 / About: preserve reader-enlarged words at 400% without allowing
+   decorative gutters, artwork, folio markers or label tracks to set width. */
+@media (max-width: 600px) {
+  .hero { padding: min(1.2rem, 24px); }
+  .heroIndex { min-width: 0; flex-wrap: wrap; gap: min(1.5rem, 12px); }
+  .heroIndex > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .heroIndex > span:last-child { max-width: 100%; text-align: start; }
+  .heroBody { min-width: 0; grid-template-columns: minmax(0, 1fr); gap: min(1.4rem, 22px); }
+  .heroCopy, .heroCopy > p, .heroCopy .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .hero h1 { min-width: 0; max-width: 100%; }
+  .heroLink { gap: min(1rem, 12px); margin-top: min(2.2rem, 35px); padding: min(.8rem, 14px) min(1.25rem, 20px); }
+  .heroArtwork { min-width: 0; padding: min(.9rem, 16px); }
+  .artworkOrb > span { font-size: min(6.5rem, 110px); }
+  .artworkCaption { min-width: 0; flex-wrap: wrap; gap: min(1rem, 12px); }
+  .artworkCaption > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .artworkStatement {
+    min-width: 0;
+    width: calc(100% + 2 * min(.9rem, 16px));
+    margin: auto calc(-1 * min(.9rem, 16px)) calc(-1 * min(.9rem, 16px));
+    padding: min(2.4rem, 40px) min(.9rem, 16px) min(.9rem, 16px);
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Round 42 / chapter grid: avoid 4× ordinal columns and internal card min-size.
+   Reader-scaled paragraphs continue onto additional lines, not hidden strips. */
+@media (max-width: 600px) {
+  .statement, .model, .formats, .modelRows, .formatGrid, .cta, .sectionHeading { min-width: 0; max-width: 100%; }
+  .statement { gap: min(.75rem, 14px); padding-block: min(3.1rem, 52px); }
+  .statement > div, .statement p, .statement .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .modelRows, .formatGrid { grid-template-columns: minmax(0, 1fr); }
+  .modelRow {
+    min-width: 0;
+    grid-template-columns: minmax(0, min(2.5rem, 32px)) minmax(0, 1fr);
+    gap: min(1.4rem, 12px);
+    padding: min(1.4rem, 20px) 0;
+  }
+  .modelRow > span, .modelRow h3, .modelRow p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .formatItem { min-width: 0; gap: min(.85rem, 12px); padding: min(1.1rem, 18px); }
+  .formatItem h3, .formatItem p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .cta { gap: min(2rem, 24px); }
+  .ctaActions { min-width: 0; }
+  .ctaActions a { min-width: 0; max-width: 100%; white-space: normal; flex-wrap: wrap; gap: min(.5rem, 8px); padding: min(.8rem, 14px) min(1.25rem, 20px); overflow-wrap: anywhere; }
+}
