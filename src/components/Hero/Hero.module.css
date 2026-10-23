@@ -597,3 +597,36 @@
     hyphens: auto;
   }
 }
+
+/* Round 42 / Home: avoid rem-scaled intrinsic flex min-width at 400% text.
+   Buttons, article descriptions and labels remain visible and tappable. */
+@media (max-width: 640px) {
+  .utility, .supportingGrid, .copy, .heroActions, .featuredContent, .featuredTopline { min-width: 0; max-width: 100%; }
+  .utility { flex-wrap: wrap; gap: min(1rem, 12px); }
+  .utility > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .supportingGrid { grid-template-columns: minmax(0, 1fr); }
+  .copy { width: 100%; }
+  .subtitle { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .heroActions { width: 100%; gap: min(.65rem, 10px); }
+  .primaryAction, .secondaryAction {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: min(.7rem, 12px);
+    padding: min(.7rem, 14px) min(.82rem, 14px);
+    overflow-wrap: anywhere;
+    white-space: normal;
+    text-align: center;
+  }
+  .featuredContent strong, .featuredLabel, .featuredMeta, .featuredType { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .featuredTopline { flex-wrap: wrap; }
+}
+
+/* Reader-sized featured story: fill its actual mobile column instead of
+   letting an auto-sized clamped excerpt choose a 400%-font intrinsic width. */
+@media (max-width: 640px) {
+  .featuredContent { align-items: stretch; padding: min(1.15rem, 18px); }
+  .featuredExcerpt { align-self: stretch; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .featuredMeta { min-width: 0; gap: min(.3rem, 6px); }
+  .featuredMeta > span { min-width: 0; max-width: 100%; flex-wrap: wrap; overflow-wrap: anywhere; }
+}

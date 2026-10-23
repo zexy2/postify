@@ -951,3 +951,35 @@
     overflow-wrap: anywhere;
   }
 }
+
+/* Round 42: long outcomes and mobile link controls are actual prose, not
+   decorative overflow. Respect the card track under magnified reader text. */
+@media (max-width: 620px) {
+  :global([data-showcase='true']) .featured, :global([data-showcase='true']) .featured .content {
+    min-width: 0;
+    max-width: 100%;
+  }
+  :global([data-showcase='true']) .featured .titleLink,
+  :global([data-showcase='true']) .featured .title,
+  :global([data-showcase='true']) .featured .meta,
+  :global([data-showcase='true']) .featured .outcome,
+  :global([data-showcase='true']) .featured .actions {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  :global([data-showcase='true']) .featured .actions { flex-wrap: wrap; }
+}
+
+/* Round 42: showcase folio number is decorative; at 400% reader text its
+   rem-based track must not displace the meaningful compact-card title/link. */
+@media (max-width: 620px) {
+  :global([data-showcase='true']) .compact {
+    grid-template-columns: minmax(0, min(2.65rem, 48px)) minmax(0, 1fr);
+    gap: min(1.1rem, 14px);
+  }
+  :global([data-showcase='true']) .compact > .ordinal { font-size: min(clamp(2.2rem, 8.5vw, 2.8rem), 52px); }
+  :global([data-showcase='true']) .compact > .content,
+  :global([data-showcase='true']) .compact > .content > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  :global([data-showcase='true']) .readLink { flex-wrap: wrap; }
+}

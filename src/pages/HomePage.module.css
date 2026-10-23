@@ -522,3 +522,34 @@
   margin-top: .64em;
   background: var(--primary);
 }
+
+/* Round 42 / discovery: at 400% reader text, let the real section header and
+   category controls reflow rather than widening the clipped document root. */
+@media (max-width: 640px) {
+  .postsSection, .sectionHeader, .sectionHeader > div, .discoveryControls, .typeFilter, .filterToolbar,
+  .filterCluster, .formatSelectWrap { min-width: 0; max-width: 100%; }
+  .sectionHeader { gap: min(1rem, 16px); }
+  .sectionEyebrow, .sectionTitle, .sectionSubtitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .discoveryControls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: min(.42rem, 8px); padding: min(.6rem, 10px); }
+  .discoveryControls :global(nav), .discoveryControls :global(nav > div) { min-width: 0; max-width: 100%; }
+  .discoveryControls :global(nav select), .formatSelect { min-width: 0; max-width: 100%; padding-right: min(1.5rem, 24px); }
+  .filterCluster { width: 100%; }
+  .fallbackNotice, .fallbackNotice span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+}
+
+/* Reader-width responsive filters: 9rem is two columns at normal 390px,
+   but expands with the reader's font setting and becomes one at 400%. */
+@media (max-width: 640px) {
+  .discoveryControls {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: min(.42rem, 8px);
+  }
+  .discoveryControls :global(nav), .discoveryControls :global(nav select),
+  .typeFilter, .filterToolbar, .filterCluster, .formatSelectWrap, .formatSelect {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .discoveryControls :global(nav) { width: 100%; }
+  .formatSelectWrap { width: 100%; }
+  .postsSection :global([data-knowledge-feed]) { min-width: 0; max-width: 100%; }
+}
