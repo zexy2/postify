@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getFallbackPosts } from '../src/content/fallbackPosts.js';
 
 /**
  * GitHub Pages serves /route/index.html with HTTP 200, rather than
@@ -18,6 +19,31 @@ export const PUBLIC_ROUTE_SHELLS = Object.freeze({
   },
 });
 
+/**
+ * Only checked-in, explicitly published editorial fallback posts are
+ * prerendered as HTML entry shells. User posts, unknown slugs, auth, editing,
+ * admin and profile routes stay behind the existing SPA fallback.
+ * This is NOT publishing permission; it is a locally tested release candidate.
+ */
+export const PUBLIC_ARTICLE_SHELLS = Object.freeze(Object.fromEntries(
+  getFallbackPosts('tr')
+    .filter((post) => post.isPublished && post.source === 'local-fallback')
+    .map((post) => [post.slug, Object.freeze({ title: post.title, description: post.excerpt })]),
+));
+
+const escapeHtml = (value) => String(value)
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#39;');
+
+const metadataForRoute = (route, metadata, homepage) => homepage
+  .replace(/\s*<link rel="preload" as="image"[^>]+>/, '')
+  .replace(/<title>[^<]+<\/title>/, `<title>${escapeHtml(metadata.title)}</title>`)
+  .replace(/<meta name="description" content="[^"]+"/, `<meta name="description" content="${escapeHtml(metadata.description)}"`)
+  .replace('</head>', `  <link rel="canonical" href="https://postify.zekiakgul.dev/${route}" />\n  </head>`);
+
 export async function exportPublicRouteShells(outputDir) {
   const root = resolve(outputDir);
   const homepage = await readFile(resolve(root, 'index.html'), 'utf8');
@@ -28,16 +54,19 @@ export async function exportPublicRouteShells(outputDir) {
     throw new Error('Public route shells require a complete built Vite index.html');
   }
 
-  for (const [route, metadata] of Object.entries(PUBLIC_ROUTE_SHELLS)) {
-    const html = homepage
-      // The homepage cover preload is not relevant on About/Contact routes.
-      .replace(/\s*<link rel="preload" as="image"[^>]+>/, '')
-      .replace(/<title>[^<]+<\/title>/, '<title>' + metadata.title + '</title>')
-      .replace(/<meta name="description" content="[^"]+"/, '<meta name="description" content="' + metadata.description + '"')
-      .replace('</head>', '  <link rel="canonical" href="https://postify.zekiakgul.dev/' + route + '" />\n  </head>');
+  const routeShells = [
+    ...Object.entries(PUBLIC_ROUTE_SHELLS),
+    ...Object.entries(PUBLIC_ARTICLE_SHELLS).map(([slug, metadata]) => {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+        throw new Error(`Unsafe public article slug: ${slug}`);
+      }
+      return [`posts/${slug}`, metadata];
+    }),
+  ];
+  for (const [route, metadata] of routeShells) {
     const directory = resolve(root, route);
     await mkdir(directory, { recursive: true });
-    await writeFile(resolve(directory, 'index.html'), html);
+    await writeFile(resolve(directory, 'index.html'), metadataForRoute(route, metadata, homepage));
   }
 }
 
