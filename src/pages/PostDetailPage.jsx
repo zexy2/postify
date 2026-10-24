@@ -60,9 +60,41 @@ const PostDetailPage = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [activeSectionId, setActiveSectionId] = useState(null);
   const { post, comments, isLoading, isError, refetch, commentsUnavailable } = usePost(id);
   const { posts } = usePosts();
   const { bookmarkedIds, toggle: toggleBookmark } = useBookmarks();
+  const outline = useMemo(() => getArticleOutline(
+    post?.body || post?.bodyHtml?.replace(/<[^>]+>/g, ' ') || '',
+  ), [post?.body, post?.bodyHtml]);
+
+  // Read position follows real article headings; no timer or layout work
+  // on pages without a chapter outline. Links remain native anchors.
+  useEffect(() => {
+    if (outline.length < 2) return undefined;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const threshold = Math.min(window.innerHeight * .27, 240);
+      let current = outline[0].id;
+      for (const section of outline) {
+        const heading = document.getElementById(section.id);
+        if (heading && heading.getBoundingClientRect().top <= threshold) current = section.id;
+      }
+      setActiveSectionId((previous) => previous === current ? previous : current);
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    schedule();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [outline, post?.id]);
 
   const handleBack = () => {
     const historyIndex = typeof window !== 'undefined' ? window.history.state?.idx : 0;
@@ -136,7 +168,6 @@ const PostDetailPage = () => {
   const isBookmarked = bookmarkedIds.includes(post.id);
   const presentation = getPostPresentation(post, i18n.language);
   const readingMinutes = getPostReadingMinutes(post);
-  const outline = getArticleOutline(articleBody);
   const externalReferences = extractExternalReferences(
     articleBody,
     typeof window !== 'undefined' ? window.location.origin : '',
@@ -223,6 +254,28 @@ const PostDetailPage = () => {
                   </Link>
                 </div>
 
+                {/* Inline mobile reading actions: never cover the article text. */}
+                <div data-mobile-article-tools className={`${styles.mobileActionBar} ${isFooterVisible ? styles.mobileActionBarHidden : ''}`} aria-label={t('article.tools')}>
+                  <button type="button" className={styles.mobileActionBtn} aria-label={t('common.back')} onClick={handleBack}>
+                    <FiArrowLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.mobileActionBtn} ${isBookmarked ? styles.bookmarked : ''}`}
+                    onClick={() => toggleBookmark(post.id, post)}
+                    aria-label={isBookmarked ? t('bookmarks.removeFromBookmarks') : t('bookmarks.addToBookmarks')}
+                  >
+                    <FiBookmark size={18} />
+                  </button>
+                  <a href="#comments-section" className={styles.mobileActionBtn} aria-label={t('posts.comments')}>
+                    <FiMessageCircle size={18} />
+                    <small>{comments.length}</small>
+                  </a>
+                  <div className={styles.mobileShareWrap}>
+                    <CopyLinkButton url={pageUrl} compact />
+                  </div>
+                </div>
+
                 {post.canonicalSourceUrl && (
                   <a
                     href={post.canonicalSourceUrl}
@@ -268,7 +321,7 @@ const PostDetailPage = () => {
                       <span>{i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}</span>
                       <ol>
                         {outline.map((item) => (
-                          <li key={item.id} data-level={item.level}><a href={`#${item.id}`}>{item.text}</a></li>
+                          <li key={item.id} data-level={item.level} data-active={activeSectionId === item.id}><a href={`#${item.id}`} aria-current={activeSectionId === item.id ? 'location' : undefined}>{item.text}</a></li>
                         ))}
                       </ol>
                     </nav>
@@ -280,7 +333,7 @@ const PostDetailPage = () => {
                       <nav aria-label={i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}>
                         <ol>
                           {outline.map((item) => (
-                            <li key={item.id} data-level={item.level}><a href={`#${item.id}`}>{item.text}</a></li>
+                            <li key={item.id} data-level={item.level} data-active={activeSectionId === item.id}><a href={`#${item.id}`} aria-current={activeSectionId === item.id ? 'location' : undefined}>{item.text}</a></li>
                           ))}
                         </ol>
                       </nav>
@@ -356,28 +409,6 @@ const PostDetailPage = () => {
               ) : <span />}
             </nav>
           )}
-        </div>
-
-        {/* Mobile Sticky Action Bar */}
-        <div data-mobile-article-tools className={`${styles.mobileActionBar} ${isFooterVisible ? styles.mobileActionBarHidden : ''}`} aria-label={t('article.tools')}>
-          <button type="button" className={styles.mobileActionBtn} aria-label={t('common.back')} onClick={handleBack}>
-            <FiArrowLeft size={18} />
-          </button>
-          <button
-            type="button"
-            className={`${styles.mobileActionBtn} ${isBookmarked ? styles.bookmarked : ''}`}
-            onClick={() => toggleBookmark(post.id, post)}
-            aria-label={isBookmarked ? t('bookmarks.removeFromBookmarks') : t('bookmarks.addToBookmarks')}
-          >
-            <FiBookmark size={18} />
-          </button>
-          <a href="#comments-section" className={styles.mobileActionBtn} aria-label={t('posts.comments')}>
-            <FiMessageCircle size={18} />
-            <small>{comments.length}</small>
-          </a>
-          <div className={styles.mobileShareWrap}>
-            <CopyLinkButton url={pageUrl} compact />
-          </div>
         </div>
       </div>
     </>

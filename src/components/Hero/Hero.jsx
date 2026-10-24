@@ -48,7 +48,7 @@ export default function Hero({
                   onChange={(event) => onSearchChange?.(event.target.value)}
                   aria-label={t('home.searchLabel')}
                 />
-                <span className={styles.searchHint}>⌘K</span>
+                <span className={styles.searchHint} aria-hidden="true">{i18n.language?.startsWith('en') ? 'FILTER' : 'FİLTRE'}</span>
               </label>
             )}
 

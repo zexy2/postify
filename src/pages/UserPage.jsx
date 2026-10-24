@@ -5,8 +5,34 @@ import { useUser, useUserPosts } from '../hooks/usePosts';
 import { useBookmarks } from '../hooks/useBookmarks';
 import EditorialFeed from '../components/EditorialFeed';
 import SEO from '../components/SEO';
-import { getPostReadingMinutes } from '../lib/postPresentation';
+import { getPostPresentation, getPostReadingMinutes } from '../lib/postPresentation';
 import styles from './UserPage.module.css';
+
+// A compact, truthful issue index. Titles, type and duration come from
+// the same published records as the full editorial cards below.
+const PublicationLinks = ({ posts, locale, en }) => (
+  <ol className={styles.publicationList}>
+    {posts.map((post, index) => {
+      const presentation = getPostPresentation(post, locale);
+      const readingMinutes = getPostReadingMinutes(post);
+      return (
+        <li key={post.id}>
+          <Link to={`/posts/${post.slug || post.id}`} className={styles.publicationLink}>
+            <span className={styles.publicationOrdinal} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <span className={styles.publicationDetails}>
+              <span className={styles.publicationType}>{presentation.typeLabel}</span>
+              <strong>{post.title}</strong>
+              {readingMinutes !== null && (
+                <small>{readingMinutes} {en ? 'min read' : 'dk okuma'}</small>
+              )}
+            </span>
+            <FiArrowUpRight className={styles.publicationArrow} aria-hidden="true" />
+          </Link>
+        </li>
+      );
+    })}
+  </ol>
+);
 
 const UserPage = () => {
   const { t, i18n } = useTranslation();
@@ -117,11 +143,37 @@ const UserPage = () => {
           ) : posts.length === 0 ? (
             <p className={styles.empty}>{t('home.noContent')}</p>
           ) : (
-            <EditorialFeed
-              posts={posts}
-              bookmarkedIds={bookmarkedIds}
-              onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
-            />
+            <div className={styles.portfolioLayout}>
+              {posts.length >= 3 && (
+                <>
+                  <aside className={styles.portfolioIndex} aria-label={en ? 'Author publication index' : 'Yazar yayın dizini'}>
+                    <div className={styles.portfolioIndexHeading}>
+                      <span>{en ? 'Reading index' : 'Okuma dizini'}</span>
+                      <strong>{posts.length}</strong>
+                    </div>
+                    <nav aria-label={en ? 'Browse published work' : 'Yayınlanan çalışmalara göz at'}>
+                      <PublicationLinks posts={posts} locale={i18n.language} en={en} />
+                    </nav>
+                  </aside>
+                  <details className={styles.portfolioIndexMobile}>
+                    <summary>
+                      <span>{en ? 'Browse all publications' : 'Tüm yayınları keşfet'}</span>
+                      <strong>{posts.length}</strong>
+                    </summary>
+                    <nav aria-label={en ? 'Browse published work' : 'Yayınlanan çalışmalara göz at'}>
+                      <PublicationLinks posts={posts} locale={i18n.language} en={en} />
+                    </nav>
+                  </details>
+                </>
+              )}
+              <div className={styles.portfolioFeed}>
+                <EditorialFeed
+                  posts={posts}
+                  bookmarkedIds={bookmarkedIds}
+                  onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
+                />
+              </div>
+            </div>
           )}
         </section>
       </main>

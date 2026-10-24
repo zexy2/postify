@@ -51,11 +51,13 @@ export default function CopyableCodeBlock({ code, language = '' }) {
         <span>{language || (en ? 'code' : 'kod')}</span>
         <button type="button" onClick={handleCopy} aria-live="polite">
           {state === 'copied' ? <FiCheck /> : <FiCopy />}
-          {state === 'copied'
-            ? (en ? 'Copied' : 'Kopyalandı')
-            : state === 'failed'
-              ? (en ? 'Copy failed' : 'Kopyalanamadı')
-              : (en ? 'Copy' : 'Kopyala')}
+          <span className={styles.copyLabel}>
+            {state === 'copied'
+              ? (en ? 'Copied' : 'Kopyalandı')
+              : state === 'failed'
+                ? (en ? 'Copy failed' : 'Kopyalanamadı')
+                : (en ? 'Copy' : 'Kopyala')}
+          </span>
         </button>
       </div>
       <pre><code>{code}</code></pre>

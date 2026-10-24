@@ -15,6 +15,188 @@ async function waitForStableFeed(feed, { samples = 3, maxAttempts = 15 } = {}) {
 }
 
 test.describe('Postify UI V2', () => {
+  test('About public reading chapters remain readable at 400 percent text on narrow screens', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    for (const width of [320, 390]) for (const theme of ['light', 'dark']) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/about');
+      await expect(page.locator('[class*="modelRow_"]')).toHaveCount(4);
+      await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const metrics = await page.evaluate(() => {
+        const content = [
+          ...document.querySelectorAll('main h1, main h2, main h3'),
+          ...document.querySelectorAll('main [class*="heroCopy_"] > p'),
+          ...document.querySelectorAll('main [class*="modelRow_"] p, main [class*="formatItem_"] p'),
+          ...document.querySelectorAll('main [class*="ctaActions_"] a'),
+        ];
+        const clipped = content.filter(el => {
+          const r = el.getBoundingClientRect();
+          return r.left < -1 || r.right > innerWidth + 1 || el.scrollWidth > el.clientWidth + 1;
+        }).map(el => el.textContent?.trim().slice(0, 28));
+        return { bodyOverhang: document.body.scrollWidth - innerWidth, clipped, contentCount: content.length };
+      });
+      expect(metrics.bodyOverhang).toBeLessThanOrEqual(1);
+      expect(metrics.clipped).toEqual([]);
+      expect(metrics.contentCount).toBeGreaterThan(15);
+    }
+  });
+
+  test('Home reading actions and archive filters reflow at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    for (const width of [320, 390]) for (const theme of ['light', 'dark']) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/');
+      await expect(page.locator('[data-knowledge-feed="v3"]')).toBeVisible();
+      await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const metrics = await page.evaluate(() => {
+        const content = [
+          document.querySelector('main [class*="heroActions_"] a[href="#knowledge-feed"]'),
+          document.querySelector('main [class*="heroActions_"] a[href="/posts/create"]'),
+          document.querySelector('main [class*="copy_"] [class*="subtitle_"]'),
+          document.querySelector('main [class*="sectionHeader_"] [class*="sectionTitle_"]'),
+        ].filter(Boolean);
+        const clipped = content.filter(el => {
+          const r = el.getBoundingClientRect();
+          return r.left < -1 || r.right > innerWidth + 1 || el.scrollWidth > el.clientWidth + 1;
+        }).map(el => el.textContent?.trim().slice(0, 28));
+        const controls = [...document.querySelectorAll('main select')];
+        return {
+          bodyOverhang: document.body.scrollWidth - innerWidth,
+          clipped,
+          contentCount: content.length,
+          filterCount: controls.length,
+          tinyControls: controls.filter(el => el.getBoundingClientRect().height < 44).length,
+        };
+      });
+      expect(metrics.bodyOverhang).toBeLessThanOrEqual(1);
+      expect(metrics.clipped).toEqual([]);
+      expect(metrics.contentCount).toBe(4);
+      expect(metrics.filterCount).toBeGreaterThanOrEqual(2);
+      expect(metrics.tinyControls).toBe(0);
+    }
+  });
+
+  test('featured summary follows English locale and hero filter never advertises the command-palette shortcut', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'en'));
+    await page.goto('/');
+    const hero = page.locator('section[class*="hero_"]').first();
+    const featured = hero.locator('a[class*="featured_"]');
+    await expect(featured.locator('strong')).toContainText('An AI feature is a system');
+    await expect(featured.locator('[class*="featuredExcerpt_"]'))
+      .toContainText('Design AI as a measurable and safe product system');
+    await expect(hero.locator('[class*="searchHint_"]')).toHaveText('FILTER');
+    await expect(hero.locator('input[type="search"]')).toBeVisible();
+    await page.keyboard.press('Control+K');
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+  });
+
+  test('early mobile menu tap does not wait for an outstanding image load', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.route('**/images/posts/responsive/ai-muhendisligi-*.webp', async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return route.continue();
+    });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const trigger = page.locator('header button[aria-expanded]').first();
+    await expect(trigger).toBeVisible();
+    await trigger.click();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 4_000 });
+    await page.keyboard.press('Escape');
+    await expect(trigger).toBeFocused();
+  });
+
+  test('mobile Sheet prewarms after page load while the first menu stays fast', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await expect.poll(async () => page.evaluate(() => performance.getEntriesByType('resource')
+      .some((entry) => /\/assets\/sheet-[^/]+\.js/.test(entry.name))), { timeout: 5_000 }).toBe(true);
+    const timings = await page.evaluate(() => ({
+      load: performance.getEntriesByType('navigation')[0].loadEventEnd,
+      sheet: performance.getEntriesByType('resource').find((entry) => /\/assets\/sheet-[^/]+\.js/.test(entry.name))?.startTime,
+    }));
+    expect(timings.sheet).toBeGreaterThanOrEqual(timings.load - 5);
+    const trigger = page.locator('header button[aria-expanded]').first();
+    await trigger.click();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 500 });
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+  });
+
+  test('slow editorial bundle shows accessible loading status instead of an empty shelf', async ({ page }) => {
+    const shell = await (await page.request.get('/')).text();
+    const entry = shell.match(/<script[^>]+src="(\/assets\/index-[^" ]+\.js)"/)?.[1];
+    expect(entry).toBeTruthy();
+    await page.route('**/assets/index-*.js', async (route) => {
+      const pathname = new URL(route.request().url()).pathname;
+      if (pathname === entry) return route.continue();
+      await new Promise((resolve) => setTimeout(resolve, 900));
+      return route.continue();
+    });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const loading = page.locator('[role="status"][class*="feedLoading_"]');
+    await expect(loading).toBeVisible();
+    await expect(loading).toContainText(/yükleniyor|loading/i);
+    await expect(page.locator('[data-knowledge-feed="v3"]')).toBeVisible();
+    await expect(loading).toHaveCount(0);
+  });
+
+  test('the editorial feed remains functional when split from the opening hero', async ({ page }) => {
+    await page.goto('/');
+    const search = page.getByRole('searchbox').first();
+    await expect(search).toBeVisible();
+    const feed = page.locator('[data-knowledge-feed="v3"]');
+    await expect(feed).toBeVisible();
+    expect(await feed.locator('article[data-card-variant]').count()).toBeGreaterThanOrEqual(4);
+    await expect(feed.locator('[data-card-variant="featured"]')).toHaveCount(1);
+    await search.fill('Node.js');
+    await expect(page.locator('#knowledge-feed')).toBeVisible();
+    await search.fill('');
+    await expect(feed.locator('article[data-card-variant]').first()).toBeVisible();
+  });
+
+  test('About chapters and editorial call to action reflow at 200 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/about');
+      await expect(page.locator('#about-statement-title')).toBeVisible();
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(230);
+      const info = await page.evaluate(() => {
+        const elements = [
+          document.querySelector('div[class*="artworkStatement_"]'),
+          document.querySelector('#about-statement-title'),
+          document.querySelector('#trust-model-title'),
+          document.querySelector('section[class*="cta_"] h2'),
+        ];
+        const fits = elements.map((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.left >= -1 && rect.right <= innerWidth + 1
+            && element.scrollWidth <= element.clientWidth + 1;
+        });
+        return {
+          fits,
+          bodyOverflow: document.body.scrollWidth - innerWidth,
+          documentOverflow: document.documentElement.scrollWidth - innerWidth,
+        };
+      });
+      expect(info.fits).toEqual([true, true, true, true]);
+      expect(info.bodyOverflow).toBeLessThanOrEqual(1);
+      expect(info.documentOverflow).toBeLessThanOrEqual(1);
+    }
+  });
+
   test('desktop discovery has the editorial hierarchy and practical navigation', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
@@ -46,9 +228,8 @@ test.describe('Postify UI V2', () => {
       await expect(link).toHaveAttribute('aria-current', 'page');
       await expect(explore).not.toHaveAttribute('aria-current', 'page');
 
-      const activeFilter = page.getByRole('group', { name: /content format|içerik biçimi/i })
-        .getByRole('button', { name: item.filter });
-      await expect(activeFilter).toHaveAttribute('aria-pressed', 'true');
+      const activeFilter = page.getByRole('combobox', { name: /content format|içerik biçimi/i });
+      await expect(activeFilter).toHaveValue(item.type);
       await expect(page.locator('#knowledge-feed')).toBeInViewport();
       expect(await page.locator('#knowledge-feed [data-card-variant]').count()).toBeGreaterThan(0);
 
@@ -74,7 +255,7 @@ test.describe('Postify UI V2', () => {
       await guides.click();
 
       await expect(page).toHaveURL(/[?&]type=guide#knowledge-feed$/);
-      await expect(page.getByRole('button', { name: /^rehber$|^guide$/i })).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByRole('combobox', { name: /content format|içerik biçimi/i })).toHaveValue('guide');
       await expect(page.locator('#knowledge-feed')).toBeInViewport();
 
       await footer.scrollIntoViewIfNeeded();
@@ -99,7 +280,8 @@ test.describe('Postify UI V2', () => {
       await refineToggle.click();
       await expect(refineToggle).toHaveAttribute('aria-expanded', 'true');
       const latest = page.getByRole('button', { name: /^latest$|^en yeni$/i });
-      await latest.scrollIntoViewIfNeeded();
+      // The filter sheet owns its scroll position. Scrolling the document before
+      // selecting an option can move the fixed sheet behind the sticky header.
       const beforeFilterTop = await feed.evaluate((element) => element.getBoundingClientRect().top);
       await latest.click();
       await expect(page).toHaveURL(/type=guide.*sort=latest$/);
@@ -218,6 +400,44 @@ test.describe('Postify UI V2', () => {
     await expect(article.locator(':scope > section dl')).toHaveCount(0);
   });
 
+  test('long-form chapter atlas tracks actual reading position without obscuring mobile content', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/posts/node-json-dogrulama');
+    const atlas = page.locator('article nav[class*="articleOutline_"]').first();
+    await expect(atlas).toBeVisible();
+    await expect(atlas).toHaveCSS('position', 'sticky');
+    const links = atlas.locator('a[href^="#section-"]');
+    expect(await links.count()).toBeGreaterThanOrEqual(2);
+    const finalLink = links.last();
+    const targetId = (await finalLink.getAttribute('href')).slice(1);
+    await page.evaluate((id) => document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'instant' }), targetId);
+    await expect(finalLink).toHaveAttribute('aria-current', 'location');
+    const visualOrder = await page.evaluate(() => {
+      const nav = document.querySelector('article nav[class*="articleOutline_"]');
+      const body = document.querySelector('article div[class*="_body_"]');
+      return { navLeft: nav.getBoundingClientRect().left, bodyRight: body.getBoundingClientRect().right };
+    });
+    expect(visualOrder.navLeft).toBeGreaterThanOrEqual(visualOrder.bodyRight - 1);
+
+    await page.setViewportSize({ width: 980, height: 844 });
+    await page.goto('/posts/node-json-dogrulama');
+    await expect(atlas).toBeVisible();
+    for (const height of await atlas.locator('a').evaluateAll((items) => items.map((item) => item.getBoundingClientRect().height))) {
+      expect(height).toBeGreaterThanOrEqual(44);
+    }
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/posts/node-json-dogrulama');
+    await expect(atlas).toBeHidden();
+    const mobileAtlas = page.locator('article details[class*="articleOutlineDisclosure_"]');
+    await expect(mobileAtlas).toBeVisible();
+    await mobileAtlas.locator('summary').click();
+    await expect(mobileAtlas).toHaveAttribute('open', '');
+    expect(await mobileAtlas.locator('a[href^="#section-"]').count()).toBeGreaterThanOrEqual(2);
+    const overflow = await page.evaluate(() => Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+
   test('article evidence disclosure stays compact and text-safe', async ({ page }) => {
     for (const config of [
       { width: 390, height: 844, scale: false },
@@ -248,6 +468,297 @@ test.describe('Postify UI V2', () => {
       }
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       expect(overflow).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('mobile site header and article comments remain usable with enlarged text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const comments = page.locator('#comments-section');
+      await expect(comments).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await page.evaluate(() => {
+        const selectors = [
+          'header:first-of-type a[class*="logo_"]',
+          'header:first-of-type button[aria-expanded]',
+          'section[class*="commentsSection_"]',
+          'section[class*="commentsSection_"] div[class*="sectionHeading_"]',
+          'section[class*="commentsSection_"] h2',
+          'section[class*="commentsSection_"] div[class*="sectionHeading_"] > button',
+          'section[class*="commentsSection_"] p[class*="commentHint_"]',
+        ];
+        const bad = selectors.filter((selector) => {
+          const e = document.querySelector(selector);
+          if (!e) return true;
+          const rect = e.getBoundingClientRect();
+          return e.scrollWidth > e.clientWidth + 1 || rect.right > innerWidth + 1 || rect.left < -1;
+        });
+        const logo = document.querySelector('header:first-of-type a[class*="logo_"]');
+        const menu = document.querySelector('header:first-of-type button[aria-expanded]');
+        const copy = document.querySelector('section[class*="commentsSection_"] div[class*="sectionHeading_"] > button');
+        return {
+          bad,
+          logo: logo?.getAttribute('aria-label'),
+          menuWidth: menu?.getBoundingClientRect().width,
+          copyWidth: copy?.getBoundingClientRect().width,
+          copyHeight: copy?.getBoundingClientRect().height,
+        };
+      });
+      expect(result.bad).toEqual([]);
+      expect(result.logo).toBe('Postify');
+      expect(result.menuWidth).toBeGreaterThanOrEqual(44);
+      expect(result.copyWidth).toBeGreaterThanOrEqual(44);
+      expect(result.copyHeight).toBeGreaterThanOrEqual(44);
+    }
+  });
+
+  test('article reading actions stay tappable and contained with enlarged text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const bar = page.locator('[data-mobile-article-tools]');
+      await expect(bar).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await bar.evaluate((el) => {
+        const bounds = el.getBoundingClientRect();
+        const controls = [...el.querySelectorAll('button, a')];
+        return {
+          barOverflow: el.scrollWidth - el.clientWidth,
+          offscreen: controls.some((control) => {
+            const rect = control.getBoundingClientRect();
+            return rect.left < bounds.left - 1 || rect.right > bounds.right + 1
+              || rect.left < -1 || rect.right > innerWidth + 1;
+          }),
+          untappable: controls.some((control) => {
+            const rect = control.getBoundingClientRect();
+            return rect.width < 44 || rect.height < 44;
+          }),
+          count: controls.length,
+          labels: controls.map((control) => control.getAttribute('aria-label')),
+        };
+      });
+      expect(result.barOverflow).toBeLessThanOrEqual(1);
+      expect(result.offscreen).toBe(false);
+      expect(result.untappable).toBe(false);
+      expect(result.count).toBe(4);
+      expect(result.labels.every(Boolean)).toBe(true);
+    }
+  });
+
+  test('mobile article outline retains all links at enlarged reader text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const outline = page.locator('details[class*="articleOutlineDisclosure_"]');
+      await expect(outline).toBeVisible();
+      await outline.evaluate((el) => { el.open = true; });
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const m = await outline.evaluate((el) => {
+        const targets = [el, el.querySelector('summary'), el.querySelector('nav'),
+          ...el.querySelectorAll('li'), ...el.querySelectorAll('a')];
+        const bad = targets.filter((item) => {
+          const r = item.getBoundingClientRect();
+          return item.scrollWidth > item.clientWidth + 1 || r.right > innerWidth + 1 || r.left < -1;
+        });
+        return { bad: bad.map((e) => e.textContent.trim().slice(0, 24)),
+          links: el.querySelectorAll('a').length };
+      });
+      expect(m.bad).toEqual([]);
+      expect(m.links).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  test('reader feedback buttons and shelf reflow inside their card at 400 percent', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const panel = page.locator('section.local-evidence-actions');
+      await expect(panel).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(160);
+      const geometry = await panel.evaluate((element) => {
+        const selectors = [
+          '.local-evidence-actions__summary',
+          '.local-evidence-actions__summary small',
+          '.local-evidence-actions__buttons',
+          '.local-evidence-actions__shelf',
+          '.local-evidence-actions__buttons button',
+          '.local-evidence-actions__shelf button',
+        ];
+        const rect = element.getBoundingClientRect();
+        const bad = selectors.flatMap((selector) => [...element.querySelectorAll(selector)])
+          .filter((node) => {
+            const box = node.getBoundingClientRect();
+            return node.scrollWidth > node.clientWidth + 1
+              || box.right > rect.right + 1 || box.left < rect.left - 1;
+          }).map((node) => node.textContent.trim().slice(0, 32));
+        return {
+          bad,
+          panelOverflow: element.scrollWidth - element.clientWidth,
+          controls: element.querySelectorAll('button').length,
+          firstLabel: element.querySelector('.local-evidence-actions__buttons button')?.textContent,
+          shelfButtons: element.querySelectorAll('.local-evidence-actions__shelf button').length,
+        };
+      });
+      expect(geometry.bad).toEqual([]);
+      expect(geometry.panelOverflow).toBeLessThanOrEqual(1);
+      expect(geometry.controls).toBeGreaterThanOrEqual(5);
+      expect(geometry.shelfButtons).toBe(3);
+      expect(geometry.firstLabel).toMatch(/Çalıştı/);
+    }
+  });
+
+  test('evidence contract and verification checklist remain readable at enlarged text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      const proof = page.locator('section.knowledge-evidence');
+      await expect(proof).toBeVisible();
+      const details = proof.locator('details.knowledge-evidence__details');
+      await details.evaluate((el) => { el.open = true; });
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(180);
+      const info = await page.evaluate(() => {
+        const selectors = [
+          '.knowledge-evidence__header',
+          '#knowledge-evidence-title',
+          '.knowledge-evidence__header > strong',
+          '.knowledge-evidence__details > summary',
+          '.knowledge-evidence__execution',
+          '.knowledge-evidence__contract',
+          '.knowledge-evidence__contract > div',
+          '.knowledge-evidence__contract dt',
+          '.knowledge-evidence__contract dd',
+          '.knowledge-evidence__artifact',
+          'section[class*="runbook_"]',
+          'section[class*="runbook_"] div[class*="header_"]',
+          '#verification-runbook-title',
+          'section[class*="runbook_"] ol',
+          'section[class*="runbook_"] label',
+        ];
+        const bad = selectors.filter((selector) => {
+          const el = document.querySelector(selector);
+          if (!el) return true;
+          const rect = el.getBoundingClientRect();
+          return el.scrollWidth > el.clientWidth + 1
+            || rect.right > innerWidth + 1 || rect.left < -1;
+        });
+        return {
+          bad,
+          contract: document.querySelector('.knowledge-evidence__contract')?.textContent || '',
+          stepCount: document.querySelectorAll('section[class*="runbook_"] li').length,
+        };
+      });
+      expect(info.bad).toEqual([]);
+      expect(info.contract).toMatch(/Yerelde çalıştır/);
+      expect(info.stepCount).toBeGreaterThan(0);
+    }
+  });
+
+  test('article edition, excerpt, author and reading brief reflow with magnified text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390, 768]) for (const scale of [200, 400]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/posts/node-json-dogrulama');
+      await expect(page.locator('header[class*="articleHeader_"]')).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(210);
+      const result = await page.evaluate(() => {
+        const selectors = [
+          'header[class*="articleHeader_"] div[class*="editionLine_"]',
+          'header[class*="articleHeader_"] p[class*="excerpt_"]',
+          'header[class*="articleHeader_"] div[class*="authorBar_"]',
+          'header[class*="articleHeader_"] div[class*="authorInfo_"] strong',
+          'section[class*="quickBrief_"] div[class*="quickBriefCopy_"]',
+          'section[class*="quickBrief_"] div[class*="quickBriefCopy_"] strong',
+          'div[class*="articleContent_"] div[class*="plainBody_"] > p',
+        ];
+        const bad = selectors.filter((selector) => {
+          const el = document.querySelector(selector);
+          if (!el) return true;
+          const rect = el.getBoundingClientRect();
+          return el.scrollWidth > el.clientWidth + 1
+            || rect.right > innerWidth + 1 || rect.left < -1;
+        });
+        const articleTitle = document.querySelector('header[class*="articleHeader_"] h1');
+        return { bad, text: articleTitle?.textContent };
+      });
+      expect(result.bad).toEqual([]);
+      expect(result.text).toMatch(/Node\.js/);
+    }
+  });
+
+  test('article code remains copyable and independently scrollable at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) {
+      for (const scale of [200, 400]) {
+        await page.setViewportSize({ width, height: 850 });
+        await page.goto('/posts/node-json-dogrulama');
+        const card = page.locator('[class*="codeBlock_"]').first();
+        const copy = card.getByRole('button', { name: /^kopyala$|^copy$/i });
+        await expect(copy).toBeVisible();
+        await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(210);
+        const dimensions = await card.evaluate((element) => {
+          const pre = element.querySelector('pre');
+          const toolbar = element.querySelector('[class*="toolbar_"]');
+          const button = toolbar.querySelector('button');
+          const code = pre.querySelector('code');
+          const fits = (node) => {
+            const rect = node.getBoundingClientRect();
+            const parentRect = element.getBoundingClientRect();
+            return rect.left >= parentRect.left - 1 && rect.right <= parentRect.right + 1;
+          };
+          return {
+            cardFits: fits(element) && element.scrollWidth <= element.clientWidth + 1,
+            toolbarFits: fits(toolbar) && toolbar.scrollWidth <= toolbar.clientWidth + 1,
+            buttonFits: fits(button),
+            buttonHeight: button.getBoundingClientRect().height,
+            internalCodeScroll: pre.scrollWidth > pre.clientWidth,
+            preservesNewlines: code.textContent.includes('\n'),
+          };
+        });
+        expect(dimensions.cardFits).toBe(true);
+        expect(dimensions.toolbarFits).toBe(true);
+        expect(dimensions.buttonFits).toBe(true);
+        expect(dimensions.buttonHeight).toBeGreaterThanOrEqual(44);
+        expect(dimensions.internalCodeScroll).toBe(true);
+        expect(dimensions.preservesNewlines).toBe(true);
+      }
     }
   });
 
@@ -312,7 +823,7 @@ test.describe('Postify UI V2', () => {
     await expect(mobileActionBar).toHaveCSS('opacity', '0');
   });
 
-  test('mobile article toast clears the floating action bar', async ({ page }) => {
+  test('mobile article feedback does not obscure inline reading actions', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     await expect(page.locator('#knowledge-feed')).toBeVisible();
@@ -341,8 +852,10 @@ test.describe('Postify UI V2', () => {
 
       const overlapX = Math.max(0, Math.min(barBox.x + barBox.width, toastBox.x + toastBox.width) - Math.max(barBox.x, toastBox.x));
       const overlapY = Math.max(0, Math.min(barBox.y + barBox.height, toastBox.y + toastBox.height) - Math.max(barBox.y, toastBox.y));
+      // The reading actions now sit inline below the author rather than
+      // floating across the text; both regions must remain independently usable.
       expect(overlapX * overlapY).toBe(0);
-      expect(toastBox.y + toastBox.height).toBeLessThanOrEqual(barBox.y - 8);
+      await expect(actionBar).toHaveCSS('position', 'static');
     }
   });
 
@@ -376,6 +889,45 @@ test.describe('Postify UI V2', () => {
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
+  });
+
+  test('author publication index links to real work and keeps mobile disclosure readable', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/users/fallback-editor');
+    const index = page.getByRole('complementary', { name: /yazar yayın dizini|author publication index/i });
+    await expect(index).toBeVisible();
+    await expect(index).toHaveCSS('position', 'sticky');
+    const links = index.getByRole('navigation', { name: /yayınlanan çalışmalara göz at|browse published work/i }).getByRole('link');
+    const cardLinks = page.locator('#published-work [data-card-variant] a[href^="/posts/"]');
+    const archiveCount = await page.locator('#published-work [data-card-variant]').count();
+    expect(archiveCount).toBeGreaterThanOrEqual(3);
+    await expect(links).toHaveCount(archiveCount);
+    const hrefs = await links.evaluateAll((items) => items.map((item) => item.getAttribute('href')));
+    const cardHrefs = await cardLinks.evaluateAll((items) => [...new Set(items.map((item) => item.getAttribute('href')))]);
+    expect(hrefs).toEqual(cardHrefs);
+    await expect(index.getByText(/okuma dizini|reading index/i)).toBeVisible();
+    for (const box of await links.evaluateAll((items) => items.map((item) => item.getBoundingClientRect().height))) {
+      expect(box).toBeGreaterThanOrEqual(44);
+    }
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/users/fallback-editor');
+    await expect(index).toBeHidden();
+    const mobileIndex = page.locator('details[class*="portfolioIndexMobile_"]');
+    await expect(mobileIndex).toBeVisible();
+    await expect(mobileIndex).not.toHaveAttribute('open', '');
+    const summary = mobileIndex.locator('summary');
+    expect((await summary.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    await summary.click();
+    await expect(mobileIndex).toHaveAttribute('open', '');
+    const mobileLinks = mobileIndex.getByRole('navigation').getByRole('link');
+    await expect(mobileLinks).toHaveCount(archiveCount);
+    await expect(mobileLinks.first()).toHaveAttribute('href', hrefs[0]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+    await mobileLinks.first().click();
+    await expect(page).toHaveURL(/\/posts\//);
+    expect(page.url()).toContain(hrefs[0]);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   });
 
   test('V3 public author portfolio stays mobile-safe and knowledge-first', async ({ page }) => {
@@ -432,7 +984,7 @@ test.describe('Postify UI V2', () => {
       page.getByRole('link', { name: /browse the library|bilgi arşivine göz at/i }),
       page.getByRole('link', { name: /contribute|katkı yap/i }),
       page.getByRole('button', { name: /add to bookmarks|favorilere ekle/i }).first(),
-      page.locator('main').getByRole('button', { name: /all formats|tüm formatlar/i }).first(),
+      page.getByRole('combobox', { name: /content format|içerik biçimi/i }),
     ];
     for (const target of touchTargets) {
       await expect(target).toBeVisible();
@@ -446,7 +998,7 @@ test.describe('Postify UI V2', () => {
     }
 
     for (const railButton of [
-      page.getByRole('navigation', { name: /topics|konu başlıkları/i }).getByRole('button').last(),
+      page.getByRole('navigation', { name: /topics|konu başlıkları/i }).getByRole('combobox'),
       page.getByRole('group', { name: /discovery filters|keşif filtreleri/i }).getByRole('button').last(),
     ]) {
       await railButton.focus();
@@ -479,16 +1031,47 @@ test.describe('Postify UI V2', () => {
 
 
 
+  test('desktop topic index shows real archive counts and preserves other filters', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/?type=guide#knowledge-feed');
+    const nav = page.getByRole('navigation', { name: /topics|konu başlıkları/i });
+    const index = nav.locator('[data-topic-index]');
+    await expect(index).toBeVisible();
+    await expect(nav.getByRole('combobox')).toBeHidden();
+    const topics = index.getByRole('button');
+    expect(await topics.count()).toBeGreaterThan(2);
+    const totals = await topics.evaluateAll((items) => items.map((element) =>
+      Number(element.querySelector('span:last-child')?.textContent)));
+    expect(totals[0]).toBeGreaterThan(0);
+    expect(totals.slice(1).reduce((sum, count) => sum + count, 0)).toBe(totals[0]);
+    expect((await topics.first().getAttribute('aria-pressed'))).toBe('true');
+    const selectedTopic = topics.nth(1);
+    const selectedLabel = await selectedTopic.locator('span').first().innerText();
+    await selectedTopic.click();
+    await expect(selectedTopic).toHaveAttribute('aria-pressed', 'true');
+    await expect(page).toHaveURL(/type=guide.*category=/);
+    await expect(page.getByRole('heading', { level: 2, name: selectedLabel })).toBeVisible();
+    await topics.first().click();
+    await expect(page).toHaveURL(/type=guide/);
+    await expect(page).not.toHaveURL(/category=/);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(index).toBeHidden();
+    await expect(nav.getByRole('combobox')).toBeVisible();
+    expect(await page.evaluate(() => document.body.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  });
+
   test('V3 topic navigation changes discovery context without mobile overflow', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const topicNav = page.locator('nav').filter({ has: page.getByRole('button', { name: /^tümü$|^all$/i }) }).first();
-    await expect(topicNav.getByText(/^konular$|^topics$/i)).toBeVisible();
-    const topicButtons = topicNav.getByRole('button');
-    expect(await topicButtons.count()).toBeGreaterThan(1);
-    await expect(topicButtons.first()).toHaveAttribute('aria-pressed', 'true');
-    await topicButtons.nth(1).click();
-    await expect(topicButtons.nth(1)).toHaveAttribute('aria-pressed', 'true');
+    const topicNav = page.getByRole('navigation', { name: /topics|konu başlıkları/i });
+    await expect(topicNav).toBeVisible();
+    const topicSelect = topicNav.getByRole('combobox');
+    await expect(topicSelect.getByRole('option').first()).toHaveText(/tüm konular|all topics/i);
+    const selected = await topicSelect.getByRole('option').nth(1).getAttribute('value');
+    await topicSelect.selectOption(selected);
+    await expect(topicSelect).toHaveValue(selected);
+    await expect(page).toHaveURL(/category=/);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
   });
@@ -501,17 +1084,22 @@ test.describe('Postify UI V2', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
 
-    const topicNav = page.getByRole('navigation', { name: 'Topics' });
+    // Discovery uses a native select now; assert the English-facing labels and
+    // canonical stored category values, not the removed legacy chip buttons.
+    const topics = page.getByRole('combobox', { name: 'Topics' });
     for (const label of ['Product design', 'Developer tools']) {
-      await expect(topicNav.getByRole('button', { name: new RegExp(label, 'i') })).toBeVisible();
+      await expect(topics.getByRole('option', { name: label, exact: true })).toHaveCount(1);
     }
     for (const rawLabel of ['Ürün tasarımı', 'Geliştirici araçları']) {
-      await expect(topicNav.getByRole('button', { name: new RegExp(rawLabel, 'i') })).toHaveCount(0);
+      await expect(topics.getByRole('option', { name: rawLabel, exact: true })).toHaveCount(0);
     }
+    await topics.selectOption({ label: 'Product design' });
+    await expect(page).toHaveURL(/category=%C3%9Cr%C3%BCn/);
+    await topics.selectOption('all');
 
     const search = page.getByRole('searchbox');
     await search.fill('Product design');
-    await expect(page.locator('#knowledge-feed').getByText('Product design', { exact: true }).first()).toBeVisible();
+    await expect(page.locator('#knowledge-feed article').getByText('Product design', { exact: true }).first()).toBeVisible();
 
     await page.goto('/users/postify');
     await expect(page.getByRole('heading', { level: 1, name: 'Postify Editor' })).toBeVisible();
@@ -658,6 +1246,41 @@ test.describe('Postify UI V2', () => {
     await expect(page.getByRole('dialog')).toBeVisible();
     await expect(toaster).toHaveCSS('opacity', '0');
     await expect(toaster).toHaveCSS('pointer-events', 'none');
+  });
+
+  test('login headings, social actions and password toggle reflow at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    for (const width of [320, 390]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/auth/login');
+      await expect(page.locator('#email')).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await page.evaluate(() => {
+        const elements = [
+          document.querySelector('main h1'),
+          document.querySelector('main h2'),
+          ...document.querySelectorAll('main button[class*="socialButton_"]'),
+          document.querySelector('main button[class*="passwordToggle_"]'),
+          ...document.querySelectorAll('main input'),
+        ].filter(Boolean);
+        const clipped = elements.filter((el) => {
+          const r = el.getBoundingClientRect();
+          return el.scrollWidth > el.clientWidth + 1 || r.left < -1 || r.right > innerWidth + 1;
+        }).map((el) => el.textContent?.trim().slice(0, 32) || el.tagName);
+        return {
+          bodyExtra: document.body.scrollWidth - innerWidth,
+          clipped,
+          socialButtons: document.querySelectorAll('main button[class*="socialButton_"]').length,
+          tinyTargets: [...document.querySelectorAll('main button[class*="socialButton_"]')]
+            .filter(el => el.getBoundingClientRect().height < 44).length,
+        };
+      });
+      expect(result.bodyExtra).toBeLessThanOrEqual(1);
+      expect(result.clipped).toEqual([]);
+      expect(result.socialButtons).toBe(2);
+      expect(result.tinyTargets).toBe(0);
+    }
   });
 
   test('login surface remains clear and operable', async ({ page }) => {
@@ -870,6 +1493,238 @@ test.describe('Postify UI V2', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
+  test('Home masthead and discovery count reflow at enlarged mobile text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) {
+      for (const scale of [200, 400]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto('/');
+        const title = page.getByRole('heading', { level: 1 });
+        await expect(title).toBeVisible();
+        await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(280);
+        const geometry = await page.evaluate(() => {
+          const hero = document.querySelector('section[class*="hero_"]');
+          const heading = hero.querySelector('h1');
+          const eyebrow = hero.querySelector('span[class*="eyebrow_"]');
+          const feed = document.querySelector('#knowledge-feed');
+          const title = feed.querySelector('h2[class*="sectionTitle_"]');
+          const count = feed.querySelector('p[class*="sectionSubtitle_"]');
+          const fits = (element) => {
+            const rect = element.getBoundingClientRect();
+            return rect.right <= innerWidth + 1 && rect.left >= -1 && element.scrollWidth <= element.clientWidth + 1;
+          };
+          return {
+            heading: fits(heading), eyebrow: fits(eyebrow),
+            feedTitle: fits(title), resultCount: fits(count),
+            scrollableDocument: document.documentElement.scrollWidth > innerWidth + 1,
+          };
+        });
+        expect(geometry.heading).toBe(true);
+        expect(geometry.eyebrow).toBe(true);
+        expect(geometry.feedTitle).toBe(true);
+        expect(geometry.resultCount).toBe(true);
+        expect(geometry.scrollableDocument).toBe(false);
+      }
+    }
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  });
+
+  test('footer navigation and trust copy fit at 400 percent reader text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/contact');
+      const footer = page.locator('footer').first();
+      await expect(footer).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const result = await footer.evaluate((el) => {
+        const nodes = [
+          el.querySelector('#footer-statement-title'),
+          el.querySelector('[class*="statementText_"]'),
+          el.querySelector('[class*="brandLink_"]'),
+          el.querySelector('[class*="brandBlock_"] p'),
+          ...el.querySelectorAll('nav a'),
+          ...el.querySelectorAll('[class*="systemLine_"] strong, [class*="systemLine_"] small'),
+          el.querySelector('[class*="bottomBar_"]'),
+          el.querySelector('button[class*="scrollTopButton_"]'),
+        ].filter(Boolean);
+        const bad = nodes.filter((node) => {
+          const rect = node.getBoundingClientRect();
+          return node.scrollWidth > node.clientWidth + 1
+            || rect.right > innerWidth + 1 || rect.left < -1;
+        }).map((node) => node.textContent.trim().slice(0, 30));
+        return {
+          widthOverflow: document.body.scrollWidth - innerWidth,
+          footerOverflow: el.scrollWidth - el.clientWidth,
+          clipped: bad,
+          checkedNodes: nodes.length,
+          navCount: el.querySelectorAll('nav a').length,
+          label: el.querySelector('#footer-statement-title')?.textContent,
+        };
+      });
+      expect(result.footerOverflow).toBeLessThanOrEqual(1);
+      expect(result.clipped).toEqual([]);
+      expect(result.checkedNodes).toBeGreaterThan(16);
+      expect(result.navCount).toBe(9); // Goal is the ninth public editorial destination.
+      expect(result.label).toContain('İşe yarasın');
+    }
+    // Contact has unrelated 400% overflows in its hero and form; audit the
+    // article separately rather than claiming the entire site passes reflow.
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/posts/node-json-dogrulama');
+      await expect(page.locator('article')).toBeVisible();
+      await page.addStyleTag({ content: 'html { font-size: 400% !important; }' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(150);
+      const bodyExtra = await page.evaluate(() => document.body.scrollWidth - innerWidth);
+      expect(bodyExtra).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('contact channels and local brief reflow at 400 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) for (const scale of [100, 200, 400]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/contact');
+      await expect(page.getByRole('heading', { name: /doğrudan kanallar/i })).toBeVisible();
+      await expect(page.locator('[class*="draftDesk"]')).toBeVisible();
+      await page.addStyleTag({ content: `html { font-size: ${scale}% !important; }` });
+      await page.evaluate(() => document.fonts.ready);
+      const snapshot = await page.evaluate(() => ({
+        bodyOverflow: document.body.scrollWidth - innerWidth,
+        footerOverflow: document.querySelector('footer').scrollWidth - document.querySelector('footer').clientWidth,
+        channelCount: document.querySelectorAll('main a[href^="mailto:"], main a[href^="https://"]').length,
+        inputCount: document.querySelectorAll('main input, main textarea').length,
+        hasDraft: !!document.querySelector('[class*="draftDesk"]'),
+      }));
+      expect(snapshot.bodyOverflow, `Contact ${width}px / ${scale}%`).toBeLessThanOrEqual(1);
+      expect(snapshot.footerOverflow).toBeLessThanOrEqual(1);
+      expect(snapshot.channelCount).toBeGreaterThanOrEqual(1);
+      expect(snapshot.inputCount).toBeGreaterThanOrEqual(1);
+      expect(snapshot.hasDraft).toBe(true);
+    }
+  });
+
+  test('footer endpaper keeps its title and links legible at 200 percent text', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('postify_language', 'tr');
+      localStorage.setItem('postify_theme', 'light');
+    });
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/contact');
+      await page.locator('footer #footer-statement-title').waitFor();
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(150);
+      const result = await page.locator('footer').evaluate((footer) => {
+        const title = footer.querySelector('h2[id="footer-statement-title"]');
+        const navs = [...footer.querySelectorAll('nav')];
+        const links = navs.flatMap((nav) => [...nav.querySelectorAll('a')]);
+        const index = footer.querySelector('div[class*="indexGrid_"]');
+        return {
+          titleClipped: title.scrollWidth > title.clientWidth + 1,
+          clippedNavs: navs.filter((nav) => nav.scrollWidth > nav.clientWidth + 1).length,
+          clippedLinks: links.filter((link) => link.scrollWidth > link.clientWidth + 1).length,
+          titleLegible: /sadece\s*okuma|işe yarasın/i.test(title.textContent),
+          indexColumnCount: getComputedStyle(index).gridTemplateColumns.split(' ').length,
+        };
+      });
+      expect(result.titleLegible).toBe(true);
+      expect(result.titleClipped).toBe(false);
+      expect(result.clippedNavs).toBe(0);
+      expect(result.clippedLinks).toBe(0);
+      expect(result.indexColumnCount).toBe(1);
+    }
+    await page.setViewportSize({ width: 390, height: 850 });
+    await page.goto('/contact');
+    await page.locator('footer nav').first().waitFor();
+    const baseline = await page.locator('footer div[class*="indexGrid_"]').evaluate((index) =>
+      getComputedStyle(index).gridTemplateColumns.split(' ').length);
+    expect(baseline).toBe(1); // Published Goal footer stacks one index column on mobile.
+    await page.setViewportSize({ width: 768, height: 850 });
+    await page.goto('/contact');
+    await page.locator('footer nav').first().waitFor();
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    await page.evaluate(() => document.fonts.ready);
+    const trust = await page.locator('footer div[class*="systemLine_"]').evaluate((element) => ({
+      columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+      clipped: element.scrollWidth > element.clientWidth + 1,
+      offscreen: [...element.querySelectorAll('strong')].some((item) => item.getBoundingClientRect().right > innerWidth + 1),
+    }));
+    expect(trust.columns).toBeLessThan(3);
+    expect(trust.clipped).toBe(false);
+    expect(trust.offscreen).toBe(false);
+  });
+
+  test('contact brief composes locally and hands off only to email', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'tr'));
+    const submittedRequests = [];
+    page.on('request', (request) => {
+      if (request.method() === 'POST') submittedRequests.push(request.url());
+    });
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/contact');
+      const desk = page.getByRole('region', { name: /mesajını işe yarar hale getir|give your message a useful shape/i });
+      await expect(desk).toBeVisible();
+      const reasons = desk.getByRole('group', { name: /mesajın amacı|message purpose/i });
+      const initial = reasons.getByRole('button', { name: /düzeltme|correction/i });
+      await expect(initial).toHaveAttribute('aria-pressed', 'true');
+      await expect(desk.getByRole('button', { name: /açıklama ekle|add details/i })).toBeDisabled();
+      await expect(desk.getByRole('link', { name: /e-posta uygulamasında aç|open in email app/i })).toHaveCount(0);
+
+      await desk.getByLabel(/sayfa veya referans|page or reference/i).fill('https://example.org/docs#claim');
+      await desk.getByLabel(/bilmemiz gereken nedir|what should we know/i).fill('Çalışan örnekte beklenen sonuç farklı.');
+      const handoff = desk.getByRole('link', { name: /e-posta uygulamasında aç|open in email app/i });
+      await expect(handoff).toBeVisible();
+      let url = new URL(await handoff.getAttribute('href'));
+      expect(url.protocol).toBe('mailto:');
+      expect(url.pathname).toBe('zekiakgul09@gmail.com');
+      expect(url.searchParams.get('subject')).toContain('Düzeltme');
+      expect(url.searchParams.get('body')).toContain('https://example.org/docs#claim');
+      expect(url.searchParams.get('body')).toContain('Çalışan örnekte beklenen sonuç farklı.');
+
+      await reasons.getByRole('button', { name: /faydalı konu|useful topic/i }).click();
+      await expect(reasons.getByRole('button', { name: /faydalı konu|useful topic/i })).toHaveAttribute('aria-pressed', 'true');
+      await expect(initial).toHaveAttribute('aria-pressed', 'false');
+      url = new URL(await handoff.getAttribute('href'));
+      expect(url.searchParams.get('subject')).toContain('Faydalı konu');
+      expect(url.searchParams.get('body')).toContain('Çalışan örnekte beklenen sonuç farklı.');
+      expect(submittedRequests).toEqual([]);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(overflow).toBeLessThanOrEqual(1);
+
+      await page.reload();
+      await expect(desk.getByLabel(/bilmemiz gereken nedir|what should we know/i)).toHaveValue('');
+      await expect(desk.getByRole('link', { name: /e-posta uygulamasında aç|open in email app/i })).toHaveCount(0);
+    }
+    await page.addInitScript(() => localStorage.setItem('postify_language', 'en'));
+    await page.goto('/contact');
+    const desk = page.getByRole('region', { name: 'Give your message a useful shape.' });
+    await expect(desk.getByRole('button', { name: /add details/i })).toBeDisabled();
+    await desk.getByLabel('What should we know?').fill('Please verify the steps.');
+    const englishUrl = new URL(await desk.getByRole('link', { name: 'Open in email app' }).getAttribute('href'));
+    expect(englishUrl.searchParams.get('subject')).toContain('Correction');
+    expect(englishUrl.searchParams.get('body')).toContain('Please verify the steps.');
+    expect(submittedRequests).toEqual([]);
+  });
+
   test('contact page is a correction-first public channel index', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/contact');
@@ -895,12 +1750,11 @@ test.describe('Postify UI V2', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(filters.getByRole('group', { name: /evidence and ordering|kanıt ve sıralama/i })).toHaveCount(0);
 
-    const desktop = await formatGroup.evaluate((element) => ({
-      rows: new Set([...element.querySelectorAll('button')].map((button) => Math.round(button.getBoundingClientRect().top))).size,
-      labelSize: parseFloat(getComputedStyle(element.querySelector('[aria-hidden="true"]')).fontSize),
-    }));
-    expect(desktop.rows).toBe(1);
-    expect(desktop.labelSize).toBeGreaterThanOrEqual(11);
+    const formatSelect = formatGroup.getByRole('combobox');
+    await expect(formatSelect).toBeVisible();
+    await expect(formatSelect).toHaveValue('all');
+    const desktop = await formatSelect.boundingBox();
+    expect(desktop?.height || 0).toBeGreaterThanOrEqual(44);
 
     const beforeOpenHeight = await filters.evaluate((element) => element.getBoundingClientRect().height);
     await toggle.click();
@@ -929,17 +1783,11 @@ test.describe('Postify UI V2', () => {
     const filters = page.getByRole('group', { name: /discovery filters|keşif filtreleri/i });
     const formatGroup = filters.getByRole('group', { name: /content format|içerik biçimi/i });
     const toggle = filters.getByRole('button', { name: /^filters$|^filtreler$/i });
-    await expect(formatGroup.getByRole('button', { name: /tüm biçimler|all formats/i })).toBeVisible();
-
-    const primaryGeometry = await formatGroup.evaluate((element) => {
-      const buttons = [...element.querySelectorAll('button')];
-      return {
-        rows: new Set(buttons.map((button) => Math.round(button.getBoundingClientRect().top))).size,
-        minHeight: Math.min(...buttons.map((button) => button.getBoundingClientRect().height)),
-      };
-    });
-    expect(primaryGeometry.rows).toBe(1);
-    expect(primaryGeometry.minHeight).toBeGreaterThanOrEqual(44);
+    const formatSelect = formatGroup.getByRole('combobox');
+    await expect(formatSelect).toBeVisible();
+    await expect(formatSelect).toHaveValue('all');
+    const primaryGeometry = await formatSelect.boundingBox();
+    expect(primaryGeometry?.height || 0).toBeGreaterThanOrEqual(44);
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 
     const beforeOpenHeight = await filters.evaluate((element) => element.getBoundingClientRect().height);
@@ -1022,7 +1870,7 @@ test.describe('Postify UI V2', () => {
 
     await expect(menu).toHaveAttribute('aria-expanded', 'false');
     await expect(page).toHaveURL(/[?&]type=guide#knowledge-feed$/);
-    await expect(page.getByRole('button', { name: /^rehber$|^guide$/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('combobox', { name: /content format|içerik biçimi/i })).toHaveValue('guide');
     await expect(page.locator('#knowledge-feed')).toBeInViewport();
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -1037,8 +1885,8 @@ test.describe('Postify UI V2', () => {
     await expect(feed.locator('[data-card-variant="featured"]')).toHaveCount(1);
     await expect(feed.locator('[data-card-variant="standard"]')).toHaveCount(3);
     expect(await feed.locator('[data-card-variant="compact"]').count()).toBeGreaterThan(0);
-    await expect(feed.getByText(/^kanıt$|^evidence$/i).first()).toBeVisible();
-    await expect(feed.getByText(/^güncellik$|^freshness$/i).first()).toBeVisible();
+    await expect(feed.locator('article[data-card-variant=featured] .evidence-badge')).toBeVisible();
+    await expect(feed.locator('article[data-card-variant=featured] [data-freshness] strong').last()).toBeVisible();
     const articles = feed.locator('article');
     const overflow = await articles.evaluateAll((items) => items.map((item) => item.scrollWidth - item.clientWidth));
     expect(Math.max(...overflow)).toBeLessThanOrEqual(1);
@@ -1048,8 +1896,10 @@ test.describe('Postify UI V2', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
+    await expect(page.locator('[data-knowledge-feed="v3"]')).toBeVisible();
+    await page.locator('footer').scrollIntoViewIfNeeded();
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300); // Verify meaningful scroll before testing instant return.
 
     await page.getByRole('button', { name: /başa dön|back to top/i }).click();
     await page.waitForTimeout(50);
@@ -1066,7 +1916,7 @@ test.describe('Postify UI V2', () => {
 test.describe('Verified Knowledge V1', () => {
   test('discovery exposes evidence and freshness controls', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText(/yazar test etti|author tested/i).first()).toBeVisible();
+    await expect(page.locator('#knowledge-feed article .evidence-badge').first()).toBeVisible();
     await page.getByRole('button', { name: /^filters$|^filtreler$/i }).click();
     await expect(page.getByRole('button', { name: /güncel kanıt|current evidence/i })).toBeVisible();
   });
@@ -1359,6 +2209,41 @@ test.describe('Public goal manifesto & editorial footer', () => {
         expect(enlarged.body, `${width}px at 400% text`).toBeLessThanOrEqual(enlarged.width + 1);
         expect(enlarged.clipped, `${width}px at 400% text: no clipped actions or headings`).toEqual([]);
       }
+    }
+  });
+});
+
+test.describe('Author folio large-text reflow', () => {
+  test('author headings and evidence facts stay in view at synthetic 400% text on 320/390 light/dark', async ({ page }) => {
+    for (const width of [320, 390]) for (const theme of ['light', 'dark']) {
+      await page.setViewportSize({ width, height: 850 });
+      await page.goto('/users/postify');
+      await page.evaluate((value) => { localStorage.setItem('postify_theme', value); localStorage.setItem('postify_language', 'tr'); }, theme);
+      await page.reload();
+      await page.locator('main h2').first().waitFor({ state: 'visible', timeout: 10_000 });
+      await page.locator('main [class*="freshnessFact"]').first().waitFor({ state: 'visible', timeout: 10_000 });
+      await page.addStyleTag({ content: 'html { font-size: 400% !important }' });
+      const metrics = await page.evaluate(() => {
+        const viewport = document.documentElement.clientWidth;
+        const section = document.querySelector('main h2');
+        const heading = document.querySelector('main h1');
+        const cardFacts = [...document.querySelectorAll('main [class*="freshnessFact"]')];
+        return {
+          viewport,
+          bodyWidth: document.body.scrollWidth,
+          rootWidth: document.documentElement.scrollWidth,
+          headingVisible: !!heading && getComputedStyle(heading).visibility !== 'hidden',
+          sectionVisible: !!section && getComputedStyle(section).visibility !== 'hidden',
+          factCount: cardFacts.length,
+          factsInBounds: cardFacts.every((element) => element.getBoundingClientRect().right <= viewport + 1),
+        };
+      });
+      expect(metrics.headingVisible).toBe(true);
+      expect(metrics.sectionVisible).toBe(true);
+      expect(metrics.factCount).toBeGreaterThan(0);
+      expect(metrics.factsInBounds).toBe(true);
+      expect(metrics.bodyWidth).toBeLessThanOrEqual(metrics.viewport + 1);
+      expect(metrics.rootWidth).toBeLessThanOrEqual(metrics.viewport + 1);
     }
   });
 });

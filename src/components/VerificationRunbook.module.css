@@ -29,3 +29,34 @@
 @media(max-width:960px){.actions button,.actions a{min-height:44px}}
 @media(max-width:620px){.header,.footer{align-items:stretch;flex-direction:column}.progressLabel{display:flex;justify-content:flex-start;gap:.5rem}.actions{justify-content:flex-start}}
 @media(prefers-reduced-motion:reduce){.progressTrack span{transition:none}}
+
+/* Edition 29 — never discard checklist text when zoom increases: its icon
+   and progress badge are furniture, while the instructions can wrap. */
+.runbook,
+.header,
+.header > div,
+.footer,
+.footer > *,
+.steps,
+.steps li,
+.steps label,
+.steps label > span:last-child { min-width: 0; max-width: 100%; }
+.header { flex-wrap: wrap; }
+.header h2,
+.header p,
+.footer small,
+.steps label > span:last-child,
+.actions button,
+.actions a { overflow-wrap: anywhere; }
+.progressLabel { min-width: 0; }
+.steps label { grid-template-columns: 23px minmax(0, 1fr); gap: min(.7rem, 12px); }
+.checkIcon { width: 23px; height: 23px; }
+.steps label { padding: min(.7rem, 12px); }
+@media (max-width: 960px) {
+  .header, .footer { flex-wrap: wrap; }
+  .actions { min-width: 0; }
+}
+.eyebrow { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+.progressLabel { flex-wrap: wrap; }
+.checkIcon { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+.checkIcon svg { max-width: 100%; max-height: 100%; }

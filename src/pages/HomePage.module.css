@@ -49,8 +49,8 @@
 
 .errorSection { padding: var(--space-3xl) 0; }
 
-.fallbackNotice { display: grid; grid-template-columns: minmax(170px, .32fr) minmax(0, 1fr); gap: .4rem 1.3rem; align-items: center; margin: 1.1rem auto .25rem; padding: .9rem 1.15rem; color: var(--text-secondary); background: var(--bg-secondary); border-left: 3px solid var(--primary); border-radius: 0 3px 3px 0; font-size: .78rem; line-height: 1.5; }
-.fallbackNotice strong { color: var(--text-primary); font-family: var(--font-mono); font-size: .75rem; font-weight: 820; letter-spacing: .07em; line-height: 1.45; text-transform: uppercase; }
+.fallbackNotice { display: flex; align-items: baseline; gap: .55rem 1rem; margin: .8rem auto 0; padding: .65rem .9rem; color: var(--text-secondary); background: color-mix(in srgb, var(--bg-secondary) 58%, transparent); border-left: 2px solid var(--primary); border-radius: 0 4px 4px 0; font-size: .72rem; line-height: 1.5; }
+.fallbackNotice strong { flex: 0 1 auto; min-width: 0; max-width: 100%; overflow-wrap: anywhere; color: var(--primary); font-family: var(--font-mono); font-size: .69rem; font-weight: 770; letter-spacing: 0; line-height: 1.45; text-transform: none; }
 .fallbackNotice span { max-width: 70ch; }
 
 .errorCard { max-width: 560px; margin: 4rem auto; padding: clamp(1.5rem, 4vw, 3rem) 0; background: transparent; border: 0; border-top: 2px solid var(--text-primary); border-bottom: 1px solid var(--border-strong); border-radius: 0; box-shadow: none; }
@@ -60,10 +60,10 @@
 .retryButton { min-height: 44px; padding: .72rem .9rem; color: var(--text-inverse); background: var(--primary); border: 1px solid var(--primary); border-radius: 0; font: inherit; font-weight: 760; cursor: pointer; }
 .retryButton:hover { background: var(--primary-hover); }
 
-.postsSection { scroll-margin-top: 76px; padding-top: clamp(.9rem, 1.6vw, 1.3rem); padding-bottom: var(--space-3xl); }
-.sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin: clamp(.9rem, 1.5vw, 1.2rem) 0 clamp(.75rem, 1.2vw, 1rem); }
-.sectionTitle { display: flex; align-items: center; gap: .55rem; margin: .34rem 0 .3rem; color: var(--text-primary); font-family: var(--font-display); font-size: clamp(2.1rem, 3.3vw, 3.15rem); font-weight: 550; letter-spacing: -.045em; line-height: .96; text-wrap: balance; }
-.sectionSubtitle { display: inline-flex; align-items: center; margin: 0; padding: 0; color: var(--text-muted); font-family: var(--font-mono); font-size: .68rem; font-weight: 720; letter-spacing: .035em; }
+.postsSection { scroll-margin-top: 76px; padding-top: clamp(1.65rem, 3.4vw, 2.8rem); padding-bottom: var(--space-3xl); }
+.sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin: 0 0 clamp(1.5rem, 2.4vw, 2.1rem); }
+.sectionTitle { display: flex; align-items: center; gap: .55rem; margin: .65rem 0 0; color: var(--text-primary); font-family: var(--font-display); font-size: clamp(2.35rem, 4.1vw, 3.7rem); font-weight: 520; letter-spacing: -.055em; line-height: .99; text-wrap: balance; }
+.sectionSubtitle { flex: 0 0 auto; display: inline-flex; align-items: center; margin: 0 0 .25rem; padding: .42rem .6rem; color: var(--text-secondary); background: var(--bg-secondary); border-radius: 4px; font-family: var(--font-mono); font-size: .64rem; font-weight: 730; letter-spacing: .035em; }
 
 .noResults { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: .35rem 1rem; align-items: start; padding: 1.35rem 0 1.5rem; color: var(--text-muted); border-top: 2px solid var(--text-primary); border-bottom: 1px solid var(--border-strong); text-align: left; }
 .noResults > svg { grid-column: 1; grid-row: 1 / span 3; width: 44px; height: 44px; padding: .72rem; color: var(--primary); border-bottom: 1px solid var(--border-strong); }
@@ -83,7 +83,7 @@
 .loadMoreButton:hover { border-bottom-color: var(--primary); color: var(--primary); }
 
 @media (max-width: 620px) {
-  .fallbackNotice { grid-template-columns: 1fr; gap: .25rem; margin-top: .75rem; padding: .8rem .9rem; }
+  .fallbackNotice { flex-wrap: wrap; align-items: flex-start; gap: .2rem .65rem; margin-top: .75rem; padding: .6rem .75rem; }
   .postsSection { padding-top: 1rem; }
   .noResults { grid-template-columns: 44px minmax(0, 1fr); gap: .35rem .75rem; padding-block: 1rem 1.2rem; }
   .noResults > svg { width: 40px; height: 40px; padding: .62rem; }
@@ -93,145 +93,99 @@
 }
 
 
-.typeFilter {
-  position: relative;
-  margin-bottom: .65rem;
+/* Discovery cockpit: one calm row of purposeful controls, not two ticker walls. */
+.discoveryControls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(.5rem, 1.4vw, 1rem);
+  align-items: start;
+  margin-bottom: clamp(1.3rem, 2.6vw, 2rem);
+  padding: .9rem clamp(.8rem, 1.6vw, 1.2rem);
+  background: color-mix(in srgb, var(--bg-secondary) 48%, var(--bg-primary));
+  border: 1px solid var(--border-color);
+  border-top: 2px solid var(--text-primary);
+  border-radius: 7px;
 }
 
-.filterToolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: .15rem 0 .45rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.filterCluster {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: .72rem;
-}
-
+.typeFilter { min-width: 0; position: relative; }
+.filterToolbar { display: flex; align-items: center; justify-content: flex-end; gap: clamp(.45rem, 1.2vw, 1rem); }
+.filterCluster { display: flex; align-items: center; gap: .7rem; min-width: 0; flex: 0 1 295px; }
 .filterClusterLabel {
   flex: 0 0 auto;
   color: var(--text-muted);
-  font-size: .73rem;
-  font-weight: 720;
-  letter-spacing: .01em;
+  font: 800 .63rem / 1.3 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .09em;
 }
-
-.filterClusterControls {
+.formatSelectWrap { min-width: 0; flex: 1; position: relative; }
+.formatSelect {
+  appearance: none;
   min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  overflow-x: auto;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--border-strong);
-  border-radius: 0;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.filterClusterControls::-webkit-scrollbar,
-.activeRefinementList::-webkit-scrollbar { display: none; }
-
-.filterClusterControls button {
-  flex: 0 0 auto;
-  min-height: 36px;
-  padding: .42rem .72rem;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  font: inherit;
-  font-size: .79rem;
-  font-weight: 680;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-}
-
-.filterClusterControls button:hover {
+  width: 100%;
+  height: 46px;
+  padding: 0 2.1rem 0 .85rem;
   color: var(--text-primary);
-  background: transparent;
-  border-bottom-color: var(--border-strong);
-}
-
-.filterClusterControls button:focus-visible,
-.refineToggle:focus-visible,
-.activeRefinementChip:focus-visible,
-.clearSummary:focus-visible {
-  outline: 3px solid var(--border-focus);
-  outline-offset: 2px;
-}
-
-.filterClusterControls .typeFilterActive {
-  color: var(--text-primary);
-  background: transparent;
-  border-bottom-color: var(--primary);
-  box-shadow: none;
-  font-weight: 780;
-}
-
-.refineMenu {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.refineToggle {
-  min-height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .48rem;
-  padding: .48rem .12rem .42rem;
-  color: var(--text-primary);
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid var(--border-strong);
-  border-radius: 0;
-  box-shadow: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
   font: inherit;
   font-size: .78rem;
   font-weight: 760;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+.formatSelect:hover { border-color: var(--border-strong); }
+.formatSelect:focus-visible,
+.refineToggle:focus-visible,
+.activeRefinementChip:focus-visible,
+.clearSummary:focus-visible { outline: 3px solid var(--border-focus); outline-offset: 2px; }
+.formatChevron {
+  position: absolute;
+  top: 50%;
+  right: .7rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.refineMenu { position: relative; flex: 0 0 auto; }
+.refineToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  justify-content: center;
+  height: 46px;
+  padding: 0 .95rem;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  font: inherit;
+  font-size: .76rem;
+  font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
-  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
-
-.refineToggle:hover,
-.refineToggleOpen {
-  background: transparent;
-  border-bottom-color: var(--primary);
+.refineToggle:hover, .refineToggleOpen {
+  background: var(--bg-elevated);
+  border-color: var(--primary);
 }
-
-.refineToggleOpen { box-shadow: none; }
-
 .refineCount {
-  min-width: 1.25rem;
-  height: 1.25rem;
   display: inline-grid;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding-inline: .22rem;
   place-items: center;
-  padding-inline: .24rem;
   color: var(--bg-primary);
-  background: var(--text-primary);
-  border-radius: 0;
+  background: var(--primary);
+  border-radius: 50%;
   font-family: var(--font-mono);
-  font-size: .75rem;
-  font-weight: 850;
+  font-size: .65rem;
+  font-weight: 800;
 }
-
-.refineChevron {
-  color: var(--text-muted);
-  transition: transform var(--transition-fast);
-}
-
+.refineChevron { color: var(--text-muted); transition: transform var(--transition-fast); }
 .refineToggleOpen .refineChevron { transform: rotate(180deg); }
 
 .clearSummary {
@@ -306,51 +260,296 @@
 
 
 @media (max-width: 960px) {
-  .filterToolbar { gap: .5rem; }
-  .filterCluster { min-width: 0; flex: 1 1 auto; }
+  .discoveryControls { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); }
   .filterClusterLabel { display: none; }
-  .filterClusterControls button,
-  .refineToggle { min-height: 44px; }
-  .refineToggle { padding-inline: .65rem; }
+  .filterCluster { flex: 1 1 auto; }
+  .refineToggle { min-width: 44px; }
   .activeRefinementChip { min-height: 40px; }
 }
 
 @media (max-width: 560px) {
-  .filterToolbar {
-    gap: .38rem;
-    padding-bottom: .4rem;
-  }
-
-  .filterClusterControls {
-    padding: 0;
-    border-radius: 0;
-  }
-
-  .filterClusterControls button { padding-inline: .62rem; }
-
-  .refineToggle {
-    min-width: 44px;
-    padding-inline: .55rem;
-  }
-
+  .postsSection { padding-top: 1.6rem; }
+  .sectionHeader { align-items: start; gap: .55rem; margin-bottom: 1.2rem; }
+  .sectionSubtitle { margin-top: .25rem; padding-inline: .35rem; font-size: .57rem; }
+  .discoveryControls { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: .42rem; padding: .6rem; }
+  .filterToolbar { gap: .42rem; }
+  .formatSelect { height: 44px; padding-left: .5rem; padding-right: 1.5rem; font-size: .72rem; }
+  .formatChevron { right: .3rem; width: 12px; }
+  .refineToggle { width: 44px; height: 44px; gap: 0; padding: 0; }
   .refineToggle > span:not(.refineCount) { display: none; }
-
-  .activeRefinements {
-    gap: .38rem;
-    padding-top: .45rem;
-  }
-
+  .refineChevron { display: none; }
+  .activeRefinements { gap: .38rem; padding-top: .45rem; }
   .activeRefinementLabel { display: none; }
-  .activeRefinementChip { min-height: 44px; }
-  .clearSummary { min-height: 44px; }
+  .activeRefinementChip, .clearSummary { min-height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .filterClusterControls button,
+  .formatSelect,
   .refineToggle,
   .refineChevron { transition: none; }
 }
 
 @media (max-width: 620px) {
   .sectionTitle { font-size: clamp(1.7rem, 8.8vw, 2.25rem); }
+}
+
+/* Discovery edition 04 — thin editorial rule instead of a form-like filter panel. */
+.sectionEyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  margin-right: .65rem;
+  vertical-align: middle;
+  background: var(--primary);
+}
+.discoveryControls {
+  position: relative;
+  padding: 1.05rem .12rem 1rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+.formatSelect,
+.refineToggle {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+.formatSelect:hover,
+.refineToggle:hover,
+.refineToggleOpen {
+  background: color-mix(in srgb, var(--bg-elevated) 55%, transparent);
+  border-bottom-color: var(--primary);
+}
+.discoveryControls :global(select) {
+  letter-spacing: -.005em;
+}
+@media (max-width: 560px) {
+  .sectionTitle { font-size: clamp(2rem, 10.2vw, 2.8rem); }
+  .discoveryControls { padding-block: .6rem; }
+  .formatSelect, .refineToggle { background: transparent; }
+}
+
+/* Studio edition / discovery as a two-column reading desk, not a toolbar
+   placed above another identical-width column of cards. */
+@media (min-width: 1060px) {
+  .postsSection {
+    display: grid;
+    grid-template-columns: minmax(206px, .285fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 3.6vw, 4.8rem);
+    align-items: start;
+    padding-top: clamp(2.8rem, 5vw, 4.9rem);
+  }
+  .sectionHeader {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 1.6rem;
+    margin-bottom: clamp(2.2rem, 4.2vw, 3.8rem);
+    padding-bottom: clamp(1.35rem, 2.3vw, 2.2rem);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .sectionTitle {
+    max-width: 16ch;
+    font-size: clamp(3.9rem, 5.65vw, 5.95rem);
+    line-height: .96;
+    letter-spacing: -.063em;
+  }
+  .sectionSubtitle {
+    align-self: end;
+    margin-bottom: .4rem;
+    padding: .5rem 0 .3rem;
+    background: transparent;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+  }
+  .discoveryControls {
+    grid-column: 1;
+    grid-row: 2;
+    position: sticky;
+    top: calc(var(--header-height) + 1.2rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.4rem, 2.5vw, 2.6rem);
+    align-items: stretch;
+    min-width: 0;
+    max-height: calc(100vh - var(--header-height) - 2.4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: 0;
+    padding: 1.55rem clamp(1.2rem, 2.35vw, 2.5rem) 1.55rem 0;
+    border: 0;
+    border-top: 2px solid var(--primary);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 0;
+    background: transparent;
+  }
+  .discoveryControls :global(nav) { display: grid; align-items: start; gap: .65rem; }
+  .discoveryControls :global(nav > div) { width: 100%; max-width: none; }
+  .discoveryControls :global(nav > label) { font-size: .69rem; letter-spacing: .04em; }
+  .discoveryControls :global(nav select),
+  .discoveryControls .formatSelect {
+    height: 56px;
+    padding-left: 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+    font-size: .94rem;
+    font-weight: 620;
+    letter-spacing: -.02em;
+  }
+  .discoveryControls :global(nav select):focus-visible,
+  .discoveryControls .formatSelect:focus-visible { outline-offset: 2px; }
+  .filterToolbar, .filterCluster { flex-direction: column; align-items: stretch; gap: .65rem; }
+  .filterCluster { flex: 0 1 auto; width: 100%; }
+  .filterClusterLabel { font-size: .69rem; font-weight: 740; letter-spacing: .04em; }
+  .formatSelectWrap { width: 100%; flex: 0 1 auto; }
+  .refineMenu { width: 100%; margin-top: .2rem; }
+  .refineToggle {
+    width: 100%;
+    min-height: 50px;
+    justify-content: space-between;
+    padding-inline: 0;
+    border: 0;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+    font-size: .79rem;
+  }
+  .activeRefinements { flex-wrap: wrap; }
+  .postsSection > :global([data-knowledge-feed]),
+  .postsSection > .noResults,
+  .postsSection > .loadMore { grid-column: 2; min-width: 0; }
+  .postsSection > :global([data-knowledge-feed]),
+  .postsSection > .noResults { grid-row: 2; }
+  .postsSection > .loadMore { grid-row: 3; }
+}
+@media (min-width: 1060px) and (max-height: 700px) {
+  .discoveryControls { position: relative; top: auto; max-height: none; overflow: visible; }
+}
+
+/* Sticky elements must not establish their own scroll container. The controls
+   already fit within the reading rail; let the document own vertical scroll. */
+@media (min-width: 1060px) {
+  .discoveryControls { max-height: none; overflow: visible; overscroll-behavior: auto; }
+}
+
+/* Root overflow:hidden creates a second scroll container and defeats sticky
+   sidebars. Scope the modern overflow:clip fix to Home; keep other pages as-is. */
+@supports (overflow: clip) {
+  :global(html):has(.page),
+  :global(body):has(.page) { overflow-x: clip; overflow-y: visible; }
+}
+
+/* Discovery's sticky reading rail establishes a stacking context. Its filter
+   sheet must paint above adjacent story cards, even after the page scrolls. */
+@media (min-width: 1060px) {
+  .discoveryControls { z-index: calc(var(--z-dropdown) - 1); }
+}
+@media (max-width: 1059px) {
+  .discoveryControls { position: relative; z-index: calc(var(--z-dropdown) - 1); }
+}
+
+/* Offline archive is useful service information, not a critical red alert.
+   Preserve the live-region and both messages, but give them a quieter
+   editorial colophon treatment between the masthead and the reading desk. */
+.fallbackNotice {
+  display: grid;
+  grid-template-columns: minmax(13rem, .38fr) minmax(0, 1fr);
+  align-items: start;
+  gap: .35rem clamp(.8rem, 2vw, 1.6rem);
+  margin-top: clamp(.55rem, 1.2vw, 1rem);
+  padding: .7rem 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+}
+.fallbackNotice strong {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  font-weight: 680;
+  letter-spacing: -.015em;
+  line-height: 1.5;
+}
+.fallbackNotice span {
+  max-width: none;
+  font-size: .72rem;
+  line-height: 1.6;
+}
+@media (max-width: 620px) {
+  .fallbackNotice { grid-template-columns: minmax(0, 1fr); gap: .2rem; padding: .7rem 0; }
+}
+
+/* Edition 25 — the live result count must not force the editorial heading
+   outside the viewport when readers enlarge type. Keep the regular one-line
+   layout where it fits; wrap the count only when space actually runs out. */
+@media (max-width: 640px) {
+  .sectionHeader { flex-wrap: wrap; }
+  .sectionHeader > div { min-width: 0; max-width: 100%; }
+  .sectionTitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .sectionSubtitle { max-width: 100%; margin-left: auto; }
+}
+
+/* Edition 34 — the late-loaded editorial cards must not masquerade as an
+   empty result. A modest reserved reading surface reduces abrupt changes
+   without injecting extra JavaScript into the critical Hero path. */
+.feedLoading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: clamp(200px, 28vw, 320px);
+  padding: 28px 0;
+  border-top: 1px solid var(--border-strong);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.feedLoadingMark {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 1px;
+  margin-top: .64em;
+  background: var(--primary);
+}
+
+/* Round 42 / discovery: at 400% reader text, let the real section header and
+   category controls reflow rather than widening the clipped document root. */
+@media (max-width: 640px) {
+  .postsSection, .sectionHeader, .sectionHeader > div, .discoveryControls, .typeFilter, .filterToolbar,
+  .filterCluster, .formatSelectWrap { min-width: 0; max-width: 100%; }
+  .sectionHeader { gap: min(1rem, 16px); }
+  .sectionEyebrow, .sectionTitle, .sectionSubtitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .discoveryControls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: min(.42rem, 8px); padding: min(.6rem, 10px); }
+  .discoveryControls :global(nav), .discoveryControls :global(nav > div) { min-width: 0; max-width: 100%; }
+  .discoveryControls :global(nav select), .formatSelect { min-width: 0; max-width: 100%; padding-right: min(1.5rem, 24px); }
+  .filterCluster { width: 100%; }
+  .fallbackNotice, .fallbackNotice span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+}
+
+/* Reader-width responsive filters: 9rem is two columns at normal 390px,
+   but expands with the reader's font setting and becomes one at 400%. */
+@media (max-width: 640px) {
+  .discoveryControls {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: min(.42rem, 8px);
+  }
+  .discoveryControls :global(nav), .discoveryControls :global(nav select),
+  .typeFilter, .filterToolbar, .filterCluster, .formatSelectWrap, .formatSelect {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .discoveryControls :global(nav) { width: 100%; }
+  .formatSelectWrap { width: 100%; }
+  .postsSection :global([data-knowledge-feed]) { min-width: 0; max-width: 100%; }
 }

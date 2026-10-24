@@ -6,7 +6,8 @@ import { FiArrowRight, FiChevronDown, FiSearch, FiSliders, FiX } from 'react-ico
 import Hero from '../components/Hero';
 import CategoryNav from '../components/CategoryNav';
 import { getCategoryLabel } from '../lib/categoryLabels';
-import EditorialFeed from '../components/EditorialFeed';
+// Keep the hero on the initial render path; the editorial feed is below the fold.
+const EditorialFeed = React.lazy(() => import('../components/EditorialFeed'));
 import SEO from '../components/SEO';
 import { usePosts } from '../hooks/usePosts';
 import { useScrollAnchorTransition } from '../hooks/useScrollAnchorTransition';
@@ -198,6 +199,14 @@ const HomePage = ({ isHistoryRestore = false }) => {
     [evidenceAwarePosts],
   );
 
+  // Counts describe the full loaded archive; other refinements do not
+  // silently change the meaning of the topic index.
+  const topicCounts = useMemo(() => evidenceAwarePosts.reduce((counts, post) => {
+    counts.all += 1;
+    if (post.category) counts[post.category] = (counts[post.category] || 0) + 1;
+    return counts;
+  }, { all: 0 }), [evidenceAwarePosts]);
+
   const filteredPosts = useMemo(() => {
     const normalizedQuery = debouncedQuery.trim().toLocaleLowerCase(i18n.language);
     return evidenceAwarePosts.filter((post) => {
@@ -261,105 +270,101 @@ const HomePage = ({ isHistoryRestore = false }) => {
         </div>
       )}
 
-      <CategoryNav categories={categories} activeCategory={activeCategory} onChange={handleCategoryChange} />
-
       <section id="knowledge-feed" className={`container ${styles.postsSection}`}>
-        <div className={styles.typeFilter} role="group" aria-label={isEnglish ? 'Discovery filters' : 'Keşif filtreleri'}>
-          <div className={styles.filterToolbar}>
-            <div className={styles.filterCluster} role="group" aria-label={isEnglish ? 'Content format' : 'İçerik biçimi'}>
-              <span className={styles.filterClusterLabel} aria-hidden="true">{isEnglish ? 'Format' : 'Biçim'}</span>
-              <div className={styles.filterClusterControls} onFocusCapture={(event) => event.target?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' })}>
-                <button
-                  type="button"
-                  className={activeType === 'all' ? styles.typeFilterActive : ''}
-                  aria-pressed={activeType === 'all'}
-                  onClick={() => handleTypeChange('all')}
-                >
-                  {isEnglish ? 'All formats' : 'Tüm biçimler'}
-                </button>
-                {contentTypes.map((type) => (
-                  <button
-                    key={type.id}
-                    type="button"
-                    className={activeType === type.id ? styles.typeFilterActive : ''}
-                    aria-pressed={activeType === type.id}
-                    onClick={() => handleTypeChange(type.id)}
-                  >
-                    {type.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.refineMenu} ref={refineMenuRef}>
-              <button
-                ref={refineToggleRef}
-                type="button"
-                className={`${styles.refineToggle} ${refineOpen ? styles.refineToggleOpen : ''}`}
-                aria-label={isEnglish ? 'Filters' : 'Filtreler'}
-                aria-haspopup="dialog"
-                aria-expanded={refineOpen}
-                aria-controls="advanced-discovery-filters"
-                onClick={() => setRefineOpen((open) => !open)}
-              >
-                <FiSliders size={15} aria-hidden="true" />
-                <span>{isEnglish ? 'Filters' : 'Filtreler'}</span>
-                {activeRefinementCount > 0 && <span className={styles.refineCount} aria-label={isEnglish ? `${activeRefinementCount} active filters` : `${activeRefinementCount} aktif filtre`}>{activeRefinementCount}</span>}
-                <FiChevronDown className={styles.refineChevron} size={15} aria-hidden="true" />
-              </button>
-
-              {refineOpen && (
-                <React.Suspense fallback={null}>
-                  <DiscoveryFilterPopover
-                    anchorRef={refineToggleRef}
-                    isEnglish={isEnglish}
-                    resultCount={filteredPosts.length}
-                    activeRefinementCount={activeRefinementCount}
-                    freshnessFilter={freshnessFilter}
-                    evidenceFilter={evidenceFilter}
-                    sortMode={sortMode}
-                    readingFilter={readingFilter}
-                    onFreshnessChange={handleFreshnessChange}
-                    onEvidenceChange={handleEvidenceChange}
-                    onSortChange={handleSortChange}
-                    onReadingChange={handleReadingChange}
-                    onClear={clearRefinements}
-                    onClose={() => {
-                      setRefineOpen(false);
-                      refineToggleRef.current?.focus({ preventScroll: true });
-                    }}
-                  />
-                </React.Suspense>
-              )}
-            </div>
-          </div>
-
-          {activeRefinements.length > 0 && (
-            <div className={styles.activeRefinements} aria-label={isEnglish ? 'Active filters' : 'Aktif filtreler'}>
-              <span className={styles.activeRefinementLabel}>{isEnglish ? 'Active' : 'Aktif'}</span>
-              <div className={styles.activeRefinementList}>
-                {activeRefinements.map((filter) => (
-                  <button key={filter.id} type="button" className={styles.activeRefinementChip} aria-label={isEnglish ? `Remove ${filter.label}` : `${filter.label} filtresini kaldır`} onClick={() => clearRefinement(filter.id)}>
-                    <span>{filter.label}</span>
-                    <FiX size={13} aria-hidden="true" />
-                  </button>
-                ))}
-              </div>
-              {activeRefinements.length > 1 && (
-                <button type="button" className={styles.clearSummary} onClick={clearRefinements}>
-                  {isEnglish ? 'Clear all' : 'Tümünü temizle'}
-                </button>
-              )}
-            </div>
-          )}
-        </div>
         <div className={styles.sectionHeader}>
           <div>
             <span className={styles.sectionEyebrow}>{hasSearch ? t('home.searchLabel') : t('home.latest')}</span>
             <h2 className={styles.sectionTitle}>
               {hasSearch ? <><FiSearch size={22} /> “{query}”</> : activeCategory !== 'all' ? getCategoryLabel(activeCategory, i18n.language) : t('home.feedTitle')}
             </h2>
-            <p className={styles.sectionSubtitle}>{t('home.resultCount', { count: filteredPosts.length })}</p>
+          </div>
+          <p className={styles.sectionSubtitle}>{t('home.resultCount', { count: filteredPosts.length })}</p>
+        </div>
+
+        <div className={styles.discoveryControls}>
+          <CategoryNav categories={categories} counts={topicCounts} activeCategory={activeCategory} onChange={handleCategoryChange} />
+          <div className={styles.typeFilter} role="group" aria-label={isEnglish ? 'Discovery filters' : 'Keşif filtreleri'}>
+            <div className={styles.filterToolbar}>
+              <div className={styles.filterCluster} role="group" aria-label={isEnglish ? 'Content format' : 'İçerik biçimi'}>
+                <label className={styles.filterClusterLabel} htmlFor="postify-format-select">{isEnglish ? 'Format' : 'Biçim'}</label>
+                <div className={styles.formatSelectWrap}>
+                  <select
+                    id="postify-format-select"
+                    className={styles.formatSelect}
+                    aria-label={isEnglish ? 'Content format' : 'İçerik biçimi'}
+                    value={activeType}
+                    onChange={(event) => handleTypeChange(event.target.value)}
+                  >
+                    <option value="all">{isEnglish ? 'All formats' : 'Tüm biçimler'}</option>
+                    {contentTypes.map((type) => (
+                      <option key={type.id} value={type.id}>{type.label}</option>
+                    ))}
+                  </select>
+                  <FiChevronDown aria-hidden="true" className={styles.formatChevron} size={15} />
+                </div>
+              </div>
+
+              <div className={styles.refineMenu} ref={refineMenuRef}>
+                <button
+                  ref={refineToggleRef}
+                  type="button"
+                  className={`${styles.refineToggle} ${refineOpen ? styles.refineToggleOpen : ''}`}
+                  aria-label={isEnglish ? 'Filters' : 'Filtreler'}
+                  aria-haspopup="dialog"
+                  aria-expanded={refineOpen}
+                  aria-controls="advanced-discovery-filters"
+                  onClick={() => setRefineOpen((open) => !open)}
+                >
+                  <FiSliders size={15} aria-hidden="true" />
+                  <span>{isEnglish ? 'Filters' : 'Filtreler'}</span>
+                  {activeRefinementCount > 0 && <span className={styles.refineCount} aria-label={isEnglish ? `${activeRefinementCount} active filters` : `${activeRefinementCount} aktif filtre`}>{activeRefinementCount}</span>}
+                  <FiChevronDown className={styles.refineChevron} size={15} aria-hidden="true" />
+                </button>
+
+                {refineOpen && (
+                  <React.Suspense fallback={null}>
+                    <DiscoveryFilterPopover
+                      anchorRef={refineToggleRef}
+                      isEnglish={isEnglish}
+                      resultCount={filteredPosts.length}
+                      activeRefinementCount={activeRefinementCount}
+                      freshnessFilter={freshnessFilter}
+                      evidenceFilter={evidenceFilter}
+                      sortMode={sortMode}
+                      readingFilter={readingFilter}
+                      onFreshnessChange={handleFreshnessChange}
+                      onEvidenceChange={handleEvidenceChange}
+                      onSortChange={handleSortChange}
+                      onReadingChange={handleReadingChange}
+                      onClear={clearRefinements}
+                      onClose={() => {
+                        setRefineOpen(false);
+                        refineToggleRef.current?.focus({ preventScroll: true });
+                      }}
+                    />
+                  </React.Suspense>
+                )}
+              </div>
+            </div>
+
+            {activeRefinements.length > 0 && (
+              <div className={styles.activeRefinements} aria-label={isEnglish ? 'Active filters' : 'Aktif filtreler'}>
+                <span className={styles.activeRefinementLabel}>{isEnglish ? 'Active' : 'Aktif'}</span>
+                <div className={styles.activeRefinementList}>
+                  {activeRefinements.map((filter) => (
+                    <button key={filter.id} type="button" className={styles.activeRefinementChip} aria-label={isEnglish ? `Remove ${filter.label}` : `${filter.label} filtresini kaldır`} onClick={() => clearRefinement(filter.id)}>
+                      <span>{filter.label}</span>
+                      <FiX size={13} aria-hidden="true" />
+                    </button>
+                  ))}
+                </div>
+                {activeRefinements.length > 1 && (
+                  <button type="button" className={styles.clearSummary} onClick={clearRefinements}>
+                    {isEnglish ? 'Clear all' : 'Tümünü temizle'}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -382,11 +387,19 @@ const HomePage = ({ isHistoryRestore = false }) => {
             )}
           </div>
         ) : (
-          <EditorialFeed
-            posts={displayPosts.slice(0, visiblePostCount)}
-            onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
-            bookmarkedIds={bookmarkedIds}
-          />
+          <React.Suspense fallback={
+            <div className={styles.feedLoading} role="status">
+              <span className={styles.feedLoadingMark} aria-hidden="true" />
+              <span>{t('common.loading')}</span>
+            </div>
+          }>
+            <EditorialFeed
+              fx
+              posts={displayPosts.slice(0, visiblePostCount)}
+              onBookmarkToggle={(post) => toggleBookmark(post.id, post)}
+              bookmarkedIds={bookmarkedIds}
+            />
+          </React.Suspense>
         )}
 
         {displayPosts.length > visiblePostCount && (

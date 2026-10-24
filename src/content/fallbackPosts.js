@@ -68,6 +68,7 @@ const FALLBACK_CATALOG = [
       en: {
         title: 'An AI feature is a system, not a model call',
         excerpt: 'Before adding AI to a product, design the data, feedback loops, and failure boundaries around it.',
+        outcome: 'Design AI as a measurable and safe product system, not just a model call.',
         body: `AI features are often described as if they were a single model call. A reliable user experience also needs good inputs, output evaluation, and a safe way to handle mistakes.
 
 The first decision should not be which model to use. It should be which user decision the feature will improve. If people cannot understand why a suggestion appeared, even a strong model will struggle to earn trust.
@@ -380,6 +381,7 @@ Build sırasında Postify yukarıda gösterilen aynı kodu daraltılmış determ
       en: {
         title: 'Verify a Node.js example by running it, not by saying it should work',
         excerpt: 'Postify’s first automatically verifiable example runs JSON parsing and assertions in a real Node.js runtime.',
+        outcome: 'Parse incoming JSON in Node.js and verify the expected structure with an assertion.',
         body: `## Problem
 Code samples are usually only read. Here a small deterministic Node.js example is actually executed and its expected output is checked.
 
@@ -419,7 +421,7 @@ const localize = (post, locale) => {
     commentCount: 0,
     evidence: post.evidence || null,
     autoVerificationId: post.autoVerificationId || null,
-    outcome: post.outcome || translation.excerpt,
+    outcome: translation.outcome || (locale === 'tr' ? post.outcome : null) || translation.excerpt,
     isFallback: true,
     source: 'local-fallback',
   };

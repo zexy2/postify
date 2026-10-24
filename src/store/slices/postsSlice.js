@@ -4,14 +4,15 @@
  */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { postService } from '../../services/postService';
+// Redux thunks load the service when invoked, not during the initial shell.
+const loadPostService = async () => (await import('../../services/postService')).postService;
 
 // Async thunks
 export const fetchPosts = createAsyncThunk(
   'posts/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      return await postService.getAll();
+      return await (await loadPostService()).getAll();
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to fetch posts');
     }
@@ -22,6 +23,7 @@ export const fetchPostById = createAsyncThunk(
   'posts/fetchById',
   async (id, { rejectWithValue }) => {
     try {
+      const postService = await loadPostService();
       const [post, comments] = await Promise.all([
         postService.getById(id),
         postService.getComments(id),
@@ -37,7 +39,7 @@ export const createPost = createAsyncThunk(
   'posts/create',
   async (postData, { rejectWithValue }) => {
     try {
-      return await postService.create(postData);
+      return await (await loadPostService()).create(postData);
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to create post');
     }
@@ -48,7 +50,7 @@ export const updatePost = createAsyncThunk(
   'posts/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      return await postService.update(id, data);
+      return await (await loadPostService()).update(id, data);
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to update post');
     }
@@ -59,7 +61,7 @@ export const deletePost = createAsyncThunk(
   'posts/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await postService.delete(id);
+      await (await loadPostService()).delete(id);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to delete post');
