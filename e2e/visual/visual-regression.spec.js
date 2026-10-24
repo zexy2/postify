@@ -1314,3 +1314,28 @@ for (const viewport of viewports) {
     });
   }
 }
+
+/* Public identity must remain visually recognizable at both real breakpoints.
+   The new goal and footer are deliberately NOT masked or omitted. */
+for (const viewport of viewports) {
+  test(`Goal manifesto hero ${viewport.name} baseline`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await stabilize(page);
+    await page.goto('/goal');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    const hero = page.locator('main header').first();
+    await settleVisualSurface(page);
+    await expect(hero).toHaveScreenshot(`goal-hero-${viewport.name}.png`);
+  });
+
+  test(`Postify signature footer ${viewport.name} baseline`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await stabilize(page);
+    await page.goto('/goal');
+    const footer = page.locator('footer');
+    await expect(footer.getByRole('link', { name: /discover our goal|hedefimizi keşfet/i })).toBeVisible();
+    await footer.scrollIntoViewIfNeeded();
+    await settleVisualSurface(page);
+    await expect(footer).toHaveScreenshot(`goal-footer-${viewport.name}.png`);
+  });
+}

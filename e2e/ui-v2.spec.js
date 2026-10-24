@@ -414,7 +414,7 @@ test.describe('Postify UI V2', () => {
     });
     await menuButton.click();
     await expect(menuButton).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.getByRole('link', { name: /^hakkında$|^about$/i })).toBeVisible({ timeout: 500 });
+    await expect(page.getByRole('dialog').getByRole('link', { name: /^hakkında$|^about$/i })).toBeVisible({ timeout: 500 });
     const clickToMount = await page.evaluate(() => window.__postifyMenuLatency.visible - window.__postifyMenuLatency.click);
     expect(clickToMount).toBeLessThan(250);
   });
@@ -1313,5 +1313,52 @@ test.describe('Action Runbook', () => {
     await expect(copy).toBeVisible();
     await copy.click();
     await expect(page.getByRole('button', { name: /kopyalandı|copied/i }).first()).toBeVisible();
+  });
+});
+
+test.describe('Public goal manifesto & editorial footer', () => {
+  test('public goal works via footer and the interactive method is keyboard operable', async ({ page }) => {
+    await page.goto('/');
+    const footer = page.locator('footer');
+    await footer.getByRole('link', { name: /hedefimizi keşfet|discover our goal/i }).click();
+    await expect(page).toHaveURL(/\/goal$/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Bilgi|Knowledge/i);
+    const proof = page.getByRole('button', { name: /Kanıt|Evidence/i }).first();
+    await proof.focus();
+    await page.keyboard.press('Enter');
+    await expect(proof).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('heading', { level: 3 })).toContainText(/Hangi koşullarda|Under what conditions/i);
+    await expect(page.locator('footer').getByRole('link', { name: /Postify hedefini keşfet|Discover the Postify goal/i })).toBeVisible();
+  });
+
+  test('goal hero, footer, reflow, controls and status remain safe on small screens', async ({ page }) => {
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 820 });
+      await page.goto('/goal');
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      const state = await page.evaluate(() => ({
+        body: document.body.scrollWidth,
+        document: document.documentElement.scrollWidth,
+        width: window.innerWidth,
+      }));
+      expect(state.body, `${width}px body overflow`).toBeLessThanOrEqual(width + 1);
+      expect(state.document, `${width}px document overflow`).toBeLessThanOrEqual(width + 1);
+      const goalLink = page.locator('footer').getByRole('link', { name: /hedefimiz|our goal/i }).first();
+      await expect(goalLink).toBeVisible();
+      const box = await goalLink.boundingBox();
+      expect(box.height).toBeGreaterThanOrEqual(40);
+      if (width === 320 || width === 768) {
+        await page.evaluate(() => { document.documentElement.style.fontSize = '64px'; });
+        const enlarged = await page.evaluate(() => ({
+          width: window.innerWidth,
+          body: document.body.scrollWidth,
+          clipped: [...document.querySelectorAll('h1,h2,h3,footer a,button')]
+            .filter((element) => element.clientWidth > 0 && element.scrollWidth > element.clientWidth + 4)
+            .map((element) => element.textContent.trim().slice(0, 32)),
+        }));
+        expect(enlarged.body, `${width}px at 400% text`).toBeLessThanOrEqual(enlarged.width + 1);
+        expect(enlarged.clipped, `${width}px at 400% text: no clipped actions or headings`).toEqual([]);
+      }
+    }
   });
 });
