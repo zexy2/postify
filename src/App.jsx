@@ -12,7 +12,9 @@ import { selectTheme } from './store/slices/uiSlice';
 
 // Layout (keep eager - needed immediately)
 import Header from './components/Header/Header';
-import Footer from './components/Footer';
+// The substantial editorial footer is deferred into a separate chunk.
+// It remains on every page but no longer inflates the critical entry bundle.
+const Footer = lazy(() => import('./components/Footer'));
 import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute from './components/ProtectedRoute';
 import SystemStatus from './components/SystemStatus';
@@ -28,6 +30,7 @@ const PasswordRecoveryPage = lazy(() => import('./pages/PasswordRecoveryPage'));
 const PostDetailPage = lazy(() => import('./pages/PostDetailPage'));
 const UserPage = lazy(() => import('./pages/UserPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
+const GoalPage = lazy(() => import('./pages/GoalPage/GoalPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const CreatePostPage = lazy(() => import('./pages/CreatePostPage'));
 const BookmarksPage = lazy(() => import('./pages/BookmarksPage'));
@@ -250,6 +253,7 @@ function App() {
                 }
               />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/goal" element={<GoalPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route
                 path="/profile"
@@ -263,7 +267,7 @@ function App() {
             </Routes>
           </Suspense>
         </main>
-        <Footer />
+        <Suspense fallback={null}><Footer /></Suspense>
       </div>
     </ErrorBoundary>
   );

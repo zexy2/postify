@@ -18,7 +18,7 @@ test('dedicated public shells share hashed Vite entrypoint and route canonical m
     await writeFile(join(temp, 'index.html'), fixture);
     await writeFile(join(temp, 'assets', 'index-fixture123.js'), 'console.log(1)');
     await exportPublicRouteShells(temp);
-    assert.deepEqual(Object.keys(PUBLIC_ROUTE_SHELLS), ['about', 'contact']);
+    assert.deepEqual(Object.keys(PUBLIC_ROUTE_SHELLS), ['about', 'contact', 'goal']);
 
     for (const route of Object.keys(PUBLIC_ROUTE_SHELLS)) {
       const html = await readFile(join(temp, route, 'index.html'), 'utf8');

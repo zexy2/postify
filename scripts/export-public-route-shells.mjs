@@ -17,6 +17,10 @@ export const PUBLIC_ROUTE_SHELLS = Object.freeze({
     title: 'İletişim — Postify',
     description: 'Postify ile iletişime geçin: yayın ve geri bildirim kanalları.',
   },
+  goal: {
+    title: 'Hedefimiz — Postify',
+    description: 'Neden Postify? Kanıt, güncellik ve tekrar kullanılabilir bilgi için manifestomuz.',
+  },
 });
 
 /**
