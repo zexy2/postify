@@ -564,3 +564,9 @@
   .loginButton:hover,
   .mobileLogin:hover { transform: none; }
 }
+
+/* Keep shared navigation reachable when the reader enlarges browser text. */
+@media (max-width: 980px) {
+  .logo { font-size: min(1.18rem, 24px); gap: min(.62rem, 10px); min-width: 0; }
+  .logo svg { width: min(1.85rem, 31px); height: min(1.85rem, 31px); flex: 0 0 auto; }
+}

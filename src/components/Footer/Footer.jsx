@@ -32,27 +32,35 @@ const Footer = () => {
       <div className={styles.shell}>
         <section className={styles.statement} aria-labelledby="footer-statement-title">
           <div className={styles.statementCopy}>
-            <span className={styles.eyebrow}>{isEnglish ? 'KNOWLEDGE SYSTEM' : 'BİLGİ SİSTEMİ'}</span>
+            <span className={styles.eyebrow}>{isEnglish ? 'THE IDEA BEHIND POSTIFY' : 'POSTIFY’IN ARKASINDAKİ FİKİR'}</span>
             <h2 id="footer-statement-title" className={styles.statementTitle}>
-              {isEnglish ? 'Useful knowledge should stay usable.' : 'Faydalı bilgi kullanılabilir kalmalı.'}
+              {isEnglish ? <>Don't just <em>read it.</em><br />Make it work.</> : <>Sadece <em>okuma.</em><br />İşe yarasın.</>}
             </h2>
             <p className={styles.statementText}>
               {isEnglish
-                ? 'Postify keeps practical knowledge close to its evidence, freshness and execution context.'
-                : 'Postify, pratik bilgiyi kanıtı, güncelliği ve uygulama bağlamıyla birlikte tutar.'}
+                ? 'A home for ideas that can be tested, questioned and used again. That is the whole point.'
+                : 'Sınanabilen, sorgulanabilen ve yeniden kullanılabilen fikirler için bir yer. Bütün mesele bu.'}
             </p>
+            <div className={styles.primaryActions}>
+              <Link to="/goal" className={styles.primaryLink}>
+                {isEnglish ? 'Discover our goal' : 'Hedefimizi keşfet'}
+                <FiArrowUpRight aria-hidden="true" />
+              </Link>
+              <Link to="/" className={styles.secondaryLink} onClick={handleHomeNavigation}>
+                {isEnglish ? 'Explore knowledge' : 'Bilgiyi keşfet'}
+              </Link>
+            </div>
           </div>
-
-          <div className={styles.primaryActions}>
-            <Link to="/" className={styles.primaryLink} onClick={handleHomeNavigation}>
-              {isEnglish ? 'Explore knowledge' : 'Bilgiyi keşfet'}
-              <FiArrowUpRight aria-hidden="true" />
-            </Link>
-            <Link to="/posts/create" className={styles.secondaryLink}>
-              {isEnglish ? 'Write a field-tested note' : 'Sahada denenmiş not yaz'}
-            </Link>
+          <div className={styles.footerArtwork} aria-hidden="true">
+            <div className={styles.artworkRing}><span>✳</span></div>
+            <span className={styles.artworkTop}>POSTIFY / IDEA TO EVIDENCE</span>
+            <span className={styles.artworkBottom}>READ → TEST → REPEAT</span>
           </div>
         </section>
+
+        <Link className={styles.signature} to="/goal" aria-label={isEnglish ? 'Discover the Postify goal' : 'Postify hedefini keşfet'}>
+          <span>POSTIFY</span><FiArrowUpRight aria-hidden="true" />
+        </Link>
 
         <div className={styles.indexGrid}>
           <div className={styles.brandBlock}>
@@ -85,10 +93,11 @@ const Footer = () => {
 
           <nav className={styles.linkGroup} aria-label={isEnglish ? 'Postify pages' : 'Postify sayfaları'}>
             <span className={styles.groupLabel}>POSTIFY</span>
-            <Link to="/about"><span className={styles.linkIndex} aria-hidden="true">01</span><span>{t('nav.about')}</span></Link>
-            <Link to="/contact"><span className={styles.linkIndex} aria-hidden="true">02</span><span>{t('nav.contact')}</span></Link>
-            <Link to="/bookmarks"><span className={styles.linkIndex} aria-hidden="true">03</span><span>{t('nav.bookmarks')}</span></Link>
-            <Link to="/knowledge"><span className={styles.linkIndex} aria-hidden="true">04</span><span>{isEnglish ? 'Knowledge health' : 'Bilgi sağlığı'}</span></Link>
+            <Link to="/goal"><span className={styles.linkIndex} aria-hidden="true">01</span><span>{isEnglish ? 'Our goal' : 'Hedefimiz'}</span></Link>
+            <Link to="/about"><span className={styles.linkIndex} aria-hidden="true">02</span><span>{t('nav.about')}</span></Link>
+            <Link to="/contact"><span className={styles.linkIndex} aria-hidden="true">03</span><span>{t('nav.contact')}</span></Link>
+            <Link to="/bookmarks"><span className={styles.linkIndex} aria-hidden="true">04</span><span>{t('nav.bookmarks')}</span></Link>
+            <Link to="/knowledge"><span className={styles.linkIndex} aria-hidden="true">05</span><span>{isEnglish ? 'Knowledge health' : 'Bilgi sağlığı'}</span></Link>
           </nav>
         </div>
 

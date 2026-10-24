@@ -4,6 +4,7 @@ const required = [
   'docs/index.html',
   'docs/about/index.html',
   'docs/contact/index.html',
+  'docs/goal/index.html',
   'docs/404.html',
   'docs/llms.txt',
   'docs/verification-runs.json',
@@ -39,7 +40,7 @@ if (!html.includes('name="description"')) {
   throw new Error('Static description metadata is missing');
 }
 
-for (const [route, title] of [['about', 'Hakkımızda — Postify'], ['contact', 'İletişim — Postify']]) {
+for (const [route, title] of [['about', 'Hakkımızda — Postify'], ['contact', 'İletişim — Postify'], ['goal', 'Hedefimiz — Postify']]) {
   const routeHtml = await readFile('docs/' + route + '/index.html', 'utf8');
   if (!routeHtml.includes('<title>' + title + '</title>') ||
       !routeHtml.includes('rel="canonical" href="https://postify.zekiakgul.dev/' + route + '"') ||
