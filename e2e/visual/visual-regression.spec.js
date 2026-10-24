@@ -232,6 +232,9 @@ test('Mobile command palette open baseline', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await stabilize(page);
   await page.goto('/');
+  // Wait for React hydration before exercising its document key listener.
+  // The CI container can finish Vite's page-load event before Header mounts.
+  await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible({ timeout: 15_000 });
   await page.keyboard.press('Control+K');
   const palette = page.getByRole('dialog', { name: /search|ara/i });
   await expect(palette).toBeVisible();
