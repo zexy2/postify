@@ -1,0 +1,26 @@
+# Temporary pull-request-only artifact capture for the intentionally redesigned
+# footer and new goal page. Remove after reviewer-verified baselines are saved.
+name: Postify PR Visual Baseline Capture
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  capture:
+    if: github.head_ref == 'design/postify-goal-footer-revamp-20261024'
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.57.0-noble@sha256:3bed4b1a12f2338642f3d8cba28e291deef3c66bd4a964bbeb3e57bbff511dbd
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Install dependencies
+        run: npm ci
+      - name: Refresh exact Chromium visual baselines
+        run: npm run test:e2e:visual -- --update-snapshots=changed
+      - name: Upload reviewed snapshot candidates
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: postify-goal-footer-visual-baselines
+          path: e2e/visual/__screenshots__/visual-regression.spec.js/*.png
+          retention-days: 2
+          if-no-files-found: error
