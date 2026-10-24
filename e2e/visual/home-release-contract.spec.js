@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-// First public Home slice: approved dark editorial cover with page-local
-// PL-01 tokens, real featured cover, functional navigation and mobile reflow.
+// The released premium editorial Home may use a light paper cover by day and
+// a dark ink cover by night. Keep functional, focus and overflow contracts.
 for (const theme of ['light', 'dark']) {
   for (const width of [320, 390, 768, 1440]) {
     test('Home PL-01 ' + theme + ' ' + width + 'px remains legible and functional', async ({ page }) => {
@@ -18,12 +18,12 @@ for (const theme of ['light', 'dark']) {
       await page.evaluate(() => document.fonts.ready);
       const hero = h1.locator('xpath=ancestor::section[1]');
       const color = await hero.evaluate((element) => getComputedStyle(element).backgroundColor);
-      expect(color).toBe(theme === 'light' ? 'rgb(31, 36, 32)' : 'rgb(34, 42, 38)');
+      expect(color).toBe(theme === 'light' ? 'rgb(244, 239, 230)' : 'rgb(34, 42, 38)');
       const headingStyle = await h1.evaluate((element) => {
         const style = getComputedStyle(element);
         return { color: style.color, family: style.fontFamily };
       });
-      expect(headingStyle.color).toBe('rgb(239, 237, 229)');
+      expect(headingStyle.color).toBe(theme === 'light' ? 'rgb(31, 36, 32)' : 'rgb(239, 237, 229)');
       expect(headingStyle.family).toMatch(/Fraunces/);
       const featured = hero.locator('a[href^="/posts/"]').filter({ has: page.locator('img') }).first();
       await expect(featured).toBeVisible();

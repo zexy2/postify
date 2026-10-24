@@ -110,7 +110,7 @@ test('Core text and status tokens keep accessible contrast in light and dark the
   }
 });
 
-test('Article action bar yields to keyboard focus in short touch viewports', async ({ page }) => {
+test('Article inline action bar remains accessible under keyboard focus in short touch viewports', async ({ page }) => {
   await page.setViewportSize({ width: 568, height: 320 });
   await stabilize(page);
   await page.goto('/posts/node-json-dogrulama');
@@ -129,8 +129,12 @@ test('Article action bar yields to keyboard focus in short touch viewports', asy
   const verificationLink = outlineDisclosure.getByRole('link', { name: /^verification$|^doğrulama$/i });
   await verificationLink.focus();
   await expect(verificationLink).toBeFocused();
-  await expect.poll(async () => Number.parseFloat(await actionBar.evaluate((element) => getComputedStyle(element).opacity))).toBeLessThan(0.1);
-  await expect.poll(async () => actionBar.evaluate((element) => getComputedStyle(element).pointerEvents)).toBe('none');
+  // The new editorial layout moves tools into article metadata instead of
+  // covering reading content with a fixed dock. Inline tools remain visible
+  // and accessible even when a chapter link takes keyboard focus.
+  await expect.poll(async () => Number.parseFloat(await actionBar.evaluate((element) => getComputedStyle(element).opacity))).toBeGreaterThan(0.9);
+  await expect.poll(async () => actionBar.evaluate((element) => getComputedStyle(element).pointerEvents)).not.toBe('none');
+  expect(await actionBar.evaluate((element) => getComputedStyle(element).position)).toBe('static');
 
   const back = actionBar.getByRole('button', { name: /^back$|^geri$/i });
   await back.focus();
