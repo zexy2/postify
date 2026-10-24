@@ -594,7 +594,6 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    hyphens: auto;
   }
 }
 
@@ -606,7 +605,7 @@
   .utility > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .supportingGrid { grid-template-columns: minmax(0, 1fr); }
   .copy { width: 100%; }
-  .subtitle { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .subtitle { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .heroActions { width: 100%; gap: min(.65rem, 10px); }
   .primaryAction, .secondaryAction {
     min-width: 0;

@@ -1466,7 +1466,6 @@
   min-width: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 
 /* Edition 28 — keep meaning-bearing article copy visible when reader text
@@ -1496,7 +1495,6 @@
   min-width: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 .articleHeader .author { max-width: 100%; }
 .articleHeader .authorInfo { flex: 1 1 auto; }
@@ -1544,7 +1542,6 @@
   min-width: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 /* Links stay at least 44px wide for mobile touch, even when their words
    are short; only the decorative summary span may shrink to zero. */
@@ -1628,13 +1625,11 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    hyphens: auto;
   }
   .commentsSection .commentHint,
   .commentsSection .comment p,
   .commentsSection .comment strong {
     overflow-wrap: anywhere;
-    hyphens: auto;
   }
   .commentsSection .sectionHeading > button {
     min-width: 44px;
@@ -1653,6 +1648,5 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    hyphens: auto;
   }
 }

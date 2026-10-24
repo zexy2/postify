@@ -47,7 +47,7 @@
 .footer small,
 .steps label > span:last-child,
 .actions button,
-.actions a { overflow-wrap: anywhere; hyphens: auto; }
+.actions a { overflow-wrap: anywhere; }
 .progressLabel { min-width: 0; }
 .steps label { grid-template-columns: 23px minmax(0, 1fr); gap: min(.7rem, 12px); }
 .checkIcon { width: 23px; height: 23px; }

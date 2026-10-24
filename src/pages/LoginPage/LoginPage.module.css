@@ -428,7 +428,6 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    hyphens: auto;
   }
   .context h2 { margin-top: min(.4rem, 8px); }
   .card { padding-top: min(1rem, 18px); }

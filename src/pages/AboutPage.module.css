@@ -309,7 +309,6 @@
   min-width: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 /* The artwork wordmark deliberately spans its own inset panel; constrain
    text only, retaining the full-bleed gradient background and image geometry. */
@@ -328,7 +327,7 @@
   .heroIndex > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .heroIndex > span:last-child { max-width: 100%; text-align: start; }
   .heroBody { min-width: 0; grid-template-columns: minmax(0, 1fr); gap: min(1.4rem, 22px); }
-  .heroCopy, .heroCopy > p, .heroCopy .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .heroCopy, .heroCopy > p, .heroCopy .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .hero h1 { min-width: 0; max-width: 100%; }
   .heroLink { gap: min(1rem, 12px); margin-top: min(2.2rem, 35px); padding: min(.8rem, 14px) min(1.25rem, 20px); }
   .heroArtwork { min-width: 0; padding: min(.9rem, 16px); }
@@ -349,7 +348,7 @@
 @media (max-width: 600px) {
   .statement, .model, .formats, .modelRows, .formatGrid, .cta, .sectionHeading { min-width: 0; max-width: 100%; }
   .statement { gap: min(.75rem, 14px); padding-block: min(3.1rem, 52px); }
-  .statement > div, .statement p, .statement .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .statement > div, .statement p, .statement .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .modelRows, .formatGrid { grid-template-columns: minmax(0, 1fr); }
   .modelRow {
     min-width: 0;
@@ -357,9 +356,9 @@
     gap: min(1.4rem, 12px);
     padding: min(1.4rem, 20px) 0;
   }
-  .modelRow > span, .modelRow h3, .modelRow p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .modelRow > span, .modelRow h3, .modelRow p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .formatItem { min-width: 0; gap: min(.85rem, 12px); padding: min(1.1rem, 18px); }
-  .formatItem h3, .formatItem p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .formatItem h3, .formatItem p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .cta { gap: min(2rem, 24px); }
   .ctaActions { min-width: 0; }
   .ctaActions a { min-width: 0; max-width: 100%; white-space: normal; flex-wrap: wrap; gap: min(.5rem, 8px); padding: min(.8rem, 14px) min(1.25rem, 20px); overflow-wrap: anywhere; }

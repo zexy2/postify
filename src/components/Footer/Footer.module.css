@@ -640,19 +640,18 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    hyphens: auto;
   }
   .brandBlock { min-width: 0; gap: min(.5rem, 8px) min(1rem, 12px); }
   .brandLink { min-width: 0; max-width: 100%; gap: min(.62rem, 10px); font-size: min(1.22rem, 26px); }
   .brandLink > span { min-width: 0; overflow-wrap: anywhere; }
   .brandLink svg { width: min(2rem, 36px); height: min(2rem, 36px); flex: 0 0 auto; }
-  .brandBlock p { min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
+  .brandBlock p { min-width: 0; overflow-wrap: anywhere; }
   .githubLink { min-width: 0; gap: min(.45rem, 7px); font-size: min(.66rem, 14px); }
   .githubLink svg { width: min(1rem, 17px); height: min(1rem, 17px); }
   .linkGroup { min-width: 0; }
   .linkGroup a { min-width: 0; max-width: 100%; grid-template-columns: minmax(0, min(1.8rem, 28px)) minmax(0, 1fr); gap: min(.4rem, 6px); }
   .systemLine > div { grid-template-columns: min(1.6rem, 26px) minmax(0, 1fr); gap: min(.65rem, 10px); }
-  .systemLine strong, .systemLine small { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .systemLine strong, .systemLine small { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .bottomBar { min-width: 0; flex-wrap: wrap; gap: min(1rem, 12px); }
   .bottomBar > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .scrollTopButton { max-width: 100%; min-width: 44px; min-height: 44px; gap: min(.48rem, 8px); white-space: normal; overflow-wrap: anywhere; }

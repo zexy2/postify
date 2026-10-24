@@ -495,7 +495,7 @@
 @media (max-width: 640px) {
   .sectionHeader { flex-wrap: wrap; }
   .sectionHeader > div { min-width: 0; max-width: 100%; }
-  .sectionTitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .sectionTitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .sectionSubtitle { max-width: 100%; margin-left: auto; }
 }
 
@@ -529,7 +529,7 @@
   .postsSection, .sectionHeader, .sectionHeader > div, .discoveryControls, .typeFilter, .filterToolbar,
   .filterCluster, .formatSelectWrap { min-width: 0; max-width: 100%; }
   .sectionHeader { gap: min(1rem, 16px); }
-  .sectionEyebrow, .sectionTitle, .sectionSubtitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .sectionEyebrow, .sectionTitle, .sectionSubtitle { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .discoveryControls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: min(.42rem, 8px); padding: min(.6rem, 10px); }
   .discoveryControls :global(nav), .discoveryControls :global(nav > div) { min-width: 0; max-width: 100%; }
   .discoveryControls :global(nav select), .formatSelect { min-width: 0; max-width: 100%; padding-right: min(1.5rem, 24px); }

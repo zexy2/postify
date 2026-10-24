@@ -836,7 +836,6 @@ body:has([role="dialog"]) [data-rht-toaster] {
 .knowledge-evidence li,
 .knowledge-evidence small {
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 .knowledge-evidence__execution { grid-template-columns: minmax(0, 1fr); padding: min(1rem, 16px); }
 .knowledge-evidence__contract > div {
@@ -853,7 +852,7 @@ body:has([role="dialog"]) [data-rht-toaster] {
 /* Section labels are full sentences in Turkish; allow their own glyph runs
    to break instead of stretching the expanded disclosure 120px wider. */
 .knowledge-evidence h3,
-.knowledge-evidence__details-body > div > h3 { max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+.knowledge-evidence__details-body > div > h3 { max-width: 100%; overflow-wrap: anywhere; }
 
 /* Edition 30 — feedback must remain actionable at enlarged reader text.
    Allow its summary, controls and shelf to consume additional lines instead
@@ -883,7 +882,6 @@ body:has([role="dialog"]) [data-rht-toaster] {
   max-width: 100%;
   white-space: normal;
   overflow-wrap: anywhere;
-  hyphens: auto;
   padding: 8px 10px;
 }
 .local-evidence-actions small,
@@ -894,6 +892,5 @@ body:has([role="dialog"]) [data-rht-toaster] {
   min-width: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 .local-evidence-actions__context-form { padding: min(1rem, 16px); grid-template-columns: minmax(0, 1fr); }
