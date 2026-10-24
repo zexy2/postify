@@ -8,7 +8,7 @@ import userReducer from '../store/slices/userSlice';
 import { authService } from '../services/authService';
 import { useAuth } from './useAuth';
 
-vi.mock('../lib/supabase', () => ({ hasSupabaseConfig: true }));
+vi.mock('../lib/supabaseConfig', () => ({ hasSupabaseConfig: true }));
 vi.mock('../services/authService', () => ({
   authService: {
     onAuthStateChange: vi.fn(),

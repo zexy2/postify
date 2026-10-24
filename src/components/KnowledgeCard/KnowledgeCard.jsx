@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FiArrowUpRight, FiBookmark, FiClock } from 'react-icons/fi';
+import { FiBookmark, FiClock } from 'react-icons/fi';
 import ContentImage from '../ContentImage/ContentImage';
 import EvidenceBadge from '../EvidenceBadge';
 import { summarizeCommunityEvidence } from '../../lib/communityEvidence';
@@ -8,8 +8,7 @@ import { getEvidenceCopy } from '../../lib/knowledgeEvidence';
 import { getPostPresentation, getPostReadingMinutes } from '../../lib/postPresentation';
 import { getCategoryLabel } from '../../lib/categoryLabels';
 import styles from './KnowledgeCard.module.css';
-
-const VARIANTS = new Set(['featured', 'standard', 'compact']);
+import { getResponsiveCoverSrcSet } from '../../lib/responsiveCover';
 
 const KnowledgeCard = ({
   post,
@@ -21,7 +20,8 @@ const KnowledgeCard = ({
 }) => {
   const { t, i18n } = useTranslation();
   const en = i18n.language?.startsWith('en');
-  const safeVariant = VARIANTS.has(variant) ? variant : 'standard';
+  const safeVariant = variant === 'featured' || variant === 'compact' ? variant : 'standard';
+  const isFeatured = safeVariant === 'featured';
   const presentation = getPostPresentation(post, i18n.language);
   const evidence = getEvidenceCopy(post, i18n.language);
   const community = summarizeCommunityEvidence(post.evidenceSummary || {});
@@ -64,7 +64,7 @@ const KnowledgeCard = ({
         </div>
 
         <Link to={href} className={styles.titleLink}>
-          {safeVariant === 'featured'
+          {isFeatured
             ? <h3 className={styles.title}>{post.title}</h3>
             : <h4 className={styles.title}>{post.title}</h4>}
         </Link>
@@ -86,7 +86,7 @@ const KnowledgeCard = ({
             <strong>{evidence.freshnessLabel}</strong>
           </div>
           {factItems.map((item) => (
-            <div className={styles.fact} key={`${item.label}-${item.value}`}>
+            <div className={styles.fact} key={item.label}>
               <span>{item.label}</span>
               <strong>{item.icon}{item.value}</strong>
             </div>
@@ -95,7 +95,7 @@ const KnowledgeCard = ({
 
         <div className={styles.actions}>
           <Link to={href} className={styles.readLink}>
-            {safeVariant === 'featured' ? t('common.readMore') : t('common.read')} <FiArrowUpRight size={14} aria-hidden="true" />
+            {isFeatured ? t('common.readMore') : t('common.read')}
           </Link>
           <button
             type="button"
@@ -112,6 +112,8 @@ const KnowledgeCard = ({
         <Link to={href} className={styles.imageLink} tabIndex={-1} aria-hidden="true">
           <ContentImage
             src={post.coverImageUrl}
+            srcSet={getResponsiveCoverSrcSet(post.coverImageUrl)}
+            sizes={isFeatured ? '100vw' : '205px'}
             alt=""
             className={styles.image}
             loading="lazy"

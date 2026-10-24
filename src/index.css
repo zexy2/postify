@@ -807,3 +807,93 @@ body:has([role="dialog"]) [data-rht-toaster] {
 .knowledge-evidence__artifact { width:fit-content; color:var(--primary); font-size:.76rem; font-weight:800; text-decoration:underline; text-underline-offset:3px; }
 @media(max-width:960px){.knowledge-evidence a{display:inline-flex;align-items:center;min-width:44px;min-height:44px}.knowledge-evidence__artifact{display:inline-flex;align-items:center;min-height:44px}}
 @media(max-width:620px){.knowledge-evidence__details>summary>small{display:none}.knowledge-evidence__contract>div{grid-template-columns:1fr;gap:.2rem}}
+
+/* Edition 29 — evidence is functional reading content, never an overflow
+   ornament. At magnified reader type keep status, contracts and links inside
+   their real editorial column; leave all verification data unchanged. */
+.knowledge-evidence,
+.knowledge-evidence__header,
+.knowledge-evidence__header > div,
+.knowledge-evidence__details,
+.knowledge-evidence__details-body,
+.knowledge-evidence__execution,
+.knowledge-evidence__contract,
+.knowledge-evidence__contract > div,
+.knowledge-evidence__contract dt,
+.knowledge-evidence__contract dd {
+  min-width: 0;
+  max-width: 100%;
+}
+.knowledge-evidence__header { flex-wrap: wrap; }
+.knowledge-evidence__header h2,
+.knowledge-evidence__header > strong,
+.knowledge-evidence__details > summary > *,
+.knowledge-evidence__execution h3,
+.knowledge-evidence__contract dt,
+.knowledge-evidence__contract dd,
+.knowledge-evidence__artifact,
+.knowledge-evidence p,
+.knowledge-evidence li,
+.knowledge-evidence small {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.knowledge-evidence__execution { grid-template-columns: minmax(0, 1fr); padding: min(1rem, 16px); }
+.knowledge-evidence__contract > div {
+  grid-template-columns: minmax(min(7.5rem, 26%), .45fr) minmax(0, 1fr);
+  gap: min(.75rem, 12px);
+}
+.knowledge-evidence__contract code { white-space: normal; }
+.knowledge-evidence__details > summary { padding-right: min(2.4rem, 38px); grid-template-columns: minmax(0, 1fr); }
+.knowledge-evidence__details > summary::after { width: min(1.6rem, 26px); height: min(1.6rem, 26px); }
+.knowledge-evidence__artifact { max-width: 100%; }
+@media (max-width: 620px) {
+  .knowledge-evidence__contract > div { grid-template-columns: minmax(0, 1fr); }
+}
+/* Section labels are full sentences in Turkish; allow their own glyph runs
+   to break instead of stretching the expanded disclosure 120px wider. */
+.knowledge-evidence h3,
+.knowledge-evidence__details-body > div > h3 { max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+
+/* Edition 30 — feedback must remain actionable at enlarged reader text.
+   Allow its summary, controls and shelf to consume additional lines instead
+   of stretching the entire clipped article track; never hide copy. */
+.local-evidence-actions,
+.local-evidence-actions > div,
+.local-evidence-actions__summary,
+.local-evidence-actions__summary > div,
+.local-evidence-actions__buttons,
+.local-evidence-actions__shelf,
+.local-evidence-actions__context-form,
+.local-evidence-actions__context-heading,
+.local-evidence-actions__form-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+.local-evidence-actions { padding: min(1.25rem, 20px); }
+.local-evidence-actions > div:first-child,
+.local-evidence-actions__summary > div { flex-wrap: wrap; }
+.local-evidence-actions__buttons,
+.local-evidence-actions__shelf,
+.local-evidence-actions__form-actions { gap: min(.5rem, 8px); }
+.local-evidence-actions__buttons > *,
+.local-evidence-actions__shelf > *,
+.local-evidence-actions__form-actions > * { flex-shrink: 1; min-width: 0; max-width: 100%; }
+.local-evidence-actions button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  padding: 8px 10px;
+}
+.local-evidence-actions small,
+.local-evidence-actions p,
+.local-evidence-actions strong,
+.local-evidence-actions span,
+.local-evidence-actions label {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.local-evidence-actions__context-form { padding: min(1rem, 16px); grid-template-columns: minmax(0, 1fr); }
