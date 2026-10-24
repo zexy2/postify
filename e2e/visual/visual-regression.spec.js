@@ -299,6 +299,19 @@ for (const viewport of viewports) {
     expect(box?.y ?? -1).toBeGreaterThanOrEqual(0);
     expect((box?.y ?? viewport.height + 1) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport.height);
     await settleVisualSurface(page);
+    // The popover position is responsive to feed height and scroll. Validate its
+    // real placement above, then normalize only the screenshot capture geometry.
+    // This prevents async feed timing from clipping an otherwise identical panel.
+    await page.addStyleTag({ content: `
+      #advanced-discovery-filters {
+        position: fixed !important;
+        top: 72px !important;
+        max-height: calc(100vh - 100px) !important;
+      }
+    ` });
+    // Pointer remains over the toggle after opening; move it out so hover
+    // styling never affects the deterministic screenshot of filter options.
+    await page.mouse.move(0, 0);
     await expect(dialog).toHaveScreenshot(`discovery-filter-popover-${viewport.name}.png`);
   });
 }
@@ -309,9 +322,18 @@ for (const viewport of viewports) {
     await stabilize(page);
     await page.goto('/');
     await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible({ timeout: 15_000 });
+    // Initial fallback content is immediately visible while React Query is
+    // still fetching; wait until the offline notice stops changing height.
+    await expect(page.locator('[class*="fallbackNotice"] strong')).toContainText(
+      'The connection is temporarily unavailable', { timeout: 15_000 },
+    );
     await settleVisualSurface(page);
-    await waitForStableGeometry(page.locator('#main-content'));
-    await expect(page.locator('#main-content')).toHaveScreenshot(`home-${viewport.name}.png`);
+    const main = page.locator('#main-content');
+    // The first Chromium element screenshot finalizes a deferred 24px bottom
+    // section layout. Warm it once before comparing the stable complete page.
+    await main.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(main);
+    await expect(main).toHaveScreenshot(`home-${viewport.name}.png`);
   });
 
   test(`Article ${viewport.name} baseline`, async ({ page }) => {
@@ -1169,9 +1191,14 @@ for (const viewport of viewports) {
     await page.goto('/');
     await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible({ timeout: 15_000 });
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.locator('[class*="fallbackNotice"] strong')).toContainText(
+      'The connection is temporarily unavailable', { timeout: 15_000 },
+    );
     await settleVisualSurface(page);
-    await waitForStableGeometry(page.locator('#main-content'));
-    await expect(page.locator('#main-content')).toHaveScreenshot(`home-dark-${viewport.name}.png`);
+    const main = page.locator('#main-content');
+    await main.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(main);
+    await expect(main).toHaveScreenshot(`home-dark-${viewport.name}.png`);
   });
 
   test(`Dark theme Article ${viewport.name} baseline`, async ({ page }) => {
