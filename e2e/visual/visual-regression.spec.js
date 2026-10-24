@@ -691,7 +691,10 @@ for (const viewport of viewports) {
     const width = await page.evaluate(() => ({ viewport: window.innerWidth, document: document.documentElement.scrollWidth }));
     expect(width.document).toBeLessThanOrEqual(width.viewport);
     await settleVisualSurface(page);
-    await expect(page.locator('#root')).toHaveScreenshot(`authenticated-profile-${viewport.name}.png`);
+    const profile = page.locator('#root');
+    await profile.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(profile);
+    await expect(profile).toHaveScreenshot(`authenticated-profile-${viewport.name}.png`);
   });
 }
 
@@ -723,7 +726,10 @@ for (const viewport of viewports) {
     await page.goto('/about');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await settleVisualSurface(page);
-    await expect(page.locator('#main-content')).toHaveScreenshot(`about-${viewport.name}.png`);
+    const about = page.locator('#main-content');
+    await about.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(about);
+    await expect(about).toHaveScreenshot(`about-${viewport.name}.png`);
   });
 
   test(`Contact ${viewport.name} baseline`, async ({ page }) => {
@@ -759,6 +765,7 @@ for (const viewport of viewports) {
     if (viewport.name === 'mobile') expect((await recovery.boundingBox())?.height || 0).toBeGreaterThanOrEqual(44);
     await settleVisualSurface(page);
     await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ fullPage: false, animations: 'disabled', caret: 'hide' });
     await expect(page).toHaveScreenshot(`author-not-found-${viewport.name}.png`, { fullPage: false });
   });
 
@@ -1343,7 +1350,10 @@ for (const viewport of viewports) {
         await page.evaluate(() => window.scrollTo(0, 0));
         await expect(page).toHaveScreenshot(`author-dark-${viewport.name}.png`, { fullPage: false });
       } else {
-        await expect(page.locator('#main-content')).toHaveScreenshot(`${name}-dark-${viewport.name}.png`);
+        const main = page.locator('#main-content');
+        await main.screenshot({ animations: 'disabled', caret: 'hide' });
+        await waitForStableGeometry(main);
+        await expect(main).toHaveScreenshot(`${name}-dark-${viewport.name}.png`);
       }
     });
   }
@@ -1370,6 +1380,8 @@ for (const viewport of viewports) {
     await expect(footer.getByRole('link', { name: /discover our goal|hedefimizi keşfet/i })).toBeVisible();
     await footer.scrollIntoViewIfNeeded();
     await settleVisualSurface(page);
+    await footer.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(footer);
     await expect(footer).toHaveScreenshot(`goal-footer-${viewport.name}.png`);
   });
 }
