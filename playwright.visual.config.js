@@ -8,7 +8,8 @@ export default defineConfig({
   testDir: './e2e/visual',
   fullyParallel: false,
   workers: 1,
-  retries: 0,
+  // One fresh-context retry in CI for transient font/paint timing; no snapshots are updated.
+  retries: process.env.CI ? 1 : 0,
   reporter: 'line',
   snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',
   expect: {

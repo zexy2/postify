@@ -140,8 +140,8 @@
 }
 
 .readLink:hover { color: var(--primary); }
-.readLink svg { transition: transform var(--transition-fast); }
-.readLink:hover svg { transform: translate(2px, -2px); }
+.readLink::after { content: '↗'; transition: transform var(--transition-fast); }
+.readLink:hover::after { transform: translate(2px, -2px); }
 
 .bookmark {
   display: inline-grid;
@@ -383,4 +383,603 @@
 @media (prefers-reduced-motion: reduce) {
   .card, .image, .readLink svg { transition: none; }
   .featured:hover { transform: none; }
+}
+
+/* 03 / Immersive split: opt-in for Home discovery only.
+   The author portfolio retains the original card composition. */
+:global([data-showcase="true"]) .featured {
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
+  grid-template-rows: minmax(0, 1fr);
+  min-height: clamp(405px, 39vw, 495px);
+  gap: 0;
+  overflow: hidden;
+  margin: 0 0 clamp(1.35rem, 2.5vw, 2.25rem);
+  padding: 0;
+  color: #f3f0e7;
+  background: #203129;
+  border: 1px solid #294135;
+  border-radius: 12px;
+  box-shadow: 0 17px 46px rgb(22 38 29 / 10%);
+}
+:global([data-showcase="true"]) .featured:hover {
+  background: #203129;
+  border-color: #506651;
+  box-shadow: 0 22px 52px rgb(22 38 29 / 14%);
+}
+:global([data-showcase="true"]) .featured > .ordinal {
+  position: absolute;
+  z-index: 3;
+  top: 1.3rem;
+  left: clamp(1.35rem, 3.2vw, 2.9rem);
+  padding: 0;
+  color: #f2aa8f;
+  font-size: .8rem;
+}
+:global([data-showcase="true"]) .featured > .content {
+  position: relative;
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: clamp(3.5rem, 6.7vw, 6.25rem) clamp(1.4rem, 3.2vw, 3rem) clamp(1.4rem, 3vw, 2.7rem);
+  overflow: hidden;
+  background: radial-gradient(circle at 110% 12%, rgb(156 184 141 / 13%), transparent 53%), #203129;
+}
+:global([data-showcase="true"]) .featured > .content::after {
+  content: "";
+  position: absolute;
+  top: -12rem;
+  right: -14rem;
+  width: 25rem;
+  height: 25rem;
+  border: 1px solid rgb(243 240 231 / 10%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+:global([data-showcase="true"]) .featured .priority {
+  margin: 0 0 .6rem;
+  color: #f2aa8f;
+  font-size: .62rem;
+  letter-spacing: .17em;
+}
+:global([data-showcase="true"]) .featured .meta {
+  gap: .45rem .6rem;
+  margin-top: .3rem;
+  color: #cbcfc3;
+  font-size: .7rem;
+}
+:global([data-showcase="true"]) .featured .type { color: #f2aa8f; }
+:global([data-showcase="true"]) .featured .category,
+:global([data-showcase="true"]) .featured .date { color: #c3d1c2; }
+:global([data-showcase="true"]) .featured .title {
+  max-width: 17ch;
+  margin: .95rem 0 .9rem;
+  color: #fcf9f0;
+  font-size: clamp(2.15rem, 3.5vw, 3.5rem);
+  font-weight: 530;
+  line-height: 1;
+}
+:global([data-showcase="true"]) .featured .titleLink:hover .title { color: #f6c1aa; }
+:global([data-showcase="true"]) .featured .outcome {
+  max-width: 47ch;
+  color: #d9dfd3;
+  font-size: .85rem;
+  line-height: 1.65;
+}
+:global([data-showcase="true"]) .featured .outcome > span { display: none; }
+:global([data-showcase="true"]) .featured .trustStrip {
+  gap: .45rem 1.1rem;
+  margin: auto 0 0;
+  padding: 1.3rem 0 .4rem;
+  border-top: 0;
+}
+:global([data-showcase="true"]) .featured .trustStrip > div {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 12rem;
+  gap: .3rem;
+}
+:global([data-showcase="true"]) .featured .trustStrip > div > span { display: none; }
+:global([data-showcase="true"]) .featured .trustStrip strong { color: #e4e7dc; font-size: .73rem; }
+:global([data-showcase="true"]) .featured .trustStrip :global(.evidence-badge) { color: #dcebd7; font-size: .73rem; }
+:global([data-showcase="true"]) .featured .freshnessFact strong { color: #dcebd7; }
+:global([data-showcase="true"]) .featured .actions { width: 100%; margin: .8rem 0 0; }
+:global([data-showcase="true"]) .featured .readLink {
+  min-height: 44px;
+  gap: 1rem;
+  padding: .65rem 1.05rem;
+  color: #203129;
+  background: #f1eae0;
+  border-radius: 5px;
+  font-size: .8rem;
+}
+:global([data-showcase="true"]) .featured .readLink:hover { color: #203129; background: #f6c1aa; }
+:global([data-showcase="true"]) .featured .bookmark {
+  color: #f3f0e7;
+  border: 1px solid rgb(243 240 231 / 34%);
+  border-radius: 5px;
+}
+:global([data-showcase="true"]) .featured .bookmark:hover,
+:global([data-showcase="true"]) .featured .bookmark.bookmarked {
+  color: #203129;
+  background: #f1eae0;
+  border-color: #f1eae0;
+}
+:global([data-showcase="true"]) .featured > .imageLink {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 0;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+:global([data-showcase="true"]) .featured > .imageLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(32 49 41 / 8%), transparent 58%);
+  pointer-events: none;
+}
+:global([data-showcase="true"]) .featured .image { filter: saturate(.77) contrast(1.05); }
+:global([data-showcase="true"]) .featured:hover .image { filter: saturate(.94) contrast(1.07); }
+
+:global([data-showcase="true"]) .standard {
+  grid-template-columns: 2.4rem minmax(0, 1fr) clamp(145px, 18vw, 205px);
+  gap: clamp(.75rem, 2vw, 2rem);
+  padding: clamp(1.5rem, 2.3vw, 2.2rem) .4rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+:global([data-showcase="true"]) .standard > .ordinal {
+  padding-top: .85rem;
+  color: var(--primary);
+  font-size: .87rem;
+}
+:global([data-showcase="true"]) .standard .title {
+  max-width: 27ch;
+  margin: .55rem 0 .5rem;
+  font-size: clamp(1.7rem, 2.35vw, 2.45rem);
+  line-height: 1.05;
+}
+:global([data-showcase="true"]) .standard .meta { font-size: .72rem; }
+:global([data-showcase="true"]) .standard .outcome { max-width: 65ch; color: var(--text-secondary); font-size: .83rem; }
+:global([data-showcase="true"]) .standard .outcome > span { display: none; }
+:global([data-showcase="true"]) .standard .trustStrip {
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  margin: .8rem 0 0;
+  padding: .7rem 0 0;
+}
+:global([data-showcase="true"]) .standard .trustStrip > div {
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+  min-width: 0;
+}
+:global([data-showcase="true"]) .standard .trustStrip > div > span { display: none; }
+:global([data-showcase="true"]) .standard .trustStrip strong,
+:global([data-showcase="true"]) .standard .trustStrip :global(.evidence-badge) { font-size: .72rem; }
+:global([data-showcase="true"]) .standard .trustStrip > div:nth-child(n+4) { display: none; }
+:global([data-showcase="true"]) .standard .actions { margin: .25rem 0 0; }
+:global([data-showcase="true"]) .standard .readLink { color: var(--primary); }
+:global([data-showcase="true"]) .standard .imageLink {
+  align-self: center;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 7px;
+}
+:global([data-showcase="true"]) .standard .image { transition: transform 350ms ease, filter 350ms ease; }
+:global([data-showcase="true"]) .standard:hover .image { transform: scale(1.035); }
+
+@media (max-width: 820px) {
+  :global([data-showcase="true"]) .featured { min-height: 375px; }
+  :global([data-showcase="true"]) .featured > .content { padding: 3.5rem 1.35rem 1.4rem; }
+  :global([data-showcase="true"]) .featured > .ordinal { left: 1.35rem; }
+  :global([data-showcase="true"]) .featured .title { font-size: clamp(1.9rem, 4vw, 2.65rem); }
+}
+
+@media (max-width: 620px) {
+  :global([data-showcase="true"]) .featured {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    min-height: 0;
+    border-radius: 10px;
+  }
+  :global([data-showcase="true"]) .featured > .ordinal { grid-column: 1; grid-row: 1; top: 1rem; left: 1.1rem; }
+  :global([data-showcase="true"]) .featured > .content {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 3.15rem 1.1rem 1.15rem;
+  }
+  :global([data-showcase="true"]) .featured .title { max-width: 20ch; font-size: clamp(1.85rem, 8.3vw, 2.65rem); }
+  :global([data-showcase="true"]) .featured .outcome { -webkit-line-clamp: 2; font-size: .8rem; }
+  :global([data-showcase="true"]) .featured .trustStrip { gap: .35rem .7rem; padding-top: .85rem; }
+  :global([data-showcase="true"]) .featured .trustStrip > div { flex: 0 1 auto; min-width: 0; }
+  :global([data-showcase="true"]) .featured .trustStrip strong { font-size: .67rem; }
+  :global([data-showcase="true"]) .featured > .imageLink {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 16 / 8;
+  }
+  :global([data-showcase="true"]) .standard {
+    grid-template-columns: 1.2rem minmax(0, 1fr) minmax(0, 28%);
+    gap: .55rem;
+    padding: 1.1rem 0;
+  }
+  :global([data-showcase="true"]) .standard > .ordinal { grid-column: 1; grid-row: 1; padding-top: .35rem; font-size: .68rem; }
+  :global([data-showcase="true"]) .standard > .content { grid-column: 2; grid-row: 1; min-width: 0; }
+  :global([data-showcase="true"]) .standard > .imageLink {
+    display: block;
+    grid-column: 3;
+    grid-row: 1;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: 3 / 4;
+    border-radius: 5px;
+  }
+  :global([data-showcase="true"]) .standard .meta { gap: .25rem .4rem; font-size: .62rem; }
+  :global([data-showcase="true"]) .standard .date { display: none; }
+  :global([data-showcase="true"]) .standard .title { font-size: clamp(1.1rem, 4.5vw, 1.55rem); }
+  :global([data-showcase="true"]) .standard .outcome { display: none; }
+  :global([data-showcase="true"]) .standard .trustStrip { gap: .4rem; margin: .2rem 0 0; }
+  :global([data-showcase="true"]) .standard .trustStrip > div:nth-child(n+2) { display: none; }
+  :global([data-showcase="true"]) .standard .trustStrip strong { font-size: .65rem; }
+  :global([data-showcase="true"]) .standard .readLink { min-height: 44px; }
+  :global([data-showcase="true"]) .standard .bookmark { width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global([data-showcase="true"]) .standard .image { transition: none; }
+  :global([data-showcase="true"]) .standard:hover .image { transform: none; }
+}
+
+/* Keep the split layout expressive while honoring Postify's light/dark setting. */
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured {
+  color: #24362a;
+  background: #e5e9df;
+  border-color: #c5cfc1;
+  box-shadow: 0 17px 46px rgb(36 54 42 / 8%);
+}
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured:hover {
+  background: #e5e9df;
+  border-color: #a9baa7;
+}
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured > .content {
+  background: radial-gradient(circle at 110% 12%, rgb(97 127 97 / 12%), transparent 53%), #e5e9df;
+}
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured > .content::after { border-color: rgb(36 54 42 / 13%); }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured > .ordinal,
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .priority,
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .type { color: #a13c25; }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .meta,
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .category,
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .date { color: #425946; }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .title { color: #1f3025; }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .titleLink:hover .title { color: #9d3f27; }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .outcome { color: #435746; }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .trustStrip strong,
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .trustStrip :global(.evidence-badge),
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .freshnessFact strong { color: #294a32; }
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .readLink {
+  color: #fdfbf6;
+  background: #294b36;
+}
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .readLink:hover {
+  color: #fdfbf6;
+  background: #9a3e27;
+}
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .bookmark {
+  color: #294b36;
+  border-color: #9daf9d;
+}
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .bookmark:hover,
+:global(html:not([data-theme='dark'])) :global([data-showcase="true"]) .featured .bookmark.bookmarked {
+  color: #fdfbf6;
+  background: #294b36;
+  border-color: #294b36;
+}
+
+/* Home discovery: a thin proof-trail follows deliberate card focus/hover.
+   Static default and keyboard focus remain fully readable. */
+:global([data-showcase="true"]) .standard::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  bottom: -1px;
+  inset-inline-start: 0;
+  width: min(38%, 18rem);
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-showcase="true"]) .standard::before { transition: transform 420ms cubic-bezier(.22,.73,.21,1); }
+  :global([data-showcase="true"]) .standard:hover::before,
+  :global([data-showcase="true"]) .standard:focus-within::before { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global([data-showcase="true"]) .standard::before { display: none; }
+}
+
+/* 200% text scaling: long editorial titles must stay inside narrow cards. */
+@media (max-width: 620px) {
+  .titleLink { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .title { min-width: 0; overflow-wrap: anywhere; }
+}
+
+/* Reading desk lead story: type has the full reading width. In the narrower
+   editorial column a 50/50 split made Turkish titles six or more lines long. */
+@media (min-width: 1060px) {
+  :global([data-showcase="true"]) .featured {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto clamp(290px, 24vw, 350px);
+    min-height: 0;
+    border-radius: 4px;
+  }
+  :global([data-showcase="true"]) .featured > .ordinal { grid-column: 1; grid-row: 1; }
+  :global([data-showcase="true"]) .featured > .content {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    padding: clamp(3.6rem, 5vw, 5.3rem) clamp(1.7rem, 3.3vw, 3.25rem) 2.2rem;
+  }
+  :global([data-showcase="true"]) .featured .title {
+    max-width: 19ch;
+    margin: clamp(.9rem, 1.7vw, 1.6rem) 0 1.05rem;
+    font-size: clamp(2.85rem, 4.3vw, 4.65rem);
+    line-height: 1.045;
+    letter-spacing: -.055em;
+    text-wrap: balance;
+  }
+  :global([data-showcase="true"]) .featured .outcome { max-width: 46ch; }
+  :global([data-showcase="true"]) .featured .trustStrip {
+    margin: clamp(1.1rem, 2.8vw, 2.2rem) 0 0;
+    padding: .8rem 0 0;
+    border-top: 1px solid var(--border-color);
+  }
+  :global([data-showcase="true"]) .featured > .imageLink {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 290px;
+    height: auto;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+  :global([data-showcase="true"]) .featured > .imageLink::after {
+    background: linear-gradient(180deg, rgb(18 36 28 / 15%), transparent 52%);
+  }
+}
+
+/* Evidence is a product signal, not an ornamental label. The compressed
+   showcase hides field captions; never hide the nested live evidence badge. */
+:global([data-showcase="true"]) .featured .evidenceFact :global(.evidence-badge),
+:global([data-showcase="true"]) .standard .evidenceFact :global(.evidence-badge) {
+  display: inline-flex;
+  visibility: visible;
+}
+
+/* Supporting stories form an editorial contact sheet below the lead story.
+   This changes composition rather than replacing images or hiding evidence. */
+@media (min-width: 1180px) {
+  :global([data-showcase='true']) .standard {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+    min-width: 0;
+    margin: 0 0 clamp(1.35rem, 2.6vw, 2.4rem);
+    padding: 0 0 1.05rem;
+    background: transparent;
+    border-top: 2px solid var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
+    transform: none;
+    box-shadow: none;
+  }
+  :global([data-showcase='true']) .standard:hover {
+    background: transparent;
+    border-top-color: var(--primary);
+    transform: none;
+    box-shadow: none;
+  }
+  :global([data-showcase='true']) .standard > .imageLink {
+    order: -2;
+    width: 100%;
+    min-height: 0;
+    margin: 0 0 .95rem;
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+  }
+  :global([data-showcase='true']) .standard > .ordinal {
+    order: -1;
+    padding: 0 0 .85rem;
+    font-size: .72rem;
+    letter-spacing: .12em;
+  }
+  :global([data-showcase='true']) .standard > .content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+  }
+  :global([data-showcase='true']) .standard .meta { gap: .3rem .5rem; font-size: .7rem; }
+  :global([data-showcase='true']) .standard .title {
+    max-width: 18ch;
+    margin: .7rem 0 .6rem;
+    font-size: clamp(1.5rem, 2.06vw, 1.97rem);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+  :global([data-showcase='true']) .standard .outcome {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    font-size: .76rem;
+    line-height: 1.62;
+  }
+  :global([data-showcase='true']) .standard .trustStrip {
+    margin-top: auto;
+    padding-top: .95rem;
+    border-top: 0;
+  }
+  :global([data-showcase='true']) .standard .actions { margin-top: .35rem; }
+  :global([data-showcase='true']) .standard .image { height: 100%; }
+}
+
+/* 15 / Mobile archive index. The former compact rows hid their explicit
+   reading link and repeated field captions around a small heading. Keep the
+   factual values and native links, but make each issue entry easy to scan. */
+@media (max-width: 620px) {
+  :global([data-showcase='true']) .compact {
+    grid-template-columns: clamp(2.65rem, 12vw, 3.15rem) minmax(0, 1fr);
+    gap: clamp(.75rem, 3vw, 1.1rem);
+    align-items: start;
+    padding: clamp(1.45rem, 4vw, 1.9rem) 0;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  :global([data-showcase='true']) .compact > .ordinal {
+    padding-top: .03em;
+    color: var(--primary);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 8.5vw, 2.8rem);
+    font-weight: 430;
+    line-height: 1;
+    letter-spacing: -.08em;
+  }
+  :global([data-showcase='true']) .compact > .content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'meta'
+      'title'
+      'trust'
+      'actions';
+    gap: 0;
+    min-width: 0;
+  }
+  :global([data-showcase='true']) .compact .meta { gap: .32rem .55rem; font-size: .67rem; }
+  :global([data-showcase='true']) .compact .title {
+    max-width: 25ch;
+    margin: .7rem 0 .8rem;
+    font-size: clamp(1.3rem, 5.6vw, 1.75rem);
+    font-weight: 540;
+    line-height: 1.14;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+  :global([data-showcase='true']) .compact .trustStrip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem .8rem;
+    margin: 0;
+    padding: .65rem 0 0;
+    border-top: 1px solid var(--border-color);
+  }
+  :global([data-showcase='true']) .compact .trustStrip > div {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  /* The headings remain accessible to assistive tech; values stay visible. */
+  :global([data-showcase='true']) .compact .trustStrip > div > span:first-child:not(.evidence-badge) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  /* The live evidence badge already states freshness ('Güncel'). Avoid
+     printing the same state twice; the badge remains fully visible. */
+  :global([data-showcase='true']) .compact .trustStrip > .freshnessFact { display: none; }
+  :global([data-showcase='true']) .compact .trustStrip strong { font-size: .72rem; }
+  :global([data-showcase='true']) .compact .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .65rem;
+    margin-top: .35rem;
+  }
+  :global([data-showcase='true']) .compact .readLink {
+    display: inline-flex;
+    min-height: 44px;
+    font-size: .76rem;
+    color: var(--primary);
+  }
+  :global([data-showcase='true']) .compact .bookmark { flex: 0 0 44px; }
+}
+
+/* 18 / Compact index reading order. The former meta/actions row
+   placed the reading link before the title on tablet and desktop. */
+@media (min-width: 621px) {
+  :global([data-showcase='true']) .compact .content {
+    grid-template-areas:
+      "meta meta"
+      "title title"
+      "trust actions";
+    align-items: end;
+  }
+  :global([data-showcase='true']) .compact .actions { align-self: end; }
+  /* Freshness is already stated in the visible evidence badge. */
+  :global([data-showcase='true']) .compact .trustStrip > .freshnessFact { display: none; }
+}
+
+/* Round 40: evidence labels are readable at large text zoom; no clipped facts. */
+@media (max-width: 620px) {
+  .meta > *, .outcome > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .standard .trustStrip > div { min-width: 0; max-width: 100%; }
+  .outcome { grid-template-columns: minmax(0, 1fr); }
+  .featured, .standard, .compact { gap: min(.75rem, 12px); }
+  .priority, .meta, .outcome, .title, .content { min-width: 0; overflow-wrap: anywhere; }
+  .actions { min-width: 0; flex-wrap: wrap; }
+  .readLink, .compact .readLink { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .trustStrip > div, .trustStrip > div > span {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Round 42: long outcomes and mobile link controls are actual prose, not
+   decorative overflow. Respect the card track under magnified reader text. */
+@media (max-width: 620px) {
+  :global([data-showcase='true']) .featured, :global([data-showcase='true']) .featured .content {
+    min-width: 0;
+    max-width: 100%;
+  }
+  :global([data-showcase='true']) .featured .titleLink,
+  :global([data-showcase='true']) .featured .title,
+  :global([data-showcase='true']) .featured .meta,
+  :global([data-showcase='true']) .featured .outcome,
+  :global([data-showcase='true']) .featured .actions {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  :global([data-showcase='true']) .featured .actions { flex-wrap: wrap; }
+}
+
+/* Round 42: showcase folio number is decorative; at 400% reader text its
+   rem-based track must not displace the meaningful compact-card title/link. */
+@media (max-width: 620px) {
+  :global([data-showcase='true']) .compact {
+    grid-template-columns: minmax(0, min(2.65rem, 48px)) minmax(0, 1fr);
+    gap: min(1.1rem, 14px);
+  }
+  :global([data-showcase='true']) .compact > .ordinal { font-size: min(clamp(2.2rem, 8.5vw, 2.8rem), 52px); }
+  :global([data-showcase='true']) .compact > .content,
+  :global([data-showcase='true']) .compact > .content > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  :global([data-showcase='true']) .readLink { flex-wrap: wrap; }
 }

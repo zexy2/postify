@@ -81,9 +81,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Start product server
+      # The UI suite checks hashed production assets, lazy chunk loading and
+      # static public route shells. Test the same compiled output Pages ships.
+      - name: Build production site for browser verification
+        run: npm run build
+
+      - name: Start compiled product preview
         run: |
-          npm run dev -- --host 0.0.0.0 --port 4174 --strictPort > /tmp/postify-vite.log 2>&1 &
+          npm run preview -- --host 0.0.0.0 --port 4174 --strictPort > /tmp/postify-vite.log 2>&1 &
           echo $! > /tmp/postify-vite.pid
 
       - name: Wait for product server

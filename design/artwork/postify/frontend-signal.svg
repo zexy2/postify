@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Original Postify visual study for frontend performance"><defs>
+<linearGradient id="bg" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#152820"/><stop offset=".57" stop-color="#28473a"/><stop offset="1" stop-color="#4b5f4c"/></linearGradient>
+<linearGradient id="oxide" x1="0" x2="1"><stop stop-color="#f5b893"/><stop offset="1" stop-color="#a55b43"/></linearGradient>
+<linearGradient id="surface" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#49685b"/><stop offset="1" stop-color="#172d26"/></linearGradient>
+<pattern id="grid" width="45" height="45" patternUnits="userSpaceOnUse"><path d="M45 0H0V45" stroke="#ecddbf" stroke-opacity=".09" fill="none"/></pattern>
+<pattern id="dots" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#ffdfbe" opacity=".4"/></pattern>
+<clipPath id="clip"><rect width="1200" height="800" /></clipPath></defs>
+<g clip-path="url(#clip)"><rect width="1200" height="800" fill="url(#bg)"/><rect width="1200" height="800" fill="url(#grid)"/>
+<rect x="36" y="36" width="1128" height="728" fill="none" stroke="#e9e2c6" opacity=".3"/>
+<text x="68" y="72" fill="#ebe6d2" font-family="monospace" font-size="14" letter-spacing="3">POSTIFY / LAB NOTE</text>
+<text x="1132" y="72" text-anchor="end" fill="#ebe6d2" opacity=".84" font-family="monospace" font-size="14" letter-spacing="2">02  /  HUMAN-TIMED</text>
+<rect x="146" y="158" width="915" height="495" rx="2" fill="#112820" fill-opacity=".35" stroke="#d4e1d2" stroke-opacity=".32"/>
+<path d="M162 226H1048" stroke="#d1e4d6" stroke-opacity=".16" stroke-width="1"/>
+<path d="M162 308H1048" stroke="#d1e4d6" stroke-opacity=".16" stroke-width="1"/>
+<path d="M162 390H1048" stroke="#d1e4d6" stroke-opacity=".16" stroke-width="1"/>
+<path d="M162 472H1048" stroke="#d1e4d6" stroke-opacity=".16" stroke-width="1"/>
+<path d="M162 554H1048" stroke="#d1e4d6" stroke-opacity=".16" stroke-width="1"/>
+<path d="M200 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M302 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M404 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M506 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M608 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M710 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M812 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M914 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<path d="M1016 180V630" stroke="#d1e4d6" stroke-opacity=".12" stroke-width="1"/>
+<rect x="210" y="242" width="336.0" height="22" fill="#d2e1c6" fill-opacity="0.120" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="210" y="242" width="67.2" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="193" y="258" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">01</text>
+<rect x="235" y="297" width="177.79999999999998" height="22" fill="#d2e1c6" fill-opacity="0.133" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="235" y="297" width="35.56" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="218" y="313" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">02</text>
+<rect x="260" y="352" width="459.2" height="22" fill="#d2e1c6" fill-opacity="0.146" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="260" y="352" width="91.84" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="243" y="368" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">03</text>
+<rect x="210" y="407" width="137.2" height="22" fill="#d2e1c6" fill-opacity="0.159" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="210" y="407" width="27.44" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="193" y="423" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">04</text>
+<rect x="235" y="462" width="214.2" height="22" fill="#d2e1c6" fill-opacity="0.172" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="235" y="462" width="42.84" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="218" y="478" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">05</text>
+<rect x="260" y="517" width="56.0" height="22" fill="#d2e1c6" fill-opacity="0.185" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="260" y="517" width="11.200000000000001" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="243" y="533" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">06</text>
+<rect x="210" y="572" width="77.0" height="22" fill="#d2e1c6" fill-opacity="0.198" stroke="#bad3b5" stroke-opacity=".42"/>
+<rect x="210" y="572" width="15.400000000000002" height="22" fill="url(#oxide)" opacity=".83"/>
+<text x="193" y="588" font-family="monospace" font-size="11" fill="#e4e3cc" text-anchor="end">07</text>
+<polyline points="175.0,365.0 182.5,385.7 190.0,404.0 197.5,418.0 205.0,426.5 212.5,429.1 220.0,426.1 227.5,418.9 235.0,409.3 242.5,399.2 250.0,390.4 257.5,384.2 265.0,381.0 272.5,380.7 280.0,382.3 287.5,384.3 295.0,384.9 302.5,382.7 310.0,376.5 317.5,366.2 325.0,352.3 332.5,336.0 340.0,319.3 347.5,304.4 355.0,293.3 362.5,287.8 370.0,288.8 377.5,296.2 385.0,309.2 392.5,326.2 400.0,344.9 407.5,363.1 415.0,378.7 422.5,390.3 430.0,397.2 437.5,399.5 445.0,398.4 452.5,395.1 460.0,391.5 467.5,389.3 475.0,389.4 482.5,392.5 490.0,398.1 497.5,405.3 505.0,252.3 512.5,257.4 520.0,418.7 527.5,415.1 535.0,406.0 542.5,391.7 550.0,373.4 557.5,353.0 565.0,332.8 572.5,315.1 580.0,302.0 587.5,294.6 595.0,293.7 602.5,298.5 610.0,308.0 617.5,320.3 625.0,333.3 632.5,345.1 640.0,354.2 647.5,359.9 655.0,362.3 662.5,362.1 670.0,360.9 677.5,360.2 685.0,361.6 692.5,366.3 700.0,374.7 707.5,386.3 715.0,400.2 722.5,414.5 730.0,427.1 737.5,435.9 745.0,439.4 752.5,436.6 760.0,427.5 767.5,412.8 775.0,394.4 782.5,374.3 790.0,354.8 797.5,338.2 805.0,326.0 812.5,319.0 820.0,317.2 827.5,209.5 835.0,214.6 842.5,330.5 850.0,335.7 857.5,338.7 865.0,339.0 872.5,336.5 880.0,332.2 887.5,327.5 895.0,324.2 902.5,324.0 910.0,328.1 917.5,337.3 925.0,351.2 932.5,368.7 940.0,388.1 947.5,407.2 955.0,423.6 962.5,435.3 970.0,441.0 977.5,440.1 985.0,433.2 992.5,421.4 1000.0,406.6 1007.5,391.0 1015.0,376.6 1022.5,365.0 1030.0,357.3" fill="none" stroke="#fad0a7" stroke-width="2.5" stroke-linejoin="round" opacity=".88"/>
+<circle cx="505.0" cy="252.3" r="10" fill="#293c30" stroke="#f4b794" stroke-width="3"/><circle cx="505.0" cy="252.3" r="3.5" fill="#f4b794"/>
+<circle cx="835.0" cy="214.6" r="10" fill="#293c30" stroke="#f4b794" stroke-width="3"/><circle cx="835.0" cy="214.6" r="3.5" fill="#f4b794"/>
+<circle cx="1030.0" cy="357.3" r="10" fill="#293c30" stroke="#f4b794" stroke-width="3"/><circle cx="1030.0" cy="357.3" r="3.5" fill="#f4b794"/>
+<path d="M780 190V620" stroke="#f3c6a8" opacity=".38" stroke-dasharray="4 7"/><text x="796" y="209" font-size="13" font-family="monospace" fill="#f6d7bc" letter-spacing="1.5">P75</text>
+<text x="1122" y="730" font-family="monospace" font-size="12" fill="#efe6d1" text-anchor="end" letter-spacing="2">OBSERVE / INTERACT / VERIFY</text>
+</g></svg>

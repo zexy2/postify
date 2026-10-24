@@ -394,3 +394,57 @@
     min-height: 44px;
   }
 }
+
+/* A sign-in is a task, not a three-step marketing story. Keep the form early,
+   with a compact editorial preface on small screens. */
+.contextList { font-family: var(--font-sans); font-size: .8rem; letter-spacing: -.01em; }
+.contextList li { grid-template-columns: minmax(0, 1fr); }
+.contextList li::before { display: none; }
+@media (max-width: 920px) {
+  .container { gap: 1.55rem; }
+  .context h2 { max-width: 17ch; font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: .99; }
+  .context > p { margin-top: .85rem; }
+}
+@media (max-width: 560px) {
+  .container { gap: 1.15rem; padding-top: .85rem; }
+  .eyebrow { letter-spacing: .04em; }
+  .context h2 { max-width: 18ch; margin-top: .4rem; font-size: clamp(2rem, 8.2vw, 2.7rem); line-height: 1.02; }
+  .context > p { margin-top: .65rem; font-size: .85rem; line-height: 1.55; }
+  .card { padding-top: 1rem; }
+  .header { padding-bottom: .8rem; }
+  .title { font-size: clamp(2.65rem, 10vw, 3.5rem); }
+  .form { margin-top: .95rem; gap: 1rem; }
+}
+
+/* Round 41 — real 400% reader-text reflow: preserve user-enlarged copy, but
+   cap layout furniture (gutters, SVGs and field inset) in device pixels. */
+@media (max-width: 560px) {
+  .container {
+    width: min(680px, calc(100% - min(2rem, 32px)));
+    gap: min(1.15rem, 20px);
+  }
+  .context, .card, .header, .form, .socialButtons { min-width: 0; max-width: 100%; }
+  .context h2, .title, .context > p, .subtitle, .error, .footer {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .context h2 { margin-top: min(.4rem, 8px); }
+  .card { padding-top: min(1rem, 18px); }
+  .form { gap: min(1rem, 20px); }
+  .input { padding-inline: min(1.55rem, 28px) min(2.4rem, 48px); }
+  .inputIcon { font-size: min(.8rem, 20px); }
+  .passwordToggle svg { width: min(1rem, 24px); height: min(1rem, 24px); }
+  .socialButtons { grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); }
+  .socialButton {
+    min-width: 0;
+    max-width: 100%;
+    min-height: 44px;
+    flex-wrap: wrap;
+    gap: min(.6rem, 12px);
+    padding: min(.65rem, 14px) min(.75rem, 14px);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .socialButton svg { width: min(1.5rem, 28px); height: min(1.5rem, 28px); flex: 0 0 auto; }
+}

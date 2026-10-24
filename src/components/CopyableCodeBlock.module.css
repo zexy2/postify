@@ -9,3 +9,34 @@
 @media (max-width:960px) {
   .toolbar button { min-height:44px; }
 }
+
+/* Round 27: keep the language + Copy control inside the code card when the
+   reader enlarges text to 200–400%. Actual code stays independently
+   scrollable and its whitespace / copied bytes are never changed. */
+.codeBlock { min-width: 0; max-width: 100%; }
+.toolbar { flex-wrap: wrap; min-width: 0; }
+.toolbar span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.toolbar button {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  text-align: left;
+}
+.toolbar button svg { flex: 0 0 auto; }
+.codeBlock pre {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.toolbar button .copyLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+/* Spacing is chrome, not prose. Keep it nearly identical at 100% but do not
+   multiply the icon-to-label padding by four when users enlarge the text. */
+.toolbar { gap: clamp(4px, .4rem, 12px); padding: 6px 10px 6px 14px; }
+.toolbar button { gap: 6px; padding: 6px 9px; }

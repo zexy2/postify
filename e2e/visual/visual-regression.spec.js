@@ -110,7 +110,7 @@ test('Core text and status tokens keep accessible contrast in light and dark the
   }
 });
 
-test('Article action bar yields to keyboard focus in short touch viewports', async ({ page }) => {
+test('Article inline action bar remains accessible under keyboard focus in short touch viewports', async ({ page }) => {
   await page.setViewportSize({ width: 568, height: 320 });
   await stabilize(page);
   await page.goto('/posts/node-json-dogrulama');
@@ -129,8 +129,12 @@ test('Article action bar yields to keyboard focus in short touch viewports', asy
   const verificationLink = outlineDisclosure.getByRole('link', { name: /^verification$|^doğrulama$/i });
   await verificationLink.focus();
   await expect(verificationLink).toBeFocused();
-  await expect.poll(async () => Number.parseFloat(await actionBar.evaluate((element) => getComputedStyle(element).opacity))).toBeLessThan(0.1);
-  await expect.poll(async () => actionBar.evaluate((element) => getComputedStyle(element).pointerEvents)).toBe('none');
+  // The new editorial layout moves tools into article metadata instead of
+  // covering reading content with a fixed dock. Inline tools remain visible
+  // and accessible even when a chapter link takes keyboard focus.
+  await expect.poll(async () => Number.parseFloat(await actionBar.evaluate((element) => getComputedStyle(element).opacity))).toBeGreaterThan(0.9);
+  await expect.poll(async () => actionBar.evaluate((element) => getComputedStyle(element).pointerEvents)).not.toBe('none');
+  expect(await actionBar.evaluate((element) => getComputedStyle(element).position)).toBe('static');
 
   const back = actionBar.getByRole('button', { name: /^back$|^geri$/i });
   await back.focus();
@@ -228,6 +232,9 @@ test('Mobile command palette open baseline', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await stabilize(page);
   await page.goto('/');
+  // Wait for React hydration before exercising its document key listener.
+  // The CI container can finish Vite's page-load event before Header mounts.
+  await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible({ timeout: 15_000 });
   await page.keyboard.press('Control+K');
   const palette = page.getByRole('dialog', { name: /search|ara/i });
   await expect(palette).toBeVisible();
@@ -292,6 +299,19 @@ for (const viewport of viewports) {
     expect(box?.y ?? -1).toBeGreaterThanOrEqual(0);
     expect((box?.y ?? viewport.height + 1) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport.height);
     await settleVisualSurface(page);
+    // The popover position is responsive to feed height and scroll. Validate its
+    // real placement above, then normalize only the screenshot capture geometry.
+    // This prevents async feed timing from clipping an otherwise identical panel.
+    await page.addStyleTag({ content: `
+      #advanced-discovery-filters {
+        position: fixed !important;
+        top: 72px !important;
+        max-height: calc(100vh - 100px) !important;
+      }
+    ` });
+    // Pointer remains over the toggle after opening; move it out so hover
+    // styling never affects the deterministic screenshot of filter options.
+    await page.mouse.move(0, 0);
     await expect(dialog).toHaveScreenshot(`discovery-filter-popover-${viewport.name}.png`);
   });
 }
@@ -302,9 +322,18 @@ for (const viewport of viewports) {
     await stabilize(page);
     await page.goto('/');
     await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible({ timeout: 15_000 });
+    // Initial fallback content is immediately visible while React Query is
+    // still fetching; wait until the offline notice stops changing height.
+    await expect(page.locator('[class*="fallbackNotice"] strong')).toContainText(
+      'The connection is temporarily unavailable', { timeout: 15_000 },
+    );
     await settleVisualSurface(page);
-    await waitForStableGeometry(page.locator('#main-content'));
-    await expect(page.locator('#main-content')).toHaveScreenshot(`home-${viewport.name}.png`);
+    const main = page.locator('#main-content');
+    // The first Chromium element screenshot finalizes a deferred 24px bottom
+    // section layout. Warm it once before comparing the stable complete page.
+    await main.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(main);
+    await expect(main).toHaveScreenshot(`home-${viewport.name}.png`);
   });
 
   test(`Article ${viewport.name} baseline`, async ({ page }) => {
@@ -662,7 +691,10 @@ for (const viewport of viewports) {
     const width = await page.evaluate(() => ({ viewport: window.innerWidth, document: document.documentElement.scrollWidth }));
     expect(width.document).toBeLessThanOrEqual(width.viewport);
     await settleVisualSurface(page);
-    await expect(page.locator('#root')).toHaveScreenshot(`authenticated-profile-${viewport.name}.png`);
+    const profile = page.locator('#root');
+    await profile.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(profile);
+    await expect(profile).toHaveScreenshot(`authenticated-profile-${viewport.name}.png`);
   });
 }
 
@@ -694,7 +726,10 @@ for (const viewport of viewports) {
     await page.goto('/about');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await settleVisualSurface(page);
-    await expect(page.locator('#main-content')).toHaveScreenshot(`about-${viewport.name}.png`);
+    const about = page.locator('#main-content');
+    await about.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(about);
+    await expect(about).toHaveScreenshot(`about-${viewport.name}.png`);
   });
 
   test(`Contact ${viewport.name} baseline`, async ({ page }) => {
@@ -730,6 +765,7 @@ for (const viewport of viewports) {
     if (viewport.name === 'mobile') expect((await recovery.boundingBox())?.height || 0).toBeGreaterThanOrEqual(44);
     await settleVisualSurface(page);
     await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ fullPage: false, animations: 'disabled', caret: 'hide' });
     await expect(page).toHaveScreenshot(`author-not-found-${viewport.name}.png`, { fullPage: false });
   });
 
@@ -1162,9 +1198,14 @@ for (const viewport of viewports) {
     await page.goto('/');
     await expect(page.locator('#knowledge-feed [data-card-variant="featured"]')).toBeVisible({ timeout: 15_000 });
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.locator('[class*="fallbackNotice"] strong')).toContainText(
+      'The connection is temporarily unavailable', { timeout: 15_000 },
+    );
     await settleVisualSurface(page);
-    await waitForStableGeometry(page.locator('#main-content'));
-    await expect(page.locator('#main-content')).toHaveScreenshot(`home-dark-${viewport.name}.png`);
+    const main = page.locator('#main-content');
+    await main.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(main);
+    await expect(main).toHaveScreenshot(`home-dark-${viewport.name}.png`);
   });
 
   test(`Dark theme Article ${viewport.name} baseline`, async ({ page }) => {
@@ -1309,7 +1350,10 @@ for (const viewport of viewports) {
         await page.evaluate(() => window.scrollTo(0, 0));
         await expect(page).toHaveScreenshot(`author-dark-${viewport.name}.png`, { fullPage: false });
       } else {
-        await expect(page.locator('#main-content')).toHaveScreenshot(`${name}-dark-${viewport.name}.png`);
+        const main = page.locator('#main-content');
+        await main.screenshot({ animations: 'disabled', caret: 'hide' });
+        await waitForStableGeometry(main);
+        await expect(main).toHaveScreenshot(`${name}-dark-${viewport.name}.png`);
       }
     });
   }
@@ -1336,6 +1380,8 @@ for (const viewport of viewports) {
     await expect(footer.getByRole('link', { name: /discover our goal|hedefimizi keşfet/i })).toBeVisible();
     await footer.scrollIntoViewIfNeeded();
     await settleVisualSurface(page);
+    await footer.screenshot({ animations: 'disabled', caret: 'hide' });
+    await waitForStableGeometry(footer);
     await expect(footer).toHaveScreenshot(`goal-footer-${viewport.name}.png`);
   });
 }

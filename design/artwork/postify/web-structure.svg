@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Postify editorial illustration of accessible web structure"><defs><linearGradient id="bg" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#15271f"/><stop offset=".58" stop-color="#27473a"/><stop offset="1" stop-color="#445d49"/></linearGradient><linearGradient id="accent" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#eac1a0"/><stop offset="1" stop-color="#b96c53"/></linearGradient><pattern id="dots" width="13" height="13" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#efdfca" opacity=".22"/></pattern></defs><rect width="1200" height="800" fill="url(#bg)"/><rect width="1200" height="800" fill="url(#dots)"/><rect x="36" y="36" width="1128" height="728" fill="none" stroke="#f1e4d3" stroke-opacity=".24"/><text x="66" y="73" font-size="14" letter-spacing="2" font-family="monospace" fill="#e7dfcc">POSTIFY / STRUCTURAL STUDY</text><text x="1130" y="73" text-anchor="end" font-size="13" letter-spacing="2" font-family="monospace" fill="#e7dfcc">04 / OPEN WEB</text>
+<path d="M0 110C320 200 460 0 1200 150" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 144C320 234 460 34 1200 184" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 178C320 268 460 68 1200 218" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 212C320 302 460 102 1200 252" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 246C320 336 460 136 1200 286" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 280C320 370 460 170 1200 320" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 314C320 404 460 204 1200 354" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 348C320 438 460 238 1200 388" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 382C320 472 460 272 1200 422" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 416C320 506 460 306 1200 456" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 450C320 540 460 340 1200 490" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 484C320 574 460 374 1200 524" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 518C320 608 460 408 1200 558" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 552C320 642 460 442 1200 592" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<path d="M0 586C320 676 460 476 1200 626" stroke="#b8ceb7" opacity=".08" fill="none"/>
+<rect x="234" y="174" width="710" height="94" rx="2" fill="#152c24" fill-opacity="0.63" stroke="#c9dec5" stroke-opacity="0.66"/>
+<rect x="254" y="193" width="63" height="56" fill="url(#accent)" fill-opacity="0.78"/>
+<text x="349" y="233" font-family="monospace" font-size="25" fill="#e8deca" letter-spacing="3">01</text>
+<path d="M429 221H914" stroke="#ccd8c4" stroke-opacity=".34" stroke-width="2" stroke-dasharray="8 8"/>
+<rect x="256" y="300" width="666" height="96" rx="2" fill="#152c24" fill-opacity="0.57" stroke="#c9dec5" stroke-opacity="0.58"/>
+<rect x="276" y="319" width="57" height="58" fill="url(#accent)" fill-opacity="0.72"/>
+<text x="371" y="359" font-family="monospace" font-size="25" fill="#e8deca" letter-spacing="3">02</text>
+<path d="M451 347H892" stroke="#ccd8c4" stroke-opacity=".34" stroke-width="2" stroke-dasharray="8 8"/>
+<rect x="278" y="426" width="622" height="100" rx="2" fill="#152c24" fill-opacity="0.51" stroke="#c9dec5" stroke-opacity="0.50"/>
+<rect x="298" y="445" width="51" height="62" fill="url(#accent)" fill-opacity="0.66"/>
+<text x="393" y="485" font-family="monospace" font-size="25" fill="#e8deca" letter-spacing="3">03</text>
+<path d="M473 473H870" stroke="#ccd8c4" stroke-opacity=".34" stroke-width="2" stroke-dasharray="8 8"/>
+<rect x="322" y="564" width="534" height="83" rx="2" fill="#152c24" fill-opacity="0.45" stroke="#c9dec5" stroke-opacity="0.42"/>
+<rect x="342" y="583" width="45" height="45" fill="url(#accent)" fill-opacity="0.60"/>
+<text x="437" y="623" font-family="monospace" font-size="25" fill="#e8deca" letter-spacing="3">04</text>
+<path d="M517 611H826" stroke="#ccd8c4" stroke-opacity=".34" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M600 269V300" stroke="#edbc9e" stroke-width="3"/><circle cx="600" cy="300" r="7" fill="#edbc9e"/>
+<path d="M600 394V426" stroke="#edbc9e" stroke-width="3"/><circle cx="600" cy="426" r="7" fill="#edbc9e"/>
+<path d="M600 526V564" stroke="#edbc9e" stroke-width="3"/><circle cx="600" cy="564" r="7" fill="#edbc9e"/>
+<circle cx="961" cy="216" r="49" fill="#daac86" fill-opacity=".12" stroke="#eac4a5" stroke-width="1.5"/><path d="M940 217l14 14 29-29" stroke="#edc6aa" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<text x="1130" y="730" text-anchor="end" fill="#eadfca" font-size="12" letter-spacing="2" font-family="monospace">SEMANTICS / ACCESS / RESILIENCE</text></svg>

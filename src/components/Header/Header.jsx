@@ -23,7 +23,6 @@ import { useBookmarks } from '../../hooks/useBookmarks';
 import { useAuth } from '../../hooks/useAuth';
 import LanguageSwitcher from '../LanguageSwitcher';
 import BrandMark from '../BrandMark';
-const sheetModulePromise = import('../ui/sheet');
 
 const CommandPalette = lazy(() => import('../CommandPalette'));
 
@@ -76,13 +75,48 @@ const Header = () => {
     setIsAccountOpen(false);
   }, [location.pathname]);
 
+  // Keep the menu prewarmed for fast first-click navigation, but schedule its
+  // dialog bundle after the page load and in idle time instead of making the
+  // mobile sheet part of the initial render's work.
   useEffect(() => {
     let active = true;
-    sheetModulePromise.then((module) => {
+    let idleHandle;
+    let timerHandle;
+    let pending = false;
+    const prepareSheet = () => {
+      if (!active || pending) return;
+      pending = true;
+      import('../ui/sheet').then((module) => {
+        if (active) setSheetModule(module);
+      });
+    };
+    const schedule = () => {
+      if ('requestIdleCallback' in window) {
+        idleHandle = window.requestIdleCallback(prepareSheet, { timeout: 1200 });
+      } else {
+        timerHandle = window.setTimeout(prepareSheet, 150);
+      }
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
+    return () => {
+      active = false;
+      window.removeEventListener('load', schedule);
+      if (idleHandle !== undefined) window.cancelIdleCallback(idleHandle);
+      if (timerHandle !== undefined) window.clearTimeout(timerHandle);
+    };
+  }, []);
+
+  // If someone taps the menu before the idle prewarm finishes, request the
+  // same cached chunk immediately instead of waiting for the window load.
+  useEffect(() => {
+    if (!isMenuOpen || sheetModule) return undefined;
+    let active = true;
+    import('../ui/sheet').then((module) => {
       if (active) setSheetModule(module);
     });
     return () => { active = false; };
-  }, []);
+  }, [isMenuOpen, sheetModule]);
 
   useEffect(() => {
     if (!isAccountOpen) return undefined;

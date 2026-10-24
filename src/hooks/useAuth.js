@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { authService } from "../services/authService";
-import { hasSupabaseConfig } from "../lib/supabase";
+import { hasSupabaseConfig } from "../lib/supabaseConfig";
+
+// Public pages render without eagerly evaluating the optional auth SDK.
+const loadAuthService = async () => (await import("../services/authService")).authService;
 import {
   setUser,
   setSession,
@@ -72,6 +74,7 @@ export const useAuth = () => {
 
     let isMounted = true;
     let subscription;
+    let authService;
 
     const hydrateUser = async (session) => {
       if (!session || !isMounted) return;
@@ -120,6 +123,8 @@ export const useAuth = () => {
 
     const initAuth = async () => {
       try {
+        authService = await loadAuthService();
+        if (!isMounted) return;
         // Subscribe before reading the session so post-OAuth SIGNED_IN cannot
         // be missed while Supabase is processing the callback URL.
         const result = await authService.onAuthStateChange(handleAuthStateChange);
@@ -151,6 +156,7 @@ export const useAuth = () => {
         dispatch(setLoading(true));
         dispatch(setError(null));
 
+        const authService = await loadAuthService();
         const registration = await authService.register({ email, password, fullName, username });
 
         toast.success(registration.needsEmailConfirmation
@@ -180,6 +186,7 @@ export const useAuth = () => {
         dispatch(setLoading(true));
         dispatch(setError(null));
 
+        const authService = await loadAuthService();
         const { session: newSession, user: newUser } = await authService.login({
           email,
           password,
@@ -222,6 +229,7 @@ export const useAuth = () => {
     async (provider) => {
       try {
         dispatch(setLoading(true));
+        const authService = await loadAuthService();
         await authService.loginWithOAuth(provider);
         return { success: true };
       } catch (err) {
@@ -240,6 +248,7 @@ export const useAuth = () => {
    */
   const logout = useCallback(async () => {
     try {
+      const authService = await loadAuthService();
       await authService.logout();
       dispatch(logoutAction());
       toast.success(t("auth.logoutSuccess"));
@@ -259,6 +268,7 @@ export const useAuth = () => {
 
         if (!user?.id) throw new Error("Not authenticated");
 
+        const authService = await loadAuthService();
         const updatedProfile = await authService.updateProfile(
           user.id,
           updates,
@@ -285,6 +295,7 @@ export const useAuth = () => {
     async (email) => {
       try {
         dispatch(setLoading(true));
+        const authService = await loadAuthService();
         await authService.resetPassword(email);
         toast.success(t("auth.resetPasswordSent"));
         return { success: true };
@@ -306,6 +317,7 @@ export const useAuth = () => {
     async (newPassword) => {
       try {
         dispatch(setLoading(true));
+        const authService = await loadAuthService();
         await authService.updatePassword(newPassword);
         toast.success(t("auth.passwordUpdated"));
         return { success: true };
