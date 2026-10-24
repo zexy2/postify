@@ -4,19 +4,19 @@
 
 .container {
   position: fixed;
-  top: 0;
+  /* Keep progress visible just below the sticky header. */
+  top: var(--header-height);
   left: 0;
   right: 0;
-  z-index: 9999;
-  background: transparent;
+  z-index: calc(var(--z-sticky) + 1);
+  background: color-mix(in srgb, var(--border-strong) 40%, transparent);
   pointer-events: none;
 }
 
 .bar {
   height: 100%;
-  border-radius: 0 2px 2px 0;
+  border-radius: 0;
   transition: width 50ms ease-out;
-  will-change: width;
 }
 
 .glow {
@@ -24,8 +24,8 @@
   top: 0;
   left: 0;
   height: 100%;
-  filter: blur(8px);
-  opacity: 0.6;
+  filter: blur(4px);
+  opacity: 0.25;
   border-radius: 0 2px 2px 0;
   transition: width 50ms ease-out;
   will-change: width;

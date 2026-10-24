@@ -280,3 +280,342 @@
   .statusAction, .exploreLink { transition: none; }
   .statusAction:hover, .exploreLink:hover { transform: none; }
 }
+
+/* Authors on warm newsprint in light mode; preserve the ink-green dark edition. */
+:global(html:not([data-theme='dark'])) .authorHeader {
+  color: #21332a;
+  background:
+    radial-gradient(ellipse at 90% 6%, rgb(143 173 136 / 20%), transparent 42%),
+    radial-gradient(ellipse at 10% 100%, rgb(194 127 101 / 12%), transparent 48%),
+    linear-gradient(125deg, #e4e8dc, #efeadf 70%, #f2eee6);
+  border-color: rgb(35 49 41 / 15%);
+}
+:global(html:not([data-theme='dark'])) .authorHeader::before {
+  border-color: rgb(35 49 41 / 14%);
+  box-shadow: 0 0 0 5rem rgb(35 49 41 / 2%), 0 0 0 11rem rgb(35 49 41 / 2%);
+}
+:global(html:not([data-theme='dark'])) .editionLine { color: #395343; border-bottom-color: rgb(35 49 41 / 18%); }
+:global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: #566b5e; }
+:global(html:not([data-theme='dark'])) .editionMark { color: #a64225; }
+:global(html:not([data-theme='dark'])) .eyebrow { color: #274734; background: rgb(44 74 56 / 8%); border-color: rgb(44 74 56 / 19%); }
+:global(html:not([data-theme='dark'])) .identity h1 { color: #1d2e25; }
+:global(html:not([data-theme='dark'])) .handle { color: #566e5d; }
+:global(html:not([data-theme='dark'])) .bio { color: #405748; }
+:global(html:not([data-theme='dark'])) .exploreLink { color: #fdfbf6; background: #2c4a38; }
+:global(html:not([data-theme='dark'])) .exploreLink:hover { color: #fdfbf6; background: #385d46; }
+:global(html:not([data-theme='dark'])) .portrait { color: #2e4a37; background: radial-gradient(circle at 50% 50%, #d9e3d2, #c9d9c3 65%, #b9cdb6); }
+:global(html:not([data-theme='dark'])) .portraitRing { border-color: rgb(44 74 56 / 20%); }
+:global(html:not([data-theme='dark'])) .portraitEdition { color: #fdfbf6; background: #2c4a38; }
+
+@media (max-width: 520px) {
+  .authorStats > div { min-height: 5.65rem; }
+  .authorStats strong { font-size: clamp(1.25rem, 5vw, 1.65rem); }
+}
+
+/* Studio folio: authors are people and their work, not a dashboard hero
+   with a decorative avatar and floating KPI cards. */
+.authorHeader,
+:global(html:not([data-theme='dark'])) .authorHeader {
+  min-height: 0;
+  padding: clamp(1.45rem, 3.3vw, 3rem) 0 clamp(1.9rem, 3.9vw, 3.8rem);
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  border-top: 3px solid var(--primary);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+.authorHeader::before,
+:global(html:not([data-theme='dark'])) .authorHeader::before { display: none; }
+.editionLine,
+:global(html:not([data-theme='dark'])) .editionLine {
+  padding-bottom: .85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  letter-spacing: .075em;
+}
+.editionLine > span:last-child,
+:global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: var(--text-muted); }
+.heroContent {
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, .24fr);
+  gap: clamp(1.5rem, 3.5vw, 4rem);
+  align-items: end;
+  padding: clamp(1.8rem, 4vw, 3.5rem) 0 0;
+}
+.eyebrow,
+:global(html:not([data-theme='dark'])) .eyebrow {
+  min-height: 0;
+  padding: 0;
+  color: var(--primary);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  letter-spacing: .055em;
+}
+.identity h1,
+:global(html:not([data-theme='dark'])) .identity h1 {
+  max-width: 17ch;
+  margin: clamp(.65rem, 1.4vw, 1.1rem) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 520;
+  font-size: clamp(3.7rem, 7vw, 7.2rem);
+  letter-spacing: -.067em;
+  line-height: .99;
+}
+.handle,
+:global(html:not([data-theme='dark'])) .handle { margin-top: .55rem; color: var(--text-muted); }
+.bio,
+:global(html:not([data-theme='dark'])) .bio {
+  margin-top: 1.1rem;
+  max-width: 55ch;
+  color: var(--text-secondary);
+  font-size: clamp(.98rem, 1.4vw, 1.11rem);
+  line-height: 1.63;
+}
+.exploreLink,
+:global(html:not([data-theme='dark'])) .exploreLink {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  padding: .55rem 0;
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--primary);
+  border-radius: 0;
+}
+.exploreLink:hover,
+:global(html:not([data-theme='dark'])) .exploreLink:hover {
+  color: var(--primary);
+  background: transparent;
+  transform: none;
+}
+.portrait,
+:global(html:not([data-theme='dark'])) .portrait {
+  width: min(100%, 12rem);
+  aspect-ratio: 4 / 5;
+  justify-self: end;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--border-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+.portraitRing { display: none; }
+.monogram { font-family: var(--font-display); font-weight: 460; font-size: clamp(6rem, 12vw, 11rem); letter-spacing: -.09em; }
+.portraitEdition,
+:global(html:not([data-theme='dark'])) .portraitEdition {
+  right: 0;
+  bottom: 0;
+  padding: .2rem 0;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  letter-spacing: .06em;
+}
+.authorStats {
+  width: 100%;
+  margin: 0;
+  gap: 0;
+  border-bottom: 1px solid var(--border-strong);
+}
+.authorStats > div {
+  min-height: 7rem;
+  padding: 1.15rem clamp(.65rem, 2.5vw, 2.2rem);
+  gap: .25rem .65rem;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: none;
+}
+.authorStats > div:first-child { padding-left: 0; }
+.authorStats > div:last-child { border-right: 0; }
+.authorStats strong { font-family: var(--font-display); font-weight: 560; letter-spacing: -.05em; }
+.authorStats span { font-family: var(--font-sans); letter-spacing: .015em; text-transform: none; }
+.knowledgeSection { margin-top: clamp(2rem, 4vw, 3.5rem); }
+.sectionHeader h2 { font-family: var(--font-display); font-size: clamp(2.4rem, 4.2vw, 4.1rem); font-weight: 530; letter-spacing: -.06em; }
+.sectionHeader > strong { background: transparent; border-radius: 0; border: 0; font-family: var(--font-mono); }
+@media (max-width: 720px) {
+  .heroContent { grid-template-columns: minmax(0, 1fr) minmax(6rem, .24fr); padding: 1.6rem 0 0; }
+  .portrait { width: 7rem; aspect-ratio: 3 / 4; box-shadow: none; }
+  .monogram { font-size: 6rem; }
+  .authorStats { margin-top: 0; width: 100%; gap: 0; }
+  .authorStats > div { min-height: 6rem; padding: .8rem .6rem; border-radius: 0; }
+  .authorStats strong { font-size: 1.85rem; }
+}
+@media (max-width: 520px) {
+  .authorHeader,
+  :global(html:not([data-theme='dark'])) .authorHeader { padding: 1.15rem 0 1.45rem; border-radius: 0; }
+  .heroContent { display: block; padding-top: 1.2rem; }
+  .portrait { display: none; }
+  .identity h1,
+  :global(html:not([data-theme='dark'])) .identity h1 { font-size: clamp(2.85rem, 11vw, 4.1rem); }
+  .authorStats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .authorStats > div { min-height: 5.7rem; padding: .75rem .55rem; }
+  .authorStats strong { font-size: 1.65rem; }
+  .authorStats span { font-size: .64rem; overflow-wrap: break-word; }
+}
+
+
+/* Edition 22 — a real author's bibliography lives beside the folio, not
+   hidden behind a sequence of large cover cards. Links go to the real records. */
+.portfolioLayout { min-width: 0; }
+.portfolioIndex { display: none; }
+.portfolioIndexMobile { display: none; }
+.portfolioFeed { min-width: 0; }
+
+.portfolioIndexHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .65rem;
+  margin-bottom: .6rem;
+  padding: .95rem 0 .8rem;
+  color: var(--text-primary);
+  border-top: 2px solid var(--text-primary);
+  border-bottom: 1px solid var(--border-strong);
+  font-family: var(--font-sans);
+  font-size: .77rem;
+  font-weight: 780;
+}
+.portfolioIndexHeading strong,
+.portfolioIndexMobile summary strong {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  font-weight: 780;
+  font-variant-numeric: tabular-nums;
+}
+.publicationList {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.publicationList li { border-bottom: 1px solid var(--border-color); }
+.publicationLink {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr) 1rem;
+  align-items: start;
+  gap: .65rem;
+  min-height: 58px;
+  padding: .85rem .22rem .9rem 0;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+.publicationLink:hover {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--bg-secondary) 56%, transparent);
+}
+.publicationLink:focus-visible { outline: 3px solid var(--border-focus); outline-offset: -3px; }
+.publicationOrdinal {
+  padding-top: .1rem;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  font-weight: 740;
+  font-variant-numeric: tabular-nums;
+}
+.publicationDetails { display: grid; min-width: 0; gap: .28rem; }
+.publicationType {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: .67rem;
+  font-weight: 720;
+  letter-spacing: .035em;
+}
+.publicationDetails strong {
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(.98rem, 1.3vw, 1.28rem);
+  font-weight: 560;
+  letter-spacing: -.035em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.publicationDetails small {
+  margin-top: .1rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: .63rem;
+}
+.publicationArrow { margin-top: .08rem; color: var(--text-muted); font-size: .95rem; }
+.publicationLink:hover .publicationArrow { color: var(--primary); }
+
+@media (min-width: 1080px) {
+  .portfolioLayout:has(.portfolioIndex) {
+    display: grid;
+    grid-template-columns: minmax(14rem, .34fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3.4vw, 4.5rem);
+    align-items: start;
+    margin-top: clamp(1.25rem, 2.4vw, 2.5rem);
+  }
+  .portfolioIndex {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + 1.2rem);
+    min-width: 0;
+    max-height: calc(100vh - var(--header-height) - 2.4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .portfolioFeed { min-width: 0; }
+}
+
+@media (max-width: 1079px) {
+  .portfolioIndexMobile {
+    display: block;
+    margin-top: 1.25rem;
+    border-top: 2px solid var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .portfolioIndexMobile summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .85rem;
+    min-height: 48px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: .81rem;
+    font-weight: 760;
+  }
+  .portfolioIndexMobile summary:focus-visible { outline: 3px solid var(--border-focus); outline-offset: -3px; }
+  .portfolioIndexMobile nav { padding-bottom: .55rem; }
+  .portfolioIndexMobile .publicationLink { min-height: 48px; }
+  .portfolioIndexMobile .publicationDetails strong { font-size: clamp(1.05rem, 3.5vw, 1.32rem); }
+  .portfolioFeed { margin-top: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .publicationLink { transition: none; }
+}
+
+/* Round 40: 400% text reflow keeps the author folio and publication count
+   within narrow reading viewports without hiding information. */
+@media (max-width: 520px) {
+  .editionLine { min-width: 0; flex-wrap: wrap; }
+  .editionLine > span { min-width: 0; overflow-wrap: anywhere; }
+  .eyebrow, .exploreLink { max-width: 100%; overflow-wrap: anywhere; }
+  .bio, .handle, .publicationDetails { min-width: 0; overflow-wrap: anywhere; }
+  .exploreLink { flex-wrap: wrap; }
+  .authorStats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr)); }
+  .authorStats > div, .authorStats span { min-width: 0; overflow-wrap: anywhere; }
+  .sectionHeader { min-width: 0; gap: min(1rem, 12px); }
+  .sectionHeader > div { min-width: 0; flex: 1 1 0; }
+  .sectionEyebrow, .sectionHeader h2 { min-width: 0; overflow-wrap: anywhere; }
+  .sectionHeader > strong { min-width: 0; max-width: 20vw; height: auto; overflow-wrap: anywhere; }
+  .publicationLink {
+    grid-template-columns: min(1.5rem, 24px) minmax(0, 1fr) min(1rem, 16px);
+    gap: min(.65rem, 10px);
+  }
+  .publicationType, .publicationDetails small { overflow-wrap: anywhere; }
+  .portfolioIndexMobile summary { flex-wrap: wrap; gap: min(.85rem, 12px); }
+  .portfolioIndexMobile summary > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .portfolioIndexMobile summary strong { min-width: 0; }
+}

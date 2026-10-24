@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-// Contract is scoped to the modern editorial layout, restored owner-approved CD-003 PL-01 palette:
-// implemented website, real destinations, no fabricated contact submission.
+// Public editorial semantics, contrast, focus, route anchors and themed art
+// remain guarded across the distinct new sage About and terra-cotta Contact.
 for (const route of ['/about', '/contact']) {
   for (const theme of ['light', 'dark']) {
     for (const width of [320, 390, 768, 1440]) {
@@ -36,8 +36,8 @@ for (const route of ['/about', '/contact']) {
           };
         });
         expect(info.background).toMatch(/radial-gradient/i);
-        expect(info.background).toMatch(/161, 56, 38/i);
-        expect(info.front).toBe('rgb(239, 237, 229)');
+        expect(info.background).toContain(theme === 'light' ? (route === '/about' ? '123, 155, 107' : '188, 99, 70') : (route === '/about' ? '161, 56, 38' : '174, 69, 43'));
+        expect(info.front).toBe(theme === 'dark' ? 'rgb(239, 237, 229)' : (route === '/about' ? 'rgb(32, 49, 39)' : 'rgb(48, 39, 34)'));
         expect(info.right).toBeLessThanOrEqual(info.frameRight + 1);
         expect(info.left).toBeGreaterThanOrEqual(info.frameLeft - 1);
         expect(info.pageWidth).toBeLessThanOrEqual(info.viewportWidth + 1);
@@ -47,8 +47,8 @@ for (const route of ['/about', '/contact']) {
           const computed = getComputedStyle(element);
           return { font: computed.fontFamily, color: computed.color };
         });
-        expect(headlineArt.font).toMatch(/Fraunces/i);
-        expect(headlineArt.color).toBe('rgb(242, 172, 145)');
+        expect(headlineArt.font).toMatch(/Fraunces/i); // Italic evidence phrase retains the editorial accent face.
+        expect(headlineArt.color).toBe(theme === 'dark' ? 'rgb(242, 172, 145)' : (route === '/about' ? 'rgb(147, 64, 39)' : 'rgb(160, 66, 42)'));
         const art = hero.locator('[class*="heroArtwork"]');
         await expect(art).toBeVisible();
         if (width <= 390) {
@@ -73,7 +73,7 @@ for (const route of ['/about', '/contact']) {
         if (route === '/about') {
           const artworkStatement = art.locator('[class*="artworkStatement"]');
           await expect(artworkStatement).toBeVisible();
-          expect(await artworkStatement.evaluate((element) => getComputedStyle(element).color)).toBe('rgb(244, 239, 230)');
+          expect(await artworkStatement.evaluate((element) => getComputedStyle(element).color)).toBe(theme === 'dark' ? 'rgb(244, 239, 230)' : 'rgb(247, 244, 232)');
           await expect(page.getByRole('region', { name: /no magic score/i }).locator('article')).toHaveCount(4);
           await expect(page.getByRole('region', { name: /the shape follows/i }).locator('article')).toHaveCount(4);
           await expect(page.locator('#main-content').getByRole('link', { name: /explore knowledge/i })).toHaveAttribute('href', '/');

@@ -256,3 +256,110 @@
   .heroLink { transition: none; }
   .heroLink:hover { transform: none; }
 }
+
+/* Quality loop 02: the About chapter should feel like a field manual in
+   daylight, not the same dark landing poster as Contact. */
+:global(html:not([data-theme='dark'])) .hero {
+  color: #203127;
+  background:
+    radial-gradient(circle at 87% 21%, rgb(123 155 107 / 23%), transparent 42%),
+    linear-gradient(132deg, #e1e9da 0%, #edf0e6 55%, #e7e8d9 100%);
+  border-color: rgb(44 74 56 / 21%);
+}
+:global(html:not([data-theme='dark'])) .heroIndex,
+:global(html:not([data-theme='dark'])) .heroIndex > span:last-child {
+  color: #3c5744;
+  border-color: rgb(44 74 56 / 23%);
+}
+:global(html:not([data-theme='dark'])) .hero .eyebrow,
+:global(html:not([data-theme='dark'])) .editionMark { color: #9c4229; }
+:global(html:not([data-theme='dark'])) .hero h1 { color: #203127; }
+:global(html:not([data-theme='dark'])) .hero h1 em { color: #934027; }
+:global(html:not([data-theme='dark'])) .heroCopy > p { color: #435948; }
+:global(html:not([data-theme='dark'])) .heroLink,
+:global(html:not([data-theme='dark'])) .heroLink:hover { color: #fcf8f0; background: #294936; border-color: #294936; }
+:global(html:not([data-theme='dark'])) .heroArtwork {
+  background: radial-gradient(circle at 60% 32%, #d3dec7 0%, #adc4a5 35%, #e2eadc 78%);
+  border-color: rgb(44 74 56 / 27%);
+  box-shadow: 0 20px 58px rgb(36 54 42 / 12%);
+}
+:global(html:not([data-theme='dark'])) .artworkOrb { border-color: rgb(44 74 56 / 37%); box-shadow: 0 0 0 2.4rem rgb(44 74 56 / 8%), 0 0 0 5rem rgb(44 74 56 / 5%); }
+:global(html:not([data-theme='dark'])) .artworkOrb::before { border-color: rgb(44 74 56 / 33%); }
+:global(html:not([data-theme='dark'])) .artworkOrb > span { color: #a0442a; text-shadow: 0 8px 32px rgb(161 56 38 / 16%); }
+:global(html:not([data-theme='dark'])) .artworkCaption { color: #345440; }
+:global(html:not([data-theme='dark'])) .artworkStatement {
+  color: #f7f4e8;
+  background: linear-gradient(0deg, rgb(36 63 46 / 97%) 0%, rgb(36 63 46 / 62%) 60%, transparent 100%);
+}
+:global(html:not([data-theme='dark'])) .artworkStatement em { color: #fac0a4; }
+
+/* Round 26: textual section headings are content, not decoration. Allow
+   magnified Turkish/English words to wrap inside their allocated columns,
+   rather than enlarging an implicit grid/flex min-content width off-screen. */
+.statement > div,
+.sectionHeading > div,
+.modelRow > h3,
+.modelRow > p,
+.cta > div { min-width: 0; max-width: 100%; }
+.statement h2,
+.sectionHeading h2,
+.modelRow h3,
+.cta h2,
+.artworkStatement {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+/* The artwork wordmark deliberately spans its own inset panel; constrain
+   text only, retaining the full-bleed gradient background and image geometry. */
+.artworkStatement { max-width: none; }
+@media (max-width: 600px) {
+  .statement,
+  .sectionHeading { grid-template-columns: minmax(0, 1fr); }
+  .cta > div { flex: 1 1 100%; }
+}
+
+/* Round 42 / About: preserve reader-enlarged words at 400% without allowing
+   decorative gutters, artwork, folio markers or label tracks to set width. */
+@media (max-width: 600px) {
+  .hero { padding: min(1.2rem, 24px); }
+  .heroIndex { min-width: 0; flex-wrap: wrap; gap: min(1.5rem, 12px); }
+  .heroIndex > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .heroIndex > span:last-child { max-width: 100%; text-align: start; }
+  .heroBody { min-width: 0; grid-template-columns: minmax(0, 1fr); gap: min(1.4rem, 22px); }
+  .heroCopy, .heroCopy > p, .heroCopy .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .hero h1 { min-width: 0; max-width: 100%; }
+  .heroLink { gap: min(1rem, 12px); margin-top: min(2.2rem, 35px); padding: min(.8rem, 14px) min(1.25rem, 20px); }
+  .heroArtwork { min-width: 0; padding: min(.9rem, 16px); }
+  .artworkOrb > span { font-size: min(6.5rem, 110px); }
+  .artworkCaption { min-width: 0; flex-wrap: wrap; gap: min(1rem, 12px); }
+  .artworkCaption > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .artworkStatement {
+    min-width: 0;
+    width: calc(100% + 2 * min(.9rem, 16px));
+    margin: auto calc(-1 * min(.9rem, 16px)) calc(-1 * min(.9rem, 16px));
+    padding: min(2.4rem, 40px) min(.9rem, 16px) min(.9rem, 16px);
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Round 42 / chapter grid: avoid 4× ordinal columns and internal card min-size.
+   Reader-scaled paragraphs continue onto additional lines, not hidden strips. */
+@media (max-width: 600px) {
+  .statement, .model, .formats, .modelRows, .formatGrid, .cta, .sectionHeading { min-width: 0; max-width: 100%; }
+  .statement { gap: min(.75rem, 14px); padding-block: min(3.1rem, 52px); }
+  .statement > div, .statement p, .statement .eyebrow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .modelRows, .formatGrid { grid-template-columns: minmax(0, 1fr); }
+  .modelRow {
+    min-width: 0;
+    grid-template-columns: minmax(0, min(2.5rem, 32px)) minmax(0, 1fr);
+    gap: min(1.4rem, 12px);
+    padding: min(1.4rem, 20px) 0;
+  }
+  .modelRow > span, .modelRow h3, .modelRow p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .formatItem { min-width: 0; gap: min(.85rem, 12px); padding: min(1.1rem, 18px); }
+  .formatItem h3, .formatItem p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .cta { gap: min(2rem, 24px); }
+  .ctaActions { min-width: 0; }
+  .ctaActions a { min-width: 0; max-width: 100%; white-space: normal; flex-wrap: wrap; gap: min(.5rem, 8px); padding: min(.8rem, 14px) min(1.25rem, 20px); overflow-wrap: anywhere; }
+}

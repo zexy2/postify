@@ -217,6 +217,91 @@
   letter-spacing: .06em;
 }
 
+/* 21st.dev Dithered Footer-inspired signature, restyled for Oxide & Newsprint.
+   The oversized wordmark is a knockout against the warm paper surface.
+   Dots use native CSS masks: no canvas, image assets or dependencies. */
+.signatureBand {
+  position: relative;
+  isolation: isolate;
+  height: clamp(15.5rem, 25vw, 20.5rem);
+  overflow: hidden;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-secondary) 88%, var(--primary-subtle)), var(--bg-secondary) 65%);
+  border-top: 1px solid var(--border-strong);
+}
+
+/* Quiet editorial label to balance the oversized dot-cutout mark. */
+.signatureBand::before {
+  content: "POSTIFY / FIELD NOTES";
+  position: absolute;
+  z-index: 2;
+  top: .9rem;
+  inset-inline-start: .75rem;
+  color: var(--text-secondary);
+  font: 700 .64rem / 1.5 var(--font-mono);
+  letter-spacing: .16em;
+  pointer-events: none;
+}
+
+.ditherField {
+  position: absolute;
+  inset: 1.5rem 0 0 0;
+  background: radial-gradient(
+    circle 21rem at 52% 65%,
+    color-mix(in srgb, var(--primary) 55%, var(--bg-primary)),
+    var(--primary) 75%
+  );
+  -webkit-mask-image:
+    radial-gradient(circle, #000 1px, transparent 1.3px),
+    linear-gradient(to bottom, transparent 1%, #000 52%, #000 100%);
+  mask-image:
+    radial-gradient(circle, #000 1px, transparent 1.3px),
+    linear-gradient(to bottom, transparent 1%, #000 52%, #000 100%);
+  -webkit-mask-size: 5px 5px, 100% 100%;
+  mask-size: 5px 5px, 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  pointer-events: none;
+  transition: filter 300ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .signatureBand:hover .ditherField { filter: brightness(1.2) saturate(1.2); }
+}
+
+.signatureBand::after {
+  content: "POSTIFY";
+  position: absolute;
+  z-index: 1;
+  bottom: -.075em;
+  inset-inline-start: .1rem;
+  display: block;
+  color: var(--bg-secondary);
+  font-family: var(--font-sans);
+  /* Keep the T/I visibly separate, even on wide desktop screens. */
+  font-size: clamp(5.5rem, 19.4vw, 16.6rem);
+  font-weight: 900;
+  letter-spacing: .018em;
+  line-height: .81;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ditherField { animation: ditherDrift 42s linear infinite alternate; }
+}
+
+@keyframes ditherDrift {
+  to { transform: translateX(-3.75rem); }
+}
+
+@supports not (mask-image: radial-gradient(circle, #000, transparent)) {
+  .ditherField { opacity: .16; }
+  .signatureBand::after { color: var(--text-primary); }
+}
+
 .systemLine {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -324,6 +409,10 @@
 }
 
 @media (max-width: 560px) {
+  .signatureBand { height: clamp(11rem, 39vw, 13rem); }
+  .ditherField { inset: .75rem 0 0 0; }
+  .signatureBand::before { top: .55rem; inset-inline-start: .5rem; font-size: .53rem; letter-spacing: .11em; }
+  .signatureBand::after { inset-inline-start: .25rem; font-size: 18.2vw; letter-spacing: .018em; }
   .footer { margin-top: 3.25rem; }
 
   .shell {
@@ -406,27 +495,25 @@
     font-size: .76rem;
   }
 
-  .systemLine {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
+  /* Mobile edition: three readable editorial rows, not cramped 3-column labels. */
+  .systemLine { grid-template-columns: minmax(0, 1fr); }
   .systemLine > div,
   .systemLine > div:first-child {
     min-width: 0;
-    min-height: 52px;
-    display: flex;
-    justify-content: center;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
     align-items: center;
-    gap: .32rem;
-    padding: 0 .35rem;
-    border-right: 1px solid var(--border-strong);
-    text-align: center;
+    gap: .65rem;
+    padding: .7rem .1rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
   }
-
-  .systemLine > div:last-child { border-right: 0; }
-  .systemLine strong { font-size: .57rem; letter-spacing: .012em; }
-  .systemLine > div > span { padding-top: 0; font-size: .52rem; }
-  .systemLine small { display: none; }
+  .systemLine > div:last-child { border-bottom: 0; }
+  .systemLine strong { font-size: .69rem; overflow-wrap: anywhere; }
+  .systemLine > div > span { padding-top: 0; font-size: .57rem; }
+  .systemLine small { display: block; font-size: .66rem; }
 
   .bottomBar {
     min-height: 58px;
@@ -540,4 +627,38 @@
   .bottomBar { flex-wrap: wrap; }
   .bottomBar > span { max-width: 100%; }
   .footer .signature > svg { flex-basis: 23px; }
+}
+
+/* Preserve Round 36 accessible 400% reader reflow without overriding the shipped Goal footer art direction. */
+/* Edition 36 — 400% reader text must not be squeezed by decorative gutters,
+   logo marks, ordinal columns, or footer chrome. Keep prose enlargement and
+   wrap the actual words; cap only interface furniture in physical pixels. */
+@media (max-width: 560px) {
+  .shell { width: min(calc(100% - min(1.5rem, 24px)), var(--container-max)); }
+  .statement { min-width: 0; padding-inline: min(clamp(1rem, 6vw, 2.1rem), 24px); }
+  .statementCopy, .statementTitle, .statementText, .primaryActions {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .brandBlock { min-width: 0; gap: min(.5rem, 8px) min(1rem, 12px); }
+  .brandLink { min-width: 0; max-width: 100%; gap: min(.62rem, 10px); font-size: min(1.22rem, 26px); }
+  .brandLink > span { min-width: 0; overflow-wrap: anywhere; }
+  .brandLink svg { width: min(2rem, 36px); height: min(2rem, 36px); flex: 0 0 auto; }
+  .brandBlock p { min-width: 0; overflow-wrap: anywhere; }
+  .githubLink { min-width: 0; gap: min(.45rem, 7px); font-size: min(.66rem, 14px); }
+  .githubLink svg { width: min(1rem, 17px); height: min(1rem, 17px); }
+  .linkGroup { min-width: 0; }
+  .linkGroup a { min-width: 0; max-width: 100%; grid-template-columns: minmax(0, min(1.8rem, 28px)) minmax(0, 1fr); gap: min(.4rem, 6px); }
+  .systemLine > div { grid-template-columns: min(1.6rem, 26px) minmax(0, 1fr); gap: min(.65rem, 10px); }
+  .systemLine strong, .systemLine small { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .bottomBar { min-width: 0; flex-wrap: wrap; gap: min(1rem, 12px); }
+  .bottomBar > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .scrollTopButton { max-width: 100%; min-width: 44px; min-height: 44px; gap: min(.48rem, 8px); white-space: normal; overflow-wrap: anywhere; }
+}
+
+/* Tablet trust facts need two readable columns even when text is enlarged.
+   The published Goal footer keeps three desktop facts and stacks on phones. */
+@media (min-width: 561px) and (max-width: 960px) {
+  .systemLine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

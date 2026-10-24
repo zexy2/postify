@@ -21,6 +21,18 @@ describe('fallback public catalogue', () => {
   });
 
 
+  it('keeps localized article outcomes in the reader’s chosen language', () => {
+    const english = getFallbackPosts('en');
+    const turkish = getFallbackPosts('tr');
+    const aiEnglish = english.find((post) => post.slug === 'ai-muhendisligi');
+    const aiTurkish = turkish.find((post) => post.slug === 'ai-muhendisligi');
+    expect(aiEnglish.outcome).toBe('Design AI as a measurable and safe product system, not just a model call.');
+    expect(aiTurkish.outcome).toContain('model çağrısı yerine');
+    expect(english.find((post) => post.slug === 'node-json-dogrulama').outcome)
+      .toContain('Parse incoming JSON');
+    expect(english.every((post) => post.outcome)).toBe(true);
+  });
+
   it('exposes automatic checks as built-in verified knowledge, not outage fallback', () => {
     const builtIns = getBuiltInKnowledgePosts('tr');
     expect(builtIns).toHaveLength(1);

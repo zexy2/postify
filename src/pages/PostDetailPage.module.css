@@ -1041,3 +1041,612 @@
   .articleContent { padding-top: 2rem; }
   .plainBody { font-size: 1.02rem; line-height: 1.8; }
 }
+
+/* Light edition: match the reading cover to the chosen light theme.
+   Dark mode keeps the original ink-green Studio treatment above. */
+:global(html:not([data-theme='dark'])) .articleHeader {
+  color: #223129;
+  background:
+    radial-gradient(ellipse at 95% 8%, rgb(145 169 133 / 19%), transparent 43%),
+    radial-gradient(ellipse at 10% 100%, rgb(192 125 99 / 10%), transparent 46%),
+    linear-gradient(127deg, #e5e9dd, #eeeae1 68%, #f0ece3);
+  border-color: rgb(35 49 41 / 14%);
+}
+:global(html:not([data-theme='dark'])) .articleHeader::before {
+  border-color: rgb(35 49 41 / 13%);
+  box-shadow: 0 0 0 6rem rgb(35 49 41 / 2%), 0 0 0 12rem rgb(35 49 41 / 2%);
+}
+:global(html:not([data-theme='dark'])) .editionLine {
+  color: #35483d;
+  border-bottom-color: rgb(35 49 41 / 19%);
+}
+:global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: #566a5e; }
+:global(html:not([data-theme='dark'])) .editionAsterisk { color: #a64225; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta { color: #465d4e; }
+:global(html:not([data-theme='dark'])) .articleHeader .contentType { color: #fdfbf6; background: #2c4a38; }
+:global(html:not([data-theme='dark'])) .articleHeader .category { color: #8f3c29; }
+:global(html:not([data-theme='dark'])) .articleHeader .metaDot { color: #768579; }
+:global(html:not([data-theme='dark'])) .articleHeader .readingMeta { color: #475e50; }
+:global(html:not([data-theme='dark'])) .articleHeader .readingMeta svg { color: #a64225; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge) { color: #35483d; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge strong) { color: #255235; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge[data-freshness="stale"] strong),
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge[data-level="recheck-required"] strong) { color: #785208; }
+:global(html:not([data-theme='dark'])) .articleHeader .meta :global(.evidence-badge[data-level="postify-verified"] strong) { color: #924026; }
+:global(html:not([data-theme='dark'])) .articleHeader .title { color: #1d2d25; }
+:global(html:not([data-theme='dark'])) .articleHeader .excerpt { color: #445b4e; }
+:global(html:not([data-theme='dark'])) .articleHeader .authorBar { border-top-color: rgb(35 49 41 / 22%); }
+:global(html:not([data-theme='dark'])) .articleHeader .author { color: #263b2f; }
+:global(html:not([data-theme='dark'])) .articleHeader .author:hover { color: #a64225; }
+:global(html:not([data-theme='dark'])) .articleHeader .avatar { color: #fdfbf6; background: #2c4a38; border-color: rgb(35 49 41 / 20%); }
+:global(html:not([data-theme='dark'])) .articleHeader .authorInfo strong { color: #1d2d25; }
+:global(html:not([data-theme='dark'])) .articleHeader .authorInfo small { color: #54685b; }
+:global(html:not([data-theme='dark'])) .articleHeader .canonicalSource { color: #8f3c29; }
+
+/* Mobile reading dock: 44px targets retained, with less content occlusion. */
+@media (max-width: 980px) {
+  .mobileActionBar {
+    bottom: max(.2rem, env(safe-area-inset-bottom));
+    gap: .05rem;
+    padding: 0 .2rem;
+    background: color-mix(in srgb, var(--bg-primary) 97%, transparent);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    box-shadow: 0 6px 23px rgb(20 31 24 / 13%);
+  }
+  .mobileActionBtn, .mobileShareWrap button { border-radius: 999px; }
+  .mobileActionBtn:hover,
+  .mobileActionBtn.bookmarked,
+  .mobileShareWrap button:hover,
+  .mobileShareWrap button:focus-visible { background: var(--primary-subtle); border-bottom-color: transparent; }
+}
+
+/* Reading-first mobile dock: available at the article opening, then out of
+   the way while reading. Scroll-linked visibility is progressive enhancement;
+   when unsupported, the proven compact dock remains available as before. */
+@supports (animation-timeline: scroll(root block)) {
+  @media (max-width: 980px) {
+    .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+      animation: readingDockAvailability linear both;
+      animation-timeline: scroll(root block);
+    }
+    .mobileActionBar:focus-within { animation: none; }
+    .mobileActionBarHidden { animation: none; visibility: hidden; }
+  }
+}
+@keyframes readingDockAvailability {
+  0%, 10% { opacity: 1; visibility: visible; transform: translateX(-50%); }
+  14%, 100% { opacity: 0; visibility: hidden; transform: translate(-50%, calc(100% + 2rem)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @supports (animation-timeline: scroll(root block)) {
+    .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+      animation-timing-function: steps(1, end);
+    }
+  }
+}
+
+/* Editorial reading edition — remove the stacked application cards and let
+   hierarchy, measure and typographic contrast carry the article. */
+.articleHeader,
+:global(html:not([data-theme='dark'])) .articleHeader {
+  min-height: 0;
+  padding: clamp(1.6rem, 3.1vw, 3rem) 0 clamp(1.65rem, 2.7vw, 2.8rem);
+  background: transparent;
+  border: 0;
+  border-top: 3px solid var(--primary);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  color: var(--text-primary);
+}
+.articleHeader::before,
+:global(html:not([data-theme='dark'])) .articleHeader::before { display: none; }
+.editionLine,
+:global(html:not([data-theme='dark'])) .editionLine {
+  margin-bottom: clamp(1.35rem, 2.4vw, 2rem);
+  padding-bottom: .85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  letter-spacing: .075em;
+}
+.editionLine > span:last-child,
+:global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: var(--text-muted); }
+.articleHeader .meta,
+:global(html:not([data-theme='dark'])) .articleHeader .meta {
+  margin-bottom: clamp(1.1rem, 2.1vw, 1.65rem);
+  color: var(--text-secondary);
+}
+.articleHeader .contentType,
+:global(html:not([data-theme='dark'])) .articleHeader .contentType {
+  min-height: 0;
+  padding: .25rem .5rem;
+  color: var(--text-inverse);
+  background: var(--text-primary);
+  border-radius: 1px;
+  font-family: var(--font-sans);
+  font-weight: 720;
+  letter-spacing: .015em;
+}
+.articleHeader .category,
+:global(html:not([data-theme='dark'])) .articleHeader .category { color: var(--primary); }
+.articleHeader .readingMeta,
+:global(html:not([data-theme='dark'])) .articleHeader .readingMeta { color: var(--text-secondary); }
+.articleHeader .readingMeta svg,
+:global(html:not([data-theme='dark'])) .articleHeader .readingMeta svg { color: var(--primary); }
+.articleHeader .title,
+:global(html:not([data-theme='dark'])) .articleHeader .title {
+  max-width: 18ch;
+  margin: .4rem 0 clamp(.9rem, 1.9vw, 1.6rem);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(3.15rem, 5.7vw, 5.65rem);
+  font-weight: 520;
+  letter-spacing: -.064em;
+  line-height: .995;
+  overflow-wrap: anywhere;
+}
+.articleHeader .excerpt,
+:global(html:not([data-theme='dark'])) .articleHeader .excerpt {
+  max-width: 53ch;
+  margin: 0 0 clamp(1rem, 2.3vw, 1.8rem);
+  color: var(--text-secondary);
+  font-size: clamp(1.07rem, 1.55vw, 1.28rem);
+  line-height: 1.55;
+}
+.articleHeader .authorBar,
+:global(html:not([data-theme='dark'])) .articleHeader .authorBar {
+  padding-top: .95rem;
+  border-top: 1px solid var(--border-color);
+}
+.articleHeader .author,
+:global(html:not([data-theme='dark'])) .articleHeader .author { color: var(--text-primary); }
+.articleHeader .authorInfo strong,
+:global(html:not([data-theme='dark'])) .articleHeader .authorInfo strong { color: var(--text-primary); }
+.articleHeader .authorInfo small,
+:global(html:not([data-theme='dark'])) .articleHeader .authorInfo small { color: var(--text-muted); }
+.articleHeader .avatar,
+:global(html:not([data-theme='dark'])) .articleHeader .avatar {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--bg-primary);
+  background: var(--text-primary);
+  border: 0;
+  font-family: var(--font-sans);
+}
+.coverWrapper {
+  width: 100%;
+  margin: clamp(1.35rem, 2.8vw, 2.5rem) 0 0;
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: none;
+}
+.coverImage { max-height: 26rem; aspect-ratio: 2.22 / 1; }
+.quickBrief {
+  max-width: 100%;
+  margin: clamp(1.5rem, 3.2vw, 2.8rem) 0 0;
+  padding: clamp(1.1rem, 2vw, 1.65rem) 0;
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--primary);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+.quickBrief::before { display: none; }
+.quickBriefCopy {
+  display: grid;
+  grid-template-columns: minmax(7rem, .28fr) minmax(0, 1fr);
+  gap: .2rem clamp(1.4rem, 2.5vw, 2.8rem);
+  max-width: none;
+  padding: 0;
+}
+.quickBriefEyebrow {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: start;
+  margin: .25rem 0 0;
+  color: var(--primary);
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  letter-spacing: .035em;
+  text-transform: none;
+}
+.quickBriefCopy strong {
+  grid-column: 2;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  font-weight: 570;
+  line-height: 1.12;
+}
+.quickBriefCopy p {
+  grid-column: 2;
+  margin-top: .55rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.articleContent { padding-top: clamp(1.7rem, 3.4vw, 2.8rem); }
+.plainBody { line-height: 1.83; }
+.railWidget {
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--text-primary);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+@media (max-width: 640px) {
+  .articleHeader,
+  :global(html:not([data-theme='dark'])) .articleHeader {
+    padding: 1.2rem .05rem 1.5rem;
+    border-radius: 0;
+  }
+  .editionLine { margin-bottom: 1.15rem; }
+  .articleHeader .title,
+  :global(html:not([data-theme='dark'])) .articleHeader .title {
+    max-width: 18ch;
+    font-size: clamp(2.52rem, 10vw, 3.5rem);
+    line-height: 1.025;
+  }
+  .articleHeader .excerpt,
+  :global(html:not([data-theme='dark'])) .articleHeader .excerpt { font-size: 1rem; }
+  .coverWrapper { width: 100%; margin-top: 1.1rem; border-width: 1px; border-radius: 0; }
+  .coverImage { aspect-ratio: 16 / 10; }
+  .quickBrief { margin-top: 1.45rem; padding: 1.1rem 0 1.25rem; }
+  .quickBriefCopy { display: block; }
+  .quickBriefEyebrow { margin: 0 0 .65rem; }
+  .quickBriefCopy strong { font-size: 1.58rem; }
+  .quickBriefCopy p { margin-top: .7rem; font-size: .91rem; }
+}
+
+/* Reading tools belong in the article's metadata flow, not across its text.
+   The fixed pill previously obscured the first mobile outcome heading. */
+@media (max-width: 980px) {
+  .articleHeader .mobileActionBar,
+  .articleHeader .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+    position: static;
+    inset: auto;
+    display: flex;
+    width: max-content;
+    max-width: 100%;
+    margin: clamp(.9rem, 2.5vw, 1.4rem) 0 0;
+    padding: .2rem 0;
+    color: var(--text-primary);
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    transform: none;
+    animation: none;
+  }
+  .articleHeader .mobileActionBar .mobileActionBtn,
+  .articleHeader .mobileActionBar .mobileShareWrap button {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 0;
+  }
+  .page:has(:focus-visible) .articleHeader .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  .articleHeader .mobileActionBarHidden { opacity: 0; pointer-events: none; }
+}
+
+/* Keep the same low-noise offline notice within the journal reading column.
+   Previously this CSS-module class had no rule and inherited default p text. */
+.fallbackNotice {
+  display: grid;
+  gap: .25rem;
+  margin: 0 0 clamp(1.35rem, 2vw, 1.9rem);
+  padding: .75rem 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-sans);
+  font-size: .81rem;
+  line-height: 1.6;
+}
+.fallbackNotice strong { color: var(--text-primary); font-size: .81rem; font-weight: 690; }
+
+/* Edition 20 — a chapter atlas, not another card. Real article headings are
+   navigable in their reading order, with the active section echoed in ink.
+   Keep short articles and the original touch disclosure unchanged. */
+@media (min-width: 1200px) {
+  .articleContent:has(> .articleOutline) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(10.5rem, 12.5rem);
+    align-items: start;
+    gap: 0 clamp(1.45rem, 3vw, 2.5rem);
+    max-width: 58rem;
+  }
+  .articleContent:has(> .articleOutline) > .body {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
+  .articleContent:has(> .articleOutline) > .articleOutline {
+    position: sticky;
+    top: calc(var(--header-height) + 1.3rem);
+    display: block;
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    max-height: calc(100vh - var(--header-height) - 2.8rem);
+    margin: 0;
+    padding: 1.15rem 0 .55rem 1rem;
+    overflow-y: auto;
+    background: transparent;
+    border-top: 2px solid var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+    border-left: 1px solid var(--border-color);
+    scrollbar-width: thin;
+  }
+  .articleContent:has(> .articleOutline) > :not(.articleOutline):not(.body) {
+    grid-column: 1 / -1;
+  }
+  .articleOutline > span {
+    padding: 0 0 .8rem;
+    font-family: var(--font-sans);
+    font-size: .72rem;
+    font-weight: 750;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .articleOutline ol {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    counter-reset: chapter;
+    list-style: none;
+  }
+  .articleOutline li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.65rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: .45rem;
+    min-width: 0;
+    margin: 0;
+    padding: .5rem 0;
+    border-top: 1px solid var(--border-color);
+    counter-increment: chapter;
+  }
+  .articleOutline li::before {
+    content: counter(chapter, decimal-leading-zero);
+    color: var(--text-muted);
+    font: 700 .68rem / 1.5 var(--font-mono);
+  }
+  .articleOutline li[data-level='3'] { margin-left: 0; }
+  .articleOutline a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: .3rem 0;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: .77rem;
+    font-weight: 620;
+    line-height: 1.43;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .articleOutline li[data-active='true']::before,
+  .articleOutline li[data-active='true'] a {
+    color: var(--primary);
+  }
+  .articleOutline li[data-active='true'] a { font-weight: 840; }
+  .articleOutline a:focus-visible { outline: 3px solid var(--border-focus); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .articleOutline a { scroll-behavior: auto; }
+}
+
+/* The intermediate two-column index is still touch-accessible on tablets. */
+@media (min-width: 781px) and (max-width: 1199px) {
+  .articleOutline a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* Round 27: long article chapter labels should wrap on enlarged reader text,
+   rather than stretching the already narrow editorial column offscreen. */
+.plainBody h2, .plainBody h3 {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Edition 28 — keep meaning-bearing article copy visible when reader text
+   reaches 200–400%. Natural wrapping wins over stretching a clipped cover.
+   No code blocks or artwork are changed, and regular-scale spacing remains. */
+.articleShell,
+.articleHeader,
+.articleHeader .authorBar,
+.articleHeader .author,
+.articleHeader .authorInfo,
+.quickBrief,
+.quickBriefCopy,
+.articleContent,
+.plainBody { min-width: 0; max-width: 100%; }
+
+.editionLine { flex-wrap: wrap; }
+.editionLine > span,
+.articleHeader .meta > *,
+.articleHeader .title,
+.articleHeader .excerpt,
+.articleHeader .authorInfo strong,
+.articleHeader .authorInfo small,
+.quickBriefCopy > *,
+.fallbackNotice,
+.plainBody > p,
+.plainBody > li {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.articleHeader .author { max-width: 100%; }
+.articleHeader .authorInfo { flex: 1 1 auto; }
+
+@media (max-width: 980px) {
+  /* Decorative inset space and avatars must not grow fourfold with text. */
+  .articleHeader .avatar,
+  :global(html:not([data-theme='dark'])) .articleHeader .avatar {
+    flex: 0 0 auto;
+    width: min(2.4rem, 48px);
+    height: min(2.4rem, 48px);
+  }
+  .quickBrief { padding: min(1.15rem, 22px); }
+  .quickBriefCopy { padding-right: min(1rem, 16px); }
+}
+
+/* An avatar-to-author gap and the field-guide's sidebar column are inset
+   furniture, not text. Limit their growth when text is magnified fourfold. */
+@media (max-width: 980px) {
+  .articleHeader .author { gap: min(.75rem, 14px); }
+}
+@media (min-width: 641px) and (max-width: 980px) {
+  .quickBriefCopy {
+    grid-template-columns: minmax(min(7rem, 30%), .28fr) minmax(0, 1fr);
+    column-gap: min(1.4rem, 28px);
+  }
+}
+
+/* Edition 30 — the reading outline must use small, fixed disclosure
+   furniture even if prose is enlarged fourfold. Headings and links reflow. */
+.articleOutlineDisclosure,
+.articleOutlineDisclosure summary,
+.articleOutlineDisclosure nav,
+.articleOutlineDisclosure ol,
+.articleOutlineDisclosure li {
+  min-width: 0;
+  max-width: 100%;
+}
+.articleOutlineDisclosure summary {
+  gap: min(1rem, 12px);
+  flex-wrap: wrap;
+}
+.articleOutlineDisclosure summary span,
+.articleOutlineDisclosure a {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+/* Links stay at least 44px wide for mobile touch, even when their words
+   are short; only the decorative summary span may shrink to zero. */
+.articleOutlineDisclosure a { min-width: 44px; }
+.articleOutlineDisclosure summary small {
+  min-width: 26px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  flex: 0 0 auto;
+}
+.articleOutlineDisclosure ol { padding-left: min(1.1rem, 22px); grid-template-columns: minmax(0, 1fr); }
+.articleOutlineDisclosure li[data-level='3'] { margin-left: min(.5rem, 12px); }
+
+/* Edition 31 — article tools are navigation, not a decorative text line.
+   Cap rem-scaled icon padding and let the four actions wrap at 400% text;
+   preserve 44px physical touch targets and the original accessible labels. */
+@media (max-width: 980px) {
+  .articleHeader .mobileActionBar,
+  .articleHeader .mobileActionBar:not(:focus-within):not(.mobileActionBarHidden) {
+    width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px 0;
+  }
+  .articleHeader .mobileActionBar .mobileActionBtn {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+    gap: 2px;
+    justify-content: center;
+  }
+  .articleHeader .mobileShareWrap { min-width: 0; max-width: 100%; flex-shrink: 1; }
+  .articleHeader .mobileShareWrap button {
+    min-width: 44px;
+    min-height: 44px;
+    height: 44px;
+    max-width: 100%;
+    padding: 0 9px;
+    gap: 6px;
+  }
+  .articleHeader .mobileShareWrap button > span {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+@media (max-width: 390px) {
+  .articleHeader .mobileShareWrap button {
+    width: 44px;
+    min-width: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+/* Edition 32 — comments and their share action are article content.
+   Preserve real text at enlarged sizes; never use clipping as a substitute
+   for reflow. Short comments links remain >=44px tap targets. */
+@media (max-width: 980px) {
+  .commentsSection,
+  .commentsSection .sectionHeading,
+  .commentsSection .sectionHeading > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .commentsSection .sectionHeading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: min(1rem, 16px);
+  }
+  .commentsSection h2 {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .commentsSection .commentHint,
+  .commentsSection .comment p,
+  .commentsSection .comment strong {
+    overflow-wrap: anywhere;
+  }
+  .commentsSection .sectionHeading > button {
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+  .commentsSection .sectionHeading > button span { min-width: 0; overflow-wrap: anywhere; }
+}
+@media (max-width: 980px) {
+  .commentsSection .sectionEyebrow {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
