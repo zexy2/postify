@@ -50,10 +50,11 @@ export default function ProofReceipt({ run, verified, post, language, variant = 
       data-playing={playing ? 'true' : undefined}
       aria-label={isEnglish ? 'Latest verification record' : 'Son doğrulama kaydı'}
     >
-      <header className={styles.head} style={next()}>
+      {/* A figure label, not a page banner: one <header> landmark per page */}
+      <div className={styles.head} style={next()}>
         <span>{isEnglish ? 'Verification record' : 'Doğrulama kaydı'}</span>
         <code>{run.id}</code>
-      </header>
+      </div>
 
       {post && (
         <div className={styles.claim} style={next()}>
