@@ -2,16 +2,3 @@
   display: grid;
   border-bottom: 1px solid var(--border-color);
 }
-
-/* The lead record spans; the next three sit side by side; the rest become an index. */
-@media (min-width: 1040px) {
-  .feedContainer[data-showcase='true'] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: clamp(1.5rem, 2.5vw, 2.5rem);
-  }
-
-  .feedContainer[data-showcase='true'] > [data-card-variant='featured'],
-  .feedContainer[data-showcase='true'] > [data-card-variant='compact'] {
-    grid-column: 1 / -1;
-  }
-}

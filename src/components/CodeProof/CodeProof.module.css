@@ -52,3 +52,31 @@
 .proof > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 
 @media (max-width: 640px) { .state { margin-left: 0; } }
+
+/* Seal pressed once as the record scrolls in; colour follows the run state */
+.seal {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  overflow: visible;
+  color: var(--state);
+}
+.seal circle { fill: currentColor; }
+.seal path { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.proof:not([data-current]) .seal circle { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-dasharray: 3.4 3.2; }
+.proof:not([data-current]) .seal path { stroke: currentColor; }
+
+.proof { border-radius: 0 0 4px 4px; }
+.result { border-radius: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .seal { animation: proofPress linear both; animation-timeline: view(); animation-range: entry 60% cover 30%; }
+  }
+}
+
+@keyframes proofPress {
+  0%, 35% { opacity: 0; scale: 2; rotate: -30deg; }
+  80% { opacity: 1; scale: 0.88; rotate: 4deg; }
+  100% { opacity: 1; scale: 1; rotate: 0deg; }
+}

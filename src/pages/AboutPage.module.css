@@ -182,3 +182,7 @@
 .heroCopy,
 .modelRow,
 .formatItem { grid-template-columns: minmax(0, 1fr); }
+
+/* The paper sheet starts right under the header: the page's top space moves into it */
+.page { padding-top: 0; }
+.hero { padding-top: clamp(2.5rem, 7vw, 6rem); }

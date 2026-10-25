@@ -320,11 +320,11 @@ const HomePage = ({ isHistoryRestore = false }) => {
         <div className={styles.sectionHeader}>
           <div>
             <span className={styles.sectionEyebrow}>{hasSearch ? t('home.searchLabel') : t('home.latest')}</span>
-            <h2 className={styles.sectionTitle}>
+            <h2 className={styles.sectionTitle} key={`${activeCategory}|${hasSearch ? query : ''}`}>
               {hasSearch ? <><FiSearch size={22} /> “{query}”</> : activeCategory !== 'all' ? getCategoryLabel(activeCategory, i18n.language) : t('home.feedTitle')}
             </h2>
           </div>
-          <p className={styles.sectionSubtitle}>{t('home.resultCount', { count: filteredPosts.length })}</p>
+          <p className={styles.sectionSubtitle} key={filteredPosts.length} aria-live="polite">{t('home.resultCount', { count: filteredPosts.length })}</p>
         </div>
 
         <div className={styles.discoveryControls}>

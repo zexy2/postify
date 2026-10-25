@@ -62,7 +62,7 @@ export default function ProofReceipt({ run, verified, post, language, variant = 
         </div>
       )}
 
-      <pre className={styles.code} aria-label={isEnglish ? 'Executed code' : 'Çalıştırılan kod'}>
+      <pre className={styles.code} data-stamp-landing aria-label={isEnglish ? 'Executed code' : 'Çalıştırılan kod'}>
         {codeLines.map((line, index) => (
           <span key={index} className={styles.codeLine} style={next()}>
             <span className={styles.lineNo} aria-hidden="true">{index + 1}</span>

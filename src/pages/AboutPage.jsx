@@ -51,10 +51,10 @@ const AboutPage = () => {
     <div className={styles.page}>
       <SEO title={t('about.title')} description={t('about.description')} />
       <div className={styles.container}>
-        <header className={styles.hero}>
+        <header className={`${styles.hero} paper-sheet paper-sheet--bleed`}>
           <div className={styles.heroBody}>
             <div className={styles.heroCopy}>
-                            <h1>{isEn ? 'Useful knowledge should survive contact with reality.' : 'Faydalı bilgi gerçekle karşılaştığında ayakta kalmalı.'}</h1>
+                            <h1 className="ink-title">{isEn ? 'Useful knowledge should survive contact with reality.' : 'Faydalı bilgi gerçekle karşılaştığında ayakta kalmalı.'}</h1>
               <p>{t('about.description')}</p>
               <a className={styles.heroLink} href="#trust-model-title">
                 {isEn ? 'Explore our principles' : 'İlkelerimizi keşfet'} <FiArrowRight aria-hidden="true" />

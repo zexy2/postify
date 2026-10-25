@@ -867,3 +867,58 @@ body:has([role="dialog"]) [data-rht-toaster] {
   40% { transform: scale(1.18); }
   100% { transform: scale(1); }
 }
+
+/* Paper sheet — the home hero's material, shared by the manifesto pages:
+   millimetre grid, fibre grain and a vignette so it reads as a page. */
+.paper-sheet {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--bg-primary);
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+.paper-sheet::before,
+.paper-sheet::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.paper-sheet::before {
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .09 0 0 0 0 .1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[data-theme='dark'] .paper-sheet::before { mix-blend-mode: screen; opacity: 0.3; }
+
+.paper-sheet::after {
+  background: radial-gradient(120% 80% at 40% 35%, transparent 40%, var(--bg-primary) 92%);
+}
+
+/* Ink title — the claim rises in outline, then fills with ink */
+@media (prefers-reduced-motion: no-preference) {
+  .ink-title {
+    -webkit-text-stroke: 1.5px var(--text-primary);
+    animation: inkFill 900ms var(--ease-out) 380ms both;
+  }
+}
+
+@keyframes inkFill {
+  0% { color: transparent; opacity: 0; transform: translateY(0.25em); }
+  35% { color: transparent; opacity: 1; transform: none; }
+  100% { color: var(--text-primary); -webkit-text-stroke-color: transparent; opacity: 1; transform: none; }
+}
+
+/* Sheet inside a centred container that should still run edge to edge */
+.paper-sheet--bleed {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+}
+

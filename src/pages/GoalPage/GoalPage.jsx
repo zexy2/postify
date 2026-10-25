@@ -98,9 +98,9 @@ const GoalPage = () => {
     <div className={styles.page}>
       <SEO title={content.seo} description={content.lead} canonicalUrl="https://postify.zekiakgul.dev/goal" />
 
-      <header className={styles.hero}>
+      <header className={`${styles.hero} paper-sheet`}>
         <div className={styles.heroInner}>
-          <h1>{content.title}</h1>
+          <h1 className="ink-title">{content.title}</h1>
           <div className={styles.heroFoot}>
             <p className={styles.lead}>{content.lead}</p>
             <a className={styles.scrollLink} href="#life-of-a-record">{content.scroll}<FiArrowDown aria-hidden="true" /></a>

@@ -30,7 +30,7 @@
   position: absolute;
   left: 0;
   top: 50%;
-  translate: -6% -50%;
+  translate: calc(-6% - var(--fit, 0px)) calc(-50% - var(--lift, 0em));
   z-index: 6;
 }
 
@@ -189,4 +189,9 @@
   .scan,
   .lens,
   .loupe { display: none; }
+}
+
+/* Phones: drop the stamp onto the last line so it clears the line above */
+@media (max-width: 640px) {
+  .stampAnchor > * { translate: calc(-4% - var(--fit, 0px)) calc(-40% - var(--lift, 0em)); }
 }

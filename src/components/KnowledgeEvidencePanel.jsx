@@ -74,7 +74,7 @@ export default function KnowledgeEvidencePanel({ post }) {
       : freshnessUnknown ? (en ? 'Runtime release signal unavailable' : 'Runtime sürüm sinyali kullanılamıyor') : evidence.freshnessLabel;
 
   return (
-    <section className="knowledge-evidence" aria-labelledby="knowledge-evidence-title">
+    <section id="article-evidence" className="knowledge-evidence" aria-labelledby="knowledge-evidence-title">
       <div className="knowledge-evidence__header">
         <div><span>{en ? 'Evidence' : 'Kanıt durumu'}</span><h2 id="knowledge-evidence-title">{heading}</h2></div>
         <strong data-freshness={freshness}>{freshnessLabel}</strong>

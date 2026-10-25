@@ -318,3 +318,22 @@
 @media (prefers-reduced-motion: no-preference) {
   .bookmarked svg { animation: pop 360ms var(--ease-out); }
 }
+
+/* Entering the archive, each record's evidence rail is pressed on in turn —
+   the same claim → test → mark rhythm as the hero. Hover still extends it. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .card::before {
+      transform-origin: left center;
+      animation: railPress linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 90%;
+    }
+  }
+}
+
+@keyframes railPress {
+  0% { transform: scaleX(0); opacity: 0; }
+  60% { transform: scaleX(1.35); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 1; }
+}

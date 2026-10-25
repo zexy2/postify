@@ -12,6 +12,8 @@ import styles from './PostDetailPage.module.css';
 import { getPostPresentation, getPostReadingMinutes } from '../lib/postPresentation';
 import { getCategoryLabel } from '../lib/categoryLabels';
 import KnowledgeEvidencePanel from '../components/KnowledgeEvidencePanel';
+import { getEvidenceCopy } from '../lib/knowledgeEvidence';
+import EvidenceLedger from '../components/EvidenceLedger/EvidenceLedger';
 import LocalEvidenceActions from '../components/LocalEvidenceActions';
 import CommunityEvidenceDetails from '../components/CommunityEvidenceDetails';
 import VerificationRunbook from '../components/VerificationRunbook';
@@ -67,6 +69,8 @@ const PostDetailPage = () => {
   const articleRef = useRef(null);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const [activeSectionId, setActiveSectionId] = useState(null);
+  // Decided once on arrival: a card-to-article morph already animates the title.
+  const [inkTitle] = useState(() => typeof document === 'undefined' || !document.documentElement.hasAttribute('data-vt-nav'));
   const { post, comments, isLoading, isError, refetch, commentsUnavailable } = usePost(id);
   const { posts } = usePosts();
   const { bookmarkedIds, toggle: toggleBookmark } = useBookmarks();
@@ -173,6 +177,11 @@ const PostDetailPage = () => {
   const articleBody = post.body || post.bodyHtml?.replace(/<[^>]+>/g, ' ') || '';
   const isBookmarked = bookmarkedIds.includes(post.id);
   const presentation = getPostPresentation(post, i18n.language);
+  const evidenceCopy = getEvidenceCopy(post, i18n.language);
+  const isEn = i18n.language?.startsWith('en');
+  const testedDate = evidenceCopy.testedAt
+    ? new Date(evidenceCopy.testedAt).toLocaleDateString(isEn ? 'en-GB' : 'tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
+    : null;
   const readingMinutes = getPostReadingMinutes(post);
   const externalReferences = extractExternalReferences(
     articleBody,
@@ -235,17 +244,42 @@ const PostDetailPage = () => {
                   <span aria-hidden="true">/</span>
                   <span className={styles.category}>{getCategoryLabel(post.category, i18n.language)}</span>
                 </div>
-                <div className={styles.meta}>
-                  <span className={styles.readingMeta}>
-                    <FiClock size={13} aria-hidden="true" />
-                    {readingMinutes ?? 1} {t('common.minutes')}
-                  </span>
-                  <time dateTime={post.publishedAt}>{publishedDate}</time>
-                  {isUpdated && <span>({t('article.updated')} {updatedDate})</span>}
-                  <EvidenceBadge post={post} compact />
-                </div>
+                {/* Dossier: what the claim rests on, set before the claim itself */}
+                <dl className={styles.meta}>
+                  <div className={styles.metaCell} data-wide>
+                    <dt>{isEn ? 'Evidence' : 'Kanıt'}</dt>
+                    <dd><EvidenceBadge post={post} compact /></dd>
+                  </div>
+                  {evidenceCopy.environment[0] && (
+                    <div className={styles.metaCell}>
+                      <dt>{isEn ? 'Environment' : 'Ortam'}</dt>
+                      <dd>{evidenceCopy.environment[0]}</dd>
+                    </div>
+                  )}
+                  {testedDate && (
+                    <div className={styles.metaCell}>
+                      <dt>{isEn ? 'Tested' : 'Test'}</dt>
+                      <dd>{testedDate}</dd>
+                    </div>
+                  )}
+                  <div className={styles.metaCell}>
+                    <dt>{isEn ? 'Reading' : 'Okuma'}</dt>
+                    <dd className={styles.readingMeta}>
+                      <FiClock size={13} aria-hidden="true" />
+                      {readingMinutes ?? 1} {t('common.minutes')} · <time dateTime={post.publishedAt}>{publishedDate}</time>
+                      {isUpdated && <span> ({t('article.updated')} {updatedDate})</span>}
+                    </dd>
+                  </div>
+                </dl>
 
-                <h1 className={styles.title} style={{ viewTransitionName: 'post-title' }}>{post.title}</h1>
+                <h1 className={`${styles.title} ${inkTitle ? 'ink-title' : ''}`} style={{ viewTransitionName: 'post-title' }}>
+                  {post.title}
+                  <wbr />
+                  {/* Pressed onto the end of the claim; decorative, the dossier carries the words */}
+                  <span className={styles.titleSeal} data-evidence={evidenceCopy.level} data-fresh={evidenceCopy.freshness} aria-hidden="true">
+                    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" /><path d="M13 20.5l4.6 4.6L27.5 15" /></svg>
+                  </span>
+                </h1>
                 
                 {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
 
@@ -321,16 +355,20 @@ const PostDetailPage = () => {
                   </p>
                 )}
 
+                <EvidenceLedger post={post} articleRef={articleRef}>
+                  {outline.length >= 2 && (
+                      <nav className={styles.articleOutline} aria-label={i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}>
+                        <span>{i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}</span>
+                        <ol>
+                          {outline.map((item) => (
+                            <li key={item.id} data-level={item.level} data-active={activeSectionId === item.id}><a href={`#${item.id}`} aria-current={activeSectionId === item.id ? 'location' : undefined}>{item.text}</a></li>
+                          ))}
+                        </ol>
+                      </nav>
+                  )}
+                </EvidenceLedger>
                 {outline.length >= 2 && (
                   <>
-                    <nav className={styles.articleOutline} aria-label={i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}>
-                      <span>{i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}</span>
-                      <ol>
-                        {outline.map((item) => (
-                          <li key={item.id} data-level={item.level} data-active={activeSectionId === item.id}><a href={`#${item.id}`} aria-current={activeSectionId === item.id ? 'location' : undefined}>{item.text}</a></li>
-                        ))}
-                      </ol>
-                    </nav>
                     <details className={styles.articleOutlineDisclosure}>
                       <summary>
                         <span>{i18n.language?.startsWith('en') ? 'On this page' : 'Bu yazıda'}</span>
@@ -349,6 +387,21 @@ const PostDetailPage = () => {
                 <div className={styles.body}>
                   <PlainArticleBody content={articleBody} verificationId={post.autoVerificationId} />
                 </div>
+                {/* Close of record: the reader leaves with the evidence state and a way to add to it */}
+                <section className={styles.recordClose} data-evidence={evidenceCopy.level} data-fresh={evidenceCopy.freshness} aria-label={isEn ? 'End of record' : 'Kaydın sonu'}>
+                  <span className={styles.closeSeal} aria-hidden="true">
+                    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" /><path d="M13 20.5l4.6 4.6L27.5 15" /></svg>
+                  </span>
+                  <div className={styles.closeCopy}>
+                    <span>{isEn ? 'End of record' : 'Kaydın sonu'}</span>
+                    <strong><EvidenceBadge post={post} compact /></strong>
+                    {testedDate && <small>{isEn ? 'Last tested' : 'Son test'} {testedDate}{evidenceCopy.environment[0] ? ` · ${evidenceCopy.environment[0]}` : ''}</small>}
+                  </div>
+                  <div className={styles.closeActions}>
+                    <a href="#verification-runbook-title">{isEn ? 'Try it yourself' : 'Kendin dene'}</a>
+                    <a href="#evidence-feedback">{isEn ? 'Report your result' : 'Sonucunu bildir'}</a>
+                  </div>
+                </section>
                 <KnowledgeEvidencePanel post={post} />
                 <VerificationRunbook post={post} />
                 <LocalEvidenceActions post={post} />
@@ -404,6 +457,7 @@ const PostDetailPage = () => {
                   <span>{t('article.older')}</span>
                   <strong>{adjacentPosts.older.title}</strong>
                   <FiArrowLeft size={17} />
+                  <span className={styles.adjacentArt} aria-hidden="true"><EvidenceCover post={adjacentPosts.older} /></span>
                 </Link>
               ) : <span />}
               {adjacentPosts.newer ? (
@@ -411,6 +465,7 @@ const PostDetailPage = () => {
                   <span>{t('article.newer')}</span>
                   <strong>{adjacentPosts.newer.title}</strong>
                   <FiArrowRight size={17} />
+                  <span className={styles.adjacentArt} aria-hidden="true"><EvidenceCover post={adjacentPosts.newer} /></span>
                 </Link>
               ) : <span />}
             </nav>

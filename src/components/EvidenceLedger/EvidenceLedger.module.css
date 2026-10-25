@@ -1,0 +1,185 @@
+/* Evidence ledger — the article's margin note. One hairline-framed column:
+   seal + state, the facts that back it, and reading progress as its spine. */
+
+.ledger {
+  --ink: var(--state-unverified);
+  position: sticky;
+  top: calc(var(--header-height) + 1.5rem);
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.1rem 0 1.1rem 1.25rem;
+  border-left: 1px solid var(--border-color);
+  min-width: 0;
+}
+
+.ledger[data-mark='author-tested'] { --ink: var(--state-tested); }
+.ledger[data-mark='verified'],
+.ledger[data-mark='postify-verified'] { --ink: var(--state-verified); }
+.ledger[data-mark='recheck'] { --ink: var(--state-recheck); }
+
+/* The ink colour runs down the frame line, a rail like the archive cards */
+.ledger::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 2.75rem;
+  background: var(--ink);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.seal {
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--ink);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(-10deg);
+  animation: sealPress 520ms cubic-bezier(0.3, 1.5, 0.4, 1) 260ms both;
+}
+
+.seal circle:first-child { stroke-width: 2.5; }
+.seal circle:nth-child(2) { stroke-width: 1.25; opacity: 0.7; }
+.seal path { stroke-width: 3.5; }
+
+.kicker {
+  display: block;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.level {
+  display: block;
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+  font-weight: 680;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.facts {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.facts > div {
+  display: grid;
+  grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.facts dt {
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 560;
+  overflow-wrap: anywhere;
+}
+
+.pass {
+  justify-self: start;
+  padding: 0.05rem 0.5rem;
+  color: var(--text-inverse, #fff);
+  background: var(--ink);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem !important;
+  letter-spacing: 0.04em;
+}
+
+.jump {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 620;
+  text-decoration: underline;
+  text-decoration-color: var(--ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+  transition: text-underline-offset var(--transition-fast);
+}
+
+.jump:hover { text-underline-offset: 0.45em; }
+
+/* The chapter outline, when the article has one, lives inside the ledger */
+.ledger > nav {
+  position: static !important;
+  padding: 1rem 0 0 !important;
+  border-left: 0 !important;
+  border-top: 1px dashed var(--border-color);
+}
+
+.progress {
+  --read: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.progressLabel {
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+}
+
+.progressTrack {
+  position: relative;
+  height: 3px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+.progressTrack span {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleX(var(--read));
+  transform-origin: left center;
+}
+
+@keyframes sealPress {
+  from { opacity: 0; transform: rotate(-24deg) scale(1.6); }
+  to { opacity: 1; transform: rotate(-10deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seal { animation: none; }
+}
+
+/* Large reader text: every ledger line wraps inside the column */
+.ledger > *,
+.head > *,
+.facts dd,
+.kicker,
+.level,
+.jump { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.pass { display: inline-block; max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+.seal { width: 44px; height: 44px; }
+.facts > div { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.5rem), 1fr)); }
+.facts dd.pass { color: var(--bg-primary); }

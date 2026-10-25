@@ -8,7 +8,7 @@ const Line = ({ text, className, after = null }) => (
   <>
     {words(text).map((word, index, list) => (
       <span key={`${word}-${index}`}>
-        <span className={styles.word} style={{ '--i': index }}>
+        <span className={styles.word} style={{ '--i': index }} data-word={index}>
           <span className={className}>{word}</span>
         </span>
         {index < list.length - 1 ? ' ' : after}
@@ -25,6 +25,30 @@ export default function HeroHeadline({ text, className = '', run, language, stam
   const frameRef = useRef(null);
   const activateRef = useRef(onActivate);
   useEffect(() => { activateRef.current = onActivate; });
+
+  // Keep the stamp on screen: when the last word ends near the edge (long
+  // Turkish lines, 400px phones) slide it left by exactly the overflow.
+  useEffect(() => {
+    const frame = frameRef.current;
+    const anchor = frame?.querySelector('[data-stamp-anchor]');
+    const mark = anchor?.firstElementChild;
+    if (!anchor || !mark) return undefined;
+    const fit = () => {
+      anchor.style.setProperty('--fit', '0px');
+      anchor.style.setProperty('--lift', '0em');
+      const edge = document.documentElement.clientWidth - 12;
+      // ~1.1×: the stamp sits rotated, so its on-screen box is wider than its layout width
+      const right = anchor.getBoundingClientRect().left + mark.offsetWidth * 1.1;
+      const overflow = Math.max(0, Math.ceil(right - edge));
+      anchor.style.setProperty('--fit', `${overflow}px`);
+      // Sliding left would cover the last word; lift into the line above instead.
+      if (overflow > 0) anchor.style.setProperty('--lift', '0.95em');
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    window.addEventListener('resize', fit);
+    return () => window.removeEventListener('resize', fit);
+  }, [text, stamp]);
   const isEnglish = language?.startsWith('en');
   const check = getVerificationCheck(run?.id || 'node-json-parse-v1');
 
@@ -121,9 +145,9 @@ export default function HeroHeadline({ text, className = '', run, language, stam
   }, []);
 
   return (
-    <div ref={frameRef} className={styles.frame}>
+    <div ref={frameRef} className={styles.frame} data-hero-frame>
       <h1 className={`${className} ${styles.ink}`}>
-        <Line text={text} className={styles.wordInner} after={stamp && <span className={styles.stampAnchor} aria-hidden="true">{stamp}</span>} />
+        <Line text={text} className={styles.wordInner} after={stamp && <span className={styles.stampAnchor} aria-hidden="true" data-stamp-anchor>{stamp}</span>} />
       </h1>
       <span className={`${className} ${styles.outline}`} aria-hidden="true"><Line text={text} className={styles.wordInner} /></span>
       <span className={styles.scan} aria-hidden="true" />

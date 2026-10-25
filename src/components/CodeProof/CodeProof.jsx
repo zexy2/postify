@@ -21,6 +21,10 @@ export default function CodeProof({ verificationId, code }) {
 
   return (
     <aside className={styles.proof} data-current={current || undefined} aria-label={en ? 'Execution record for this code' : 'Bu kodun çalıştırma kaydı'}>
+      <svg className={styles.seal} viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" />
+        <path d="M13 20.5l4.6 4.6L27.5 15" />
+      </svg>
       <code className={styles.command}><span aria-hidden="true">$ </span>{run.reproduceCommand}</code>
       <span className={styles.result}>{run.actualStdout}</span>
       <span className={styles.meta}>

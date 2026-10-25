@@ -141,13 +141,15 @@ export default function EvidenceCover({ post, state: stateOverride, className = 
       {figure.ghosts.map((line, i) => <path key={`g${i}`} d={toD(line)} className={styles.ghost} />)}
       {figure.main.map((line, i) => <path key={`m${i}`} d={toD(line)} className={styles.trace} pathLength="1" />)}
       {figure.hub && <circle cx={figure.hub[0]} cy={figure.hub[1]} r="9" className={styles.hub} />}
-      {figure.nodes.map(([x, y], i) => <circle key={`n${i}`} cx={x} cy={y} r="3.5" className={styles.node} />)}
+      {figure.nodes.map(([x, y], i) => <circle key={`n${i}`} cx={x} cy={y} r="3.5" className={styles.node} style={{ '--i': i }} />)}
 
-      <g className={styles.terminal} transform={`translate(${ex} ${ey})`}>
-        <circle r="17" className={styles.terminalRing} />
-        {state === 'verified' && <path d="M-7 0l5 5 9-10" className={styles.terminalMark} />}
-        {state === 'tested' && <path d="M-6 0l4 4 8-9" className={styles.terminalMark} />}
-        {state === 'recheck' && <path d="M0 -8v9M0 6v1" className={styles.terminalMark} />}
+      <g transform={`translate(${ex} ${ey})`}>
+        <g className={styles.terminal}>
+          <circle r="17" className={styles.terminalRing} />
+          {state === 'verified' && <path d="M-7 0l5 5 9-10" className={styles.terminalMark} />}
+          {state === 'tested' && <path d="M-6 0l4 4 8-9" className={styles.terminalMark} />}
+          {state === 'recheck' && <path d="M0 -8v9M0 6v1" className={styles.terminalMark} />}
+        </g>
       </g>
 
       {poster && typeLabel && <text className={styles.posterLabel} x={pad - 14} y={H - 30}>{typeLabel}</text>}
@@ -155,7 +157,7 @@ export default function EvidenceCover({ post, state: stateOverride, className = 
 
       <g className={styles.ruler} transform={`translate(${pad} ${H - 18})`}>
         {Array.from({ length: 20 }, (_, i) => (
-          <line key={i} x1={i * 12} x2={i * 12} y1={i % 5 === 0 ? -8 : -4} y2="0" data-on={i < minutes ? 'true' : undefined} />
+          <line key={i} x1={i * 12} x2={i * 12} y1={i % 5 === 0 ? -8 : -4} y2="0" data-on={i < minutes ? 'true' : undefined} style={{ '--i': i }} />
         ))}
       </g>
     </svg>

@@ -160,5 +160,13 @@
 
 /* Phones: keep the stamp beside the last word and inside the screen */
 @media (max-width: 640px) {
-  .stamp { width: min(9.5rem, 34vw); }
+  .stamp { width: min(8.5rem, 30vw); }
+}
+
+/* Phones: the run reads as one tight receipt — command and PASS share a line,
+   facts sit below in a single row. */
+@media (max-width: 640px) {
+  .run { gap: 6px 10px; padding: 10px 56px 10px 14px; }
+  .command { font-size: 0.8125rem; }
+  .facts { gap: 2px 10px; font-size: 0.75rem; }
 }

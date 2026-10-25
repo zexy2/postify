@@ -157,3 +157,8 @@
   .popover { animation: none; }
   .option { transition: none; }
 }
+
+/* Square, printed panel to match the control strip */
+.popover { border-radius: 4px; border-color: var(--border-strong); }
+.option { border-radius: 2px; }
+.close { border-radius: 2px; }

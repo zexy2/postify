@@ -42,3 +42,10 @@
    multiply the icon-to-label padding by four when users enlarge the text. */
 .toolbar { gap: clamp(4px, .4rem, 12px); padding: 6px 10px 6px 14px; }
 .toolbar button { gap: 6px; padding: 6px 9px; }
+
+/* Copy confirms with a short press, then settles */
+.toolbar button[data-state='copied'] { color: #8a92ff; }
+@media (prefers-reduced-motion: no-preference) {
+  .toolbar button[data-state='copied'] svg { animation: copyPop 420ms cubic-bezier(0.3, 1.6, 0.4, 1); }
+}
+@keyframes copyPop { 0% { scale: 0.4; rotate: -40deg; } 100% { scale: 1; rotate: 0deg; } }

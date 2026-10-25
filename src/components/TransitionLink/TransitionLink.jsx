@@ -33,12 +33,15 @@ const TransitionLink = forwardRef(({ to, preload = 'post', onClick, ...props }, 
     try { await preloaders[preload]?.(); } catch { /* navigate anyway */ }
 
     named.forEach(([element, name]) => { element.style.viewTransitionName = name; });
+    // Lets the destination skip its own entrance while the morph plays.
+    document.documentElement.setAttribute('data-vt-nav', '');
     const transition = document.startViewTransition(() => {
       named.forEach(([element]) => { element.style.viewTransitionName = ''; });
       flushSync(() => navigate(to));
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     });
     transition.finished.finally(() => {
+      document.documentElement.removeAttribute('data-vt-nav');
       named.forEach(([element]) => { element.style.viewTransitionName = ''; });
     });
   };

@@ -9,6 +9,7 @@ import ProofReceipt from './ProofReceipt';
 import HeroHeadline from './HeroHeadline';
 import { HeroStamp, RunLine } from './HeroStamp';
 import PaperLight from './PaperLight';
+import useHeroScrollScene from './useHeroScrollScene';
 import { getPostPresentation } from '../../lib/postPresentation';
 import { getCategoryLabel } from '../../lib/categoryLabels';
 
@@ -25,8 +26,10 @@ export default function Hero({
   const isEnglish = i18n.language?.startsWith('en');
   const presentation = featuredPost ? getPostPresentation(featuredPost, i18n.language) : null;
   const sceneRef = useRef(null);
+  const heroRef = useRef(null);
   const [replay, setReplay] = useState(0);
   const replayRun = useCallback(() => setReplay((count) => count + 1), []);
+  useHeroScrollScene(heroRef, Boolean(proofRun));
 
   // Paper light and a few pixels of depth follow the pointer.
   useEffect(() => {
@@ -51,7 +54,7 @@ export default function Hero({
   }, []);
 
   return (
-    <section className={styles.hero}>
+    <section ref={heroRef} className={styles.hero}>
       <div className={styles.grain} aria-hidden="true" />
 
       <div ref={sceneRef} className={styles.scene}>
@@ -124,7 +127,7 @@ export default function Hero({
           </label>
         )}
 
-        <div className={styles.proof}>
+        <div className={styles.proof} data-stamp-target>
           <ProofReceipt run={proofRun} verified={proofVerified} post={proofPost} language={i18n.language} variant="wide" stamp={false} />
         </div>
 

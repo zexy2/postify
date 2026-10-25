@@ -117,3 +117,79 @@
   .select,
   .indexItem { transition: none; }
 }
+
+/* ── Topic index v2: a typographic line, counts as superscripts ───────── */
+.indexHeading {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.indexList { gap: 0.1rem 1.6rem; }
+
+.indexItem,
+.active,
+.active:hover {
+  position: relative;
+  align-items: flex-start;
+  gap: 0.2rem;
+  min-height: 44px;
+  padding: 0.35rem 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  transition: color 280ms ease;
+}
+
+/* Underline draws in under the selected topic */
+.indexItem::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.2rem;
+  height: 2px;
+  background: var(--primary);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 480ms cubic-bezier(0.7, 0, 0.2, 1);
+}
+.active::after { scale: 1 1; }
+.indexItem:hover::after { scale: 1 1; background: var(--text-primary); }
+.active:hover::after { background: var(--primary); }
+
+.indexCount,
+.active .indexCount {
+  min-width: 0;
+  padding: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.active .indexCount { color: var(--primary); }
+
+/* Others step back while one is pointed at */
+@media (hover: hover) and (pointer: fine) {
+  .indexList:has(.indexItem:hover) .indexItem:not(:hover) { color: var(--text-muted); }
+}
+
+.indexItem:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 4px; }
+
+/* Phones keep the native select, in the strip's square language */
+.select { border-radius: 2px; background: transparent; min-height: 48px; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  .indexItem::after { transition: none; }
+}

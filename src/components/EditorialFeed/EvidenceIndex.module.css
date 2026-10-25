@@ -1,0 +1,274 @@
+/* Evidence index — Home archive. One oversized title per record. */
+
+.index {
+  position: relative;
+  border-bottom: 1px solid var(--border-strong);
+  --seal: var(--state-unverified);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    'seal dossier actions'
+    'body body body';
+  gap: 0.9rem 0.9rem;
+  align-items: start;
+  padding-block: 1.6rem 1.75rem;
+  border-top: 1px solid var(--border-strong);
+  transition: opacity 380ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 380ms ease;
+}
+
+.row[data-evidence='author-tested'] { --seal: var(--state-tested); }
+.row[data-evidence='postify-verified'] { --seal: var(--state-verified); }
+.row[data-fresh='stale'],
+.row[data-fresh='aging'] { --seal: var(--state-recheck); }
+.row:first-child { border-top-color: transparent; }
+
+/* ── Seal: the record's evidence state as a pressed mark ── */
+.seal {
+  grid-area: seal;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--seal);
+}
+
+.seal svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.sealRing {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-dasharray: 3.4 3.2;
+}
+
+.sealMark {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+.row[data-evidence='author-tested'] .sealRing { stroke-dasharray: none; }
+.row[data-evidence='author-tested'] .sealMark { opacity: 1; }
+.row[data-evidence='postify-verified'] .sealRing { stroke-dasharray: none; fill: currentColor; }
+.row[data-evidence='postify-verified'] .sealMark { opacity: 1; stroke: var(--primary-contrast); }
+.row[data-fresh='stale'] .sealRing,
+.row[data-fresh='aging'] .sealRing { stroke-dasharray: 3.4 3.2; fill: none; }
+.row[data-fresh='stale'] .sealMark,
+.row[data-fresh='aging'] .sealMark { stroke: currentColor; }
+
+/* ── Dossier: what, where, when, how sure ── */
+.dossier {
+  grid-area: dossier;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  min-width: 0;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.priority {
+  flex-basis: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.type { font-weight: 680; color: var(--text-primary); }
+.dim { color: var(--text-muted); }
+.fresh strong { font-weight: 600; color: var(--seal); }
+
+/* ── Title ── */
+.body { grid-area: body; min-width: 0; }
+
+.titleLink {
+  display: block;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.titleLink:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 6px; }
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 7.4vw, 2.6rem);
+  font-weight: 640;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  color: var(--text-primary);
+  -webkit-text-stroke: 0 transparent;
+}
+
+.featured .title { font-size: clamp(2.3rem, 10vw, 3.4rem); }
+.compact .title { font-size: clamp(1.45rem, 5.6vw, 2rem); }
+
+.outcome {
+  max-width: 42rem;
+  margin: 1rem 0 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* ── Actions ── */
+.actions { grid-area: actions; display: flex; gap: 0.4rem; }
+
+.go,
+.bookmark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 240ms ease, color 240ms ease, border-color 240ms ease, rotate 420ms cubic-bezier(0.3, 1.4, 0.4, 1);
+}
+
+.go:hover,
+.go:focus-visible,
+.row[data-hot] .go {
+  color: var(--primary-contrast);
+  background: var(--primary);
+  border-color: var(--primary);
+  rotate: 45deg;
+}
+
+.bookmark:hover { border-color: var(--text-primary); }
+.bookmark[data-on] { color: var(--primary-contrast); background: var(--text-primary); border-color: var(--text-primary); }
+.go:focus-visible,
+.bookmark:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 3px; }
+
+/* ── Preview: inline plate for the lead on small screens, hidden otherwise ── */
+.preview { display: none; }
+.previewArt { display: block; width: 100%; height: 100%; }
+
+.featured .preview {
+  display: block;
+  grid-column: 1 / -1;
+  order: -1;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+@media (max-width: 959px) {
+  .featured { grid-template-areas: 'plate plate plate' 'seal dossier actions' 'body body body'; }
+  .featured .preview { grid-area: plate; }
+}
+
+/* ── Desktop: a ruled index ── */
+@media (min-width: 960px) {
+  .row {
+    grid-template-columns: 3rem minmax(10rem, 14rem) minmax(0, 1fr) auto;
+    grid-template-areas: 'seal dossier body actions';
+    gap: 2rem;
+    padding-block: 2.4rem 2.6rem;
+  }
+
+  .seal { width: 3rem; height: 3rem; margin-top: 0.35rem; }
+  .dossier { flex-direction: column; align-items: flex-start; gap: 0.4rem; padding-top: 0.6rem; }
+  .priority { flex-basis: auto; margin-bottom: 0.35rem; }
+  .title { font-size: clamp(2.4rem, 4.4vw, 4.4rem); line-height: 0.98; }
+  .featured .title { font-size: clamp(3rem, 5.1vw, 5.4rem); line-height: 0.95; }
+  .compact .title { font-size: clamp(1.9rem, 3vw, 3rem); }
+  .compact { padding-block: 1.7rem 1.9rem; }
+  .actions { padding-top: 0.6rem; }
+
+  /* Trailing preview that follows the pointer (positions come from useIndexPointer) */
+  .preview,
+  .featured .preview {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 6;
+    width: clamp(15rem, 21vw, 21rem);
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    pointer-events: none;
+    box-shadow: 0 30px 60px -24px rgba(10, 12, 16, 0.5), 0 0 0 1px var(--border-strong);
+    transform: translate(var(--px, 0), var(--py, 0)) translate(2rem, -52%) rotate(var(--rot, 0deg));
+    clip-path: inset(50% 0 50% 0 round 4px);
+    scale: 0.86;
+    opacity: 0;
+    transition:
+      clip-path 520ms cubic-bezier(0.7, 0, 0.2, 1),
+      scale 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 200ms linear 0ms;
+  }
+
+  .row[data-hot] .preview {
+    clip-path: inset(0 0 0 0 round 4px);
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+/* Hover: the record under the pointer comes forward, the archive recedes */
+@media (min-width: 960px) and (hover: hover) and (pointer: fine) {
+  .index[data-live] .row:not([data-hot]) { opacity: 0.26; filter: saturate(0.4); }
+  .row[data-hot] .titleLink { transform: translateX(1.25rem); }
+}
+
+/* ── Entering: rule draws, title inks in from outline, seal is pressed ── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .row {
+      border-top-color: transparent;
+      background: linear-gradient(var(--border-strong), var(--border-strong)) top left / 0% 1px no-repeat;
+      animation: rule linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+
+    .row:first-child { background: none; }
+
+    .title {
+      animation: ink linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 26%;
+    }
+
+    .seal {
+      animation: press linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 28%;
+    }
+  }
+}
+
+@keyframes rule { to { background-size: 100% 1px; } }
+
+@keyframes ink {
+  0% { color: transparent; -webkit-text-stroke: 1.25px var(--text-muted); translate: 0 0.3em; opacity: 0.35; }
+  50% { color: transparent; -webkit-text-stroke: 1.25px var(--text-primary); translate: 0 0; opacity: 1; }
+  78% { color: var(--text-primary); -webkit-text-stroke: 1.25px var(--text-primary); }
+  100% { color: var(--text-primary); -webkit-text-stroke: 0 transparent; translate: 0 0; opacity: 1; }
+}
+
+@keyframes press {
+  0%, 40% { opacity: 0; scale: 1.9; rotate: -24deg; }
+  80% { opacity: 1; scale: 0.9; rotate: 3deg; }
+  100% { opacity: 1; scale: 1; rotate: 0deg; }
+}
