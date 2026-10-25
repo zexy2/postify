@@ -39,8 +39,8 @@ export default function HeroHeadline({ text, className = '', run, language, stam
       // The headline box is the limit: anything past it would overflow the h1 itself.
       const heading = anchor.closest('h1')?.getBoundingClientRect();
       const edge = Math.min(document.documentElement.clientWidth - 12, heading ? heading.right : Infinity);
-      // ~1.1×: the stamp sits rotated, so its on-screen box is wider than its layout width
-      const right = anchor.getBoundingClientRect().left + mark.offsetWidth * 1.1;
+      // ~1.4×: covers the widest press frame (scale 1.12 at -18°) plus the settled -12° tilt.
+      const right = anchor.getBoundingClientRect().left + mark.offsetWidth * 1.4;
       const overflow = Math.max(0, Math.ceil(right - edge));
       anchor.style.setProperty('--fit', `${overflow}px`);
       // Sliding left would cover the last word; lift into the line above instead.
@@ -48,8 +48,14 @@ export default function HeroHeadline({ text, className = '', run, language, stam
     };
     fit();
     document.fonts?.ready.then(fit);
+    // Reader text size changes reflow the headline without resizing the window.
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(fit);
+    observer?.observe(anchor.closest('h1') || frame);
     window.addEventListener('resize', fit);
-    return () => window.removeEventListener('resize', fit);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', fit);
+    };
   }, [text, stamp]);
   const isEnglish = language?.startsWith('en');
   const check = getVerificationCheck(run?.id || 'node-json-parse-v1');

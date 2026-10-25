@@ -98,7 +98,7 @@
 .title {
   max-width: 12ch;
   margin: 0;
-  font-size: clamp(3.25rem, min(11.4vw, 19vh), 13rem);
+  font-size: min(clamp(3.25rem, min(11.4vw, 19vh), 13rem), 11.4vw);
   font-weight: 680;
   line-height: 0.9;
   letter-spacing: -0.034em;
@@ -381,7 +381,8 @@
 
 @media (max-width: 640px) {
   .scene { height: auto; min-height: calc(100svh - var(--header-height)); padding-top: 2rem; }
-  .title { font-size: clamp(2.9rem, 15.5vw, 5rem); }
+  /* Poster type tracks the screen; the rem floor must never push a single word off it at large reader text */
+  .title { font-size: min(clamp(2.9rem, 15.5vw, 5rem), 15.5vw); }
   .heroActions { display: grid; grid-template-columns: 1fr; }
   .primaryAction,
   .secondaryAction { width: 100%; }
