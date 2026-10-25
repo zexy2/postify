@@ -175,7 +175,6 @@ test.describe('Postify UI V2', () => {
       await page.waitForTimeout(230);
       const info = await page.evaluate(() => {
         const elements = [
-          document.querySelector('div[class*="artworkStatement_"]'),
           document.querySelector('#about-statement-title'),
           document.querySelector('#trust-model-title'),
           document.querySelector('section[class*="cta_"] h2'),
@@ -191,7 +190,7 @@ test.describe('Postify UI V2', () => {
           documentOverflow: document.documentElement.scrollWidth - innerWidth,
         };
       });
-      expect(info.fits).toEqual([true, true, true, true]);
+      expect(info.fits).toEqual([true, true, true]);
       expect(info.bodyOverflow).toBeLessThanOrEqual(1);
       expect(info.documentOverflow).toBeLessThanOrEqual(1);
     }
@@ -1510,7 +1509,7 @@ test.describe('Postify UI V2', () => {
         const geometry = await page.evaluate(() => {
           const hero = document.querySelector('section[class*="hero_"]');
           const heading = hero.querySelector('h1');
-          const eyebrow = hero.querySelector('span[class*="eyebrow_"]');
+          const receipt = hero.querySelector('figure');
           const feed = document.querySelector('#knowledge-feed');
           const title = feed.querySelector('h2[class*="sectionTitle_"]');
           const count = feed.querySelector('p[class*="sectionSubtitle_"]');
@@ -1519,13 +1518,13 @@ test.describe('Postify UI V2', () => {
             return rect.right <= innerWidth + 1 && rect.left >= -1 && element.scrollWidth <= element.clientWidth + 1;
           };
           return {
-            heading: fits(heading), eyebrow: fits(eyebrow),
+            heading: fits(heading), receipt: fits(receipt),
             feedTitle: fits(title), resultCount: fits(count),
             scrollableDocument: document.documentElement.scrollWidth > innerWidth + 1,
           };
         });
         expect(geometry.heading).toBe(true);
-        expect(geometry.eyebrow).toBe(true);
+        expect(geometry.receipt).toBe(true);
         expect(geometry.feedTitle).toBe(true);
         expect(geometry.resultCount).toBe(true);
         expect(geometry.scrollableDocument).toBe(false);
@@ -1577,7 +1576,7 @@ test.describe('Postify UI V2', () => {
       expect(result.clipped).toEqual([]);
       expect(result.checkedNodes).toBeGreaterThan(16);
       expect(result.navCount).toBe(9); // Goal is the ninth public editorial destination.
-      expect(result.label).toContain('İşe yarasın');
+      expect(result.label).toContain('İşini göster');
     }
     // Contact has unrelated 400% overflows in its hero and form; audit the
     // article separately rather than claiming the entire site passes reflow.
@@ -1641,7 +1640,7 @@ test.describe('Postify UI V2', () => {
           titleClipped: title.scrollWidth > title.clientWidth + 1,
           clippedNavs: navs.filter((nav) => nav.scrollWidth > nav.clientWidth + 1).length,
           clippedLinks: links.filter((link) => link.scrollWidth > link.clientWidth + 1).length,
-          titleLegible: /sadece\s*okuma|işe yarasın/i.test(title.textContent),
+          titleLegible: /göster|show your work/i.test(title.textContent),
           indexColumnCount: getComputedStyle(index).gridTemplateColumns.split(' ').length,
         };
       });
@@ -1730,7 +1729,7 @@ test.describe('Postify UI V2', () => {
     await page.goto('/contact');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.getByText(/direct channels|doğrudan kanallar/i)).toBeVisible();
-    await expect(page.getByText(/^correction$|^düzeltme$/i)).toBeVisible();
+    await expect(page.getByRole('region', { name: /good reasons|iletişim için/i }).getByText(/^correction$|^düzeltme$/i)).toBeVisible();
     await expect(page.getByRole('link', { name: /zekiakgul09@gmail.com/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /@zexy2/i })).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -2170,7 +2169,7 @@ test.describe('Public goal manifesto & editorial footer', () => {
   test('public goal works via footer and the interactive method is keyboard operable', async ({ page }) => {
     await page.goto('/');
     const footer = page.locator('footer');
-    await footer.getByRole('link', { name: /hedefimizi keşfet|discover our goal/i }).click();
+    await footer.getByRole('link', { name: /^hedefimiz$|^our goal$/i }).click();
     await expect(page).toHaveURL(/\/goal$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText(/Bilgi|Knowledge/i);
     const proof = page.getByRole('button', { name: /Kanıt|Evidence/i }).first();
@@ -2178,7 +2177,7 @@ test.describe('Public goal manifesto & editorial footer', () => {
     await page.keyboard.press('Enter');
     await expect(proof).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByRole('heading', { level: 3 })).toContainText(/Hangi koşullarda|Under what conditions/i);
-    await expect(page.locator('footer').getByRole('link', { name: /Postify hedefini keşfet|Discover the Postify goal/i })).toBeVisible();
+    await expect(page.locator('footer').getByRole('link', { name: /^hedefimiz$|^our goal$/i })).toBeVisible();
   });
 
   test('goal hero, footer, reflow, controls and status remain safe on small screens', async ({ page }) => {

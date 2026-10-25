@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { flushSync } from 'react-dom';
 import { FiArrowRight, FiChevronDown, FiSearch, FiSliders, FiX } from 'react-icons/fi';
 import Hero from '../components/Hero';
 import CategoryNav from '../components/CategoryNav';
@@ -74,11 +75,34 @@ const HomePage = ({ isHistoryRestore = false }) => {
   useEffect(() => {
     if (isHistoryRestore || location.hash !== '#knowledge-feed' || !typeParam) return undefined;
 
-    const frame = window.requestAnimationFrame(() => {
-      document.getElementById('knowledge-feed')?.scrollIntoView({ block: 'start' });
-    });
+    // Late content above the feed (web fonts, the proof receipt) must not push a
+    // filtered deep link out of view. Keep it anchored briefly, unless the
+    // reader takes over scrolling.
+    let frame = 0;
+    let active = true;
+    const scroll = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        if (active) document.getElementById('knowledge-feed')?.scrollIntoView({ block: 'start' });
+      });
+    };
+    const release = () => { active = false; };
+    const intents = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    intents.forEach((name) => window.addEventListener(name, release, { once: true, passive: true }));
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(scroll);
+    const hero = document.querySelector('#main-content section');
+    if (hero) observer?.observe(hero);
+    const timer = window.setTimeout(release, 2000);
+    scroll();
+    document.fonts?.ready.then(scroll);
 
-    return () => window.cancelAnimationFrame(frame);
+    return () => {
+      release();
+      observer?.disconnect();
+      window.clearTimeout(timer);
+      window.cancelAnimationFrame(frame);
+      intents.forEach((name) => window.removeEventListener(name, release));
+    };
   }, [isHistoryRestore, location.hash, typeParam]);
 
   useEffect(() => {
@@ -96,19 +120,26 @@ const HomePage = ({ isHistoryRestore = false }) => {
     setSearchParams(nextParams, { replace: true });
   };
 
-  const handleCategoryChange = (category) => {
+  // Re-sorting the archive animates records to their new place.
+  const reflow = (update) => {
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || typeof document.startViewTransition !== 'function') { update(); return; }
+    document.startViewTransition(() => flushSync(update));
+  };
+
+  const handleCategoryChange = (category) => reflow(() => {
     setActiveCategory(category);
     updateFilterParam('category', category);
-  };
+  });
 
-  const handleTypeChange = (type) => {
+  const handleTypeChange = (type) => reflow(() => {
     setActiveType(type);
     updateFilterParam('type', type);
-  };
+  });
 
-  const handleEvidenceChange = (next) => { setEvidenceFilter(next); updateFilterParam('evidence', next); };
-  const handleSortChange = (next) => { setSortMode(next); updateFilterParam('sort', next === 'evidence' ? 'all' : next); };
-  const handleFreshnessChange = () => { const next=freshnessFilter==='current'?'all':'current'; setFreshnessFilter(next); updateFilterParam('freshness', next); };
+  const handleEvidenceChange = (next) => reflow(() => { setEvidenceFilter(next); updateFilterParam('evidence', next); });
+  const handleSortChange = (next) => reflow(() => { setSortMode(next); updateFilterParam('sort', next === 'evidence' ? 'all' : next); });
+  const handleFreshnessChange = () => reflow(() => { const next=freshnessFilter==='current'?'all':'current'; setFreshnessFilter(next); updateFilterParam('freshness', next); });
 
   const handleReadingChange = () => {
     const next = readingFilter === 'quick' ? 'all' : 'quick';
@@ -228,6 +259,18 @@ const HomePage = ({ isHistoryRestore = false }) => {
     });
   }, [activeCategory, activeType, debouncedQuery, evidenceAwarePosts, evidenceFilter, freshnessFilter, i18n.language, readingFilter]);
 
+  // The hero replays the most recent published verification run, bound to the
+  // post whose displayed code it executed.
+  const proof = useMemo(() => {
+    const runs = Object.values(verificationRuns.data?.runs || {})
+      .filter((run) => run?.status === 'passed')
+      .sort((left, right) => String(right.verifiedAt || '').localeCompare(String(left.verifiedAt || '')));
+    const run = runs[0] || null;
+    if (!run) return { run: null, verified: false, post: null };
+    const post = posts.find((item) => item.slug === run.postSlug) || null;
+    return { run, verified: getAutomaticVerificationState(run, runtimeReleaseStatus.data).verified, post };
+  }, [posts, runtimeReleaseStatus.data, verificationRuns.data]);
+
   const rankedPosts = useMemo(() => sortKnowledge(filteredPosts, { mode: sortMode }), [filteredPosts, sortMode]);
   const hasSearch = query.trim().length > 0;
   const featuredPost = evidenceAwarePosts[0];
@@ -261,6 +304,9 @@ const HomePage = ({ isHistoryRestore = false }) => {
         searchValue={query}
         onSearchChange={setQuery}
         featuredPost={featuredPost}
+        proofRun={proof.run}
+        proofVerified={proof.verified}
+        proofPost={proof.post}
       />
 
       {isFallback && (
@@ -274,11 +320,11 @@ const HomePage = ({ isHistoryRestore = false }) => {
         <div className={styles.sectionHeader}>
           <div>
             <span className={styles.sectionEyebrow}>{hasSearch ? t('home.searchLabel') : t('home.latest')}</span>
-            <h2 className={styles.sectionTitle}>
+            <h2 className={styles.sectionTitle} key={`${activeCategory}|${hasSearch ? query : ''}`}>
               {hasSearch ? <><FiSearch size={22} /> “{query}”</> : activeCategory !== 'all' ? getCategoryLabel(activeCategory, i18n.language) : t('home.feedTitle')}
             </h2>
           </div>
-          <p className={styles.sectionSubtitle}>{t('home.resultCount', { count: filteredPosts.length })}</p>
+          <p className={styles.sectionSubtitle} key={filteredPosts.length} aria-live="polite">{t('home.resultCount', { count: filteredPosts.length })}</p>
         </div>
 
         <div className={styles.discoveryControls}>

@@ -1,0 +1,82 @@
+.proof {
+  --state: var(--state-recheck);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: -1.15rem 0 1.75rem;
+  padding: 12px min(1.25rem, 18px);
+  color: #e8ebee;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  background: #1d2128;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.proof[data-current] { --state: var(--state-verified); }
+
+.command { padding: 0; color: inherit; font-size: 0.8125rem; background: none; }
+.command span { opacity: 0.55; }
+
+.result {
+  padding: 2px 10px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background: #2f3be0;
+  border-radius: var(--radius-full);
+}
+
+.meta { color: #949ca6; }
+
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: #f3f4f1;
+  font-weight: 600;
+}
+
+.state::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--state);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--state) 30%, transparent);
+}
+
+.proof > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+
+@media (max-width: 640px) { .state { margin-left: 0; } }
+
+/* Seal pressed once as the record scrolls in; colour follows the run state */
+.seal {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  overflow: visible;
+  color: var(--state);
+}
+.seal circle { fill: currentColor; }
+.seal path { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.proof:not([data-current]) .seal circle { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-dasharray: 3.4 3.2; }
+.proof:not([data-current]) .seal path { stroke: currentColor; }
+
+.proof { border-radius: 0 0 4px 4px; }
+.result { border-radius: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .seal { animation: proofPress linear both; animation-timeline: view(); animation-range: entry 60% cover 30%; }
+  }
+}
+
+@keyframes proofPress {
+  0%, 35% { opacity: 0; scale: 2; rotate: -30deg; }
+  80% { opacity: 1; scale: 0.88; rotate: 4deg; }
+  100% { opacity: 1; scale: 1; rotate: 0deg; }
+}

@@ -24,10 +24,13 @@ Every product change should improve at least one of these outcomes:
 6. Update `project/progress.md`, `project/decisions.md`, and `project/known-issues.md` when relevant.
 
 ## Quality rules
-- Do not add decorative UI without a reader or author job to justify it.
-- Prefer quiet hierarchy, readable typography, keyboard access, and mobile ergonomics over glass/glow effects.
-- No fake social proof, fake live data, fake verification badges, or invented source counts.
+- Design language is "show your work": cool report paper, graphite ink, one cobalt colour reserved for evidence, amber for recheck. Tokens live in `src/index.css`; do not reintroduce cream/terracotta or extra accent hues.
+- Type: Bricolage Grotesque (display/UI), Source Serif 4 (reading), IBM Plex Mono for code only. No all-caps monospace labels, no fake ordinals (01/02/03) unless the content is a real sequence.
+- Motion is allowed when it explains evidence: the hero proof receipt, record-to-article view transitions, the Goal scroll scene. One orchestrated moment per page; everything respects `prefers-reduced-motion`. Heavy motion libraries (GSAP) load lazily per route and never enter the entry chunk.
+- Covers are `EvidenceCover` figures generated from each post's record (type → shape, evidence → terminal mark, minutes → ruler). Do not add stock imagery.
+- No fake social proof, fake live data, fake verification badges, or invented source counts. Anything shown in the proof receipt or a stamp must come from published run artifacts.
 - New trust/freshness labels must be backed by explicit data or use neutral wording such as “last edited”.
+- Keyboard access, visible focus, 44px touch targets and 400% text reflow remain release gates.
 - Supabase schema changes are deferred until the product model is validated in the frontend.
 
 ## graphify

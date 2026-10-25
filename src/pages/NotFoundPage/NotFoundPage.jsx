@@ -40,9 +40,8 @@ const NotFoundPage = () => {
 
         <nav className={styles.recoveryIndex} aria-label={t('notFound.suggestions')}>
           <span className={styles.indexLabel}>{isEn ? 'RECOVERY INDEX' : 'GERİ DÖNÜŞ DİZİNİ'}</span>
-          {suggestions.map(([index, label, to]) => (
+          {suggestions.map(([, label, to]) => (
             <Link to={to} key={to}>
-              <span>{index}</span>
               <strong>{label}</strong>
               <FiArrowRight aria-hidden="true" />
             </Link>

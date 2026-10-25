@@ -1,19 +1,17 @@
-import { Link } from 'react-router-dom';
+import TransitionLink from '../TransitionLink/TransitionLink';
 import { useTranslation } from 'react-i18next';
 import { FiBookmark, FiClock } from 'react-icons/fi';
-import ContentImage from '../ContentImage/ContentImage';
+import EvidenceCover from '../EvidenceCover/EvidenceCover';
 import EvidenceBadge from '../EvidenceBadge';
 import { summarizeCommunityEvidence } from '../../lib/communityEvidence';
 import { getEvidenceCopy } from '../../lib/knowledgeEvidence';
 import { getPostPresentation, getPostReadingMinutes } from '../../lib/postPresentation';
 import { getCategoryLabel } from '../../lib/categoryLabels';
 import styles from './KnowledgeCard.module.css';
-import { getResponsiveCoverSrcSet } from '../../lib/responsiveCover';
 
 const KnowledgeCard = ({
   post,
   variant = 'standard',
-  ordinal,
   priorityLabel,
   onBookmarkToggle,
   isBookmarked = false,
@@ -51,8 +49,14 @@ const KnowledgeCard = ({
   ].filter(Boolean);
 
   return (
-    <article className={`${styles.card} ${styles[safeVariant]}`} data-card-variant={safeVariant} data-scroll-anchor-key={href}>
-      <div className={styles.ordinal} aria-hidden="true">{ordinal}</div>
+    <article
+      className={`${styles.card} ${styles[safeVariant]}`}
+      data-card-variant={safeVariant}
+      data-evidence={post.evidence?.level || evidence.level || 'unverified'}
+      data-scroll-anchor-key={href}
+      data-vt-scope
+      style={{ viewTransitionName: `record-${String(post.id || post.slug).replace(/[^a-z0-9-]/gi, '-')}` }}
+    >
 
       <div className={styles.content}>
         {priorityLabel && <div className={styles.priority}>{priorityLabel}</div>}
@@ -63,11 +67,11 @@ const KnowledgeCard = ({
           {presentation.formattedDate && <span className={styles.date}>{presentation.formattedDate}</span>}
         </div>
 
-        <Link to={href} className={styles.titleLink}>
+        <TransitionLink to={href} className={styles.titleLink}>
           {isFeatured
-            ? <h3 className={styles.title}>{post.title}</h3>
-            : <h4 className={styles.title}>{post.title}</h4>}
-        </Link>
+            ? <h3 className={styles.title} data-vt="title">{post.title}</h3>
+            : <h4 className={styles.title} data-vt="title">{post.title}</h4>}
+        </TransitionLink>
 
         {safeVariant !== 'compact' && presentation.outcome && (
           <p className={styles.outcome}>
@@ -94,9 +98,9 @@ const KnowledgeCard = ({
         </div>
 
         <div className={styles.actions}>
-          <Link to={href} className={styles.readLink}>
+          <TransitionLink to={href} className={styles.readLink}>
             {isFeatured ? t('common.readMore') : t('common.read')}
-          </Link>
+          </TransitionLink>
           <button
             type="button"
             className={`${styles.bookmark} ${isBookmarked ? styles.bookmarked : ''}`}
@@ -109,16 +113,9 @@ const KnowledgeCard = ({
       </div>
 
       {safeVariant !== 'compact' && (
-        <Link to={href} className={styles.imageLink} tabIndex={-1} aria-hidden="true">
-          <ContentImage
-            src={post.coverImageUrl}
-            srcSet={getResponsiveCoverSrcSet(post.coverImageUrl)}
-            sizes={isFeatured ? '100vw' : '205px'}
-            alt=""
-            className={styles.image}
-            loading="lazy"
-          />
-        </Link>
+        <TransitionLink to={href} className={styles.imageLink} tabIndex={-1} aria-hidden="true" data-vt="cover">
+          <EvidenceCover post={post} className={styles.image} typeLabel={presentation.typeLabel} />
+        </TransitionLink>
       )}
     </article>
   );

@@ -1,0 +1,197 @@
+/* Claim under test.
+   0.10s  words rise in outline (unverified)
+   0.95s  a cobalt scan line runs; ink fills behind it (tested)
+   then   a loupe reveals the real work beneath the words */
+
+.frame {
+  --lx: -999px;
+  --ly: -999px;
+  --r: clamp(74px, 8.5vw, 132px);
+  --pad: calc(var(--r) + 1rem);
+  --reveal: 480ms;
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  isolation: isolate;
+}
+
+.frame[data-lens='on'] { cursor: none; }
+
+/* Zero-width anchor after the last word: the stamp lands on the claim itself */
+.stampAnchor {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0.7em;
+  vertical-align: baseline;
+}
+
+.stampAnchor > * {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: calc(-6% - var(--fit, 0px)) calc(-50% - var(--lift, 0em));
+  z-index: 6;
+}
+
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for Turkish dots and descenders inside the rising mask */
+  padding: 0.14em 0.02em 0.12em;
+  margin: -0.14em -0.02em -0.12em;
+}
+
+.wordInner {
+  display: inline-block;
+  transform-origin: 0 100%;
+  animation: rise 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(60ms + var(--i) * 45ms);
+}
+
+.ink {
+  position: relative;
+  z-index: 1;
+  clip-path: inset(-25% 100% -25% -2%);
+  animation: fill 640ms cubic-bezier(0.65, 0, 0.35, 1) var(--reveal) forwards;
+}
+
+.outline {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  margin: 0;
+  color: transparent;
+  -webkit-text-stroke: 1.25px var(--text-primary);
+  pointer-events: none;
+  animation: settle 500ms ease var(--reveal) forwards;
+  animation-delay: 1120ms;
+}
+
+.scan {
+  position: absolute;
+  top: -6%;
+  bottom: -6%;
+  left: 0;
+  z-index: 2;
+  width: 2px;
+  background: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary-light), 0 0 32px 6px var(--primary-light);
+  opacity: 0;
+  pointer-events: none;
+  animation: scan 640ms cubic-bezier(0.65, 0, 0.35, 1) var(--reveal) both;
+}
+
+/* Loupe — the work under the words */
+.lens {
+  position: absolute;
+  inset: calc(-1 * var(--pad));
+  z-index: 3;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle var(--r) at calc(var(--lx) + var(--pad)) calc(var(--ly) + var(--pad)), #000 calc(100% - 1.5px), transparent 100%);
+  mask-image: radial-gradient(circle var(--r) at calc(var(--lx) + var(--pad)) calc(var(--ly) + var(--pad)), #000 calc(100% - 1.5px), transparent 100%);
+  transition: opacity 240ms var(--ease-out);
+}
+
+.lensEvidence {
+  position: absolute;
+  inset: 0;
+  display: block;
+  padding: 0.5rem;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: clamp(0.8125rem, 1vw, 1rem);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+  opacity: 0.5;
+}
+
+.lensOutline {
+  position: absolute;
+  top: var(--pad);
+  left: var(--pad);
+  display: block;
+  width: calc(100% - 2 * var(--pad));
+  margin: 0;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--primary);
+}
+
+.loupe {
+  position: absolute;
+  left: var(--lx);
+  top: var(--ly);
+  z-index: 4;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  border: 1.5px solid var(--text-primary);
+  border-radius: 50%;
+  box-shadow: 0 18px 40px -18px rgba(21, 24, 28, 0.45), inset 0 0 0 6px rgba(255, 255, 255, 0.35);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.85);
+  pointer-events: none;
+  transition: opacity 240ms var(--ease-out), transform 320ms var(--ease-out);
+}
+
+.loupe span {
+  position: absolute;
+  left: 50%;
+  bottom: -0.85rem;
+  padding: 0.2rem 0.6rem;
+  color: var(--primary-contrast);
+  font-size: 0.75rem;
+  font-weight: 650;
+  white-space: nowrap;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  transform: translateX(-50%);
+}
+
+.frame[data-lens] .lens { opacity: 1; }
+.frame[data-lens] .loupe { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+/* Kinetic width: each word rises condensed and breathes out to full width */
+/* Visual-only squeeze (transform), so line breaks are final from the first frame */
+@keyframes rise {
+  from { transform: translateY(108%) scaleX(0.78); }
+  60% { transform: translateY(0) scaleX(0.9); }
+  to { transform: none; }
+}
+
+@keyframes fill {
+  99% { clip-path: inset(-25% -6% -25% -2%); }
+  to { clip-path: none; }
+}
+
+@keyframes scan {
+  0% { left: 0; opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+@keyframes settle {
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordInner,
+  .ink,
+  .outline,
+  .scan { animation: none; }
+  .ink { clip-path: none; }
+  .outline,
+  .scan,
+  .lens,
+  .loupe { display: none; }
+}
+
+/* Phones: drop the stamp onto the last line so it clears the line above */
+@media (max-width: 640px) {
+  .stampAnchor > * { translate: calc(-4% - var(--fit, 0px)) calc(-40% - var(--lift, 0em)); }
+}

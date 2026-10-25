@@ -42,7 +42,7 @@
   border-radius: 0;
   font: inherit;
   font-size: .8rem;
-  font-weight: 800;
+  font-weight: 650;
   cursor: pointer;
 }
 .cancel { color: var(--text-secondary); background: transparent; border-bottom: 1px solid var(--border-strong); }

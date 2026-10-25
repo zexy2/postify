@@ -40,10 +40,10 @@
 .statusEyebrow {
   color: #d6e9cb;
   font-family: var(--font-sans);
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .15em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  
+  
 }
 .routeStatus h1 {
   max-width: 15ch;
@@ -51,7 +51,7 @@
   color: #f8faf5;
   font-family: var(--font-sans);
   font-size: clamp(2.6rem, 6vw, 4.9rem);
-  font-weight: 800;
+  font-weight: 650;
   letter-spacing: -.07em;
   line-height: 1.04;
   text-wrap: balance;
@@ -114,10 +114,10 @@
   border-bottom: 1px solid rgb(255 255 255 / 20%);
   color: #d6e5da;
   font-family: var(--font-sans);
-  font-size: .7rem;
+  font-size: 0.8125rem;
   font-weight: 750;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+  
+  
 }
 .editionLine > span:last-child { color: #bbcfc1; font-size: .75rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
 .editionMark { color: #f4bb9f; }
@@ -134,10 +134,10 @@
 .authorStats span,
 .sectionHeader > strong {
   font-family: var(--font-sans);
-  font-size: .74rem;
+  font-size: 0.8125rem;
   font-weight: 750;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  
+  
 }
 .eyebrow {
   display: inline-flex;
@@ -157,7 +157,7 @@
   color: #f7faf5;
   font-family: var(--font-sans);
   font-size: clamp(3.3rem, 6.9vw, 6.65rem);
-  font-weight: 810;
+  font-weight: 650;
   letter-spacing: -.08em;
   line-height: .97;
   overflow-wrap: anywhere;
@@ -199,7 +199,7 @@
 }
 .portraitRing { position: absolute; inset: 12%; border: 1px dashed rgb(234 245 227 / 26%); border-radius: 50%; }
 .monogram { font-family: var(--font-sans); font-size: clamp(8rem, 17vw, 15rem); font-weight: 760; letter-spacing: -.12em; line-height: 1; transform: translateX(-.06em); }
-.portraitEdition { position: absolute; right: 5%; bottom: 12%; padding: .4rem .65rem; color: #f2f6eb; background: #1e3a34; border: 1px solid rgb(242 246 235 / 22%); border-radius: 99px; font-family: var(--font-sans); font-size: .65rem; font-weight: 700; letter-spacing: .13em; }
+.portraitEdition { position: absolute; right: 5%; bottom: 12%; padding: .4rem .65rem; color: #f2f6eb; background: #1e3a34; border: 1px solid rgb(242 246 235 / 22%); border-radius: 99px; font-family: var(--font-sans); font-size: 0.8125rem; font-weight: 700;  }
 
 .authorStats {
   position: relative;
@@ -226,8 +226,8 @@
   box-shadow: 0 12px 38px rgb(13 36 28 / 7%);
 }
 .authorStats svg { color: var(--primary); font-size: 1.1rem; }
-.authorStats strong { color: var(--text-primary); font-family: var(--font-sans); font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -.07em; line-height: 1; }
-.authorStats span { width: 100%; color: var(--text-muted); font-size: .67rem; letter-spacing: .065em; line-height: 1.4; }
+.authorStats strong { color: var(--text-primary); font-family: var(--font-sans); font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 650; letter-spacing: -.07em; line-height: 1; }
+.authorStats span { width: 100%; color: var(--text-muted); font-size: 0.8125rem;  line-height: 1.4; }
 
 .knowledgeSection { margin-top: clamp(3rem, 5vw, 4.3rem); scroll-margin-top: 6rem; }
 .sectionHeader { display: flex; align-items: end; justify-content: space-between; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border-strong); }
@@ -244,26 +244,26 @@
   .heroContent { grid-template-columns: minmax(0, 1fr) 8rem; gap: .7rem; align-items: center; padding: 2rem 0 .25rem; }
   .portrait { width: 7.5rem; box-shadow: 0 0 0 .6rem rgb(216 232 212 / 5%); }
   .monogram { font-size: 5rem; }
-  .portraitEdition { right: -9%; bottom: 4%; font-size: .45rem; }
+  .portraitEdition { right: -9%; bottom: 4%; font-size: 0.8125rem; }
   .identity h1 { font-size: clamp(2.65rem, 8.8vw, 4.35rem); }
   .bio { max-width: 45ch; font-size: .93rem; }
   .authorStats { gap: .45rem; width: calc(100% - 1.2rem); margin-top: -2.4rem; }
   .authorStats > div { min-height: 6.7rem; gap: .35rem; padding: .8rem; border-radius: .85rem; }
   .authorStats strong { font-size: clamp(1.5rem, 5vw, 2rem); }
-  .authorStats span { font-size: .62rem; }
+  .authorStats span { font-size: 0.8125rem; }
 }
 @media (max-width: 520px) {
   .page { padding-top: .85rem; }
   .authorHeader { padding: 1.3rem 1.2rem 3.2rem; border-radius: 1.1rem; }
-  .editionLine { font-size: .58rem; }
-  .editionLine > span:last-child { font-size: .63rem; }
+  .editionLine { font-size: 0.8125rem; }
+  .editionLine > span:last-child { font-size: 0.8125rem; }
   .heroContent { position: relative; display: flex; align-items: flex-start; padding-top: 1.5rem; }
   .identity { position: relative; z-index: 1; width: 100%; }
   .identity h1 { max-width: 18ch; font-size: clamp(2.55rem, 10.8vw, 3.4rem); }
   .portrait { position: absolute; top: -.25rem; right: -.8rem; z-index: -1; width: 7.8rem; opacity: .25; }
   .monogram { font-size: 5rem; }
   .portraitEdition { display: none; }
-  .eyebrow { font-size: .63rem; }
+  .eyebrow { font-size: 0.8125rem; }
   .handle { font-size: .84rem; }
   .bio { font-size: .92rem; }
   .exploreLink { min-height: 48px; font-size: .77rem; }
@@ -271,7 +271,7 @@
   .authorStats > div { min-height: 6.6rem; padding: .65rem .6rem; border-radius: .78rem; }
   .authorStats svg { font-size: .95rem; }
   .authorStats strong { font-size: clamp(1.25rem, 5.3vw, 1.8rem); }
-  .authorStats span { font-size: .56rem; letter-spacing: .02em; overflow-wrap: anywhere; }
+  .authorStats span { font-size: 0.8125rem; letter-spacing: .02em; overflow-wrap: anywhere; }
   .knowledgeSection { margin-top: 2.8rem; }
   .sectionHeader h2 { font-size: clamp(1.95rem, 8vw, 2.55rem); }
   .routeStatus { min-height: 52vh; padding: 2.2rem 1.4rem; }
@@ -332,7 +332,7 @@
   padding-bottom: .85rem;
   color: var(--text-secondary);
   border-bottom: 1px solid var(--border-color);
-  letter-spacing: .075em;
+  
 }
 .editionLine > span:last-child,
 :global(html:not([data-theme='dark'])) .editionLine > span:last-child { color: var(--text-muted); }
@@ -350,7 +350,7 @@
   background: transparent;
   border: 0;
   border-radius: 0;
-  letter-spacing: .055em;
+  
 }
 .identity h1,
 :global(html:not([data-theme='dark'])) .identity h1 {
@@ -412,7 +412,7 @@
   background: transparent;
   border: 0;
   border-radius: 0;
-  letter-spacing: .06em;
+  
 }
 .authorStats {
   width: 100%;
@@ -436,7 +436,7 @@
 .authorStats span { font-family: var(--font-sans); letter-spacing: .015em; text-transform: none; }
 .knowledgeSection { margin-top: clamp(2rem, 4vw, 3.5rem); }
 .sectionHeader h2 { font-family: var(--font-display); font-size: clamp(2.4rem, 4.2vw, 4.1rem); font-weight: 530; letter-spacing: -.06em; }
-.sectionHeader > strong { background: transparent; border-radius: 0; border: 0; font-family: var(--font-mono); }
+.sectionHeader > strong { background: transparent; border-radius: 0; border: 0;  }
 @media (max-width: 720px) {
   .heroContent { grid-template-columns: minmax(0, 1fr) minmax(6rem, .24fr); padding: 1.6rem 0 0; }
   .portrait { width: 7rem; aspect-ratio: 3 / 4; box-shadow: none; }
@@ -455,7 +455,7 @@
   .authorStats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .authorStats > div { min-height: 5.7rem; padding: .75rem .55rem; }
   .authorStats strong { font-size: 1.65rem; }
-  .authorStats span { font-size: .64rem; overflow-wrap: break-word; }
+  .authorStats span { font-size: 0.8125rem; overflow-wrap: break-word; }
 }
 
 
@@ -483,7 +483,7 @@
 .portfolioIndexHeading strong,
 .portfolioIndexMobile summary strong {
   color: var(--primary);
-  font-family: var(--font-mono);
+  
   font-size: .78rem;
   font-weight: 780;
   font-variant-numeric: tabular-nums;
@@ -515,8 +515,8 @@
 .publicationOrdinal {
   padding-top: .1rem;
   color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: .7rem;
+  
+  font-size: 0.8125rem;
   font-weight: 740;
   font-variant-numeric: tabular-nums;
 }
@@ -524,7 +524,7 @@
 .publicationType {
   color: var(--text-muted);
   font-family: var(--font-sans);
-  font-size: .67rem;
+  font-size: 0.8125rem;
   font-weight: 720;
   letter-spacing: .035em;
 }
@@ -540,8 +540,8 @@
 .publicationDetails small {
   margin-top: .1rem;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: .63rem;
+  
+  font-size: 0.8125rem;
 }
 .publicationArrow { margin-top: .08rem; color: var(--text-muted); font-size: .95rem; }
 .publicationLink:hover .publicationArrow { color: var(--primary); }
@@ -619,3 +619,8 @@
   .portfolioIndexMobile summary > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .portfolioIndexMobile summary strong { min-width: 0; }
 }
+
+/* Ordinal column was removed; the row is details + arrow only */
+.publicationLink { grid-template-columns: minmax(0, 1fr) auto !important; }
+.publicationDetails { grid-template-columns: minmax(0, 1fr); }
+.publicationDetails > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
