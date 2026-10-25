@@ -1,0 +1,147 @@
+.cover {
+  --mark: var(--state-unverified);
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cover[data-state='tested'] { --mark: var(--state-tested); }
+.cover[data-state='verified'] { --mark: var(--state-verified); }
+.cover[data-state='recheck'] { --mark: var(--state-recheck); }
+
+.paper { fill: var(--bg-secondary); }
+
+.grid {
+  fill: none;
+  stroke: var(--border-subtle);
+  stroke-width: 1;
+}
+
+.ghost {
+  fill: none;
+  stroke: var(--text-disabled);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 5;
+  stroke-linecap: round;
+}
+
+.trace {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.hub {
+  fill: var(--bg-elevated);
+  stroke: var(--text-primary);
+  stroke-width: 2;
+}
+
+.node {
+  fill: var(--bg-secondary);
+  stroke: var(--text-primary);
+  stroke-width: 1.75;
+}
+
+.terminalRing {
+  fill: var(--bg-elevated);
+  stroke: var(--mark);
+  stroke-width: 2.5;
+}
+
+.cover[data-state='unverified'] .terminalRing {
+  stroke-dasharray: 3 4;
+  stroke-width: 1.75;
+}
+
+.cover[data-state='verified'] .terminalRing { fill: var(--mark); }
+
+.terminalMark {
+  fill: none;
+  stroke: var(--mark);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cover[data-state='verified'] .terminalMark { stroke: var(--primary-contrast); }
+
+.ruler line {
+  stroke: var(--text-disabled);
+  stroke-width: 1.5;
+}
+
+.ruler line[data-on] { stroke: var(--text-primary); }
+
+/* Draw the trace when the cover's card is hovered — the record being re-run */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :global(a:hover) > .cover .trace,
+  :global(article:hover) .cover .trace {
+    animation: redraw 900ms var(--ease-in-out);
+  }
+
+  :global(article:hover) .cover .terminal {
+    animation: settle 900ms var(--ease-out);
+  }
+}
+
+@keyframes redraw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes settle {
+  0%, 70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Poster series — each content type owns a ground; the figure is drawn heavy */
+.cover {
+  --ground: var(--bg-secondary);
+  --ink: var(--text-primary);
+  --ghost-ink: var(--text-disabled);
+  --grid-ink: var(--border-subtle);
+}
+
+.cover[data-type='decision'] { --ground: #15181c; --ink: #f3f4f1; --ghost-ink: rgba(243, 244, 241, 0.32); --grid-ink: rgba(243, 244, 241, 0.06); }
+.cover[data-type='explainer'] { --ground: #c9cdc6; --ink: #15181c; --ghost-ink: rgba(21, 24, 28, 0.3); --grid-ink: rgba(21, 24, 28, 0.07); }
+.cover[data-type='fieldNote'] { --ground: #e3e1d6; --ink: #15181c; --ghost-ink: rgba(21, 24, 28, 0.28); --grid-ink: rgba(21, 24, 28, 0.06); }
+
+[data-theme='dark'] .cover[data-type='guide'] { --ground: #232933; --ink: #e8ebee; --ghost-ink: rgba(232, 235, 238, 0.3); --grid-ink: rgba(232, 235, 238, 0.05); }
+[data-theme='dark'] .cover[data-type='decision'] { --ground: #0f1217; }
+[data-theme='dark'] .cover[data-type='explainer'] { --ground: #3a414c; --ink: #f3f4f1; --ghost-ink: rgba(243, 244, 241, 0.3); --grid-ink: rgba(243, 244, 241, 0.06); }
+[data-theme='dark'] .cover[data-type='fieldNote'] { --ground: #2c2f2a; --ink: #f3f4f1; --ghost-ink: rgba(243, 244, 241, 0.28); --grid-ink: rgba(243, 244, 241, 0.05); }
+
+.paper { fill: var(--ground); }
+.grid { stroke: var(--grid-ink); }
+.ghost { stroke: var(--ghost-ink); stroke-width: 2.5; stroke-dasharray: 4 7; }
+.trace { stroke: var(--ink); stroke-width: 5; }
+.hub { fill: var(--ground); stroke: var(--ink); stroke-width: 4; }
+.node { fill: var(--ground); stroke: var(--ink); stroke-width: 3; }
+.terminalRing { fill: var(--ground); stroke-width: 4; }
+.cover[data-state='tested'] { --mark: var(--ink); }
+.cover[data-state='unverified'] { --mark: var(--ghost-ink); }
+.terminalMark { stroke-width: 4.5; }
+.ruler line { stroke: var(--ghost-ink); stroke-width: 2; }
+.ruler line[data-on] { stroke: var(--ink); }
+
+.posterLabel {
+  fill: var(--ink);
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.posterMinutes {
+  fill: var(--ink);
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}

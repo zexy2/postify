@@ -12,13 +12,12 @@ import styles from './UserPage.module.css';
 // the same published records as the full editorial cards below.
 const PublicationLinks = ({ posts, locale, en }) => (
   <ol className={styles.publicationList}>
-    {posts.map((post, index) => {
+    {posts.map((post) => {
       const presentation = getPostPresentation(post, locale);
       const readingMinutes = getPostReadingMinutes(post);
       return (
         <li key={post.id}>
           <Link to={`/posts/${post.slug || post.id}`} className={styles.publicationLink}>
-            <span className={styles.publicationOrdinal} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <span className={styles.publicationDetails}>
               <span className={styles.publicationType}>{presentation.typeLabel}</span>
               <strong>{post.title}</strong>
@@ -84,8 +83,7 @@ const UserPage = () => {
       <main className={`container ${styles.container}`}>
         <header className={styles.authorHeader}>
           <div className={styles.editionLine} aria-hidden="true">
-            <span>POSTIFY <span className={styles.editionMark}>✳</span> AUTHORS</span>
-            <span>{en ? 'People behind the ideas' : 'Fikirlerin arkasındaki insanlar'}</span>
+            <span>{en ? 'Author' : 'Yazar'}</span>
           </div>
           <div className={styles.heroContent}>
             <div className={styles.identity}>

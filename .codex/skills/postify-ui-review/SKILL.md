@@ -9,18 +9,17 @@ Use this skill for any task that changes Postify's visible interface, interactio
 
 ## Product direction
 
-Postify should feel like an editorial knowledge product crossed with a precise developer tool: calm, readable, information-dense, trustworthy, and intentional. It must not look like a generic blog template, a startup landing-page kit, or an effect demo.
+Postify's identity is "show your work": a test-report / engineering-notebook language where evidence is the loudest thing on the page. Report paper, graphite ink, a single cobalt evidence colour, amber for recheck. The site should feel authored and memorable, not like a template, and every bold moment must be made of real product data.
 
 ## Hard rules
 
-- Prefer hierarchy, typography, spacing, and information design over decoration.
-- Do not add gradients, glow, glassmorphism, animated backgrounds, custom cursors, marquees, shimmer, parallax, or decorative motion unless they solve a specific user problem and survive review.
-- Avoid card-inside-card layouts and unnecessary bordered containers.
-- Do not create a new visual primitive if an existing token/component can be reused or simplified.
-- Do not use fake social proof, fake activity, fake verification, invented counts, or unsupported trust labels.
-- Evidence and freshness language must reflect actual stored data.
-- Mobile is not a scaled-down desktop layout. Check touch targets, hierarchy, overflow, sticky controls, and editor ergonomics separately.
-- Accessibility is a release gate: keyboard navigation, visible focus, semantic headings, labels, contrast, and reduced-motion behavior must remain usable.
+- Spend boldness in one place per page (hero proof receipt, Goal scroll scene); keep everything around it quiet.
+- Decoration must encode information: graph-paper grid = notebook page, stamps = verification state, evidence rail = trust level, cover figure = content type. No unexplained gradients, glow, glass, marquees or ambient animation.
+- No all-caps monospace micro-labels, no middle-dot meta strings, no fake ordinals, no single-word italic accents in headlines.
+- Do not use fake social proof, fake activity, fake verification, invented counts, or unsupported trust labels. Stamps and receipts render published artifacts only.
+- Motion explains state change, is interruptible, lazy-loaded per route, and fully disabled under `prefers-reduced-motion`.
+- Mobile is designed, not scaled: check touch targets, sticky docks, overflow and 400% text separately.
+- Accessibility is a release gate: keyboard navigation, visible focus, semantic headings, labels, contrast.
 - A passing build is not proof of a good UI.
 
 ## Required workflow

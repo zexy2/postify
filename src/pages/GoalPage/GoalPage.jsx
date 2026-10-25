@@ -1,57 +1,67 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FiArrowDownRight, FiArrowUpRight, FiCheck, FiRefreshCw, FiExternalLink } from 'react-icons/fi';
+import { FiArrowDown, FiArrowUpRight } from 'react-icons/fi';
 import SEO from '../../components/SEO';
 import styles from './GoalPage.module.css';
 
 const copy = {
   tr: {
-    edition: 'Postify / Neden varız?',
-    kicker: 'Bir internet daha mümkün.',
-    title: <>Bilgi, <span>işe yaramalı.</span></>,
-    lead: 'İnternetin daha fazla cevaba değil, sınanabilir ve tekrar kullanılabilir bilgiye ihtiyacı var.',
-    scroll: 'Fikrin nasıl çalıştığını gör',
-    field: 'Bizim inandığımız şey',
-    belief: 'Bir şeyin doğru görünüyor olması, doğru çalıştığı anlamına gelmez.',
-    beliefDetail: 'Bir rehberi yalnızca okumakla yetinme. Çalıştığı ortamı öğren, adımlarını gör, yeniden dene. Bir şey değiştiyse fark edebil.',
-    sequence: 'Bilginin yaşam döngüsü',
-    sequenceIntro: 'Gösterişli iddialar değil, tekrar edilebilen sonuçlar.',
+    seo: 'Hedefimiz',
+    title: 'Bilgi, biri onu çalıştırana kadar bir iddiadır.',
+    lead: 'İnternetin daha fazla cevaba ihtiyacı yok. Sınanabilen, tekrar kullanılabilen ve eskidiğinde bunu söyleyen bilgiye ihtiyacı var.',
+    scroll: 'Bir kaydın hayatını izle',
+    sequence: 'Bir bilginin hayatı',
     steps: [
-      { word: 'İddia', line: 'Neyi başarmaya çalışıyoruz?', detail: 'Önce hedefi ve sınırları açıkça yaz. Okuyucu neyin işe yaraması gerektiğini daha ilk satırda görsün.', note: 'BAŞLANGIÇ / SORU' },
-      { word: 'Kanıt', line: 'Hangi koşullarda çalıştı?', detail: 'Komutlar, sürümler, örnekler ve sonuçlar iddianın yanında dursun. Güven, yalnızca kesin konuşmakla kazanılmaz.', note: 'DENEME / SONUÇ' },
-      { word: 'Güncellik', line: 'Hâlâ aynı şekilde mi çalışıyor?', detail: 'Teknoloji değişir. Bir sonucun ne zaman yeniden kontrol edilmesi gerektiği görünür olmalı.', note: 'ZAMAN / BAĞLAM' },
+      { word: 'İddia', line: 'Neyi başarmaya çalışıyoruz?', detail: 'Hedefi ve sınırları ilk satırda yaz. Okur, zaman ayırmadan önce başarının neye benzediğini bilsin.' },
+      { word: 'Kanıt', line: 'Hangi koşullarda çalıştı?', detail: 'Komut, sürüm, ortam ve çıktı iddianın hemen yanında dursun. Kendinden emin bir dil doğrulama değildir.' },
+      { word: 'Zaman', line: 'Ne zaman ve nerede denendi?', detail: 'Her kayıt bir tarih ve bir çalışma ortamı taşır. Bağlam, sonucun bir parçasıdır.' },
+      { word: 'Güncellik', line: 'Hâlâ aynı şekilde çalışıyor mu?', detail: 'Ortam değiştiğinde kayıt bunu söyler. Eski bir kanıt silinmez; yeniden kontrol gerektiği açıkça görünür.' },
     ],
-    anatomy: 'Bir bilginin anatomisi',
-    unverified: 'Bir fikir', verified: 'Sınanabilir kayıt',
-    notEnough: '“Bende çalıştı.”', enough: '“Şu ortamda, şu adımlarla çalıştı.”',
-    principleOne: 'Sınırlarıyla birlikte', principleTwo: 'Bağlamını kaybetmeden', principleThree: 'Başkasının tekrar edebileceği kadar açık',
+    record: {
+      head: 'Kayıt',
+      claim: 'JSON doğrulaması Node.js içinde bir assertion ile geçer.',
+      command: 'node node-json-parse-v1.mjs',
+      env: 'Ortam', date: 'Tarih', status: 'Durum',
+      verified: 'Doğrulandı', recheck: 'Yeniden kontrol',
+      stampOk: 'POSTIFY DOĞRULADI · TEKRARLANABİLİR · ',
+      stampRe: 'YENİDEN KONTROL · ORTAM DEĞİŞTİ · ',
+      note: 'Bu sahne, Postify’ın yayınlanmış ilk doğrulama kaydının yapısını gösterir.',
+    },
+    compare: 'Yeterli olmayan, ve yeterli olan',
+    notEnough: '“Bende çalıştı.”',
+    enough: '“Node 24.20.0 üzerinde, şu komutla, şu çıktıyı verdi.”',
     last: 'Daha az gürültü. Daha çok işe yarayan bilgi.',
-    lastText: 'Postify tamamlanmış bir söz değil; uygulamayla gelişen bir yaklaşım. Mevcut doğrulama durumlarını açıkça gösteriyoruz.',
+    lastText: 'Postify tamamlanmış bir söz değil; uygulamayla gelişen bir yaklaşım. Bugün yalnızca deterministik Node.js örneklerini otomatik doğruluyoruz ve bunu açıkça söylüyoruz.',
     action: 'Bilgiyi keşfet', secondary: 'Nasıl çalıştığımızı oku',
   },
   en: {
-    edition: 'Postify / Why we exist',
-    kicker: 'Another internet is possible.',
-    title: <>Knowledge should <span>do something.</span></>,
-    lead: 'The internet does not need more answers. It needs knowledge that can be tested, reused and revisited.',
-    scroll: 'See how the idea works',
-    field: 'What we believe',
-    belief: 'Looking correct is not the same as actually working.',
-    beliefDetail: 'Do more than read a guide. See the environment, follow the steps and repeat the result. Know when something has changed.',
-    sequence: 'The life of useful knowledge',
-    sequenceIntro: 'Less performance. More repeatable outcomes.',
+    seo: 'Our goal',
+    title: 'Knowledge is a claim until someone runs it.',
+    lead: 'The internet does not need more answers. It needs knowledge that can be tested, reused, and that says so when it goes stale.',
+    scroll: 'Follow the life of a record',
+    sequence: 'The life of a piece of knowledge',
     steps: [
-      { word: 'Claim', line: 'What are we trying to achieve?', detail: 'Start with the outcome and its limits. Readers should know what success looks like before they invest their time.', note: 'START / QUESTION' },
-      { word: 'Evidence', line: 'Under what conditions did it work?', detail: 'Keep commands, versions, examples and outcomes alongside the claim. Confidence alone is not verification.', note: 'TEST / RESULT' },
-      { word: 'Freshness', line: 'Does it still work today?', detail: 'Technology changes. The context and need for a new check should remain visible.', note: 'TIME / CONTEXT' },
+      { word: 'Claim', line: 'What are we trying to achieve?', detail: 'Write the outcome and its limits on the first line. Readers should know what success looks like before they spend their time.' },
+      { word: 'Evidence', line: 'Under what conditions did it work?', detail: 'Keep the command, version, environment and output right next to the claim. Confident wording is not verification.' },
+      { word: 'Time', line: 'When and where was it tried?', detail: 'Every record carries a date and a runtime. Context is part of the result.' },
+      { word: 'Freshness', line: 'Does it still work the same way?', detail: 'When the environment moves on, the record says so. Old evidence is not deleted; the need for a recheck becomes visible.' },
     ],
-    anatomy: 'Anatomy of an idea',
-    unverified: 'An opinion', verified: 'A reproducible record',
-    notEnough: '“It worked for me.”', enough: '“It worked here, with these steps.”',
-    principleOne: 'Including its limits', principleTwo: 'Keeping the context', principleThree: 'Clear enough to repeat',
+    record: {
+      head: 'Record',
+      claim: 'JSON validation passes inside Node.js with an assertion.',
+      command: 'node node-json-parse-v1.mjs',
+      env: 'Runtime', date: 'Date', status: 'Status',
+      verified: 'Verified', recheck: 'Recheck',
+      stampOk: 'POSTIFY VERIFIED · REPRODUCIBLE · ',
+      stampRe: 'RECHECK REQUIRED · RUNTIME CHANGED · ',
+      note: 'This scene shows the structure of Postify’s first published verification record.',
+    },
+    compare: 'Not enough, and enough',
+    notEnough: '“It worked for me.”',
+    enough: '“On Node 24.20.0, with this command, it printed this output.”',
     last: 'Less noise. More knowledge that works.',
-    lastText: 'Postify is a work in progress, not a completed promise. We show the current verification state openly.',
+    lastText: 'Postify is a work in progress, not a finished promise. Today we only verify deterministic Node.js examples automatically, and we say so plainly.',
     action: 'Explore knowledge', secondary: 'Read how we work',
   },
 };
@@ -60,75 +70,120 @@ const GoalPage = () => {
   const { i18n } = useTranslation();
   const content = copy[i18n.language?.startsWith('en') ? 'en' : 'tr'];
   const [activeStep, setActiveStep] = useState(0);
+  const sceneRef = useRef(null);
+  const stepRefs = useRef([]);
   const step = content.steps[activeStep];
+  const r = content.record;
+
+  // Scroll drives the active step; the buttons remain the accessible control.
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    let cleanup = () => {};
+    let cancelled = false;
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (cancelled || !sceneRef.current) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const triggers = stepRefs.current.filter(Boolean).map((element, index) => ScrollTrigger.create({
+        trigger: element,
+        start: 'top 55%',
+        end: 'bottom 55%',
+        onToggle: (self) => { if (self.isActive) setActiveStep(index); },
+      }));
+      cleanup = () => triggers.forEach((trigger) => trigger.kill());
+    });
+    return () => { cancelled = true; cleanup(); };
+  }, []);
 
   return (
     <div className={styles.page}>
-      <SEO title={content.edition} description={content.lead} canonicalUrl="https://postify.zekiakgul.dev/goal" />
+      <SEO title={content.seo} description={content.lead} canonicalUrl="https://postify.zekiakgul.dev/goal" />
+
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <div className={styles.masthead}><span>✳ POSTIFY</span><span>{content.edition}</span><span>EST. 2026</span></div>
-          <div className={styles.heroComposition}>
-            <div className={styles.heroCopy}>
-              <p className={styles.kicker}>{content.kicker}</p>
-              <h1>{content.title}</h1>
-              <p className={styles.lead}>{content.lead}</p>
-              <a className={styles.scrollLink} href="#our-belief">{content.scroll}<FiArrowDownRight aria-hidden="true" /></a>
-            </div>
-            <div className={styles.signalArtwork} aria-hidden="true">
-              <div className={styles.signalOuter}><div className={styles.signalMiddle}><span>✳</span></div></div>
-              <span className={styles.signalCaption}>TEST / LEARN / REPEAT</span>
-              <span className={styles.signalNo}>P—01</span>
-            </div>
+          <h1>{content.title}</h1>
+          <div className={styles.heroFoot}>
+            <p className={styles.lead}>{content.lead}</p>
+            <a className={styles.scrollLink} href="#life-of-a-record">{content.scroll}<FiArrowDown aria-hidden="true" /></a>
           </div>
-          <div className={styles.heroFoot}><span>READ / TEST / REPEAT</span><span>↓</span><span>POSTIFY® — FIELD MANIFESTO</span></div>
         </div>
       </header>
 
-      <section id="our-belief" className={styles.belief} aria-labelledby="belief-heading">
-        <div className={styles.beliefInner}>
-          <span className={styles.sectionIndex}>✳ {content.field}</span>
-          <div className={styles.beliefCopy}>
-            <h2 id="belief-heading">{content.belief}</h2>
-            <p>{content.beliefDetail}</p>
+      <section id="life-of-a-record" ref={sceneRef} className={styles.scene} aria-labelledby="method-heading">
+        <div className={styles.sceneInner}>
+          <div className={styles.narrative}>
+            <h2 id="method-heading" className={styles.sceneTitle}>{content.sequence}</h2>
+            <div className={styles.stepList} role="group" aria-label={content.sequence}>
+              {content.steps.map((item, index) => (
+                <div key={item.word} ref={(element) => { stepRefs.current[index] = element; }} className={styles.stepBlock} data-active={activeStep === index || undefined}>
+                  <button
+                    className={styles.stepButton}
+                    type="button"
+                    aria-pressed={activeStep === index}
+                    onClick={() => setActiveStep(index)}
+                  >
+                    {item.word}
+                  </button>
+                  <p className={styles.stepLine}>{item.line}</p>
+                  <p className={styles.stepDetail}>{item.detail}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <span className={styles.beliefMark} aria-hidden="true">“</span>
-        </div>
-      </section>
 
-      <section className={styles.method} aria-labelledby="method-heading">
-        <div className={styles.sectionHead}><span className={styles.sectionIndex}>02 / POSTIFY METHOD</span><h2 id="method-heading">{content.sequence}</h2><p>{content.sequenceIntro}</p></div>
-        <div className={styles.methodGrid}>
-          <div className={styles.stepList} role="group" aria-label={content.sequence}>
-            {content.steps.map((item, index) => (
-              <button key={item.word} className={`${styles.stepButton} ${activeStep === index ? styles.stepActive : ''}`} type="button" aria-pressed={activeStep === index} onClick={() => setActiveStep(index)}>
-                <span className={styles.stepNumber}>0{index + 1}</span><span>{item.word}</span><FiArrowUpRight aria-hidden="true" />
-              </button>
-            ))}
-          </div>
-          <div className={styles.methodDisplay} aria-live="polite" aria-atomic="true">
-            <div className={styles.methodDisplayTop}><span>POSTIFY / FIELD SYSTEM</span><span>{step.note}</span></div>
-            <div className={styles.methodOrbit} aria-hidden="true"><span className={styles.orbitTrack} /><span className={styles.orbitCore}>0{activeStep + 1}</span><span className={styles.orbitDot} /></div>
-            <div className={styles.methodWords} key={activeStep}><p>{step.word}</p><h3>{step.line}</h3><div>{step.detail}</div></div>
-            <div className={styles.methodDisplayBottom}><span>CONTEXT IS EVERYTHING</span><span>0{activeStep + 1} / 03</span></div>
+          <div className={styles.stage}>
+            <figure className={styles.record} data-step={activeStep} aria-live="polite" aria-atomic="true">
+              <div className={styles.recordHead}>
+                <span>{r.head}</span>
+                <span className={styles.recordProgress} aria-hidden="true">
+                  {content.steps.map((item, index) => <i key={item.word} data-on={index <= activeStep || undefined} />)}
+                </span>
+              </div>
+              <h3 className={styles.recordLine}>{step.line}</h3>
+
+              <div className={styles.layer} data-layer="claim">
+                <span className={styles.layerKey}>{content.steps[0].word}</span>
+                <p>{r.claim}</p>
+              </div>
+              <div className={styles.layer} data-layer="evidence">
+                <span className={styles.layerKey}>{content.steps[1].word}</span>
+                <code className={styles.terminal}><span aria-hidden="true">$ </span>{r.command}<b>PASS</b></code>
+              </div>
+              <dl className={styles.layer} data-layer="time">
+                <div><dt>{r.env}</dt><dd>Node v24.20.0</dd></div>
+                <div><dt>{r.date}</dt><dd>2026</dd></div>
+                <div><dt>{r.status}</dt><dd className={styles.statusValue}>{activeStep >= 3 ? r.recheck : r.verified}</dd></div>
+              </dl>
+
+              <div className={styles.stamp} data-recheck={activeStep >= 3 || undefined} aria-hidden="true">
+                <svg viewBox="0 0 120 120">
+                  <defs><path id="goal-stamp-ring" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0" /></defs>
+                  <circle cx="60" cy="60" r="56" />
+                  <circle cx="60" cy="60" r="34" />
+                  <text><textPath href="#goal-stamp-ring">{activeStep >= 3 ? r.stampRe : r.stampOk}</textPath></text>
+                  {activeStep >= 3 ? <path d="M60 44v20M60 74v2" /> : <path d="M46 61l10 10 19-22" />}
+                </svg>
+              </div>
+            </figure>
+            <p className={styles.stageNote}>{r.note}</p>
           </div>
         </div>
       </section>
 
       <section className={styles.comparison} aria-labelledby="comparison-heading">
-        <div className={styles.comparisonIntro}><span className={styles.sectionIndex}>03 / OUR STANDARD</span><h2 id="comparison-heading">{content.anatomy}</h2></div>
+        <h2 id="comparison-heading" className={styles.comparisonTitle}>{content.compare}</h2>
         <div className={styles.comparisonGrid}>
-          <div className={styles.before}><span className={styles.comparisonLabel}>× {content.unverified}</span><p>{content.notEnough}</p><span className={styles.comparisonGlyph} aria-hidden="true">?</span></div>
-          <div className={styles.after}><span className={styles.comparisonLabel}><FiCheck aria-hidden="true" /> {content.verified}</span><p>{content.enough}</p><span className={styles.comparisonGlyph} aria-hidden="true">✳</span></div>
+          <p className={styles.before}>{content.notEnough}</p>
+          <p className={styles.after}>{content.enough}</p>
         </div>
-        <div className={styles.principles}><span>{content.principleOne}</span><span>{content.principleTwo}</span><span>{content.principleThree}</span></div>
       </section>
 
       <section className={styles.closing} aria-labelledby="closing-heading">
-        <span className={styles.sectionIndex}>POSTIFY / THE OPEN INVITATION</span>
-        <h2 id="closing-heading">{content.last}</h2><p>{content.lastText}</p>
-        <div className={styles.closingActions}><Link to="/">{content.action}<FiArrowUpRight aria-hidden="true" /></Link><Link to="/about">{content.secondary}<FiExternalLink aria-hidden="true" /></Link></div>
-        <FiRefreshCw className={styles.closingMark} aria-hidden="true" />
+        <h2 id="closing-heading">{content.last}</h2>
+        <p>{content.lastText}</p>
+        <div className={styles.closingActions}>
+          <Link to="/" className={styles.primary}>{content.action}<FiArrowUpRight aria-hidden="true" /></Link>
+          <Link to="/about" className={styles.secondary}>{content.secondary}</Link>
+        </div>
       </section>
     </div>
   );

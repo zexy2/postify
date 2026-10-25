@@ -17,7 +17,6 @@ const EditorialFeed = ({ posts, onBookmarkToggle, bookmarkedIds = [], fx }) => {
             key={post.id}
             post={post}
             variant={variant}
-            ordinal={String(index + 1).padStart(2, '0')}
             priorityLabel={index === 0 ? (en ? 'Priority read' : 'Öncelikli okuma') : undefined}
             onBookmarkToggle={onBookmarkToggle}
             isBookmarked={bookmarkedIds.includes(post.id)}

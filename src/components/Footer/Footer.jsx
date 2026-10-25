@@ -27,23 +27,28 @@ const Footer = () => {
     ['fieldNote', isEnglish ? 'Field notes' : 'Saha notları'],
   ];
 
+  const trustModel = [
+    [isEnglish ? 'Evidence' : 'Kanıt', isEnglish ? 'See what supports the claim.' : 'İddianın neye dayandığını gör.'],
+    [isEnglish ? 'Freshness' : 'Güncellik', isEnglish ? 'Know when the context changed.' : 'Bağlamın ne zaman değiştiğini bil.'],
+    [isEnglish ? 'Reproducibility' : 'Tekrarlanabilirlik', isEnglish ? 'Repeat the work, not the promise.' : 'Vaadi değil, uygulamayı tekrar et.'],
+  ];
+
   return (
     <footer className={styles.footer} aria-label={isEnglish ? 'Postify footer' : 'Postify alt bilgi'}>
       <div className={styles.shell}>
         <section className={styles.statement} aria-labelledby="footer-statement-title">
+          <h2 id="footer-statement-title" className={styles.statementTitle}>
+            {isEnglish ? 'Show your work.' : 'İşini göster.'}
+          </h2>
           <div className={styles.statementCopy}>
-            <span className={styles.eyebrow}>{isEnglish ? 'THE IDEA BEHIND POSTIFY' : 'POSTIFY’IN ARKASINDAKİ FİKİR'}</span>
-            <h2 id="footer-statement-title" className={styles.statementTitle}>
-              {isEnglish ? <>Don't just <em>read it.</em><br />Make it work.</> : <>Sadece <em>okuma.</em><br />İşe yarasın.</>}
-            </h2>
             <p className={styles.statementText}>
               {isEnglish
-                ? 'A home for ideas that can be tested, questioned and used again. That is the whole point.'
-                : 'Sınanabilen, sorgulanabilen ve yeniden kullanılabilen fikirler için bir yer. Bütün mesele bu.'}
+                ? 'Write down what you tried, where you tried it and what happened. Postify keeps that record next to the claim, and tells readers when it needs checking again.'
+                : 'Neyi denediğini, nerede denediğini ve ne olduğunu yaz. Postify bu kaydı iddianın yanında tutar ve yeniden kontrol gerektiğinde okura söyler.'}
             </p>
             <div className={styles.primaryActions}>
-              <Link to="/goal" className={styles.primaryLink}>
-                {isEnglish ? 'Discover our goal' : 'Hedefimizi keşfet'}
+              <Link to="/posts/create" className={styles.primaryLink}>
+                {isEnglish ? 'Publish a record' : 'Kayıt yayımla'}
                 <FiArrowUpRight aria-hidden="true" />
               </Link>
               <Link to="/" className={styles.secondaryLink} onClick={handleHomeNavigation}>
@@ -51,16 +56,16 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          <div className={styles.footerArtwork} aria-hidden="true">
-            <div className={styles.artworkRing}><span>✳</span></div>
-            <span className={styles.artworkTop}>POSTIFY / IDEA TO EVIDENCE</span>
-            <span className={styles.artworkBottom}>READ → TEST → REPEAT</span>
-          </div>
         </section>
 
-        <Link className={styles.signature} to="/goal" aria-label={isEnglish ? 'Discover the Postify goal' : 'Postify hedefini keşfet'}>
-          <span>POSTIFY</span><FiArrowUpRight aria-hidden="true" />
-        </Link>
+        <div className={styles.systemLine} aria-label={isEnglish ? 'Postify trust model' : 'Postify güven modeli'}>
+          {trustModel.map(([title, copy]) => (
+            <div key={title} className={styles.systemCopy}>
+              <strong>{title}</strong>
+              <small>{copy}</small>
+            </div>
+          ))}
+        </div>
 
         <div className={styles.indexGrid}>
           <div className={styles.brandBlock}>
@@ -82,57 +87,24 @@ const Footer = () => {
           </div>
 
           <nav className={styles.linkGroup} aria-label={isEnglish ? 'Content formats' : 'İçerik biçimleri'}>
-            <span className={styles.groupLabel}>{isEnglish ? 'READ BY FORMAT' : 'BİÇİME GÖRE OKU'}</span>
-            {formatLinks.map(([type, label], index) => (
-              <Link key={type} to={`/?type=${type}#knowledge-feed`}>
-                <span className={styles.linkIndex} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                <span>{label}</span>
-              </Link>
+            <span className={styles.groupLabel}>{isEnglish ? 'Read by format' : 'Biçime göre oku'}</span>
+            {formatLinks.map(([type, label]) => (
+              <Link key={type} to={`/?type=${type}#knowledge-feed`}>{label}</Link>
             ))}
           </nav>
 
           <nav className={styles.linkGroup} aria-label={isEnglish ? 'Postify pages' : 'Postify sayfaları'}>
-            <span className={styles.groupLabel}>POSTIFY</span>
-            <Link to="/goal"><span className={styles.linkIndex} aria-hidden="true">01</span><span>{isEnglish ? 'Our goal' : 'Hedefimiz'}</span></Link>
-            <Link to="/about"><span className={styles.linkIndex} aria-hidden="true">02</span><span>{t('nav.about')}</span></Link>
-            <Link to="/contact"><span className={styles.linkIndex} aria-hidden="true">03</span><span>{t('nav.contact')}</span></Link>
-            <Link to="/bookmarks"><span className={styles.linkIndex} aria-hidden="true">04</span><span>{t('nav.bookmarks')}</span></Link>
-            <Link to="/knowledge"><span className={styles.linkIndex} aria-hidden="true">05</span><span>{isEnglish ? 'Knowledge health' : 'Bilgi sağlığı'}</span></Link>
+            <span className={styles.groupLabel}>Postify</span>
+            <Link to="/goal">{isEnglish ? 'Our goal' : 'Hedefimiz'}</Link>
+            <Link to="/about">{t('nav.about')}</Link>
+            <Link to="/contact">{t('nav.contact')}</Link>
+            <Link to="/bookmarks">{t('nav.bookmarks')}</Link>
+            <Link to="/knowledge">{isEnglish ? 'Knowledge health' : 'Bilgi sağlığı'}</Link>
           </nav>
         </div>
 
-        {/* Decorative signature from the 21st.dev Dithered Footer concept.
-            The actual navigation and footer headings stay accessible above. */}
-        <div className={styles.signatureBand} aria-hidden="true">
-          <div className={styles.ditherField} />
-        </div>
-
-        <div className={styles.systemLine} aria-label={isEnglish ? 'Postify trust model' : 'Postify güven modeli'}>
-          <div>
-            <span>01</span>
-            <div className={styles.systemCopy}>
-              <strong>{isEnglish ? 'Evidence' : 'Kanıt'}</strong>
-              <small>{isEnglish ? 'See what supports the claim.' : 'İddianın neye dayandığını gör.'}</small>
-            </div>
-          </div>
-          <div>
-            <span>02</span>
-            <div className={styles.systemCopy}>
-              <strong>{isEnglish ? 'Freshness' : 'Güncellik'}</strong>
-              <small>{isEnglish ? 'Know when the context changed.' : 'Bağlamın ne zaman değiştiğini bil.'}</small>
-            </div>
-          </div>
-          <div>
-            <span>03</span>
-            <div className={styles.systemCopy}>
-              <strong>{isEnglish ? 'Reproducibility' : 'Tekrarlanabilirlik'}</strong>
-              <small>{isEnglish ? 'Repeat the work, not the promise.' : 'Vaadi değil, uygulamayı tekrar et.'}</small>
-            </div>
-          </div>
-        </div>
-
         <div className={styles.bottomBar}>
-          <span>© {currentYear} Postify · {t('footer.copyright')}</span>
+          <span>© {currentYear} Postify. {t('footer.copyright')}</span>
           <button type="button" onClick={scrollToTop} className={styles.scrollTopButton}>
             <span>{isEnglish ? 'Back to top' : 'Başa dön'}</span>
             <FiArrowUp aria-hidden="true" />

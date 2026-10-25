@@ -18,8 +18,8 @@
   margin: .7rem 0 0;
   overflow: auto;
   color: var(--error);
-  font-family: var(--font-mono);
-  font-size: .7rem;
+  
+  font-size: 0.8125rem;
   line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;

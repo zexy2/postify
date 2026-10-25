@@ -91,9 +91,8 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;
 
-          if (id.includes('/gradflow/') || id.includes('/ogl/')) return 'gradient';
           if (id.includes('@tiptap') || id.includes('prosemirror')) return 'editor';
-          if (id.includes('/framer-motion/')) return 'motion';
+          if (id.includes('/gsap/')) return 'motion';
           if (id.includes('/@supabase/')) return 'supabase';
           if (id.includes('/react-icons/')) return 'icons';
           if (

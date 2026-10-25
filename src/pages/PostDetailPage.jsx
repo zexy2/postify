@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FiArrowLeft, FiArrowRight, FiMessageCircle, FiBookmark, FiClock } from 'react-icons/fi';
 import { usePost, usePosts } from '../hooks/usePosts';
 import { useBookmarks } from '../hooks/useBookmarks';
-import ContentImage from '../components/ContentImage/ContentImage';
+import EvidenceCover from '../components/EvidenceCover/EvidenceCover';
 import CopyLinkButton from '../components/CopyLinkButton';
 import ReadingProgress from '../components/ReadingProgress';
 import SEO from '../components/SEO';
@@ -17,6 +17,7 @@ import CommunityEvidenceDetails from '../components/CommunityEvidenceDetails';
 import VerificationRunbook from '../components/VerificationRunbook';
 import EvidenceBadge from '../components/EvidenceBadge';
 import CopyableCodeBlock from '../components/CopyableCodeBlock';
+import CodeProof from '../components/CodeProof/CodeProof';
 import SystemStatus from '../components/SystemStatus';
 import { extractExternalReferences, getArticleOutline, parseFencedCodeBlock, slugifyHeading, splitArticleBlocks } from '../lib/articleStructure';
 
@@ -29,7 +30,7 @@ const formatDate = (value, locale) => {
   return new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(value));
 };
 
-const PlainArticleBody = ({ content }) => {
+const PlainArticleBody = ({ content, verificationId }) => {
   const blocks = splitArticleBlocks(content);
 
   return (
@@ -43,7 +44,12 @@ const PlainArticleBody = ({ content }) => {
         }
         const fencedCode = parseFencedCodeBlock(block);
         if (fencedCode) {
-          return <CopyableCodeBlock key={key} code={fencedCode.code} language={fencedCode.language} />;
+          return (
+            <div key={key}>
+              <CopyableCodeBlock code={fencedCode.code} language={fencedCode.language} />
+              <CodeProof verificationId={verificationId} code={fencedCode.code} />
+            </div>
+          );
         }
         if (block.split('\n').every((line) => line.trim().startsWith('- '))) {
           return <ul key={key}>{block.split('\n').map((line, lineIndex) => <li key={`${lineIndex}-${line}`}>{line.trim().slice(2)}</li>)}</ul>;
@@ -222,25 +228,24 @@ const PostDetailPage = () => {
             <article ref={articleRef} className={styles.articleShell}>
               {/* Header Info FIRST */}
               <header className={styles.articleHeader}>
-                <div className={styles.editionLine} aria-hidden="true">
-                  <span>POSTIFY <span className={styles.editionAsterisk}>✳</span> JOURNAL</span>
-                  <span>{i18n.language?.startsWith('en') ? 'Ideas, unpacked.' : 'Fikirler, derinlemesine.'}</span>
+                <div className={styles.editionLine}>
+                  <Link to="/#knowledge-feed">{i18n.language?.startsWith('en') ? 'Archive' : 'Arşiv'}</Link>
+                  <span aria-hidden="true">/</span>
+                  <span className={styles.contentType}>{presentation.typeLabel}</span>
+                  <span aria-hidden="true">/</span>
+                  <span className={styles.category}>{getCategoryLabel(post.category, i18n.language)}</span>
                 </div>
                 <div className={styles.meta}>
-                  <span className={styles.contentType}>{presentation.typeLabel}</span>
-                  <span className={styles.category}>{getCategoryLabel(post.category, i18n.language)}</span>
-                  <span className={styles.metaDot}>•</span>
                   <span className={styles.readingMeta}>
-                    <FiClock size={12} aria-hidden="true" />
+                    <FiClock size={13} aria-hidden="true" />
                     {readingMinutes ?? 1} {t('common.minutes')}
                   </span>
-                  <span className={styles.metaDot}>•</span>
                   <time dateTime={post.publishedAt}>{publishedDate}</time>
                   {isUpdated && <span>({t('article.updated')} {updatedDate})</span>}
                   <EvidenceBadge post={post} compact />
                 </div>
 
-                <h1 className={styles.title}>{post.title}</h1>
+                <h1 className={styles.title} style={{ viewTransitionName: 'post-title' }}>{post.title}</h1>
                 
                 {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
 
@@ -289,13 +294,14 @@ const PostDetailPage = () => {
               </header>
 
               {/* Cover Image SECOND */}
-              <div className={styles.coverWrapper}>
-                <ContentImage
-                  src={post.coverImageUrl}
-                  alt={post.coverImageAlt || post.title}
+              <div className={styles.coverWrapper} style={{ viewTransitionName: 'post-cover' }}>
+                <EvidenceCover
+                  post={post}
                   className={styles.coverImage}
-                  loading="eager"
-                  fetchPriority="high"
+                  typeLabel={presentation.typeLabel}
+                  label={i18n.language?.startsWith('en')
+                    ? `Evidence figure for ${presentation.typeLabel}: ${post.title}`
+                    : `${presentation.typeLabel} kanıt çizimi: ${post.title}`}
                 />
               </div>
 
@@ -341,7 +347,7 @@ const PostDetailPage = () => {
                   </>
                 )}
                 <div className={styles.body}>
-                  <PlainArticleBody content={articleBody} />
+                  <PlainArticleBody content={articleBody} verificationId={post.autoVerificationId} />
                 </div>
                 <KnowledgeEvidencePanel post={post} />
                 <VerificationRunbook post={post} />

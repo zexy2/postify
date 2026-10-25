@@ -1,6 +1,6 @@
 .panel { max-width:68ch; margin:2.5rem 0; padding:1.25rem 0; border-block:1px solid var(--border-strong); }
 .header { display:flex; align-items:flex-start; justify-content:space-between; gap:1.25rem; }
-.eyebrow { color:var(--primary); font-family:var(--font-mono); font-size:.67rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.eyebrow { color:var(--primary);  font-size: 0.8125rem; font-weight: 650;   }
 .panel h2 { margin:.35rem 0 .5rem; color:var(--text-primary); font-family:var(--font-display); font-size:clamp(1.55rem,3vw,2rem); line-height:1.1; }
 .panel p { color:var(--text-muted); line-height:1.55; }
 .primaryAction,.pending button,.formActions button { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; min-height:40px; padding:.55rem .75rem; color:var(--text-secondary); background:transparent; border:1px solid var(--border-color); border-radius:var(--radius-md); font:inherit; font-size:.76rem; font-weight:750; text-decoration:none; cursor:pointer; }
