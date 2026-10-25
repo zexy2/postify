@@ -47,14 +47,13 @@ const BookmarksPage = () => {
       </header>
 
       <section className={styles.index} aria-label={en ? 'Saved knowledge' : 'Kaydedilen bilgiler'}>
-        {bookmarkedPosts.map((post, index) => {
+        {bookmarkedPosts.map((post) => {
           const presentation = getPostPresentation(post, i18n.language);
           const minutes = getPostReadingMinutes(post);
           const summary = presentation.outcome || post.body?.trim() || '';
 
           return (
             <article key={post.id} className={styles.row}>
-              <span className={styles.rowIndex}>{String(index + 1).padStart(2, '0')}</span>
               <div className={styles.rowMain}>
                 <div className={styles.metaRow}>
                   <EvidenceBadge post={post} compact />

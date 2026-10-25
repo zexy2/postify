@@ -34,36 +34,24 @@ const ContactPage = () => {
       <SEO title={t('contact.title')} description={t('contact.description')} />
       <div className={styles.container}>
         <header className={styles.hero}>
-          <div className={styles.editionLine} aria-hidden="true">
-            <span>POSTIFY <span className={styles.editionMark}>✳</span> CONTACT</span>
-            <span>{isEn ? 'A conversation worth having' : 'Değerli bir konuşmaya yer var'}</span>
-          </div>
           <div className={styles.heroBody}>
             <div className={styles.heroCopy}>
-              <span className={styles.eyebrow}>{isEn ? 'CORRECTIONS / FEEDBACK / COLLABORATION' : 'DÜZELTME / GERİ BİLDİRİM / İŞ BİRLİĞİ'}</span>
-              <h1>{isEn ? <>Useful knowledge gets better when readers can <em>challenge it.</em></> : <>Faydalı bilgi, okuyucu ona itiraz edebildiğinde <em>gelişir.</em></>}</h1>
+              <span className={styles.eyebrow}>{isEn ? 'Corrections, feedback and collaboration' : 'Düzeltme, geri bildirim ve iş birliği'}</span>
+              <h1>{isEn ? 'Knowledge gets better when readers can challenge it.' : 'Bilgi, okuru ona itiraz edebildiğinde gelişir.'}</h1>
               <p>{t('contact.description')}</p>
               <a className={styles.heroLink} href="#contact-channel-title">
                 {isEn ? 'Find a direct channel' : 'Doğrudan iletişime geç'} <FiArrowUpRight aria-hidden="true" />
               </a>
-            </div>
-            <div className={styles.heroArtwork} aria-hidden="true">
-              <span className={styles.artworkLabel}>{isEn ? 'AN OPEN CHANNEL' : 'AÇIK İLETİŞİM'}</span>
-              <span className={styles.artworkGlyph}>↗</span>
-              <span className={styles.artworkWordmark}>{isEn ? <>LET’S<br />CONNECT</> : <>BİRLİKTE<br />KONUŞALIM</>}<span>✳</span></span>
-              <span className={styles.artworkFooter}>{isEn ? 'BETTER TOGETHER / POSTIFY' : 'BİRLİKTE DAHA İYİ / POSTIFY'}</span>
             </div>
           </div>
         </header>
 
         <section className={styles.channelSection} aria-labelledby="contact-channel-title">
           <div className={styles.sectionHeading}>
-            <span>01</span>
             <h2 id="contact-channel-title">{isEn ? 'Direct channels' : 'Doğrudan kanallar'}</h2>
           </div>
           <div className={styles.channels}>
             <a href="mailto:zekiakgul09@gmail.com" className={styles.channel}>
-              <span className={styles.channelIndex}>01</span>
               <FiMail aria-hidden="true" />
               <span className={styles.channelCopy}>
                 <small>{t('contact.email')}</small>
@@ -72,7 +60,6 @@ const ContactPage = () => {
               <FiArrowUpRight aria-hidden="true" />
             </a>
             <a href="https://github.com/zexy2" target="_blank" rel="noopener noreferrer" className={styles.channel}>
-              <span className={styles.channelIndex}>02</span>
               <FiGithub aria-hidden="true" />
               <span className={styles.channelCopy}>
                 <small>GitHub</small>
@@ -85,13 +72,11 @@ const ContactPage = () => {
 
         <section className={styles.reasonSection} aria-labelledby="contact-reasons-title">
           <div className={styles.sectionHeading}>
-            <span>02</span>
             <h2 id="contact-reasons-title">{isEn ? 'Good reasons to reach out' : 'İletişim için iyi nedenler'}</h2>
           </div>
           <div className={styles.reasonRows}>
             {reasons.map(([index, title, text]) => (
               <div className={styles.reasonRow} key={index}>
-                <span>{index}</span>
                 <strong>{title}</strong>
                 <p>{text}</p>
               </div>
@@ -101,7 +86,6 @@ const ContactPage = () => {
 
         <section className={styles.draftSection} aria-labelledby="contact-draft-title">
           <div className={styles.sectionHeading}>
-            <span>03</span>
             <h2 id="contact-draft-title">{isEn ? 'Give your message a useful shape.' : 'Mesajını işe yarar hale getir.'}</h2>
           </div>
           <div className={styles.draftDesk}>
@@ -113,7 +97,7 @@ const ContactPage = () => {
                 {reasons.map(([index, title], value) => (
                   <button key={index} type="button" className={styles.draftChoice}
                     aria-pressed={intent === value} onClick={() => setIntent(value)}>
-                    <span aria-hidden="true">{index}</span>{title}
+                    {title}
                   </button>
                 ))}
               </div>
@@ -131,11 +115,10 @@ const ContactPage = () => {
             <div className={styles.draftPreview} aria-label={isEn ? 'Prepared email preview' : 'Hazırlanan e-posta önizlemesi'}>
               <div className={styles.previewHeading}>
                 <span>{isEn ? 'Your draft' : 'Mesaj taslağın'}</span>
-                <span aria-hidden="true">↗ 03 / POSTIFY</span>
               </div>
               <div className={styles.previewMeta}>
-                <span>{isEn ? 'TO' : 'ALICI'}</span><strong>zekiakgul09@gmail.com</strong>
-                <span>{isEn ? 'SUBJECT' : 'KONU'}</span><strong>{subject}</strong>
+                <span>{isEn ? 'To' : 'Alıcı'}</span><strong>zekiakgul09@gmail.com</strong>
+                <span>{isEn ? 'Subject' : 'Konu'}</span><strong>{subject}</strong>
               </div>
               <p className={styles.previewBody}>{draft}</p>
               {canCompose ? (

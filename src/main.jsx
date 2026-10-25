@@ -10,13 +10,20 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
-import { Toaster } from 'react-hot-toast';
 
 import App from './App';
 import SystemStatus from './components/SystemStatus';
 import { store, persistor } from './store';
 import { queryClient } from './lib/queryClient';
 import SmoothScrollProvider from './providers/SmoothScrollProvider';
+import ReaderToaster from './components/ReaderToaster';
+import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '@fontsource-variable/source-serif-4/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz-italic.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-ext-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/ibm-plex-mono/latin-ext-500.css';
 import './lib/i18n'; // Initialize i18n
 import './index.css';
 
@@ -33,36 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <SmoothScrollProvider>
                 <App />
               </SmoothScrollProvider>
-              <Toaster
-                position="bottom-right"
-                containerStyle={{ bottom: 'var(--toast-bottom-offset, 1rem)' }}
-                toastOptions={{
-                  duration: 3000,
-                  style: {
-                    background: 'var(--bg-elevated)',
-                    color: 'var(--text-primary)',
-                    border: '0',
-                    borderTop: '2px solid var(--text-primary)',
-                    borderBottom: '1px solid var(--border-strong)',
-                    borderRadius: '0',
-                    boxShadow: 'none',
-                    maxWidth: 'min(420px, calc(100vw - 2rem))',
-                    padding: '12px 14px',
-                  },
-                  success: {
-                    iconTheme: {
-                      primary: '#22c55e',
-                      secondary: 'white',
-                    },
-                  },
-                  error: {
-                    iconTheme: {
-                      primary: '#ef4444',
-                      secondary: 'white',
-                    },
-                  },
-                }}
-              />
+              <ReaderToaster />
             </BrowserRouter>
           </QueryClientProvider>
         </PersistGate>

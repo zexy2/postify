@@ -21,11 +21,11 @@
 .rowIndex,
 .metaRow,
 .headerMeta span {
-  font-family: var(--font-mono);
-  font-size: .66rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  
+  font-size: 0.8125rem;
+  font-weight: 650;
+  
+  
 }
 
 .eyebrow,
@@ -85,7 +85,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   font: inherit;
-  font-size: .72rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -174,8 +174,8 @@
   display: inline-flex;
   margin-top: .7rem;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: .67rem;
+  
+  font-size: 0.8125rem;
   text-decoration: none;
 }
 
@@ -250,7 +250,7 @@
   background: var(--text-primary);
   border-radius: var(--radius-md);
   font-size: .78rem;
-  font-weight: 800;
+  font-weight: 650;
   text-decoration: none;
 }
 
@@ -316,3 +316,7 @@
   .clearButton { min-height: 44px; }
   .removeButton { width: 44px; height: 44px; }
 }
+
+/* Ordinal column removed: record + actions */
+.row { grid-template-columns: minmax(0, 1fr) auto !important; }
+.row > * { min-width: 0; }

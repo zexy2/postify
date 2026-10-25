@@ -21,11 +21,11 @@
 
 .index,
 .eyebrow {
-  font-family: var(--font-mono);
-  font-size: .62rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  
+  font-size: 0.8125rem;
+  font-weight: 650;
+  
+  
 }
 
 .index { padding-top: .15rem; color: var(--text-muted); }
@@ -93,7 +93,7 @@
   border-bottom: 1px solid var(--text-primary);
   font: inherit;
   font-size: .76rem;
-  font-weight: 800;
+  font-weight: 650;
   text-decoration: none;
   cursor: pointer;
 }

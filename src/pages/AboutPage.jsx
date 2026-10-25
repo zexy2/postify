@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiArrowRight } from 'react-icons/fi';
+import EvidenceCover from '../components/EvidenceCover/EvidenceCover';
 import SEO from '../components/SEO';
 import styles from './AboutPage.module.css';
 
@@ -40,42 +41,31 @@ const AboutPage = () => {
   ];
 
   const formats = [
-    ['01', isEn ? 'Guide' : 'Rehber', isEn ? 'A concrete path to a result.' : 'Somut bir sonuca giden uygulanabilir yol.'],
-    ['02', isEn ? 'Decision' : 'Karar notu', isEn ? 'Trade-offs and the conditions behind a choice.' : 'Bir seçimin koşulları, ödünleri ve gerekçesi.'],
-    ['03', isEn ? 'Explainer' : 'Açıklayıcı', isEn ? 'A dense concept made reusable.' : 'Yoğun bir kavramı yeniden kullanılabilir hale getiren anlatı.'],
-    ['04', isEn ? 'Field note' : 'Saha notu', isEn ? 'What actually happened in real work.' : 'Gerçek işte ne olduğunun kısa ve dürüst kaydı.'],
+    ['guide', isEn ? 'Guide' : 'Rehber', isEn ? 'A concrete path to a result.' : 'Somut bir sonuca giden uygulanabilir yol.'],
+    ['decision', isEn ? 'Decision' : 'Karar notu', isEn ? 'Trade-offs and the conditions behind a choice.' : 'Bir seçimin koşulları, ödünleri ve gerekçesi.'],
+    ['explainer', isEn ? 'Explainer' : 'Açıklayıcı', isEn ? 'A dense concept made reusable.' : 'Yoğun bir kavramı yeniden kullanılabilir hale getiren anlatı.'],
+    ['fieldNote', isEn ? 'Field note' : 'Saha notu', isEn ? 'What actually happened in real work.' : 'Gerçek işte ne olduğunun kısa ve dürüst kaydı.'],
   ];
 
   return (
     <div className={styles.page}>
       <SEO title={t('about.title')} description={t('about.description')} />
       <div className={styles.container}>
-        <header className={styles.hero}>
-          <div className={styles.heroIndex} aria-hidden="true">
-            <span>POSTIFY <span className={styles.editionMark}>✳</span> ABOUT</span>
-            <span>{isEn ? 'A field guide for useful knowledge' : 'Faydalı bilgi için saha rehberi'}</span>
-          </div>
+        <header className={`${styles.hero} paper-sheet paper-sheet--bleed`}>
           <div className={styles.heroBody}>
             <div className={styles.heroCopy}>
-              <span className={styles.eyebrow}>{isEn ? 'PRACTICAL KNOWLEDGE SYSTEM' : 'PRATİK BİLGİ SİSTEMİ'}</span>
-              <h1>{isEn ? <>Useful knowledge should survive <em>contact with reality.</em></> : <>Faydalı bilgi gerçekle temas ettiğinde <em>ayakta kalmalı.</em></>}</h1>
+                            <h1 className="ink-title">{isEn ? 'Useful knowledge should survive contact with reality.' : 'Faydalı bilgi gerçekle karşılaştığında ayakta kalmalı.'}</h1>
               <p>{t('about.description')}</p>
               <a className={styles.heroLink} href="#trust-model-title">
                 {isEn ? 'Explore our principles' : 'İlkelerimizi keşfet'} <FiArrowRight aria-hidden="true" />
               </a>
             </div>
-            <div className={styles.heroArtwork} aria-hidden="true">
-              <div className={styles.artworkOrb}><span>✳</span></div>
-              <div className={styles.artworkCaption}><span>{isEn ? 'POSTIFY / FIELD NOTES' : 'POSTIFY / SAHA NOTLARI'}</span><span>01 — 04</span></div>
-              <div className={styles.artworkStatement}>{isEn ? <>IDEAS.<br />TESTED.<br /><em>IN THE WILD.</em></> : <>BİLGİ.<br />SAHADA.<br /><em>SINANIR.</em></>}</div>
-            </div>
           </div>
         </header>
 
         <section className={styles.statement} aria-labelledby="about-statement-title">
-          <span className={styles.sectionIndex}>02</span>
           <div>
-            <span className={styles.eyebrow}>{isEn ? 'THE JOB' : 'ASİL İŞ'}</span>
+            <span className={styles.eyebrow}>{isEn ? 'The job' : 'Asıl iş'}</span>
             <h2 id="about-statement-title">
               {isEn
                 ? 'Find what can help, judge whether it fits, then use it.'
@@ -91,16 +81,14 @@ const AboutPage = () => {
 
         <section className={styles.model} aria-labelledby="trust-model-title">
           <div className={styles.sectionHeading}>
-            <span className={styles.sectionIndex}>03</span>
             <div>
-              <span className={styles.eyebrow}>{isEn ? 'TRUST MODEL' : 'GÜVEN MODELİ'}</span>
+              <span className={styles.eyebrow}>{isEn ? 'Trust model' : 'Güven modeli'}</span>
               <h2 id="trust-model-title">{isEn ? 'No magic score. Inspectable signals.' : 'Sihirli puan yok. İncelenebilir sinyaller var.'}</h2>
             </div>
           </div>
           <div className={styles.modelRows}>
             {trustModel.map((item) => (
               <article key={item.key} className={styles.modelRow}>
-                <span>{item.key}</span>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
@@ -110,16 +98,17 @@ const AboutPage = () => {
 
         <section className={styles.formats} aria-labelledby="formats-title">
           <div className={styles.sectionHeading}>
-            <span className={styles.sectionIndex}>04</span>
             <div>
-              <span className={styles.eyebrow}>{isEn ? 'FORMATS' : 'BİÇİMLER'}</span>
+              <span className={styles.eyebrow}>{isEn ? 'Formats' : 'Biçimler'}</span>
               <h2 id="formats-title">{isEn ? 'The shape follows the problem.' : 'Biçimi problemi belirler.'}</h2>
             </div>
           </div>
           <div className={styles.formatGrid}>
-            {formats.map(([index, title, text]) => (
+            {formats.map(([type, title, text]) => (
               <article key={title} className={styles.formatItem}>
-                <span>{index}</span>
+                <div className={styles.formatFigure}>
+                  <EvidenceCover post={{ slug: `about-${type}`, contentType: type, readingTime: 6 }} state="unverified" poster={false} />
+                </div>
                 <h3>{title}</h3>
                 <p>{text}</p>
               </article>
@@ -129,7 +118,7 @@ const AboutPage = () => {
 
         <section className={styles.cta}>
           <div>
-            <span className={styles.eyebrow}>{isEn ? 'NEXT' : 'SONRAKİ ADIM'}</span>
+            <span className={styles.eyebrow}>{isEn ? 'Next' : 'Sonraki adım'}</span>
             <h2>{isEn ? 'Read something you can use.' : 'Kullanabileceğin bir şey oku.'}</h2>
           </div>
           <div className={styles.ctaActions}>

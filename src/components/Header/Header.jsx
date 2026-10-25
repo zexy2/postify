@@ -51,6 +51,14 @@ const Header = () => {
   const knowledgeLabel = i18n.language?.startsWith('en') ? 'Knowledge health' : 'Bilgi sağlığı';
   const isHome = location.pathname === '/';
   const activeType = isHome ? new URLSearchParams(location.search).get('type') : null;
+  const [atTop, setAtTop] = useState(true);
+
+  useEffect(() => {
+    const update = () => setAtTop(window.scrollY < 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
   const formatLinks = [
     ['guide', i18n.language?.startsWith('en') ? 'Guides' : 'Rehberler'],
     ['decision', i18n.language?.startsWith('en') ? 'Decisions' : 'Kararlar'],
@@ -167,7 +175,7 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-calm={isHome && atTop ? 'true' : undefined}>
       {isCommandOpen && <Suspense fallback={null}><CommandPalette open onClose={() => setIsCommandOpen(false)} /></Suspense>}
 
       <div className={styles.container}>
@@ -183,10 +191,9 @@ const Header = () => {
             aria-current={isHome && !activeType ? 'page' : undefined}
             onClick={handleHomeNavigation}
           >
-            <small className={styles.desktopNavIndex} aria-hidden="true">01</small>
             <span>{t('nav.home')}</span>
           </Link>
-          {formatLinks.map(([type, label], index) => {
+          {formatLinks.map(([type, label]) => {
             const isActive = isHome && activeType === type;
             return (
               <Link
@@ -195,7 +202,6 @@ const Header = () => {
                 className={isActive ? styles.active : ''}
                 aria-current={isActive ? 'page' : undefined}
               >
-                <small className={styles.desktopNavIndex} aria-hidden="true">{String(index + 2).padStart(2, '0')}</small>
                 <span>{label}</span>
               </Link>
             );
@@ -309,7 +315,6 @@ const Header = () => {
               <SheetTitle className="sr-only">{t('common.toggleMenu')}</SheetTitle>
               <div className={styles.mobilePanel}>
               <div className={styles.mobileTop}>
-                <span className={styles.mobileKicker}>POSTIFY / {t('home.edition')}</span>
                 <Link to="/" className={styles.logo} onClick={handleHomeNavigation}>
                   <BrandMark size="md" /><span>Postify</span>
                 </Link>
@@ -328,16 +333,16 @@ const Header = () => {
                   onClick={handleHomeNavigation}
                   aria-current={isHome && !activeType ? 'page' : undefined}
                 >
-                  <span>{t('nav.home')}</span><small aria-hidden="true">01</small>
+                  <span>{t('nav.home')}</span>
                 </Link>
-                {formatLinks.map(([type, label], index) => (
+                {formatLinks.map(([type, label]) => (
                   <Link
                     key={type}
                     to={`/?type=${type}#knowledge-feed`}
                     onClick={closeMenu}
                     aria-current={isHome && activeType === type ? 'page' : undefined}
                   >
-                    <span>{label}</span><small aria-hidden="true">{String(index + 2).padStart(2, '0')}</small>
+                    <span>{label}</span>
                   </Link>
                 ))}
                 {isAuthenticated && <Link to="/posts/create" onClick={closeMenu}><span>{t('nav.createPost')}</span><FiPlus size={16} /></Link>}

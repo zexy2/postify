@@ -1,0 +1,353 @@
+/* Proof receipt — the one orchestrated moment on the site. Lines are printed
+   in order (claim → code → run → facts → stamp) using a per-element --step
+   index, so the sequence reads like a test report being produced. */
+
+.receipt {
+  --tick: 70ms;
+  --start: 380ms;
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin: 0;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Perforated tear line on the receipt's top edge */
+.receipt::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: radial-gradient(circle at 5px -1px, var(--bg-primary) 4px, transparent 4.5px) 0 0 / 14px 6px repeat-x;
+  z-index: 2;
+}
+
+.receipt > *,
+.codeLine,
+.facts > div {
+  animation: print 360ms var(--ease-out) both;
+  animation-delay: calc(var(--start) + var(--step, 0) * var(--tick));
+  animation-play-state: paused;
+}
+
+.receipt[data-playing] > *,
+.receipt[data-playing] .codeLine,
+.receipt[data-playing] .facts > div { animation-play-state: running; }
+
+.receipt[data-playing] .stamp { animation-play-state: running !important; }
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.15rem min(1.35rem, 20px) 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--border-strong);
+}
+
+.head code {
+  padding: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+  background: none;
+}
+
+.claim {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem min(1.35rem, 20px);
+}
+
+.key {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.claim a,
+.claim p {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 620;
+  font-stretch: 92%;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.claim a:hover { color: var(--primary); }
+
+.code {
+  display: grid;
+  margin: 0 min(1.35rem, 20px);
+  padding: 0.85rem 0;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  animation: none;
+}
+
+.codeLine {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  white-space: pre;
+}
+
+.lineNo {
+  padding-right: 0.85rem;
+  color: var(--text-disabled);
+  text-align: right;
+  user-select: none;
+}
+
+.codeLine code {
+  padding: 0;
+  padding-right: 1rem;
+  font-size: inherit;
+  background: none;
+}
+
+.run {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.75rem min(1.35rem, 20px) 0;
+  padding: 0.7rem 0.9rem;
+  color: var(--bg-primary);
+  font-size: 0.8rem;
+  background: var(--bg-ink);
+  border-radius: var(--radius-md);
+}
+
+.run code {
+  padding: 0;
+  color: inherit;
+  background: none;
+  font-size: inherit;
+}
+
+.command span { opacity: 0.55; }
+
+.pass,
+.fail {
+  padding: 0.1rem 0.55rem !important;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+}
+
+.pass { color: var(--primary-contrast) !important; background: var(--primary) !important; }
+.fail { color: #fff !important; background: var(--error) !important; }
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1.25rem;
+  margin: 0;
+  padding: 1.1rem min(1.35rem, 20px) min(1.35rem, 20px);
+  padding-right: min(8.5rem, 132px);
+}
+
+.facts dt {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.facts dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0.1rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 560;
+  font-variant-numeric: tabular-nums;
+}
+
+.facts dd code {
+  padding: 0;
+  font-size: 0.78rem;
+  background: none;
+}
+
+.match,
+.mismatch {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.match { color: var(--primary); }
+.mismatch { color: var(--error); }
+
+/* Stamp */
+.stamp {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(7.25rem, 116px);
+  height: min(7.25rem, 116px);
+  mix-blend-mode: multiply;
+  animation: stamp 520ms cubic-bezier(0.2, 1.6, 0.4, 1) both !important;
+  animation-play-state: paused !important;
+  animation-delay: calc(var(--start) + var(--step, 0) * var(--tick) + 220ms) !important;
+}
+
+[data-theme='dark'] .stamp { mix-blend-mode: screen; }
+
+.stamp svg { width: 100%; height: 100%; overflow: visible; }
+
+.stamp circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+.stamp circle + circle { stroke-width: 1.25; }
+
+.stamp text {
+  fill: currentColor;
+  font-family: var(--font-sans);
+  font-size: 9.6px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.stampMark {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stampVerified { color: var(--state-verified); }
+.stampRecheck { color: var(--state-recheck); }
+
+.replay {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 0.45rem;
+  min-height: 44px;
+  margin: 0 min(1.35rem, 20px) 1.1rem;
+  padding: 0 0.95rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.replay:hover { color: var(--primary); border-color: var(--primary); }
+.replay svg { transition: transform 500ms var(--ease-out); }
+.replay:hover svg { transform: rotate(-180deg); }
+
+@keyframes print {
+  from { opacity: 0; transform: translateY(4px); clip-path: inset(0 100% 0 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+
+/* The press stays inside the receipt: no oversized pre-scale, so the record
+   never overflows while the stamp lands. The ring draws on as ink. */
+@keyframes stamp {
+  0% { opacity: 0; transform: scale(1.04) rotate(-17deg); }
+  55% { opacity: 1; transform: scale(0.97) rotate(-11deg); }
+  100% { opacity: 0.92; transform: scale(1) rotate(-12deg); }
+}
+
+.stamp circle:first-of-type {
+  stroke-dasharray: 352;
+  stroke-dashoffset: 352;
+  animation: ink 640ms var(--ease-out) forwards;
+  animation-delay: inherit;
+  animation-play-state: inherit;
+}
+
+@keyframes ink { to { stroke-dashoffset: 0; } }
+
+@media (max-width: 640px) {
+  .facts {
+    grid-template-columns: 1fr;
+    padding-right: min(1.35rem, 20px);
+    padding-bottom: 1rem;
+  }
+
+  .stamp { width: min(6rem, 92px); height: min(6rem, 92px); right: 0.9rem; bottom: 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .receipt > *,
+  .codeLine,
+  .facts > div { animation: none; }
+  .stamp { animation: none !important; transform: rotate(-12deg); opacity: 0.92; }
+  .stamp circle:first-of-type { animation: none; stroke-dashoffset: 0; }
+  .replay { display: none; }
+}
+
+/* Explicit shrinkable tracks: auto tracks would size to the longest word at 400% text */
+.receipt,
+.claim { grid-template-columns: minmax(0, 1fr); }
+
+.head, .run, .facts dd { flex-wrap: wrap; }
+.head > *, .run > *, .claim > *, .facts dd > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.code { max-width: calc(100% - 2 * min(1.35rem, 20px)); }
+.facts { grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+.receipt > *, .facts > div { min-width: 0; }
+.codeLine { grid-template-columns: min(2.4rem, 36px) minmax(0, 1fr); }
+.receipt { overflow-x: clip; }
+.code { overflow-x: auto; contain: inline-size; }
+.replay { max-width: calc(100% - 2 * min(1.35rem, 20px)); margin-inline: min(1.35rem, 20px); white-space: normal; overflow-wrap: anywhere; text-align: left; }
+.replay svg { flex: 0 0 auto; }
+
+/* Wide run strip — the hero scene on large screens. Code and its execution on
+   the left, the claim and its evidence on the right, a full-size ink stamp
+   pressed over the top edge of the record. */
+@media (min-width: 1041px) {
+  .receipt[data-variant='wide'] {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      'head head'
+      'code claim'
+      'run facts'
+      'replay facts';
+    align-items: start;
+    overflow: visible;
+    overflow-x: visible;
+    padding-bottom: 0.5rem;
+  }
+
+  .receipt[data-variant='wide']::before { display: none; }
+  .receipt[data-variant='wide'] .head { grid-area: head; }
+  .receipt[data-variant='wide'] .claim { grid-area: claim; padding-top: 1.25rem; }
+  .receipt[data-variant='wide'] .code { grid-area: code; margin-top: 1.25rem; font-size: 0.875rem; }
+  .receipt[data-variant='wide'] .run { grid-area: run; font-size: 0.875rem; }
+  .receipt[data-variant='wide'] .facts { grid-area: facts; padding-right: min(1.35rem, 20px); padding-top: 0.25rem; }
+  .receipt[data-variant='wide'] .replay { grid-area: replay; margin-top: 0.85rem; }
+
+  .receipt[data-variant='wide'] .claim a,
+  .receipt[data-variant='wide'] .claim p { font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.1; }
+
+  .receipt[data-variant='wide'] .stamp {
+    right: clamp(1rem, 4vw, 4rem);
+    top: clamp(-13rem, -12vw, -8rem);
+    bottom: auto;
+    width: clamp(12rem, 17vw, 16.5rem);
+    height: clamp(12rem, 17vw, 16.5rem);
+    z-index: 3;
+  }
+
+  .receipt[data-variant='wide'] .stamp text { font-size: 9px; }
+}

@@ -187,9 +187,8 @@ export default function KnowledgeDashboardPage({ dataOverride = null, backendRea
             </div>
           </div>
           <div className={styles.credibility}>
-            {credibility.length === 0 ? <p className={styles.empty}>—</p> : credibility.map((item, index) => (
+            {credibility.length === 0 ? <p className={styles.empty}>—</p> : credibility.map((item) => (
               <div key={item.domain} className={styles.credibilityRow}>
-                <span className={styles.rowIndex}>{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{item.domain}</strong>
                   <small>{item.authorTested} {en ? 'tested posts' : 'test edilmiş içerik'} · {item.confirmations} {en ? 'confirmations' : 'doğrulama'}</small>
@@ -211,9 +210,8 @@ export default function KnowledgeDashboardPage({ dataOverride = null, backendRea
             <strong>{data.gaps.length}</strong>
           </div>
           <div className={styles.gaps}>
-            {data.gaps.length === 0 ? <p className={styles.empty}>{en ? 'No recorded gaps yet.' : 'Henüz kayıtlı bilgi boşluğu yok.'}</p> : data.gaps.map((gap, index) => (
+            {data.gaps.length === 0 ? <p className={styles.empty}>{en ? 'No recorded gaps yet.' : 'Henüz kayıtlı bilgi boşluğu yok.'}</p> : data.gaps.map((gap) => (
               <div key={gap.id} className={styles.gapRow}>
-                <span className={styles.rowIndex}>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{gap.display_query}</strong>
                 <span>{gap.request_count} {en ? 'requests' : 'talep'}</span>
                 <FiArrowUpRight aria-hidden="true" />

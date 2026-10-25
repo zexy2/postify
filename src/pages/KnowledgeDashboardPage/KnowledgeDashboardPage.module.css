@@ -14,11 +14,11 @@
 .healthStrip span,
 .queueIndex,
 .rowIndex {
-  font-family: var(--font-mono);
-  font-size: .66rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  
+  font-size: 0.8125rem;
+  font-weight: 650;
+  
+  
 }
 
 .eyebrow {
@@ -113,7 +113,7 @@
 
 .healthStrip small {
   overflow: hidden;
-  font-size: .72rem;
+  font-size: 0.8125rem;
   line-height: 1.35;
   text-overflow: ellipsis;
 }
@@ -154,7 +154,7 @@
 
 .sectionTitle > strong {
   color: var(--text-muted);
-  font-family: var(--font-mono);
+  
   font-size: .8rem;
 }
 
@@ -190,7 +190,7 @@
 .queueMeta > span:not(:first-child),
 .queueFacts span {
   color: var(--text-muted);
-  font-size: .72rem;
+  font-size: 0.8125rem;
 }
 
 .state {
@@ -247,7 +247,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   font: inherit;
-  font-size: .72rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
@@ -304,7 +304,7 @@
 .pendingScore,
 .gapRow > span {
   color: var(--text-muted);
-  font-size: .7rem;
+  font-size: 0.8125rem;
 }
 
 .credibilityRow b {
@@ -318,7 +318,7 @@
 .credibilityRow b small {
   margin-left: .15rem;
   font-family: var(--font-sans);
-  font-size: .65rem;
+  font-size: 0.8125rem;
   font-weight: 500;
 }
 
@@ -352,7 +352,7 @@
   background: none;
   border: 0;
   font: inherit;
-  font-size: .72rem;
+  font-size: 0.8125rem;
   font-weight: 750;
   cursor: pointer;
 }
@@ -382,7 +382,7 @@
 .failureDetails small {
   margin: 0;
   color: var(--text-muted);
-  font-size: .72rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
 }
 
@@ -456,7 +456,7 @@
 
   .healthStrip > div:nth-child(n+3) { border-top: 1px solid var(--border-color); }
   .healthStrip strong { margin: .4rem 0 .2rem; font-size: 2rem; }
-  .healthStrip small { font-size: .66rem; }
+  .healthStrip small { font-size: 0.8125rem; }
 
   .queue {
   display: grid;
@@ -525,10 +525,10 @@
   justify-content: space-between;
   gap: 1rem;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: .66rem;
-  letter-spacing: .05em;
-  text-transform: uppercase;
+  
+  font-size: 0.8125rem;
+  
+  
 }
 
 .correctionItem h3 {
@@ -548,7 +548,7 @@
   display: block;
   margin: .35rem 0;
   color: var(--text-muted);
-  font-size: .74rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
 }
 

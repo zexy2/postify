@@ -27,11 +27,11 @@
 .indexLabel,
 .recoveryIndex a > span {
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: .62rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  
+  font-size: 0.8125rem;
+  font-weight: 650;
+  
+  
 }
 
 .codeRail strong {

@@ -1,47 +1,33 @@
 .mark {
   display: block;
   flex: 0 0 auto;
-  color: var(--primary);
   overflow: visible;
-  transition: transform var(--transition-fast);
 }
 
-.mark:hover {
-  transform: translateY(-1px) rotate(-2deg);
-}
+.sm { width: 1.375rem; height: 1.375rem; }
+.md { width: 1.875rem; height: 1.875rem; }
+.lg { width: 3rem; height: 3rem; }
 
-.sm {
-  width: 1.3rem;
-  height: 1.3rem;
-}
+.seal { fill: var(--text-primary); }
+.letter { fill: var(--bg-primary); }
 
-.md {
-  width: 1.8rem;
-  height: 1.8rem;
-}
-
-.page {
-  fill: currentColor;
-}
-
-.fold {
+.tick {
   fill: none;
-  stroke: var(--bg-primary);
-  stroke-linecap: square;
-  stroke-linejoin: miter;
-  stroke-width: 2;
+  stroke: var(--primary);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 12;
+  stroke-dashoffset: 0;
 }
 
-.letter {
-  fill: var(--bg-primary);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  a:hover > .mark .tick {
+    animation: restamp 520ms var(--ease-out);
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .mark {
-    transition: none;
-  }
-
-  .mark:hover {
-    transform: none;
-  }
+@keyframes restamp {
+  from { stroke-dashoffset: 12; }
+  to { stroke-dashoffset: 0; }
 }

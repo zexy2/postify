@@ -36,13 +36,13 @@ const DiscoveryFilterPopover = ({
 
       const width = Math.min(520, window.innerWidth - (margin * 2));
       const left = Math.min(
-        Math.max(margin, toggleRect.right - width),
+        Math.max(margin, toggleRect.left),
         window.innerWidth - width - margin,
       );
       const measuredHeight = popover.scrollHeight || popover.getBoundingClientRect().height || 480;
       const availableBelow = Math.max(0, window.innerHeight - toggleRect.bottom - gap - margin);
       const availableAbove = Math.max(0, toggleRect.top - gap - margin);
-      const placeBelow = availableBelow >= Math.min(measuredHeight, 360) || availableBelow >= availableAbove;
+      const placeBelow = availableBelow >= Math.min(measuredHeight, 280) || availableBelow >= availableAbove;
       const availableHeight = placeBelow ? availableBelow : availableAbove;
       const maxHeight = Math.max(220, availableHeight);
       const visibleHeight = Math.min(measuredHeight, maxHeight);
