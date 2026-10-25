@@ -673,7 +673,7 @@
   grid-row: 1 / span 20;
 }
 
-.articleContent > aside > nav { grid-column: auto !important; grid-row: auto !important; }
+.articleContent > aside > nav { grid-column: auto !important; grid-row: auto !important; position: sticky; top: calc(var(--header-height) + 1.5rem); }
 
 @media (max-width: 780px) {
   /* Phones: the ledger becomes a compact note above the body, not sticky */
@@ -682,6 +682,7 @@
     grid-row: auto;
     /* relative, not static: the ledger's progress rule is positioned against it */
     position: relative;
+    top: auto;
     margin-bottom: 2rem;
   }
   .articleContent > aside > nav,

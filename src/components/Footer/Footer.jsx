@@ -9,7 +9,7 @@ import useFooterInk from './useFooterInk';
 // Label rolls up on hover and returns in the verified colour; the copy is decorative.
 const Roll = ({ children }) => (
   <>
-    <span className={styles.roll} data-label={children}><span>{children}</span></span>
+    <span className={styles.roll}><span>{children}</span><span className={styles.rollCopy} aria-hidden="true">{children}</span></span>
     <FiArrowUpRight className={styles.rowArrow} aria-hidden="true" />
   </>
 );

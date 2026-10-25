@@ -272,3 +272,23 @@
   80% { opacity: 1; scale: 0.9; rotate: 3deg; }
   100% { opacity: 1; scale: 1; rotate: 0deg; }
 }
+
+/* Large reader text: dossier lines wrap inside the row */
+.dossier > *,
+.dossier :global(.evidence-badge) { min-width: 0; max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+
+/* Phones and large text: seal and actions share a top line, dossier and title run full width below */
+@media (max-width: 959px) {
+  .row,
+  .featured {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'seal actions'
+      'dossier dossier'
+      'body body';
+  }
+  .featured { grid-template-areas: 'plate plate' 'seal actions' 'dossier dossier' 'body body'; }
+  .body,
+  .dossier { min-width: 0; max-width: 100%; }
+}
+.outcome { overflow-wrap: anywhere; }

@@ -36,7 +36,9 @@ export default function HeroHeadline({ text, className = '', run, language, stam
     const fit = () => {
       anchor.style.setProperty('--fit', '0px');
       anchor.style.setProperty('--lift', '0em');
-      const edge = document.documentElement.clientWidth - 12;
+      // The headline box is the limit: anything past it would overflow the h1 itself.
+      const heading = anchor.closest('h1')?.getBoundingClientRect();
+      const edge = Math.min(document.documentElement.clientWidth - 12, heading ? heading.right : Infinity);
       // ~1.1×: the stamp sits rotated, so its on-screen box is wider than its layout width
       const right = anchor.getBoundingClientRect().left + mark.offsetWidth * 1.1;
       const overflow = Math.max(0, Math.ceil(right - edge));

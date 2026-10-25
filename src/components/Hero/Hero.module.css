@@ -449,3 +449,10 @@
 @media (max-width: 360px) {
   .heroActions { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Large reader text: the featured card's labels wrap instead of widening the page */
+.featuredContent > *,
+.featuredLabel > * { min-width: 0; max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+
+/* The loupe's reach and the stamp never widen the page (vertical stays open for the stamp's flight) */
+.hero { overflow-x: clip; }

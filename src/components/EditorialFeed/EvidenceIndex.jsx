@@ -45,10 +45,8 @@ const IndexRow = ({ post, variant, priorityLabel, onBookmarkToggle, isBookmarked
       <div className={styles.dossier}>
         {priorityLabel && <span className={styles.priority}>{priorityLabel}</span>}
         <span className={styles.type}>{presentation.typeLabel}</span>
-        <span className={styles.dim}>
-          {[post.category && getCategoryLabel(post.category, i18n.language), presentation.formattedDate]
-            .filter(Boolean).join(' · ')}
-        </span>
+        {post.category && <span className={styles.dim}>{getCategoryLabel(post.category, i18n.language)}</span>}
+        {presentation.formattedDate && <span className={styles.dim}>{presentation.formattedDate}</span>}
         <EvidenceBadge post={post} compact />
         <span className={styles.fresh} data-freshness={evidence.freshness}>
           <span className="sr-only">{en ? 'Freshness' : 'Güncellik'}: </span>

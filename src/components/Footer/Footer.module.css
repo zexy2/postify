@@ -535,10 +535,9 @@
   clip-path: inset(0 -0.2em -0.04em -0.2em);
 }
 
-.roll > span { display: inline-block; transition: translate 520ms cubic-bezier(0.7, 0, 0.2, 1); }
+.roll > span:first-child { display: inline-block; transition: translate 520ms cubic-bezier(0.7, 0, 0.2, 1); }
 
-.roll::after {
-  content: attr(data-label);
+.rollCopy {
   position: absolute;
   left: 0;
   right: 0;
@@ -549,9 +548,9 @@
 }
 
 .linkGroup a:hover .roll > span,
-.linkGroup a:hover .roll::after,
+.linkGroup a:hover .rollCopy,
 .linkGroup a:focus-visible .roll > span,
-.linkGroup a:focus-visible .roll::after { translate: 0 calc(-100% - 0.14em); }
+.linkGroup a:focus-visible .rollCopy { translate: 0 calc(-100% - 0.14em); }
 
 .rowArrow {
   flex: none;
@@ -584,5 +583,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .roll > span, .roll::after, .linkGroup a::after, .rowArrow { transition: none; }
+  .roll > span, .linkGroup a::after, .rowArrow { transition: none; }
 }

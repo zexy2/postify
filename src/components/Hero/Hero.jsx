@@ -1,14 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiArrowDown, FiArrowUpRight, FiEdit3, FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import styles from './Hero.module.css';
-import EvidenceCover from '../EvidenceCover/EvidenceCover';
 import TransitionLink from '../TransitionLink/TransitionLink';
 import ProofReceipt from './ProofReceipt';
 import HeroHeadline from './HeroHeadline';
 import { HeroStamp, RunLine } from './HeroStamp';
-import PaperLight from './PaperLight';
+// Decorative WebGL paper: loaded after first paint so it stays out of the entry chunk.
+const PaperLight = lazy(() => import('./PaperLight'));
+// The featured thumbnail is drawn art; its frame reserves the space, so it can arrive a beat later.
+const EvidenceCover = lazy(() => import('../EvidenceCover/EvidenceCover'));
 import useHeroScrollScene from './useHeroScrollScene';
 import { getPostPresentation } from '../../lib/postPresentation';
 import { getCategoryLabel } from '../../lib/categoryLabels';
@@ -59,7 +61,7 @@ export default function Hero({
 
       <div ref={sceneRef} className={styles.scene}>
         <span className={styles.light} aria-hidden="true" />
-        <PaperLight sceneRef={sceneRef} />
+        <Suspense fallback={null}><PaperLight sceneRef={sceneRef} /></Suspense>
 
         <div className={styles.titleFrame}>
           <HeroHeadline
@@ -90,7 +92,7 @@ export default function Hero({
           {featuredPost && (
             <TransitionLink to={`/posts/${featuredPost.slug || featuredPost.id}`} className={styles.featured} data-vt-scope>
               <div className={styles.featuredVisual} data-vt="cover">
-                <EvidenceCover post={featuredPost} className={styles.featuredImage} poster={false} />
+                <Suspense fallback={null}><EvidenceCover post={featuredPost} className={styles.featuredImage} poster={false} /></Suspense>
               </div>
               <div className={styles.featuredContent}>
                 <span className={styles.featuredLabel}>
