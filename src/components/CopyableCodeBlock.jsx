@@ -49,7 +49,7 @@ export default function CopyableCodeBlock({ code, language = '' }) {
     <div className={styles.codeBlock}>
       <div className={styles.toolbar}>
         <span>{language || (en ? 'code' : 'kod')}</span>
-        <button type="button" onClick={handleCopy} aria-live="polite">
+        <button type="button" onClick={handleCopy} aria-live="polite" data-state={state}>
           {state === 'copied' ? <FiCheck /> : <FiCopy />}
           <span className={styles.copyLabel}>
             {state === 'copied'

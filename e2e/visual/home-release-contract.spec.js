@@ -18,19 +18,21 @@ for (const theme of ['light', 'dark']) {
       await page.evaluate(() => document.fonts.ready);
       const hero = h1.locator('xpath=ancestor::section[1]');
       const color = await hero.evaluate((element) => getComputedStyle(element).backgroundColor);
-      expect(color).toBe(theme === 'light' ? 'rgb(244, 239, 230)' : 'rgb(34, 42, 38)');
+      expect(color).toBe(theme === 'light' ? 'rgb(243, 244, 241)' : 'rgb(23, 27, 34)');
       const headingStyle = await h1.evaluate((element) => {
         const style = getComputedStyle(element);
         return { color: style.color, family: style.fontFamily };
       });
-      expect(headingStyle.color).toBe(theme === 'light' ? 'rgb(31, 36, 32)' : 'rgb(239, 237, 229)');
-      expect(headingStyle.family).toMatch(/Fraunces/);
-      const featured = hero.locator('a[href^="/posts/"]').filter({ has: page.locator('img') }).first();
+      expect(headingStyle.color).toBe(theme === 'light' ? 'rgb(21, 24, 28)' : 'rgb(232, 235, 238)');
+      expect(headingStyle.family).toMatch(/Bricolage/);
+      // The featured record carries a cover generated from its own evidence record.
+      const featured = hero.locator('a[href^="/posts/"]').filter({ has: page.locator('svg[data-state]') }).first();
       await expect(featured).toBeVisible();
-      const image = featured.locator('img');
-      await expect(image).toBeVisible();
-      await expect.poll(() => image.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
-      expect(await image.getAttribute('srcset')).toMatch(/responsive\/.*-480\.webp 480w/);
+      await expect(featured.locator('svg[data-state]')).toHaveAttribute('data-type', /guide|decision|explainer|fieldNote/);
+      // The proof receipt replays a published run and can be replayed by the reader.
+      const receipt = hero.getByRole('figure', { name: /verification record/i });
+      await expect(receipt).toBeVisible();
+      await expect(receipt.getByRole('button', { name: /replay recorded run/i })).toBeVisible();
       const anchor = hero.locator('a[href="#knowledge-feed"]');
       await expect(anchor).toBeVisible();
       expect((await anchor.boundingBox()).height).toBeGreaterThanOrEqual(44);

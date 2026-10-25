@@ -1377,7 +1377,7 @@ for (const viewport of viewports) {
     await stabilize(page);
     await page.goto('/goal');
     const footer = page.locator('footer');
-    await expect(footer.getByRole('link', { name: /discover our goal|hedefimizi keşfet/i })).toBeVisible();
+    await expect(footer.getByRole('link', { name: /^our goal$|^hedefimiz$/i })).toBeVisible();
     await footer.scrollIntoViewIfNeeded();
     await settleVisualSurface(page);
     await footer.screenshot({ animations: 'disabled', caret: 'hide' });

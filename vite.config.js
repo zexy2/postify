@@ -15,8 +15,8 @@ export default defineConfig({
         short_name: "Postify",
         description:
           "Okumak için değil, uygulamak için: rehberler, karar notları, açıklayıcılar ve saha notları.",
-        theme_color: "#b34f2d",
-        background_color: "#fbfaf7",
+        theme_color: "#15181c",
+        background_color: "#f3f4f1",
         display: "standalone",
         orientation: "portrait",
         scope: "/",
@@ -91,9 +91,8 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;
 
-          if (id.includes('/gradflow/') || id.includes('/ogl/')) return 'gradient';
           if (id.includes('@tiptap') || id.includes('prosemirror')) return 'editor';
-          if (id.includes('/framer-motion/')) return 'motion';
+          if (id.includes('/gsap/')) return 'motion';
           if (id.includes('/@supabase/')) return 'supabase';
           if (id.includes('/react-icons/')) return 'icons';
           if (

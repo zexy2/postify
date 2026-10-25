@@ -18,11 +18,11 @@
 .roleBadge,
 .statusBadge,
 .table th {
-  font-family: var(--font-mono);
-  font-size: .64rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  
+  font-size: 0.8125rem;
+  font-weight: 650;
+  
+  
 }
 
 .eyebrow {
@@ -179,7 +179,7 @@
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
   font-size: .86rem;
-  font-weight: 800;
+  font-weight: 650;
 }
 
 .recentList {
@@ -231,7 +231,7 @@
 .userEmail {
   overflow: hidden;
   color: var(--text-muted);
-  font-size: .72rem;
+  font-size: 0.8125rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -413,8 +413,8 @@
   border: 1px solid color-mix(in srgb, var(--error) 40%, var(--border-color));
   border-radius: var(--radius-md);
   font: inherit;
-  font-size: .72rem;
-  font-weight: 800;
+  font-size: 0.8125rem;
+  font-weight: 650;
   cursor: pointer;
 }
 
@@ -499,11 +499,11 @@
   width: max-content;
   max-width: 9rem;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: .6rem;
+  
+  font-size: 0.8125rem;
   font-weight: 750;
   line-height: 1.35;
-  text-transform: uppercase;
+  
 }
 
 @media (max-width: 390px) {

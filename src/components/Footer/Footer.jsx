@@ -1,13 +1,28 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiArrowUp, FiArrowUpRight, FiGithub } from 'react-icons/fi';
 import BrandMark from '../BrandMark';
 import styles from './Footer.module.css';
+import useFooterInk from './useFooterInk';
+
+// Label rolls up on hover and returns in the verified colour; the copy is decorative.
+const Roll = ({ children }) => (
+  <>
+    <span className={styles.roll}><span>{children}</span><span className={styles.rollCopy} aria-hidden="true">{children}</span></span>
+    <FiArrowUpRight className={styles.rowArrow} aria-hidden="true" />
+  </>
+);
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
   const isEnglish = i18n.language?.startsWith('en');
   const currentYear = new Date().getFullYear();
+  const footerRef = useRef(null);
+  const titleRef = useRef(null);
+  useFooterInk(footerRef, titleRef);
+  const statement = isEnglish ? 'Show your work.' : 'İşini göster.';
+  const sealRing = isEnglish ? 'YOUR RECORD · YOUR RECORD · ' : 'SENİN KAYDIN · SENİN KAYDIN · ';
 
   const scrollToTop = () => {
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -27,23 +42,38 @@ const Footer = () => {
     ['fieldNote', isEnglish ? 'Field notes' : 'Saha notları'],
   ];
 
+  const trustModel = [
+    [isEnglish ? 'Evidence' : 'Kanıt', isEnglish ? 'See what supports the claim.' : 'İddianın neye dayandığını gör.'],
+    [isEnglish ? 'Freshness' : 'Güncellik', isEnglish ? 'Know when the context changed.' : 'Bağlamın ne zaman değiştiğini bil.'],
+    [isEnglish ? 'Reproducibility' : 'Tekrarlanabilirlik', isEnglish ? 'Repeat the work, not the promise.' : 'Vaadi değil, uygulamayı tekrar et.'],
+  ];
+
   return (
-    <footer className={styles.footer} aria-label={isEnglish ? 'Postify footer' : 'Postify alt bilgi'}>
+    <footer ref={footerRef} className={styles.footer} aria-label={isEnglish ? 'Postify footer' : 'Postify alt bilgi'}>
       <div className={styles.shell}>
         <section className={styles.statement} aria-labelledby="footer-statement-title">
+          {/* Outline sits underneath; the real heading is the ink that scroll and pointer reveal */}
+          <h2 id="footer-statement-title" ref={titleRef} className={styles.statementTitle} style={{ '--chars': statement.length }}>
+            <span className={styles.titleOutline} aria-hidden="true">{statement}</span>
+            <span className={styles.titleInk}>{statement}</span>
+            <span className={styles.titleLamp} aria-hidden="true">{statement}</span>
+          </h2>
           <div className={styles.statementCopy}>
-            <span className={styles.eyebrow}>{isEnglish ? 'THE IDEA BEHIND POSTIFY' : 'POSTIFY’IN ARKASINDAKİ FİKİR'}</span>
-            <h2 id="footer-statement-title" className={styles.statementTitle}>
-              {isEnglish ? <>Don't just <em>read it.</em><br />Make it work.</> : <>Sadece <em>okuma.</em><br />İşe yarasın.</>}
-            </h2>
             <p className={styles.statementText}>
               {isEnglish
-                ? 'A home for ideas that can be tested, questioned and used again. That is the whole point.'
-                : 'Sınanabilen, sorgulanabilen ve yeniden kullanılabilen fikirler için bir yer. Bütün mesele bu.'}
+                ? 'Write down what you tried, where you tried it and what happened. Postify keeps that record next to the claim, and tells readers when it needs checking again.'
+                : 'Neyi denediğini, nerede denediğini ve ne olduğunu yaz. Postify bu kaydı iddianın yanında tutar ve yeniden kontrol gerektiğinde okura söyler.'}
             </p>
             <div className={styles.primaryActions}>
-              <Link to="/goal" className={styles.primaryLink}>
-                {isEnglish ? 'Discover our goal' : 'Hedefimizi keşfet'}
+              <svg className={styles.seal} viewBox="0 0 120 120" aria-hidden="true">
+                <defs><path id="footer-seal-path" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0" /></defs>
+                <circle className={styles.sealRim} cx="60" cy="60" r="56" />
+                <circle className={styles.sealCore} cx="60" cy="60" r="33" />
+                <text className={styles.sealText}><textPath href="#footer-seal-path">{sealRing}</textPath></text>
+                <path className={styles.sealMark} d="M45 61l10 10 21-23" />
+              </svg>
+              <Link to="/posts/create" className={styles.primaryLink}>
+                {isEnglish ? 'Publish a record' : 'Kayıt yayımla'}
                 <FiArrowUpRight aria-hidden="true" />
               </Link>
               <Link to="/" className={styles.secondaryLink} onClick={handleHomeNavigation}>
@@ -51,16 +81,17 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          <div className={styles.footerArtwork} aria-hidden="true">
-            <div className={styles.artworkRing}><span>✳</span></div>
-            <span className={styles.artworkTop}>POSTIFY / IDEA TO EVIDENCE</span>
-            <span className={styles.artworkBottom}>READ → TEST → REPEAT</span>
-          </div>
         </section>
 
-        <Link className={styles.signature} to="/goal" aria-label={isEnglish ? 'Discover the Postify goal' : 'Postify hedefini keşfet'}>
-          <span>POSTIFY</span><FiArrowUpRight aria-hidden="true" />
-        </Link>
+        <div className={styles.systemLine} aria-label={isEnglish ? 'Postify trust model' : 'Postify güven modeli'}>
+          {trustModel.map(([title, copy]) => (
+            <div key={title} className={styles.systemCopy}>
+              <span className={styles.node} aria-hidden="true" />
+              <strong>{title}</strong>
+              <small>{copy}</small>
+            </div>
+          ))}
+        </div>
 
         <div className={styles.indexGrid}>
           <div className={styles.brandBlock}>
@@ -82,60 +113,30 @@ const Footer = () => {
           </div>
 
           <nav className={styles.linkGroup} aria-label={isEnglish ? 'Content formats' : 'İçerik biçimleri'}>
-            <span className={styles.groupLabel}>{isEnglish ? 'READ BY FORMAT' : 'BİÇİME GÖRE OKU'}</span>
-            {formatLinks.map(([type, label], index) => (
-              <Link key={type} to={`/?type=${type}#knowledge-feed`}>
-                <span className={styles.linkIndex} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                <span>{label}</span>
-              </Link>
+            <span className={styles.groupLabel}>{isEnglish ? 'Read by format' : 'Biçime göre oku'}</span>
+            {formatLinks.map(([type, label]) => (
+              <Link key={type} to={`/?type=${type}#knowledge-feed`}><Roll>{label}</Roll></Link>
             ))}
           </nav>
 
           <nav className={styles.linkGroup} aria-label={isEnglish ? 'Postify pages' : 'Postify sayfaları'}>
-            <span className={styles.groupLabel}>POSTIFY</span>
-            <Link to="/goal"><span className={styles.linkIndex} aria-hidden="true">01</span><span>{isEnglish ? 'Our goal' : 'Hedefimiz'}</span></Link>
-            <Link to="/about"><span className={styles.linkIndex} aria-hidden="true">02</span><span>{t('nav.about')}</span></Link>
-            <Link to="/contact"><span className={styles.linkIndex} aria-hidden="true">03</span><span>{t('nav.contact')}</span></Link>
-            <Link to="/bookmarks"><span className={styles.linkIndex} aria-hidden="true">04</span><span>{t('nav.bookmarks')}</span></Link>
-            <Link to="/knowledge"><span className={styles.linkIndex} aria-hidden="true">05</span><span>{isEnglish ? 'Knowledge health' : 'Bilgi sağlığı'}</span></Link>
+            <span className={styles.groupLabel}>Postify</span>
+            <Link to="/goal"><Roll>{isEnglish ? 'Our goal' : 'Hedefimiz'}</Roll></Link>
+            <Link to="/about"><Roll>{t('nav.about')}</Roll></Link>
+            <Link to="/contact"><Roll>{t('nav.contact')}</Roll></Link>
+            <Link to="/bookmarks"><Roll>{t('nav.bookmarks')}</Roll></Link>
+            <Link to="/knowledge"><Roll>{isEnglish ? 'Knowledge health' : 'Bilgi sağlığı'}</Roll></Link>
           </nav>
         </div>
 
-        {/* Decorative signature from the 21st.dev Dithered Footer concept.
-            The actual navigation and footer headings stay accessible above. */}
-        <div className={styles.signatureBand} aria-hidden="true">
-          <div className={styles.ditherField} />
-        </div>
-
-        <div className={styles.systemLine} aria-label={isEnglish ? 'Postify trust model' : 'Postify güven modeli'}>
-          <div>
-            <span>01</span>
-            <div className={styles.systemCopy}>
-              <strong>{isEnglish ? 'Evidence' : 'Kanıt'}</strong>
-              <small>{isEnglish ? 'See what supports the claim.' : 'İddianın neye dayandığını gör.'}</small>
-            </div>
-          </div>
-          <div>
-            <span>02</span>
-            <div className={styles.systemCopy}>
-              <strong>{isEnglish ? 'Freshness' : 'Güncellik'}</strong>
-              <small>{isEnglish ? 'Know when the context changed.' : 'Bağlamın ne zaman değiştiğini bil.'}</small>
-            </div>
-          </div>
-          <div>
-            <span>03</span>
-            <div className={styles.systemCopy}>
-              <strong>{isEnglish ? 'Reproducibility' : 'Tekrarlanabilirlik'}</strong>
-              <small>{isEnglish ? 'Repeat the work, not the promise.' : 'Vaadi değil, uygulamayı tekrar et.'}</small>
-            </div>
-          </div>
-        </div>
-
         <div className={styles.bottomBar}>
-          <span>© {currentYear} Postify · {t('footer.copyright')}</span>
+          <span>© {currentYear} Postify. {t('footer.copyright')}</span>
           <button type="button" onClick={scrollToTop} className={styles.scrollTopButton}>
             <span>{isEnglish ? 'Back to top' : 'Başa dön'}</span>
-            <FiArrowUp aria-hidden="true" />
+            <span className={styles.progress} aria-hidden="true">
+              <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" pathLength="1" /></svg>
+              <FiArrowUp />
+            </span>
           </button>
         </div>
       </div>

@@ -35,29 +35,14 @@ for (const route of ['/about', '/contact']) {
             viewportWidth: window.innerWidth,
           };
         });
-        expect(info.background).toMatch(/radial-gradient/i);
-        expect(info.background).toContain(theme === 'light' ? (route === '/about' ? '123, 155, 107' : '188, 99, 70') : (route === '/about' ? '161, 56, 38' : '174, 69, 43'));
-        expect(info.front).toBe(theme === 'dark' ? 'rgb(239, 237, 229)' : (route === '/about' ? 'rgb(32, 49, 39)' : 'rgb(48, 39, 34)'));
+        // "Show your work" system: graphite ink on report paper, Bricolage display.
+        expect(info.front).toBe(theme === 'dark' ? 'rgb(232, 235, 238)' : 'rgb(21, 24, 28)');
+        expect(await h1.evaluate((element) => getComputedStyle(element).fontFamily)).toMatch(/Bricolage/i);
         expect(info.right).toBeLessThanOrEqual(info.frameRight + 1);
         expect(info.left).toBeGreaterThanOrEqual(info.frameLeft - 1);
         expect(info.pageWidth).toBeLessThanOrEqual(info.viewportWidth + 1);
-        const accentedPhrase = h1.locator('em');
-        await expect(accentedPhrase).toBeVisible();
-        const headlineArt = await accentedPhrase.evaluate((element) => {
-          const computed = getComputedStyle(element);
-          return { font: computed.fontFamily, color: computed.color };
-        });
-        expect(headlineArt.font).toMatch(/Fraunces/i); // Italic evidence phrase retains the editorial accent face.
-        expect(headlineArt.color).toBe(theme === 'dark' ? 'rgb(242, 172, 145)' : (route === '/about' ? 'rgb(147, 64, 39)' : 'rgb(160, 66, 42)'));
-        const art = hero.locator('[class*="heroArtwork"]');
-        await expect(art).toBeVisible();
-        if (width <= 390) {
-          const rect = await art.boundingBox();
-          expect(rect.height).toBeLessThanOrEqual(235);
-        }
-        // The outer reading canvas follows PL-01 paper by day, warm ink by night.
         const canvasColor = await page.locator('#main-content > div').first().evaluate((el) => getComputedStyle(el).backgroundColor);
-        expect(canvasColor).toBe(theme === 'light' ? 'rgb(244, 239, 230)' : 'rgb(21, 27, 25)');
+        expect(canvasColor).toBe(theme === 'light' ? 'rgb(243, 244, 241)' : 'rgb(23, 27, 34)');
         expect(errors).toEqual([]);
 
         const primaryAnchor = hero.locator('a[href^="#"]').first();
@@ -71,9 +56,8 @@ for (const route of ['/about', '/contact']) {
         expect(await primaryAnchor.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe('none');
 
         if (route === '/about') {
-          const artworkStatement = art.locator('[class*="artworkStatement"]');
-          await expect(artworkStatement).toBeVisible();
-          expect(await artworkStatement.evaluate((element) => getComputedStyle(element).color)).toBe(theme === 'dark' ? 'rgb(244, 239, 230)' : 'rgb(247, 244, 232)');
+          // Format figures are generated evidence covers, one per content shape.
+          await expect(page.locator('[class*="formatFigure"] svg')).toHaveCount(4);
           await expect(page.getByRole('region', { name: /no magic score/i }).locator('article')).toHaveCount(4);
           await expect(page.getByRole('region', { name: /the shape follows/i }).locator('article')).toHaveCount(4);
           await expect(page.locator('#main-content').getByRole('link', { name: /explore knowledge/i })).toHaveAttribute('href', '/');
