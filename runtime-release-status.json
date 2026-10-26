@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-26T10:54:34.346Z",
+  "checkedAt": "2026-10-26T11:19:53.205Z",
   "source": "nodejs.org/dist/index.json",
   "sourceAvailable": true,
   "maxAgeHours": 36,
@@ -8,7 +8,7 @@
     "node-json-parse-v1": {
       "checkId": "node-json-parse-v1",
       "runtime": "node",
-      "checkedAt": "2026-10-26T10:54:34.346Z",
+      "checkedAt": "2026-10-26T11:19:53.205Z",
       "verifiedRuntimeVersion": "v24.20.0",
       "requiredRuntimeMajor": 24,
       "latestLtsVersion": "v24.22.1",
