@@ -4,8 +4,9 @@ import { Toaster } from 'react-hot-toast';
 
 const NARROW = '(max-width: 980px)';
 
-// On narrow article pages the reading tools sit inline at the foot of the
-// header; notices move under the masthead so they never cover those tools.
+// On narrow article pages the reading tools sit inline in the page, so where
+// they land on screen depends on the article and the scroll position. Notices
+// take whichever edge of the viewport the tools are not on.
 export default function ReaderToaster() {
   const { pathname } = useLocation();
   const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia?.(NARROW).matches);
@@ -19,7 +20,34 @@ export default function ReaderToaster() {
   }, []);
 
   const onArticle = /^\/posts\/(?!create$)[^/]+$/.test(pathname);
-  const top = narrow && onArticle;
+  const avoid = narrow && onArticle;
+  const [toolsHigh, setToolsHigh] = useState(true);
+
+  useEffect(() => {
+    if (!avoid) return undefined;
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const tools = document.querySelector('[data-mobile-article-tools]');
+      if (!tools) return;
+      const box = tools.getBoundingClientRect();
+      setToolsHigh(box.top + box.height / 2 < window.innerHeight / 2);
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(measure); };
+    measure();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    // The article mounts after the route change; measure again once it exists.
+    const late = window.setTimeout(measure, 400);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(late);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [avoid, pathname]);
+
+  const top = avoid && !toolsHigh;
 
   return (
     <Toaster
