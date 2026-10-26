@@ -37,11 +37,13 @@ export default function ReaderToaster() {
     measure();
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
-    // The article mounts after the route change; measure again once it exists.
-    const late = window.setTimeout(measure, 400);
+    // The article (and its tools) mounts after data arrives, at no fixed time:
+    // measure whenever the tree changes instead of guessing a delay.
+    const observer = new MutationObserver(schedule);
+    observer.observe(document.body, { childList: true, subtree: true });
     return () => {
       cancelAnimationFrame(frame);
-      window.clearTimeout(late);
+      observer.disconnect();
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
     };
