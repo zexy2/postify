@@ -5,7 +5,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { registerSW } from 'virtual:pwa-register';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -33,7 +32,12 @@ const LoadingScreen = () => <SystemStatus eyebrow="POSTIFY / LOADING" loading fu
 
 // With registerType "autoUpdate" this reloads the page once a new service worker
 // takes control, so returning visitors do not keep seeing the previous deploy.
-registerSW({ immediate: true });
+// Loaded after the page so workbox-window stays out of the entry chunk.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    import('virtual:pwa-register').then(({ registerSW }) => registerSW({ immediate: true }));
+  });
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

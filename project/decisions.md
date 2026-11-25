@@ -645,3 +645,7 @@ When the Header switches to drawer/touch navigation at 960px, secondary controls
 ## 2026-11-25 — Service worker registration reloads open pages on a new deploy
 **Decision:** The service worker is registered from `src/main.jsx` with `virtual:pwa-register` (`registerSW({ immediate: true })`) instead of the injected `registerSW.js` script (`injectRegister: false`). With `registerType: "autoUpdate"` the page reloads once the new worker takes control.
 **Why:** The injected script only registered the worker. A returning visitor's first visit after a deploy was served the previously precached shell and kept showing the old design until a manual reload. Visitors who arrive from the old shell still see it once; every deploy after this one reloads automatically.
+
+## 2026-11-25 — Dependency audit fixes and entry budget 330 KB
+**Decision:** i18next moves to ^26.7.2 (GHSA-6jcc-5g8w-32mx, fixed only in >=26.3.4), follow-redirects to 1.16.3, and `workbox-build` resolves glob ^14.0.6 through an npm override (glob/minimatch advisories; workbox-build 7.4.1 still asks for glob ^11). The production entry budget rises from 320 000 to 330 000 bytes.
+**Why:** `verify:security` failed closed on six advisories, so main CI had been red since 2026-11-21 and nothing could deploy. i18next 26 adds about 8 KB to the entry chunk (317 797 → 325 653 bytes); there is no patched 25.x line. The service worker registration itself is lazy-loaded and does not grow the entry chunk.
