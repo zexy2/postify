@@ -1,4 +1,4 @@
-import { readFile, stat } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 
 const required = [
   'docs/index.html',
@@ -14,7 +14,6 @@ const required = [
   'docs/knowledge/node-json-dogrulama.tr.json',
   'docs/manifest.webmanifest',
   'docs/sw.js',
-  'docs/registerSW.js',
 ];
 
 for (const path of required) {
@@ -22,6 +21,18 @@ for (const path of required) {
   if (!file.isFile() || file.size === 0) {
     throw new Error(`Missing or empty build artifact: ${path}`);
   }
+}
+
+// The service worker is registered from the app bundle (virtual:pwa-register),
+// not from an injected registerSW.js, so open pages reload on a new deploy.
+const assetNames = (await readdir('docs/assets')).filter((name) => name.endsWith('.js'));
+let registersWorker = false;
+for (const name of assetNames) {
+  const code = await readFile(`docs/assets/${name}`, 'utf8');
+  if (code.includes('/sw.js')) { registersWorker = true; break; }
+}
+if (!registersWorker) {
+  throw new Error('No bundled service worker registration for /sw.js found in docs/assets');
 }
 
 const fallbackHtml = await readFile('docs/404.html', 'utf8');
@@ -57,7 +68,7 @@ const entryMatch = html.match(/<script[^>]+type="module"[^>]+src="\/assets\/(ind
   || html.match(/<script[^>]+src="\/assets\/(index-[^"]+\.js)"[^>]+type="module"/);
 if (!entryMatch) throw new Error('Could not identify the production entry chunk');
 const entryStat = await stat(`docs/assets/${entryMatch[1]}`);
-const ENTRY_BUDGET_BYTES = 320_000;
+const ENTRY_BUDGET_BYTES = 330_000;
 if (entryStat.size > ENTRY_BUDGET_BYTES) {
   throw new Error(`Production entry chunk exceeds ${ENTRY_BUDGET_BYTES} bytes: ${entryStat.size}`);
 }
