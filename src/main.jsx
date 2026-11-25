@@ -5,6 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { registerSW } from 'virtual:pwa-register';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -29,6 +30,10 @@ import './index.css';
 
 // Keep bootstrap hydration in the same editorial system-state language as route transitions.
 const LoadingScreen = () => <SystemStatus eyebrow="POSTIFY / LOADING" loading fullPage />;
+
+// With registerType "autoUpdate" this reloads the page once a new service worker
+// takes control, so returning visitors do not keep seeing the previous deploy.
+registerSW({ immediate: true });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

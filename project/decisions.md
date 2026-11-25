@@ -641,3 +641,7 @@ When the Header switches to drawer/touch navigation at 960px, secondary controls
 **Decision:** Keep the Home masthead, search, contribution actions and featured record, but compress their vertical rhythm and render the mobile featured record as a compact horizontal lead story. The first knowledge-feed record should arrive materially earlier in the scroll without hiding product value or reducing touch targets.
 
 **Why:** Real Chromium geometry showed the previous mobile Hero consumed about 1007px and pushed the first feed record to roughly 1470px on a 390px-wide phone. The denser hierarchy brings real content more than 500px earlier while preserving search, featured context, dark mode, 200% text scaling and >=44px interactions.
+
+## 2026-11-25 — Service worker registration reloads open pages on a new deploy
+**Decision:** The service worker is registered from `src/main.jsx` with `virtual:pwa-register` (`registerSW({ immediate: true })`) instead of the injected `registerSW.js` script (`injectRegister: false`). With `registerType: "autoUpdate"` the page reloads once the new worker takes control.
+**Why:** The injected script only registered the worker. A returning visitor's first visit after a deploy was served the previously precached shell and kept showing the old design until a manual reload. Visitors who arrive from the old shell still see it once; every deploy after this one reloads automatically.
