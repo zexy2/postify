@@ -30,6 +30,15 @@ import './index.css';
 // Keep bootstrap hydration in the same editorial system-state language as route transitions.
 const LoadingScreen = () => <SystemStatus eyebrow="POSTIFY / LOADING" loading fullPage />;
 
+// With registerType "autoUpdate" this reloads the page once a new service worker
+// takes control, so returning visitors do not keep seeing the previous deploy.
+// Loaded after the page so workbox-window stays out of the entry chunk.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    import('virtual:pwa-register').then(({ registerSW }) => registerSW({ immediate: true }));
+  });
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
