@@ -8,7 +8,8 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      injectRegister: "script-defer",
+      // Registered from src/main.jsx so a new deploy reloads open pages.
+      injectRegister: false,
       includeAssets: ["pwa-192x192.png", "pwa-512x512.png", "pwa-icon.svg"],
       manifest: {
         name: "Postify",
