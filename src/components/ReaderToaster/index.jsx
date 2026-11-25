@@ -4,6 +4,9 @@ import { Toaster } from 'react-hot-toast';
 
 const NARROW = '(max-width: 980px)';
 
+// GitHub Pages serves the static article shells with a trailing slash.
+export const isArticlePath = (pathname) => /^\/posts\/(?!create\/?$)[^/]+\/?$/.test(pathname);
+
 // On narrow article pages the reading tools sit inline in the page, so where
 // they land on screen depends on the article and the scroll position. Notices
 // take whichever edge of the viewport the tools are not on.
@@ -19,7 +22,7 @@ export default function ReaderToaster() {
     return () => query.removeEventListener('change', update);
   }, []);
 
-  const onArticle = /^\/posts\/(?!create$)[^/]+$/.test(pathname);
+  const onArticle = isArticlePath(pathname);
   const avoid = narrow && onArticle;
   const [toolsHigh, setToolsHigh] = useState(true);
 
