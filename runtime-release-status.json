@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-27T10:46:18.881Z",
+  "checkedAt": "2026-11-25T09:21:07.969Z",
   "source": "nodejs.org/dist/index.json",
   "sourceAvailable": true,
   "maxAgeHours": 36,
@@ -8,14 +8,14 @@
     "node-json-parse-v1": {
       "checkId": "node-json-parse-v1",
       "runtime": "node",
-      "checkedAt": "2026-10-27T10:46:18.881Z",
+      "checkedAt": "2026-11-25T09:21:07.969Z",
       "verifiedRuntimeVersion": "v24.20.0",
       "requiredRuntimeMajor": 24,
-      "latestLtsVersion": "v24.22.1",
-      "latestLtsMajor": 24,
-      "latestLtsCodename": "Krypton",
+      "latestLtsVersion": "v26.13.1",
+      "latestLtsMajor": 26,
+      "latestLtsCodename": "Lithium",
       "status": "recheck-required",
-      "reason": "newer-lts-release"
+      "reason": "newer-lts-major"
     }
   }
 }

@@ -43,8 +43,8 @@
       "reproduceCommand": "node node-json-parse-v1.mjs",
       "artifactSha256": "c301ddea5fa2ebf955b06f56a939d573ac293b7b392adc43dc699ef8bac84713",
       "executionMode": "generated-artifact-file",
-      "verifiedAt": "2026-10-27T10:46:18.741Z",
-      "durationMs": 37,
+      "verifiedAt": "2026-11-25T09:21:07.869Z",
+      "durationMs": 34,
       "expectedStdout": "PASS",
       "actualStdout": "PASS",
       "codeSha256": "c301ddea5fa2ebf955b06f56a939d573ac293b7b392adc43dc699ef8bac84713",
@@ -53,14 +53,14 @@
     "runtimeReleaseSignal": {
       "checkId": "node-json-parse-v1",
       "runtime": "node",
-      "checkedAt": "2026-10-27T10:46:18.881Z",
+      "checkedAt": "2026-11-25T09:21:07.969Z",
       "verifiedRuntimeVersion": "v24.20.0",
       "requiredRuntimeMajor": 24,
-      "latestLtsVersion": "v24.22.1",
-      "latestLtsMajor": 24,
-      "latestLtsCodename": "Krypton",
+      "latestLtsVersion": "v26.13.1",
+      "latestLtsMajor": 26,
+      "latestLtsCodename": "Lithium",
       "status": "recheck-required",
-      "reason": "newer-lts-release"
+      "reason": "newer-lts-major"
     }
   },
   "body": "## Problem\nCode samples are usually only read. Here a small deterministic Node.js example is actually executed and its expected output is checked.\n\n## Code\n\n```js\nimport assert from 'node:assert/strict';\nconst payload = '{\"ok\":true,\"items\":[1,2,3]}';\nconst parsed = JSON.parse(payload);\nassert.equal(parsed.ok, true);\nassert.deepEqual(parsed.items, [1,2,3]);\nprocess.stdout.write('PASS');\n```\n\n## Verification\nDuring the build Postify runs the exact code displayed above in a Node.js child process. Expected stdout is exactly PASS. If it differs, the release gate fails. The “Postify verified” claim therefore comes from the same execution contract the reader can inspect.",
