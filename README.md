@@ -177,7 +177,7 @@ Database migration changes are also replayed from scratch on PostgreSQL 16 and v
 ├── scripts/                 # Verification, release and artifact tooling
 ├── supabase/                # Migrations and database verification
 ├── public/                  # Static public assets and machine-readable surfaces
-├── project/                 # Maintainer-oriented project records
+├── maintainers/             # Maintainer records: decisions, progress, specs, design reviews
 ├── .github/workflows/       # CI/CD, security and production workflows
 ├── ROADMAP.md               # Public product direction
 ├── CONTRIBUTING.md          # Contribution workflow
