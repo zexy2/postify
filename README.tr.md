@@ -16,7 +16,7 @@ Geliştiriciler ve ürün üretenler için; yeniden üretilebilir rehberleri, ka
 
 </div>
 
-![Postify production ana ekranı](.github/assets/postify-home.png)
+![Postify production ana ekranı](.github/assets/postify-home.tr.jpg)
 
 ## Neden Postify?
 
@@ -60,7 +60,7 @@ flowchart LR
 
 Authenticated kullanıcılar **Çalıştı / Çalışmadı** kanıtı gönderebilir. Public yüzeyler ham kullanıcı kimliği veya özel notlar yerine privacy-safe aggregate gösterir. Giriş yapılmadan gönderilen geri bildirim cihazda kalır.
 
-![Postify production doğrulama deneyimi](.github/assets/postify-verification.png)
+![Çalıştırılan kodu, PASS sonucunu ve Node.js ortamı değiştiği için yeniden kontrol isteyen kanıt panelini gösteren Postify saha notu](.github/assets/postify-verification.tr.png)
 
 ## Production
 

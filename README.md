@@ -16,7 +16,7 @@ A verified knowledge network for developers and builders — combining reproduci
 
 </div>
 
-![Postify production home screen](.github/assets/postify-home.png)
+![Postify production home screen](.github/assets/postify-home.jpg)
 
 ## Why Postify?
 
@@ -60,7 +60,7 @@ flowchart LR
 
 Authenticated users can submit **Worked / Didn’t work** evidence to Supabase. Public surfaces expose privacy-safe aggregates rather than raw user identities or private notes. Signed-out feedback remains local to the device.
 
-![Postify verification experience in production](.github/assets/postify-verification.png)
+![Postify field note showing the executed code, its PASS run and the evidence panel asking for a re-check after the Node.js runtime changed](.github/assets/postify-verification.png)
 
 ## Production
 
