@@ -177,7 +177,7 @@ Veritabanı migration değişiklikleri de deploy öncesinde PostgreSQL 16 üzeri
 ├── scripts/                 # Verification, release ve artifact araçları
 ├── supabase/                # Migration ve DB doğrulaması
 ├── public/                  # Static asset ve machine-readable yüzeyler
-├── project/                 # Maintainer odaklı proje kayıtları
+├── maintainers/             # Maintainer kayıtları: kararlar, ilerleme, spesifikasyon, tasarım
 ├── .github/workflows/       # CI/CD, güvenlik ve production workflow'ları
 ├── ROADMAP.md               # Public ürün yönü
 ├── CONTRIBUTING.md          # Katkı akışı
